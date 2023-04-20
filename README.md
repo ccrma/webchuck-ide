@@ -8,7 +8,7 @@ Try it here: [https://chuck.stanford.edu/webchuck/](https://chuck.stanford.edu/w
 
 WebChucK enables Chuck to run on the web. Using WebAssembly and the Web Audio API, you can use WebChucK to build your own browser-based audiovisual projects or web apps. To learn more about WebChucK and what it can do, check out the following tutorials: [https://chuck.stanford.edu/webchuck/tutorial](https://chuck.stanford.edu/webchuck/tutorial)
 
-*How much web could a WebChucK ChucK if we **all** could ChucK on the web?*
+_How much web could a WebChucK ChucK if we **all** could ChucK on the web?_
 
 ### Creating your own WebChucK project
 
@@ -18,7 +18,10 @@ If you'd like to use WebChucK API on your own site, there are two ways you can d
 
 ```html
 <!-- Connect WebChucK to the Web Audio API, connect webchuck.js and webchuck.wasm -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/ccrma/webchuck/src/webchuck_host.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/gh/ccrma/webchuck/src/webchuck_host.min.js"
+></script>
 ```
 
 2. Copy the files from WebChucK [src](./src/):
@@ -46,7 +49,6 @@ If you'd like to use WebChucK API on your own site, there are two ways you can d
 - Precompilers (to play with possible new worlds)
 
 ### Usage
-
 
 Run `index.html` with a web server (VSCode: [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)), or create one with Python 3
 
