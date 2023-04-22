@@ -1,28 +1,14 @@
-import * as monaco from "monaco-editor";
+import monaco from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
-import { initVimMode } from "monaco-vim";
+//import { initVimMode } from 'monaco-vim';
+
+//const vimMode = initVimMode(editor, document.getElementById('my-statusbar'))
 
 /*--------------------------  Monaco Worker --------------------------*/
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
-import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
 self.MonacoEnvironment = {
-    getWorker(_: any, label: string) {
-        if (label === "json") {
-            return new jsonWorker();
-        }
-        if (label === "css" || label === "scss" || label === "less") {
-            return new cssWorker();
-        }
-        if (label === "html" || label === "handlebars" || label === "razor") {
-            return new htmlWorker();
-        }
-        if (label === "typescript" || label === "javascript") {
-            return new tsWorker();
-        }
+    getWorker(_: any) {
         return new editorWorker();
     },
 };
@@ -30,7 +16,6 @@ self.MonacoEnvironment = {
 /*----------------------- EDITOR --------------------------*/
 
 let editor : monaco.editor.IStandaloneCodeEditor;
-let vimMode: any;
 
 export function createEditor(editorDiv: HTMLDivElement) {
     editor = monaco.editor.create(editorDiv, {
@@ -43,8 +28,6 @@ export function createEditor(editorDiv: HTMLDivElement) {
 
         model: editorConfig,
     });
-    vimMode = initVimMode(editor, {});
-    console.log(vimMode);
 }
 
 
