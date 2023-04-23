@@ -1,3 +1,20 @@
+#vim-status {
+    display: block;
+    background: #eee;
+    padding: 4px 2px;
+    font-family: monospace;
+    height: 15px;
+    line-height: 15px;
+}
+
+#vim-status input[type=text] {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: monospace;
+}
+
+/* ------------------------------------------------------------------------- */
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;

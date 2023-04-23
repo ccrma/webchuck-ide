@@ -1,6 +1,6 @@
 import "../styles/style.css";
 import { WebchuckHost } from "./components/webchuck-host";
-import { createEditor } from "./components/editor/editor";
+import { createEditor, toggleVimMode } from "./components/editor/editor";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -39,3 +39,8 @@ document
     });
 
 createEditor(document.querySelector<HTMLDivElement>("#editor")!);
+document
+    .querySelector<HTMLButtonElement>("#vim-toggle")!
+    .addEventListener("click", () => {
+        toggleVimMode();
+    });

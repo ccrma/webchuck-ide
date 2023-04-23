@@ -2,15 +2,13 @@ import monaco from "./monacoLite";
 import chuck_modules from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
 
-
 // Documentation Type for ckdoc
 interface docType {
     description: string[];
     method: string[];
     example: string[];
 }
-const ckdoc : {[key: string]: docType} = ckdocJSON;
-
+const ckdoc: { [key: string]: docType } = ckdocJSON;
 
 // Register a new language for Monaco
 monaco.languages.register({ id: "chuck" });
@@ -287,7 +285,6 @@ monaco.languages.registerCompletionItemProvider("chuck", {
     },
 });
 
-
 // Register a hover provider for the new language
 monaco.languages.registerHoverProvider("chuck", {
     provideHover: function (model, position) {
@@ -298,7 +295,7 @@ monaco.languages.registerHoverProvider("chuck", {
 
         // If we have a hover
         if (chuck_modules.includes(token)) {
-            const word_doc : docType = ckdoc[token];
+            const word_doc: docType = ckdoc[token];
             return {
                 // Where to show the hover
                 range: new monaco.Range(

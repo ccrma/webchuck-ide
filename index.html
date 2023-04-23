@@ -8,7 +8,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TITLE -->
     <title>WebChucK IDE [beta]</title>
@@ -31,7 +30,11 @@
 
     <!-- WebChucK IDE -->
     <div id="app"></div>
-    <div id="editor" style="width: 600px; height: 600px; border: 1px solid grey"></div>
+    <button id="vim-toggle">toggle-vim</button>
+    <div>
+      <div id="editor" style="width: 600px; height: 600px; border: 1px solid grey"></div>
+      <div id=vim-status></div>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
