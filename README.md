@@ -2,33 +2,18 @@
 
 A web-based integrated development environment (IDE) for real-time sound synthesis and music creation with ChucK!
 
-Try it here: [https://chuck.stanford.edu/webchuck/](https://chuck.stanford.edu/webchuck/)
+Try it here: [https://chuck.stanford.edu/ide/](https://chuck.stanford.edu/ide/)
 
-## What is WebChucK?
+## What is WebChucK IDE?
 
-WebChucK enables Chuck to run on the web. Using WebAssembly and the Web Audio API, you can use WebChucK to build your own browser-based audiovisual projects or web apps. To learn more about WebChucK and what it can do, check out the following tutorials: [https://chuck.stanford.edu/webchuck/tutorial](https://chuck.stanford.edu/webchuck/tutorial)
+Well first of all, what's WebChucK? Take all of computer music, advances in programming digital sound, the web and web browsers and create an enjoyable playground for sound exploration. That’s WebChucK. WebChucK IDE takes that one step further and creates a playground for you to experience and develop with all that WebChucK and native ChucK have to offer, now on the web!
+
+Use WebChucK IDE to prototype ChucK code, build WebChucK projects, but most importantly, take your ChucK on the go! WebChucK IDE runs ChucK on your desktop browser or mobile computing device! To learn more about WebChucK and what it can do, check out the following links: 
+
+1. [Tutorials](https://chuck.stanford.edu/webchuck/tutorial) for WebChucK by Mike Mulshine
+2. [Github](https://github.com/ccrma/webchuck) for WebChucK
 
 _How much web could a WebChucK ChucK if we **all** could ChucK on the web?_
-
-### Creating your own WebChucK project
-
-If you'd like to use WebChucK API on your own site, there are two ways you can do this:
-
-1. Link WebChucK in the `<body>` in your index.html
-
-```html
-<!-- Connect WebChucK to the Web Audio API, connect webchuck.js and webchuck.wasm -->
-<script
-  type="text/javascript"
-  src="https://cdn.jsdelivr.net/gh/ccrma/webchuck/src/webchuck_host.min.js"
-></script>
-```
-
-2. Copy the files from WebChucK [src](./src/):
-
-- `webchuck_host.js`
-- `webchuck.js`
-- `webchuck.wasm`
 
 ## WebChucK IDE Features
 
@@ -42,13 +27,19 @@ If you'd like to use WebChucK API on your own site, there are two ways you can d
 
 - Access to ChucK's example library
 
-- Vim keybindings
+- Vim keybinding support
 
 - Dark mode
 
 - Precompilers (to play with possible new worlds)
 
-### Usage
+## Usage
+
+Clone this repository 
+
+```
+git clone https://github.com/ccrma/webchuck-ide
+```
 
 Run `index.html` with a web server (VSCode: [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)), or create one with Python 3
 
