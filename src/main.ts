@@ -6,7 +6,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
     <h1>WebChucK IDE</h1>
     <div class="card">
-      <button id="webchuck" type="button">Start WebChucK</button>
+      <button id="webchuck" type="button" class="text-7xl">Start WebChucK</button>
       <br>
       <br>
       <button id="play" type="button">Play</button>

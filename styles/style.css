@@ -1,9 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #vim-status {
     display: block;
     background: #eee;
     padding: 4px 2px;
     font-family: monospace;
-    height: 15px;
+    height: 18px;
     line-height: 15px;
 }
 
@@ -21,7 +25,7 @@
     font-weight: 400;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 40, 255, 0.87);
     background-color: #242424;
 
     font-synthesis: none;
