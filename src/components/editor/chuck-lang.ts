@@ -1,4 +1,4 @@
-import monaco from "./monacoLite";
+import { monaco } from "./monacoLite";
 import chuck_modules from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
 

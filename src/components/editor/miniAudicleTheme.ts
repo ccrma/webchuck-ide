@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import type { monaco } from "./monacoLite";
 
 const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
     base: "vs",
@@ -31,11 +31,10 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
         {
             token: "number",
             foreground: "D48010",
-        }
-
-
+        },
     ],
     colors: {
+        "editor.background": "#FFFFE0",
     },
 };
 

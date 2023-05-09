@@ -1,4 +1,4 @@
-import monaco from "./monacoLite";
+import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
@@ -6,9 +6,9 @@ import { miniAudicleLight } from "./miniAudicleTheme";
 // Define editor themes
 monaco.editor.defineTheme("miniAudicleLight", miniAudicleLight);
 
-let editor : monaco.editor.IStandaloneCodeEditor;
-let vimMode : boolean = localStorage.getItem("vimMode") === "true";
-let vimModule : any; // for the vim object from monaco-vim
+let editor: monaco.editor.IStandaloneCodeEditor;
+let vimMode: boolean = localStorage.getItem("vimMode") === "true";
+let vimModule: any; // for the vim object from monaco-vim
 
 export function createEditor(editorDiv: HTMLDivElement) {
     editor = monaco.editor.create(editorDiv, {
@@ -19,15 +19,11 @@ export function createEditor(editorDiv: HTMLDivElement) {
         },
 
         model: editorConfig,
-        theme: "miniAudicleLight",
+        theme: "miniAudicleLight"
     });
 
     // Initialize Vim mode
-    if (vimMode) {
-        vimModeOn();
-    } else {
-        vimModeOff();
-    }
+    vimMode ? vimModeOn() : vimModeOff();
 }
 
 function vimModeOn() {
@@ -49,7 +45,6 @@ export function toggleVimMode() {
         vimModeOn();
     }
 }
-
 
 export function getEditorCode(): string {
     // get the contents of the editor
