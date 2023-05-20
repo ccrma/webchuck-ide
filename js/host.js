@@ -26,7 +26,6 @@ var chuckCompileButton = function ()
         theChuck.runCode(window.localStorage.getItem('chuckCache')).then(
             function (shredID)
             {
-                
                 addShredRow(shredID);
             },
             function (failure) { }
@@ -61,7 +60,7 @@ var chuckReplaceButton = function ()
 {
     // send message to replace last shred with this code
     if(precompilerMode === 0) {
-        theChuck.replaceCode(parsed).then(
+        theChuck.replaceCode(window.localStorage.getItem('chuckCache')).then(
             function (shreds)
             {
                 removeShredRow(shreds.oldShred);
@@ -70,6 +69,7 @@ var chuckReplaceButton = function ()
             function (failure) { }
         );
     }
+
     if(precompilerMode === 1){
         theChuck.runCode('<<< "precompiling [iter~]..." >>>;')
         main().then(() => {

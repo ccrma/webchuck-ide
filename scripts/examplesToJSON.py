@@ -7,10 +7,12 @@ chuckExamplesPath= "YOUR_PATH_TO_CHUCK_EXAMPLES!!!"
 outputJSONFile = "../examples/moreExamples.json"
 
 # Exclude directories
-excludeDirs = ["book"]
+excludeDirs = ["book", "kbhit", "word2vec"]
 
 # IMPORTANT: Words to exclude from examples, features not yet supported in WebChucK
 excludeFileWords = ["OscIn", "OscOut", "Hid", "HidMsg", "MidiIn", "MidiOut", "MidiMsg", "MidiFileIn", "ConsoleInput"]
+# Exclude Chugins
+excludeFileWords += ["AmbPan3", "Pan4", "Pan8", "Sigmund", "PitchTrack"]
 excludeFileWords += ["SndBuf", "SndBuf2"] # excluding these because we aren't retrieving data files
 # add a space to the end of each word to match Object classes
 excludeFileWords = [word + " " for word in excludeFileWords]
@@ -52,10 +54,6 @@ if __name__ == "__main__":
                             examplesDict[parentDir] = [f]
 
                         fileCount += 1
-
-    # add ai folder
-    #examplesDict["ai"] = ["features", "genre-classify", "hmm", "knn", "pca", "svm", "word2vec"]
-    #dirCount += 7
 
     # folder with no chuck files, only subfolders
     examplesDict["ai"] = []

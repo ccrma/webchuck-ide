@@ -331,7 +331,7 @@ a:visited
   html,
   body 
   {
-    height: 170vh;
+    height: 150vh;
   }
 
   #filePanel
@@ -340,6 +340,7 @@ a:visited
   }
   #editorPanel
   {
+    padding-top: 1vh;
     max-height: 60vh;
   }
   #consolePanel

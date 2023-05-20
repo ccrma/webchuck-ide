@@ -25,6 +25,7 @@
         "shred",
         "string",
         "filter",
+        "effects",
         "vector",
         "event",
         "oper",
@@ -68,6 +69,7 @@
     "array": [
         "array_associative.ck",
         "array_zero.ck",
+        "array_reverse.ck",
         "array_mmixed.ck",
         "array_capacity.ck",
         "array_resize.ck",
@@ -75,9 +77,10 @@
         "array_assign.ck",
         "array_sub_assign.ck",
         "array_dynamic.ck",
+        "array_negative.ck",
+        "array_shuffle.ck",
         "array_mdim.ck",
-        "array_storage.ck",
-        "array_negative.ck"
+        "array_storage.ck"
     ],
     "ctrl": [
         "ctrl_until.ck",
@@ -94,9 +97,12 @@
         "n.ck"
     ],
     "io": [
+        "write-byte.ck",
         "read-int.ck",
+        "read-byte.ck",
         "write2.ck",
         "seek.ck",
+        "read-float.ck",
         "chout.ck",
         "read-tokens.ck",
         "read-line.ck",
@@ -140,12 +146,14 @@
         "demo2.ck",
         "wind.ck",
         "curly.ck",
+        "phasor.ck",
         "fm.ck",
         "adsr.ck",
         "lfo.ck",
         "wind2.ck",
         "rec-auto.ck",
         "unchuck.ck",
+        "pulse.ck",
         "i-robot.ck",
         "tick2.ck"
     ],
@@ -169,6 +177,7 @@
         "frenchrn-algo2.ck",
         "mode-o-matic.ck",
         "modalbar2.ck",
+        "subnoise-audio.ck",
         "rhodey.ck",
         "mand-o-matic.ck",
         "moog.ck",
@@ -176,8 +185,8 @@
         "stif-o-karp.ck",
         "modalbar.ck",
         "shake-cycle.ck",
+        "honkeytonk-algo3.ck",
         "mandolin.ck",
-        "hevymetl-acoustic-algo3.ck",
         "bandedwg2.ck",
         "sitar.ck",
         "wurley3.ck",
@@ -189,6 +198,7 @@
         "voic-o-form.ck",
         "krstlchr-algo7.ck",
         "brass.ck",
+        "subnoise-control.ck",
         "rhodey-song.ck",
         "blowhole.ck",
         "brass2.ck",
@@ -233,11 +243,16 @@
         "readme-LiSa1.ck",
         "Gen7-test.ck",
         "LiSa-track1.ck",
-        "LiSa-trigger.ck"
+        "LiSa-trigger.ck",
+        "Mesh2D.ck",
+        "LiSa-stereo.ck"
     ],
     "type": [
+        "type_query.ck",
+        "type_type.ck",
         "type_object.ck",
         "type_primitives.ck",
+        "polymorph.ck",
         "type_analysis.ck"
     ],
     "pca": [
@@ -263,6 +278,10 @@
         "features-combined.ck",
         "flux0.ck"
     ],
+    "genre-classify": [
+        "x-validate.ck",
+        "genre-classify.ck"
+    ],
     "svm": [
         "svm-basic.ck"
     ],
@@ -270,27 +289,23 @@
         "hmm-load.ck",
         "hmm-train.ck"
     ],
-    "mlp": [
-        "mlp.ck",
-        "mlp-manual.ck",
-        "mlp-load.ck",
-        "mlp-save.ck"
-    ],
     "wekinator": [
-        "wekinator-basic.ck",
-        "wekinator-load.ck"
+        "wekinator-customize.ck",
+        "wekinator-import.ck",
+        "wekinator-basic.ck"
     ],
-    "word2vec": [
-        "poem-i-feel.ck",
-        "poem-randomwalk.ck",
-        "poem-spew.ck",
-        "word2vec-basic.ck"
+    "mlp": [
+        "model-load.ck",
+        "mlp-manual.ck",
+        "mlp.ck",
+        "model-save.ck"
     ],
     "machine": [
         "eval.ck",
         "intsize.ck",
         "machine-shred.ck",
-        "is-realtime.ck"
+        "is-realtime.ck",
+        "crash.ck"
     ],
     "class": [
         "dinky.ck",
@@ -314,12 +329,36 @@
     ],
     "filter": [
         "lpf.ck",
+        "WPKorg35.ck",
+        "KasFilter.ck",
+        "Multicomb.ck",
         "rlpf.ck",
+        "FIR-sinc-explicit.ck",
+        "Elliptic-help.ck",
+        "dcblocker.ck",
+        "WPDiodeLadder.ck",
         "hpf.ck",
+        "FIR-greyhole-down-up-decimate.ck",
         "brf.ck",
         "bpf.ck",
         "rhpf.ck",
         "resonz.ck"
+    ],
+    "effects": [
+        "Bitcrusher.ck",
+        "chorus.ck",
+        "ABSaturator.ck",
+        "Spectacle.ck",
+        "WinFuncEnv.ck",
+        "GVerb.ck",
+        "FoldbackSaturator-index.ck",
+        "PowerADSR.ck",
+        "PowerADSR-feedback-beatings.ck",
+        "ExpDelay.ck",
+        "ExpEnv-modes.ck",
+        "KasFilter-demo.ck",
+        "FoldbackSaturator-threshold.ck",
+        "ExpEnv.ck"
     ],
     "vector": [
         "vec3.ck",
@@ -328,13 +367,8 @@
     ],
     "event": [
         "broadcast.ck",
-        "kb.ck",
         "event-extend.ck",
         "signal4.ck",
-        "clix3.ck",
-        "clix2.ck",
-        "clix.ck",
-        "kb2.ck",
         "signal.ck"
     ],
     "oper": [
@@ -354,13 +388,13 @@
         "func_obj_arg.ck"
     ],
     "ai": [
-        "features",
-        "hmm",
-        "knn",
-        "mlp",
         "pca",
+        "knn",
+        "features",
+        "genre-classify",
         "svm",
+        "hmm",
         "wekinator",
-        "word2vec"
+        "mlp"
     ]
 }
