@@ -30,9 +30,36 @@ var globalFileName = (localStorage['chuckCacheName'] !== undefined) ? localStora
 /* Check if we have a cached chuck file */
 var doesChuckCacheExist = (localStorage['chuckCacheExist'] === 'true') || false; // default state
 
+var fileLoadSuccess = false;
 /* Load in chuck file from cache for edit, or load in the default chuck file */
-var launchChuckFile = function ()
+var launchChuckFile = async function ()
 {
+    // Get url parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileURL = urlParams.get('url');
+
+    if (fileURL !== null && fileURL.endsWith(".ck")) {
+        // fetch chuck file from url
+        try {
+            await fetch(fileURL)
+                .then(response => response.text())
+                .then(text => {
+                    loadChuckFileFromString(text);
+                    globalFileName = fileURL.split("/").pop();
+                    printToOutputConsole("Loaded file from URL: " + globalFileName);
+                    fileLoadSuccess = true;
+                });
+        } catch (error) {
+            printToOutputConsole("Failed to load chuck URL: " + fileURL);
+        }
+
+        // If file was loaded from url, don't load from cache
+        if (fileLoadSuccess) {
+            return;
+        }
+    }
+
+    // If urlParam is not null, or if fails to load chuck file from cache, load load cache or default chuck file
     if (doesChuckCacheExist) 
     {
         // Set chuck file to last saved file
