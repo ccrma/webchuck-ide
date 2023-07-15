@@ -637,6 +637,61 @@ var createAChuck = function( chuckID, initPromise )
             } );
             return self.deferredPromises[callbackID];
         }
+        // ================== ChucK VM parameters ============= //
+        self.setParamInt = function( name, value )
+        {
+            self.port.postMessage( {
+                type: 'setParamInt',
+                name: name,
+                value: value
+            } );
+        }
+        self.getParamInt = function( name )
+        {
+            var callbackID = self.nextDeferID();
+            self.port.postMessage( {
+                type: 'getParamInt',
+                name: name,
+                callback: callbackID
+            } );
+            return self.deferredPromises[callbackID];
+        }
+        self.setParamFloat = function( name, value )
+        {
+            self.port.postMessage( {
+                type: 'setParamFloat',
+                name: name,
+                value: value
+            } );
+        }
+        self.getParamFloat = function( name )
+        {
+            var callbackID = self.nextDeferID();
+            self.port.postMessage( {
+                type: 'getParamFloat',
+                name: name,
+                callback: callbackID
+            } );
+            return self.deferredPromises[callbackID];
+        }
+        self.setParamString = function( name, value )
+        {
+            self.port.postMessage( {
+                type: 'setParamString',
+                name: name,
+                value: value
+            } );
+        }
+        self.getParamString = function( name )
+        {
+            var callbackID = self.nextDeferID();
+            self.port.postMessage( {
+                type: 'getParamString',
+                name: name,
+                callback: callbackID
+            } );
+            return self.deferredPromises[callbackID];
+        }
         // ================= Clear ====================== //
         self.clearChuckInstance = function()
         {
@@ -853,6 +908,31 @@ var createASubChuck = function( chuck, dacName, initPromise )
         self.getAssociativeFloatArrayValue = function( variable, key )
         {
             return self.myChuck.getAssociativeFloatArrayValue( variable, key );
+        }
+        // ================== VM Params ============= //
+        self.setParamInt = function( name, value )
+        {
+            return self.myChuck.setParamInt( name, value );
+        }
+        self.getParamInt = function( name )
+        {
+            return self.myChuck.getParamInt( name );
+        }
+        self.setParamFloat = function( name, value )
+        {
+            return self.myChuck.setParamFloat( name, value );
+        }
+        self.getParamFloat = function( name )
+        {
+            return self.myChuck.getParamFloat( name );
+        }
+        self.setParamString = function( name, value )
+        {
+            return self.myChuck.setParamString( name, value );
+        }
+        self.getParamString = function( name )
+        {
+            return self.myChuck.getParamString( name );
         }
         // ================= Clear ====================== //
         self.clearChuckInstance = function()

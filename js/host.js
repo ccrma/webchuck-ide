@@ -278,6 +278,8 @@ theChuckReady.then(function ()
     // Load preUploadFiles into ChucK
     processPreUploadFiles();
     outputConsole.value += "WebChucK is ready!\n";
+    // 1.5.0.8 (ge) added
+    outputConsole.value += "version: " + theChuck.getParam("version");
 });
 
 // Override default print function, print to output console
