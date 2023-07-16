@@ -692,7 +692,16 @@ var createAChuck = function( chuckID, initPromise )
             } );
             return self.deferredPromises[callbackID];
         }
-        // ================= Clear ====================== //
+        // ================= VM ====================== //
+        self.now = function()
+        {
+            var callbackID = self.nextDeferID();
+            self.port.postMessage( {
+                type: 'getChuckNow',
+                callback: callbackID
+            } );
+            return self.deferredPromises[callbackID];
+        }
         self.clearChuckInstance = function()
         {
             self.port.postMessage( { type: 'clearChuckInstance' } );
@@ -934,7 +943,11 @@ var createASubChuck = function( chuck, dacName, initPromise )
         {
             return self.myChuck.getParamString( name );
         }
-        // ================= Clear ====================== //
+        // ================= VM ====================== //
+        self.now = function()
+        {
+            return self.myChuck.now();
+        }
         self.clearChuckInstance = function()
         {
             return self.myChuck.clearChuckInstance();
