@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------------
+// name: webchuck_host.js
+// desc: webchuck host code connecting WebChucK/wasm to WebAudio
+//       it also provides API to call ChucK inside the WASM
+//
+// author: Jack Atherton
+//   date: 2017 (original implementation)
+//-----------------------------------------------------------------------------
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext = undefined;
 var theChuck = undefined;
@@ -18,7 +26,7 @@ var chuckPrint = function( text )
 }
 
 // src: http://lea.verou.me/2016/12/resolve-promises-externally-with-this-one-weird-trick/
-function defer() 
+function defer()
 {
     var res, rej;
 
@@ -956,8 +964,7 @@ var createASubChuck = function( chuck, dacName, initPromise )
         {
             return self.myChuck.clearGlobals();
         }
-        
-        
+
     })( aSubChuck );
     
     return aSubChuck;
