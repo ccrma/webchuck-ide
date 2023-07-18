@@ -36,6 +36,7 @@
 </head>
 
 <body>
+
     <!-- IDE -->
     <div class="container ide zero-pad" id="ide">
 
@@ -152,7 +153,7 @@
                     <input class="chuckButton" id="micButton" type="image" src="./assets/icons/mic.png" disabled
                         alt="microphone" />
                 </div>
-                <div class="column col-10 col-sm-7">
+                <div class="column col-6 col-sm-5">
                     <input class="chuckButton" id="compileButton" type="image" src="./assets/icons/play.png" disabled
                         alt="compile and play" /> 
                     <input class="chuckButton" id="replaceButton" type="image" src="./assets/icons/replace.png" disabled
@@ -160,6 +161,7 @@
                     <input class="chuckButton" id="removeButton" type="image" src="./assets/icons/remove.png" disabled
                         alt="remove shred" />
                 </div>
+                <div class="column col-4 col-sm-5" style="display:flex;align-items:center;" id="chuck-now"></div>
             </div>
         </div>
 
@@ -265,7 +267,7 @@
     <script type="text/javascript" src="./precompilers/iterTilda.js"></script><!-- iter~ for testing -->
 
     <!-- POST SCRIPTS -->
-    <script> var whereIsChuck = "https://chuck.stanford.edu/webchuck/src/"; </script> <!-- Specify where ChucK is -->
+    <script> var whereIsChuck = "https://ccrma.stanford.edu/~ge/webchuck/src/"; </script> <!-- Specify where ChucK is -->
     <!-- Connect Web Audio API, Connect webchuck.js and webchuck.wasm -->
     <script type="text/javascript" src="./src/webchuck_host.js"></script> <!-- WebChucK IDE modules -->
     <script type="text/javascript" src="./js/Visualizer.js"></script> <!-- WebChucK to WebAudioAPI -->
