@@ -293,7 +293,7 @@ monaco.languages.registerHoverProvider("chuck", {
             model.getWordAtPosition(position)!; // ! TS check that word is not null
         const token: string = word.word;
 
-        // If we have a hover
+        // If we have a hover for that word
         if (chuck_modules.includes(token)) {
             const word_doc: docType = ckdoc[token];
             return {
