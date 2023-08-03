@@ -22,6 +22,19 @@ var printToOutputConsole = function (text)
     console.log(text); // print to console.log as well
 };
 
+/* Calculate console width in monospace */
+var consoleWidth = function ()
+{
+    var consoleWidth = outputConsole.clientWidth;
+    var consoleCharWidth = consoleWidth / 9.5;
+    //console.log("Console width: " + Math.floor(consoleCharWidth));
+    return Math.floor(consoleCharWidth)-5;
+}
+window.addEventListener("resize", () => {
+    if (theChuck === undefined) return;
+    theChuck.setParamInt("TTY_WIDTH_HINT", consoleWidth());
+});
+
 /* Handle preUpload and server files before Chuck is ready */
 var preUploadFiles = new Set(); // File type
 
@@ -223,6 +236,31 @@ function setDarkMode(dark)
 var toggleDarkMode = function () { setDarkMode(darkMode = !darkMode); };
 darkModeButton.addEventListener("click", toggleDarkMode);
 
+/* Toggle ChucK now visibility */
+var chuckNowMode = (localStorage['viewChuckNow'] === 'true') || false; // default state
+var chuckNowButton = document.getElementById("chuckNowButton");
+function setViewChuckNow(view)
+{
+    if (view)
+    {
+        // Set Chuck now visible
+        chuckNowButton.innerHTML = "ChucK Time: On";
+        document.getElementById("chuck-now").style.visibility = "visible";
+
+        localStorage['viewChuckNow'] = 'true';
+    }
+    else
+    {
+        // Set Chuck now hidden
+        chuckNowButton.innerHTML = "ChucK Time: Off";
+        document.getElementById("chuck-now").style.visibility = "hidden";
+
+        localStorage['viewChuckNow'] = 'false';
+    }
+};
+var toggleChuckNow = function () { setViewChuckNow(chuckNowMode = !chuckNowMode); };
+chuckNowButton.addEventListener("click", toggleChuckNow);
+
 /* Save editor contents to chuck file */
 var exportChuckButton = document.getElementById("exportChuckButton");
 var exportChuckFile = function ()
@@ -248,6 +286,7 @@ exportChuckButton.addEventListener("click", exportChuckFile);
 launchChuckFile();
 setDarkMode(darkMode);
 setVimMode(vimMode);
+setViewChuckNow(chuckNowMode);
 
 // Detect editor changes and save to cache
 chuckEditor.on("change", function ()

@@ -14,9 +14,14 @@ var outputConsole = document.getElementById("console");
 var fileUploadButton = document.getElementById("fileUploadButton");
 var fileUploader = document.getElementById("fileUploader");
 
-// For preloading files 
+// For preloading files
 var serverFilesToPreload = serverFilesToPreload || [];
 var preloadedFilesReady = preloadFilenames(serverFilesToPreload);
+
+// VM audio params
+var sampleRate = 44100; // actual sample rate will be set during init
+var chuckNowCached = 0; // local copy of chuck current time
+var displayDigits = 0; // how many digits e.g., 5 digits in 44100
 
 // use named functions instead of anonymous ones
 // so they can be replaced later if desired
@@ -38,7 +43,6 @@ var chuckCompileButton = function ()
                 theChuck.runCode(window.localStorage.getItem('chuckCache')).then(
                     function (shredID)
                     {
-                        
                         addShredRow(shredID);
                     },
                     function (failure) { }
@@ -246,12 +250,13 @@ function updateFileExplorer()
 
 startButton.addEventListener("click", async function ()
 {
+    printToOutputConsole("Starting WebChucK...");
     startButton.disabled = true;
     await preloadedFilesReady;
     // start chuck
     await startChuck();
     // start visualizer
-    await startVisualizer();
+    await startVisualizer(); 
 });
 
 // Button initial states
@@ -268,6 +273,82 @@ removeButton.addEventListener("click", chuckRemoveButton);
 micButton.addEventListener("click", chuckMicButton);
 fileUploadButton.addEventListener("click", fileUploadButtonClick);
 
+var displayFormatTime = function (i)
+{
+   // add zero in front of numbers < 10
+   if( i < 10 )
+   {
+       i = "0" + i;
+   }
+   return i;
+}
+
+// sample edition
+var displayFormatTime2 = function (i)
+{
+   var digits = Math.log(i) * Math.LOG10E + 1 | 0;
+   if( digits == 0 ) digits = 1; // for i == 0
+   var diff = displayDigits - digits;
+
+   // formatted string
+   var s = "";
+   // add zero in front of numbers < 10
+   while( diff > 0 )
+   {
+       s += "0";
+       diff--;
+   }
+   // add value
+   s += i;
+
+   // return
+   return s;
+}
+
+// cache sample rate
+function cacheSampleRate( srate )
+{
+    // cached
+    sampleRate = srate;
+    // do some digit compute for display
+    displayDigits = Math.log(srate) * Math.LOG10E + 1 | 0;
+}
+
+
+// Periodic function to get chuck time | 1.5.0.8
+function chuckGetNow()
+{
+    // get the chuck current time
+    theChuck.now()
+    .then( (samples) =>
+    {
+        // get value
+        chuckNowCached = samples;
+        // samples
+        var samplesDisplay = samples % sampleRate;
+        // seconds
+        var secondsTotal = samples / sampleRate;
+        var secondsDisplay = Math.floor(secondsTotal % 60);
+        // minutes
+        var minutesTotal = secondsTotal / 60;
+        var minutesDisplay = Math.floor(minutesTotal % 60);
+        // hours
+        var hoursTotal = minutesTotal / 60;
+        var hoursDisplay = Math.floor(hoursTotal);
+
+        // the display value
+        var str = displayFormatTime(hoursDisplay) + ":"
+             + displayFormatTime(minutesDisplay) + ":"
+             + displayFormatTime(secondsDisplay) + "."
+             + displayFormatTime2(samplesDisplay);
+
+        // get the HTML element
+        const e = document.getElementById('chuck-now-time');
+        // replace
+        e.innerText = str;
+    } );
+}
+
 // Once WebChucK is loaded, enable buttons
 theChuckReady.then(function ()
 {
@@ -277,7 +358,26 @@ theChuckReady.then(function ()
     micButton.disabled = false;
     // Load preUploadFiles into ChucK
     processPreUploadFiles();
-    outputConsole.value += "WebChucK is ready!\n";
+
+    // set interval timer to read chuck time
+    setInterval( chuckGetNow, 50 );
+
+    // print audio info
+    theChuck.getParamInt("SAMPLE_RATE")
+    .then( (value) => { cacheSampleRate(value); printToOutputConsole("sample rate: " + value); } );
+    //theChuck.getParamInt("INPUT_CHANNELS")
+    //.then( (value) => { outputConsole.value += "inputs: " + value + " "; } );
+    //theChuck.getParamInt("OUTPUT_CHANNELS")
+    //.then( (value) => { outputConsole.value += "outputs: " + value + "\n"; } );
+    //theChuck.getParamInt("IS_REALTIME_AUDIO_HINT")
+    //.then( (value) => { outputConsole.value += "real-time audio: " + (value ? "ON" : "OFF") + "\n"; } );
+    // print version and ready message
+    theChuck.getParamString("VERSION")
+    .then( (value) => { printToOutputConsole("system version: " + value); } )
+    .finally( () => { printToOutputConsole("WebChucK is ready!"); });
+
+    // console width
+    theChuck.setParamInt("TTY_WIDTH_HINT", consoleWidth());
 });
 
 // Override default print function, print to output console
@@ -320,32 +420,29 @@ function addShredRow(theShred)
         {
             return Math.floor(Date.now() / 1000);
         };
-        var formatTime = function (i)
-        {
-            // add zero in front of numbers < 10
-            if (i < 10)
-            {
-                i = "0" + i;
-            }
-            return i;
-        };
 
-        var startTime = getTime();
+        // get chuck current time | 1.5.0.8
+        var startTime = chuckNowCached; // was: = getTime();
         var removed = false;
+
         function updateTime()
         {
-            var now = getTime();
-            var elapsed = now - startTime;
+            // get chuck current time
+            var now = chuckNowCached; // was: = getTime();
+            // convert to seconds
+            var elapsed = (now - startTime) / sampleRate;
+            // compute minutes and seconds
             var m = Math.floor(elapsed / 60);
             var s = Math.floor(elapsed % 60);
-
             // piggyback off time keeper to remove row
             // if it stops running
             if (!(myShred in shredsToRows))
             {
                 removed = true;
             }
-            theChuck.isShredActive(myShred).then(function (result)
+            // check if shred active, if not remove from display
+            theChuck.isShredActive(myShred)
+            .then( function(result)
             {
                 if (!result && !removed)
                 {
@@ -358,10 +455,12 @@ function addShredRow(theShred)
             // only keep updating time if row still exists
             if (!removed && document.contains(cell))
             {
-                cell.innerHTML = formatTime(m) + ":" + formatTime(s);
-                setTimeout(updateTime, 1000);
+                cell.innerHTML = displayFormatTime(m) + ":"
+                               + displayFormatTime(s);
+                setTimeout(updateTime, 300);
             }
         }
+
         updateTime();
     })(cell2, theShred);
 
