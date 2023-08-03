@@ -250,13 +250,13 @@ function updateFileExplorer()
 
 startButton.addEventListener("click", async function ()
 {
-    outputConsole.value += "starting WebChucK...\n";
+    printToOutputConsole("Starting WebChucK...");
     startButton.disabled = true;
     await preloadedFilesReady;
     // start chuck
     await startChuck();
     // start visualizer
-    await startVisualizer();
+    await startVisualizer(); 
 });
 
 // Button initial states
@@ -337,16 +337,15 @@ function chuckGetNow()
         var hoursDisplay = Math.floor(hoursTotal);
 
         // the display value
-        var str = "<font color=\"5555ff\"><b>now</b></font>: ";
-        str += displayFormatTime(hoursDisplay) + ":"
+        var str = displayFormatTime(hoursDisplay) + ":"
              + displayFormatTime(minutesDisplay) + ":"
              + displayFormatTime(secondsDisplay) + "."
              + displayFormatTime2(samplesDisplay);
 
         // get the HTML element
-        const e = document.getElementById('chuck-now');
+        const e = document.getElementById('chuck-now-time');
         // replace
-        e.innerHTML = str;
+        e.innerText = str;
     } );
 }
 
@@ -365,17 +364,20 @@ theChuckReady.then(function ()
 
     // print audio info
     theChuck.getParamInt("SAMPLE_RATE")
-    .then( (value) => { cacheSampleRate(value); outputConsole.value += "sample rate: " + value + "\n"; } );
-    theChuck.getParamInt("INPUT_CHANNELS")
-    .then( (value) => { outputConsole.value += "inputs: " + value + " "; } );
-    theChuck.getParamInt("OUTPUT_CHANNELS")
-    .then( (value) => { outputConsole.value += "outputs: " + value + "\n"; } );
-    theChuck.getParamInt("IS_REALTIME_AUDIO_HINT")
-    .then( (value) => { outputConsole.value += "real-time audio: " + (value ? "ON" : "OFF") + "\n"; } );
+    .then( (value) => { cacheSampleRate(value); printToOutputConsole("sample rate: " + value); } );
+    //theChuck.getParamInt("INPUT_CHANNELS")
+    //.then( (value) => { outputConsole.value += "inputs: " + value + " "; } );
+    //theChuck.getParamInt("OUTPUT_CHANNELS")
+    //.then( (value) => { outputConsole.value += "outputs: " + value + "\n"; } );
+    //theChuck.getParamInt("IS_REALTIME_AUDIO_HINT")
+    //.then( (value) => { outputConsole.value += "real-time audio: " + (value ? "ON" : "OFF") + "\n"; } );
     // print version and ready message
     theChuck.getParamString("VERSION")
-    .then( (value) => { outputConsole.value += "system version: " + value + "\n"; } )
-    .finally( () => { outputConsole.value += "WebChucK is ready!\n"; });
+    .then( (value) => { printToOutputConsole("system version: " + value); } )
+    .finally( () => { printToOutputConsole("WebChucK is ready!"); });
+
+    // console width
+    theChuck.setParamInt("TTY_WIDTH_HINT", consoleWidth());
 });
 
 // Override default print function, print to output console
