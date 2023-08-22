@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "monaco-editor": "^0.37.1",
-        "monaco-vim": "github:terryzfeng/monaco-vim#dist",
-        "webchuck": "github:ccrma/webchuck"
+        "monaco-vim": "^0.4.0",
+        "webchuck": "^1.2.3"
     }
 }

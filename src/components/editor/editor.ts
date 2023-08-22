@@ -19,7 +19,7 @@ export function createEditor(editorDiv: HTMLDivElement) {
         },
 
         model: editorConfig,
-        theme: "miniAudicleLight"
+        theme: "miniAudicleLight",
     });
 
     // Initialize Vim mode

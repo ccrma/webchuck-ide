@@ -1,42 +1,11 @@
 import "../styles/style.css";
-import { WebchuckHost } from "./components/webchuck-host";
 import { createEditor, toggleVimMode } from "./components/editor/editor";
+import { setupNavbar } from "./components/navbar";
+import { setupChuckBar } from "./components/chuckBar";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <h1>WebChucK IDE</h1>
-    <div class="card">
-      <button id="webchuck" type="button" class="text-7xl">Start WebChucK</button>
-      <br>
-      <br>
-      <button id="play" type="button">Play</button>
-      <br>
-      <br>
-      <button id="remove" type="button">Remove</button>
-    </div>
-  </div>
-`;
 
-document
-    .querySelector<HTMLButtonElement>("#webchuck")!
-    .addEventListener("click", async () => {
-        WebchuckHost.startChuck(
-            document.querySelector<HTMLButtonElement>("#webchuck")!
-        );
-    });
-
-document
-    .querySelector<HTMLButtonElement>("#play")!
-    .addEventListener("click", async () => {
-        //WebchuckHost.runCode("SinOsc foo => dac; 1000::ms => now;");
-        WebchuckHost.runEditorCode();
-    });
-
-document
-    .querySelector<HTMLButtonElement>("#remove")!
-    .addEventListener("click", async () => {
-        WebchuckHost.removeLastCode();
-    });
+setupNavbar(document.querySelector<HTMLDivElement>("#navbar")!);
+setupChuckBar(document.querySelector<HTMLDivElement>("#chuck-bar")!);
 
 createEditor(document.querySelector<HTMLDivElement>("#editor")!);
 document
