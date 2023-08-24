@@ -1,3 +1,12 @@
 {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescript]": {
+        "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    }
 }

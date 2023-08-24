@@ -1,15 +1,24 @@
-import "../styles/style.css";
 import { createEditor, toggleVimMode } from "./components/editor/editor";
 import { setupNavbar } from "./components/navbar";
 import { setupChuckBar } from "./components/chuckBar";
 
+class Main {
+    constructor() {
+        setupNavbar();
+        setupChuckBar(document.querySelector<HTMLDivElement>("#chuck-bar")!);
+        createEditor(document.querySelector<HTMLDivElement>("#editor")!);
 
-setupNavbar(document.querySelector<HTMLDivElement>("#navbar")!);
-setupChuckBar(document.querySelector<HTMLDivElement>("#chuck-bar")!);
+    }
 
-createEditor(document.querySelector<HTMLDivElement>("#editor")!);
-document
-    .querySelector<HTMLButtonElement>("#vim-toggle")!
-    .addEventListener("click", () => {
-        toggleVimMode();
-    });
+    init() {
+        // local logic
+        document
+            .querySelector<HTMLButtonElement>("#vim-toggle")!
+            .addEventListener("click", () => {
+                toggleVimMode();
+            });
+    }
+}
+
+const main = new Main();
+main.init();

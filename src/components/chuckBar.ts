@@ -14,8 +14,8 @@ let removeButton: HTMLButtonElement;
 export function setupChuckBar(element: HTMLDivElement) {
     // HTML Setup
     element.innerHTML = `
-      <div class="h-14 w-full flex justify-start items-center p-2">
-        <button id="webchuck" type="button" class="bg-orange text-white mr-2 disabled:opacity-50">Start WebChucK</button>
+      <div class="w-full flex justify-start items-center p-2">
+        <button id="webchuck" type="button" class="bg-orange text-white mr-2 px-4 py-2 rounded hover:shadow-xl transition-all disabled:opacity-50">Start WebChucK</button>
         <!-- <button id="mic"      type="button" class="bg-white mr-2 disabled:opacity-50" disabled>Mic</button> -->
         <button id="play"     type="button" class="p-0 mr-2 disabled:opacity-50 focus:outline-none" disabled>
             <img src="images/icons/play.svg" alt="Play" class="h-12" draggable="false">

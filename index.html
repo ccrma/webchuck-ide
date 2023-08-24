@@ -26,28 +26,63 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="./favicon_io/site.webmanifest">
-    <style>
-    </style>
+    <link rel="stylesheet" href="./src/index.css" />
+
   </head>
 
-  <body>
+  <body class="h-full w-full">
+
 
     <!-- WEBCHUCK IDE -->
-    <div id="webchuck-ide" class="w-full h-screen bg-sky-blue dark:bg-dark">
+    <div id="webchuck-ide" class="grid w-full h-screen bg-sky-blue dark:bg-dark">
 
       <!-- NAVIGATION BAR -->
-      <nav id="navbar" >
+      <nav id="navbar" class="sm:flex sm:justify-between"> 
+      <div class="border-gray-200 dark:bg-gray-900 dark:border-gray-700
+        flex h-full items-center justify-between md:px-2 px-4">
+        <!-- Left -->
+        <div class="flex justify-left items-center">
+          <!-- Logo -->
+          <a href="#" class="">
+            <img src="images/icons/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+          </a>
+        </div>
+
+
+        <!-- Right -->
+        <!-- Mobile Nav Button-->
+        <div class="sm:hidden">
+          <button id="mobileMenuButton" type="button" class="block text-sky-blue-200 hover:white focus:text-white focus:outline-none">
+            <svg class="md:h-5 md:w-5 h-6 w-6 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+          </button>
+        </div>
+        </div>
+        <div id="mobileMenu" class="bg-sky-blue-300 sm:bg-sky-blue w-full px-2 py-2 absolute z-10 sm:static sm:pl-0 sm:flex sm:items-center">
+
+
+          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">File</a>
+          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">Edit</a>
+          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">View</a>
+          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">Help</a>
+        </div>
       </nav>
 
       <!-- CHUCK BAR -->
       <div id="chuck-bar" class="bg-orange-peach">
       </div>
 
-      <div id="app"></div>
-      <button id="vim-toggle">toggle-vim</button>
-      <div>
-        <div id="editor" style="width: 100%; height: 600px; border: 1px solid grey"></div>
-        <div id=vim-status></div>
+      <div id="app">
+        <br>
+        <button id="vim-toggle"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">toggle-vim</button>
+        <div>
+          <div id="editor" style="width: 350px; height: 300px; border: 1px solid grey"></div>
+          <div id=vim-status></div>
+        </div>
       </div>
 
     </div>

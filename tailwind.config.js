@@ -4,7 +4,11 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
+  darkMode: true,
   theme: {
+    transitionDuration: {
+      DEFAULT: '300ms'
+    },
     extend: {
       colors: {
         "orange": {
@@ -15,8 +19,13 @@ module.exports = {
         },
         "sky-blue": {
           DEFAULT: "#DDEEFF",
-          100: "#C3E2FF",
-          200: "#68B7FF",
+          100: "#003366",
+          200: "#99D7FF",
+          300: "#C9E0F7",
+          400: "#9999FF",
+          700: "#BBDBFA",
+          800: "#DDEEFF",
+          900: "#E7F3FF"
         },
         light: "#EEEEEE",
         dark: "#333333"

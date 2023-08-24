@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* WEBCHUCK IDE LAYOUT */
+#navbar
+{
+    grid-area: nav;
+}
+
+#chuck-bar
+{
+    grid-area: chuck-bar;
+}
+
+#app
+{
+    grid-area: app;
+}
+
+#webchuck-ide
+{
+    grid-template-rows: minmax(0, .5fr) minmax(0, .7fr) minmax(0, 8.8fr);
+    grid-template-columns: 100%;
+    grid-template-areas:
+        "nav"
+        "chuck-bar"
+        "app";
+}
+
+/* media query 768px */
+@media (max-width: 768px)
+{
+    #webchuck-ide
+    {
+        grid-template-rows: minmax(0, .7fr) minmax(0, .7fr) minmax(0, 8.6fr);
+        grid-template-columns: 100%;
+        grid-template-areas:
+            "nav"
+            "chuck-bar"
+            "app";
+    }
+}
+
+/* NAVBAR */
+.dropdown
+{
+    text-decoration-color: green;
+}
