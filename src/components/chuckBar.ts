@@ -54,9 +54,7 @@ export function setupChuckBar(element: HTMLDivElement) {
 //
 async function startWebChuck() {
     // Start WebChuck Host
-    await WebchuckHost.startChuck(
-        webchuckButton
-    );
+    await WebchuckHost.startChuck(webchuckButton);
 
     // Enable Play and Remove buttons
     document.querySelector<HTMLButtonElement>("#play")!.disabled = false;

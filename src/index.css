@@ -3,24 +3,20 @@
 @tailwind utilities;
 
 /* WEBCHUCK IDE LAYOUT */
-#navbar
-{
+#navbar {
     grid-area: nav;
 }
 
-#chuck-bar
-{
+#chuck-bar {
     grid-area: chuck-bar;
 }
 
-#app
-{
+#app {
     grid-area: app;
 }
 
-#webchuck-ide
-{
-    grid-template-rows: minmax(0, .5fr) minmax(0, .7fr) minmax(0, 8.8fr);
+#webchuck-ide {
+    grid-template-rows: minmax(0, 0.5fr) minmax(0, 0.7fr) minmax(0, 8.8fr);
     grid-template-columns: 100%;
     grid-template-areas:
         "nav"
@@ -28,22 +24,12 @@
         "app";
 }
 
-/* media query 768px */
-@media (max-width: 768px)
-{
-    #webchuck-ide
-    {
-        grid-template-rows: minmax(0, .7fr) minmax(0, .7fr) minmax(0, 8.6fr);
-        grid-template-columns: 100%;
-        grid-template-areas:
-            "nav"
-            "chuck-bar"
-            "app";
-    }
+/* NAVBAR */
+.dropdownButton {
+    @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 transition focus:outline-none
 }
 
-/* NAVBAR */
-.dropdown
-{
-    text-decoration-color: green;
+.dropdown {
+    @apply absolute z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none
+    origin-top-right
 }

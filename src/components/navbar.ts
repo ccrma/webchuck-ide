@@ -1,35 +1,64 @@
-let mobileMenu: HTMLDivElement | null;
-let mobileMenuButton: HTMLButtonElement | null;
+export class NavBar {
+    constructor() {
+        this.buildDropdowns();
+    }
 
-export function setupNavbar() {
-    mobileMenu = document.querySelector<HTMLDivElement>("#mobileMenu");
-    mobileMenuButton = document.querySelector<HTMLButtonElement>("#mobileMenuButton");
+    buildDropdowns() {
+        // File
+        let fileButton =
+            document.querySelector<HTMLButtonElement>("#fileButton")!;
+        let fileDropdown =
+            document.querySelector<HTMLDivElement>("#fileDropdown")!;
+        let fileBG = document.querySelector<HTMLButtonElement>("#fileBG")!;
+        createDropdown(fileButton, fileDropdown, fileBG);
 
-    // Dropdowns
+        // Edit
+        let editButton =
+            document.querySelector<HTMLButtonElement>("#editButton")!;
+        let editDropdown =
+            document.querySelector<HTMLDivElement>("#editDropdown")!;
+        let editBG = document.querySelector<HTMLButtonElement>("#editBG")!;
+        createDropdown(editButton, editDropdown, editBG);
 
-    // add event listeners
-    mobileMenuButton?.addEventListener("click", () => {
-        if (mobileMenu?.classList.contains("hidden")) {
-            mobileMenu.classList.remove("hidden");
-        } else {
-            mobileMenu?.classList.add("hidden");
-        }
-    });
+        // View
+        let viewButton =
+            document.querySelector<HTMLButtonElement>("#viewButton")!;
+        let viewDropdown =
+            document.querySelector<HTMLDivElement>("#viewDropdown")!;
+        let viewBG = document.querySelector<HTMLButtonElement>("#viewBG")!;
+        createDropdown(viewButton, viewDropdown, viewBG);
+
+        // Examples
+        let examplesButton =
+            document.querySelector<HTMLButtonElement>("#examplesButton")!;
+        let examplesDropdown =
+            document.querySelector<HTMLDivElement>("#examplesDropdown")!;
+        let examplesBG =
+            document.querySelector<HTMLButtonElement>("#examplesBG")!;
+        createDropdown(examplesButton, examplesDropdown, examplesBG);
+
+        // Help
+        let helpButton =
+            document.querySelector<HTMLButtonElement>("#helpButton")!;
+        let helpDropdown =
+            document.querySelector<HTMLDivElement>("#helpDropdown")!;
+        let helpBG = document.querySelector<HTMLButtonElement>("#helpBG")!;
+        createDropdown(helpButton, helpDropdown, helpBG);
+    }
 }
 
-/*
-          <div class="relative">
-            <button href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-0 sm:mr-1">File</button>
-            <div class="absolute left-0 mt-2 py-1 w-48 bg-white rounded-lg shadow-sm">
-              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-sky-blue-200">New</a>
-              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-sky-blue-200">Upload</a>
-            </div>
-          </div>
-
-          attach state for open/close
-          be able to close dropdown by clicking outside
-*/
-const dropdownTemplate = document.createElement('dropdownTemplate');
-dropdownTemplate.innerHTML = `
- 
-`
+// HELPER FUNCTIONS
+function createDropdown(
+    button: HTMLButtonElement,
+    dropdown: HTMLDivElement,
+    bg: HTMLButtonElement
+) {
+    button?.addEventListener("click", () => {
+        dropdown?.classList.toggle("hidden");
+        bg?.classList.toggle("hidden");
+    });
+    bg?.addEventListener("click", () => {
+        dropdown?.classList.toggle("hidden");
+        bg?.classList.toggle("hidden");
+    });
+}
