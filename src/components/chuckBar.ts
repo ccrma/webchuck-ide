@@ -1,62 +1,72 @@
 //--------------------------------------------------------------------
-// Create the WebChucK ChucK Bar
-// Start, mic, play, replace, remove
-//--------------------------------------------------------------------
-import { WebchuckHost } from "./webchuck-host";
-
-// Globals
-let webchuckButton: HTMLButtonElement;
-//let micButton: HTMLButtonElement;
-let playButton: HTMLButtonElement;
-//let replaceButton: HTMLButtonElement;
-let removeButton: HTMLButtonElement;
-
-export function setupChuckBar(element: HTMLDivElement) {
-    // HTML Setup
-    element.innerHTML = `
-      <div class="w-full flex justify-start items-center p-2">
-        <button id="webchuck" type="button" class="bg-orange text-white mr-2 px-4 py-2 rounded hover:shadow-xl transition-all disabled:opacity-50">Start WebChucK</button>
-        <!-- <button id="mic"      type="button" class="bg-white mr-2 disabled:opacity-50" disabled>Mic</button> -->
-        <button id="play"     type="button" class="p-0 mr-2 disabled:opacity-50 focus:outline-none" disabled>
-            <img src="images/icons/play.svg" alt="Play" class="h-12" draggable="false">
-        </button>
-        <!-- <button id="replace"  type="button" class="bg-white mr-2 disabled:opacity-50" disabled>Play</button> -->
-        <button id="remove"   type="button" class="p-0 mr-2 disabled:opacity-50 focus:outline-none" disabled>
-            <img src="images/icons/remove.svg" alt="Remove" class="h-12" draggable="false">
-        </button>
-    </div>
-  `;
-
-    // Button setup
-    webchuckButton = document.querySelector<HTMLButtonElement>("#webchuck")!;
-    //micButton = document.querySelector<HTMLButtonElement>("#mic")!;
-    playButton = document.querySelector<HTMLButtonElement>("#play")!;
-    //replaceButton = document.querySelector<HTMLButtonElement>("#replace")!;
-    removeButton = document.querySelector<HTMLButtonElement>("#remove")!;
-
-    webchuckButton.addEventListener("click", async () => {
-        startWebChuck();
-    });
-
-    //micButton!.addEventListener("click", async () => {});
-
-    playButton.addEventListener("click", async () => {
-        WebchuckHost.runEditorCode();
-    });
-
-    //replaceButton.addEventListener("click", async () => {});
-
-    removeButton.addEventListener("click", async () => {
-        WebchuckHost.removeLastCode();
-    });
-}
-
+// title: ChuckBar
+// desc: ChuckBar is the interface for buttons for communicating
+//       with the ChucK VM. Also contains some extra logic for
+//       WebChucK IDE
 //
-async function startWebChuck() {
-    // Start WebChuck Host
-    await WebchuckHost.startChuck(webchuckButton);
+//       Left:
+//       Start VM, Mic On, Compile and Play, Replace Shred,
+//       Remove Shred
+//
+//       Right:
+//       ChucK Time
+//       Share Button
+//
+// author: terry feng
+//--------------------------------------------------------------------
+import { theChuck, startChuck } from "../host";
+import { getEditorCode } from "./editor/editor";
 
-    // Enable Play and Remove buttons
-    document.querySelector<HTMLButtonElement>("#play")!.disabled = false;
-    document.querySelector<HTMLButtonElement>("#remove")!.disabled = false;
+export class ChuckBar {
+    public webchuckButton: HTMLButtonElement;
+    public micButton: HTMLButtonElement;
+    public playButton: HTMLButtonElement;
+    public replaceButton: HTMLButtonElement;
+    public removeButton: HTMLButtonElement;
+
+    constructor() {
+        // Connect all buttons
+        this.webchuckButton =
+            document.querySelector<HTMLButtonElement>("#webchuckButton")!;
+        this.micButton = document.querySelector<HTMLButtonElement>("#micButton")!;
+        this.playButton = document.querySelector<HTMLButtonElement>("#playButton")!;
+        this.replaceButton =
+            document.querySelector<HTMLButtonElement>("#replaceButton")!;
+        this.removeButton =
+            document.querySelector<HTMLButtonElement>("#removeButton")!;
+
+
+        // Add event listeners
+        this.webchuckButton.addEventListener("click", async () => {
+            await this.startWebchuck();
+        });
+        this.micButton.addEventListener("click", async () => {});
+        this.playButton.addEventListener("click", async () => {
+            theChuck?.runCode(getEditorCode());
+            // TODO: Add to shred table...
+        });
+        this.replaceButton.addEventListener("click", async () => {
+            theChuck?.removeLastCode();
+            theChuck?.runCode(getEditorCode());
+            // TODO: Replace shred in shred table...
+        });
+        this.removeButton.addEventListener("click", async () => {
+            theChuck?.removeLastCode();
+            // TODO: Remove shred from shred table...
+        });
+    }
+
+    async startWebchuck() {
+        // Start WebChuck Host
+        this.webchuckButton.innerText = "Loading...";
+        await startChuck();
+        this.webchuckButton.innerText = "WebChucK running...";
+        this.webchuckButton.disabled = true;
+
+        // Enable the ChuckBar buttons
+        this.micButton.disabled = false;
+        this.playButton.disabled = false;
+        this.replaceButton.disabled = false;
+        this.removeButton.disabled = false;
+    }
 }

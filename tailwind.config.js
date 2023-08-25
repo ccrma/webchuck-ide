@@ -6,10 +6,13 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
-    transitionDuration: {
-      DEFAULT: '150ms'
-    },
     extend: {
+      invert: {
+        20: '.2',
+      },
+      transitionDuration: {
+        DEFAULT: '150ms'
+      },
       colors: {
         "orange": {
           DEFAULT: "#FF8833",

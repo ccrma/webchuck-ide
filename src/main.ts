@@ -1,11 +1,11 @@
 import { createEditor, toggleVimMode } from "./components/editor/editor";
 import { NavBar } from "./components/navbar";
-import { setupChuckBar } from "./components/chuckBar";
+import { ChuckBar } from "./components/chuckBar";
 
 class Main {
     constructor() {
         new NavBar();
-        setupChuckBar(document.querySelector<HTMLDivElement>("#chuck-bar")!);
+        new ChuckBar();
         createEditor(document.querySelector<HTMLDivElement>("#editor")!);
     }
 
