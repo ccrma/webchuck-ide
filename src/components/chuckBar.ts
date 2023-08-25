@@ -28,13 +28,14 @@ export class ChuckBar {
         // Connect all buttons
         this.webchuckButton =
             document.querySelector<HTMLButtonElement>("#webchuckButton")!;
-        this.micButton = document.querySelector<HTMLButtonElement>("#micButton")!;
-        this.playButton = document.querySelector<HTMLButtonElement>("#playButton")!;
+        this.micButton =
+            document.querySelector<HTMLButtonElement>("#micButton")!;
+        this.playButton =
+            document.querySelector<HTMLButtonElement>("#playButton")!;
         this.replaceButton =
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
         this.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
-
 
         // Add event listeners
         this.webchuckButton.addEventListener("click", async () => {

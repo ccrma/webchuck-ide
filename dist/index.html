@@ -28,8 +28,8 @@
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     
 
-    <script type="module" crossorigin src="./assets/index-008da415.js"></script>
-    <link rel="stylesheet" href="./assets/index-54629f84.css">
+    <script type="module" crossorigin src="./assets/index-acb603ab.js"></script>
+    <link rel="stylesheet" href="./assets/index-ae587263.css">
   </head>
 
   <body class="h-full w-full">
@@ -38,60 +38,204 @@
     <!-- WEBCHUCK IDE -->
     <div id="webchuck-ide" class="grid w-full h-screen bg-sky-blue dark:bg-dark">
 
-      <!-- NAVIGATION BAR -->
-      <nav id="navbar" class="sm:flex sm:justify-between"> 
-      <div class="border-gray-200 dark:bg-gray-900 dark:border-gray-700
-        flex h-full items-center justify-between md:px-2 px-4">
+      <!-- NAVBAR -->
+      <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4">
+
         <!-- Left -->
         <div class="flex justify-left items-center">
-          <!-- Logo -->
+          <!-- ChucK Logo -->
           <a href="#" class="">
             <img src="images/icons/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
           </a>
-        </div>
 
+          <!-- Nav Items -->
+          <div id="menuItems" class="text-dark dark:text-gray-400 w-full px-2 py-2 flex items-center">
 
-          <!-- Right -->
-          <!-- Mobile Nav Button-->
-          <div class="sm:hidden">
-            <button id="mobileMenuButton" type="button" class="block text-sky-blue-200 hover:white focus:text-white focus:outline-none">
-              <svg class="md:h-5 md:w-5 h-6 w-6 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M1 1h15M1 7h15M1 13h15" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div id="mobileMenu" class="bg-sky-blue-300 sm:bg-sky-blue w-full px-2 py-2 absolute z-10 sm:static sm:pl-0 sm:flex sm:items-center">
-          <div class="relative hidden">
-            <button href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-0 sm:mr-1">File</button>
-            <button tabindex="-1" class="fixed inset-0 bg-red-100"></button>
-            <div class="absolute left-0 mt-2 py-1 w-48 bg-white rounded-lg shadow-sm">
-              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-sky-blue-200">New</a>
-              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-sky-blue-200">Upload</a>
+            <!-- File -->
+            <div class="relative inline-block">
+              <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                File 
+                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <button id="fileBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
+              <div id="fileDropdown" class="hidden dropdown transition-colors">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Edit -->
+            <div class="relative inline-block">
+              <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                Edit  
+                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <button id="editBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
+              <div id="editDropdown" class="hidden dropdown">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- View  -->
+            <div class="relative inline-block">
+              <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                View  
+                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <button id="viewBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
+              <div id="viewDropdown" class="hidden dropdown">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Examples -->
+            <div class="relative inline-block">
+              <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                Examples   
+                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <button id="examplesBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
+              <div id="examplesDropdown" class="hidden dropdown">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Help -->
+            <div class="relative inline-block">
+              <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                Help  
+                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <button id="helpBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
+              <div id="helpDropdown" class="hidden dropdown">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+        </div>
 
-          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">File > </a>
-          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">Edit > </a>
-          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">View > </a>
-          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">Help > </a>
-          <a href="#" class="px-2 py-2 block text-dark font-semibold rounded hover:text-sky-blue-200 transition sm:py-1 sm:mr-1">Examples > </a>
+
+        <!-- Right -->
+        <!-- More Menu Button-->
+        <div class="">
+          <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-white focus:outline-none">
+            <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
+              <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
+            </svg>
+          </button>
         </div>
       </nav>
 
+
       <!-- CHUCK BAR -->
       <div id="chuck-bar" class="bg-orange-peach">
+        <div class="w-full h-full flex justify-start items-center px-2">
+            <!-- WebChucK Button-->
+            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-48 rounded enabled:hover:shadow-xl transition-all overflow-hidden truncate disabled:opacity-50">Start WebChucK</button>
+            <!-- Chuck Buttons -->
+            <div class="flex h-full justify-start items-center">
+                <button id="micButton"     type="button" class="chuck-button" disabled>
+                    <img src="images/icons/mic.svg" alt="Microphone" class="h-11" draggable="false">
+                </button>
+                <button id="playButton"     type="button" class="chuck-button" disabled>
+                    <img src="images/icons/play.svg" alt="Play" class="h-11" draggable="false">
+                </button>
+                <button id="replaceButton"  type="button" class="chuck-button" disabled>
+                    <img src="images/icons/replace.svg" alt="Replace" class="h-11" draggable="false">
+                </button>
+                <button id="removeButton"   type="button" class="chuck-button" disabled>
+                    <img src="images/icons/remove.svg" alt="Remove" class="h-11" draggable="false">
+                </button>
+            </div>
+        </div>
       </div>
 
+
+      <!-- APP -->
       <div id="app">
-        <br>
-        <button id="vim-toggle"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">toggle-vim</button>
-        <div>
-          <div id="editor" style="width: 350px; height: 300px; border: 1px solid grey"></div>
-          <div id=vim-status></div>
+        <div class="w-full flex flex-col items-start">
+            <br>
+            <button id="vim-toggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                toggle-vim
+            </button>
+            <div>
+                <div id="editor" style="width: 300px; height: 300px; border: 1px solid grey"></div>
+                <div id=vim-status></div>
+            </div>
         </div>
       </div>
 
@@ -99,5 +243,7 @@
 
     
   </body>
+
+
 
 </html>

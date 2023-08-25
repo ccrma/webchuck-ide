@@ -201,9 +201,11 @@
 
       <!-- CHUCK BAR -->
       <div id="chuck-bar" class="bg-orange-peach">
-        <div class="w-full flex justify-start items-center p-2">
-            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 px-4 py-2 w-48 rounded enabled:hover:shadow-xl transition-all overflow-hidden disabled:opacity-50">Start WebChucK</button>
-            <div class="flex justify-start items-center">
+        <div class="w-full h-full flex justify-start items-center px-2">
+            <!-- WebChucK Button-->
+            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-48 rounded enabled:hover:shadow-xl transition-all overflow-hidden truncate disabled:opacity-50">Start WebChucK</button>
+            <!-- Chuck Buttons -->
+            <div class="flex h-full justify-start items-center">
                 <button id="micButton"     type="button" class="chuck-button" disabled>
                     <img src="images/icons/mic.svg" alt="Microphone" class="h-11" draggable="false">
                 </button>
@@ -223,12 +225,15 @@
 
       <!-- APP -->
       <div id="app">
-        <br>
-        <button id="vim-toggle"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">toggle-vim</button>
-        <div>
-          <div id="editor" style="width: 500px; height: 300px; border: 1px solid grey"></div>
-          <div id=vim-status></div>
+        <div class="w-full flex flex-col items-start">
+            <br>
+            <button id="vim-toggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                toggle-vim
+            </button>
+            <div>
+                <div id="editor" style="width: 300px; height: 300px; border: 1px solid grey"></div>
+                <div id=vim-status></div>
+            </div>
         </div>
       </div>
 

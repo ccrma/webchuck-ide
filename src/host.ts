@@ -8,7 +8,7 @@ export async function startChuck() {
 
     const ChucK = (await import("webchuck")).Chuck;
     theChuck = await ChucK.init([], audioContext);
-    theChuck.connect(audioContext.destination)
+    theChuck.connect(audioContext.destination);
 }
 
-export { theChuck, audioContext }
+export { theChuck, audioContext };
