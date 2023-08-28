@@ -6,7 +6,7 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
-import { createEditor, toggleVimMode } from "./components/editor/editor";
+import { createEditor } from "./components/editor/editor";
 import { NavBar } from "./components/navbar";
 import { ChuckBar } from "./components/chuckBar";
 
@@ -21,9 +21,6 @@ class Main {
 
     init() {
         createEditor(document.querySelector<HTMLDivElement>("#monaco")!);
-
-        // local logic
-
 
         Main.keyboardShortcuts();
     }
