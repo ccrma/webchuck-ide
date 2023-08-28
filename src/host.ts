@@ -1,7 +1,12 @@
 //--------------------------------------------------------
-// title: Host
-// desc: Host configuration for ChucK Web Audio Node and 
-//       all things Web Audio API
+// title: Host (Audio)
+// desc:  IDE configuration for WebChucK Web Audio Node and 
+//        all things Web Audio API
+// 
+// author: terry feng
+// date:   August 2023
+//--------------------------------------------------------
+
 import { Chuck } from "webchuck";
 
 let theChuck: Chuck;

@@ -43,18 +43,30 @@ export class ChuckBar {
         });
         this.micButton.addEventListener("click", async () => {});
         this.playButton.addEventListener("click", async () => {
-            theChuck?.runCode(getEditorCode());
+            ChuckBar.runEditorCode();
             // TODO: Add to shred table...
         });
         this.replaceButton.addEventListener("click", async () => {
-            theChuck?.removeLastCode();
-            theChuck?.runCode(getEditorCode());
+            ChuckBar.replaceCode();
             // TODO: Replace shred in shred table...
         });
         this.removeButton.addEventListener("click", async () => {
-            theChuck?.removeLastCode();
+            ChuckBar.removeCode();
             // TODO: Remove shred from shred table...
         });
+    }
+
+    static runEditorCode() {
+        theChuck?.runCode(getEditorCode());
+    }
+
+    static replaceCode() {
+        theChuck?.removeLastCode();
+        ChuckBar.runEditorCode();
+    }
+
+    static removeCode() {
+        theChuck?.removeLastCode();
     }
 
     async startWebchuck() {

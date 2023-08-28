@@ -11,19 +11,42 @@ import { NavBar } from "./components/navbar";
 import { ChuckBar } from "./components/chuckBar";
 
 class Main {
+    public navBar: NavBar;
+    public chuckBar: ChuckBar;
+
     constructor() {
-        new NavBar();
-        new ChuckBar();
-        createEditor(document.querySelector<HTMLDivElement>("#editor")!);
+        this.navBar = new NavBar();
+        this.chuckBar = new ChuckBar();
     }
 
     init() {
+        createEditor(document.querySelector<HTMLDivElement>("#editor")!);
+
         // local logic
         document
             .querySelector<HTMLButtonElement>("#vim-toggle")!
             .addEventListener("click", () => {
                 toggleVimMode();
             });
+
+        Main.keyboardShortcuts();
+    }
+
+    static keyboardShortcuts() {
+        // global keyboard shortcuts
+        document.addEventListener("keydown", (e) => {
+            // cmd + enter or ctrl + enter
+            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                e.preventDefault();
+                ChuckBar.runEditorCode();
+            }
+
+            // cmd + backspace or ctrl + backspace
+            if ((e.metaKey || e.ctrlKey) && e.key === "Backspace") {
+                e.preventDefault();
+                ChuckBar.removeCode();
+            }
+        });
     }
 }
 

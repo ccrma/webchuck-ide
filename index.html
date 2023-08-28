@@ -50,7 +50,7 @@
           <div id="menuItems" class="text-dark dark:text-gray-400 w-full px-2 py-2 flex items-center">
 
             <!-- File -->
-            <div class="relative inline-block">
+            <div id="fileContainer" class="relative inline-block">
               <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
                 File 
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -77,14 +77,13 @@
             </div>
 
             <!-- Edit -->
-            <div class="relative inline-block">
+            <div id="editContainer" class="relative inline-block">
               <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
                 Edit  
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="editBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
               <div id="editDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
@@ -104,14 +103,13 @@
             </div>
 
             <!-- View  -->
-            <div class="relative inline-block">
+            <div id="viewContainer" class="relative inline-block">
               <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
                 View  
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="viewBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
               <div id="viewDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
@@ -131,14 +129,13 @@
             </div>
 
             <!-- Examples -->
-            <div class="relative inline-block">
+            <div id="examplesContainer" class="relative inline-block">
               <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
                 Examples   
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="examplesBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
               <div id="examplesDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
@@ -158,34 +155,41 @@
             </div>
 
             <!-- Help -->
-            <div class="relative inline-block">
+            <div id="helpContainer" class="relative inline-block">
               <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
                 Help  
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="helpBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
-              <div id="helpDropdown" class="hidden dropdown">
+              <div id="helpDropdown" class="hidden dropdown
+              ring-1 ring-black ring-opacity-5
+              ">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Class Reference</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Documentation</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class>
+                    <a href="https://chuck.stanford.edu" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">ChucK</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">WebChucK</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">GitHub</a>
+                  </li>
+                  <li>
+                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Discord</a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-
 
         <!-- Right -->
         <!-- More Menu Button-->
@@ -203,7 +207,7 @@
       <div id="chuck-bar" class="bg-orange-peach">
         <div class="w-full h-full flex justify-start items-center px-2">
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-48 rounded enabled:hover:shadow-xl transition-all overflow-hidden truncate disabled:opacity-50">Start WebChucK</button>
+            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-48 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center">
                 <button id="micButton"     type="button" class="chuck-button" disabled>
