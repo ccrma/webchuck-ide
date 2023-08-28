@@ -20,14 +20,10 @@ class Main {
     }
 
     init() {
-        createEditor(document.querySelector<HTMLDivElement>("#editor")!);
+        createEditor(document.querySelector<HTMLDivElement>("#monaco")!);
 
         // local logic
-        document
-            .querySelector<HTMLButtonElement>("#vim-toggle")!
-            .addEventListener("click", () => {
-                toggleVimMode();
-            });
+
 
         Main.keyboardShortcuts();
     }

@@ -18,6 +18,7 @@ monaco.editor.defineTheme("miniAudicleLight", miniAudicleLight);
 let editor: monaco.editor.IStandaloneCodeEditor;
 let vimMode: boolean = localStorage.getItem("vimMode") === "true";
 let vimModule: any; // for the vim object from monaco-vim
+let vimToggle: HTMLButtonElement;
 
 export function createEditor(editorDiv: HTMLDivElement) {
     editor = monaco.editor.create(editorDiv, {
@@ -31,6 +32,12 @@ export function createEditor(editorDiv: HTMLDivElement) {
         theme: "miniAudicleLight",
     });
 
+    // Connect vim toggle button
+    vimToggle = document.querySelector<HTMLButtonElement>("#vim-toggle")!;
+    vimToggle.addEventListener("click", () => {
+        toggleVimMode();
+    });
+
     // Initialize Vim mode
     vimMode ? vimModeOn() : vimModeOff();
 }
@@ -38,12 +45,14 @@ export function createEditor(editorDiv: HTMLDivElement) {
 function vimModeOn() {
     vimModule = initVimMode(editor, document.getElementById("vim-status"));
     localStorage.setItem("vimMode", "true");
+    vimToggle.innerText = "Vim Mode: On";
     vimMode = true;
 }
 
 function vimModeOff() {
     vimModule?.dispose();
     localStorage.setItem("vimMode", "false");
+    vimToggle.innerText = "Vim Mode: Off";
     vimMode = false;
 }
 

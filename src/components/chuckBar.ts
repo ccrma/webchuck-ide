@@ -37,7 +37,8 @@ export class ChuckBar {
         this.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
 
-        // Add event listeners
+
+        // Add button event listeners
         this.webchuckButton.addEventListener("click", async () => {
             await this.startWebchuck();
         });

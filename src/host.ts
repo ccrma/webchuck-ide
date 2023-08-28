@@ -1,7 +1,10 @@
 //--------------------------------------------------------
 // title: Host (Audio)
-// desc:  IDE configuration for WebChucK Web Audio Node and 
-//        all things Web Audio API
+// desc:  Audio Host for WebChucK IDE, managing everything
+//        related to Web Audio API
+//        
+//        Creates the AudioContext and WebChucK Web Audio
+//        Node instance (Chuck)
 // 
 // author: terry feng
 // date:   August 2023

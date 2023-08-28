@@ -26,7 +26,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="./favicon_io/site.webmanifest">
-    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="stylesheet" href="./src/styles/index.css" />
 
   </head>
 
@@ -87,16 +87,9 @@
               <div id="editDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <button id="vim-toggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Vim Mode: Off
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -229,16 +222,18 @@
 
       <!-- APP -->
       <div id="app">
-        <div class="w-full flex flex-col items-start">
+
+        <div id="file-explorer"> </div>
+        <div id="editor" class="w-full flex flex-col items-start">
             <br>
-            <button id="vim-toggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                toggle-vim
-            </button>
             <div>
-                <div id="editor" style="width: 300px; height: 300px; border: 1px solid grey"></div>
+                <div id="monaco" style="width: 300px; height: 300px; border: 1px solid grey"></div>
                 <div id=vim-status></div>
             </div>
         </div>
+        <div id="inputPanel"></div>
+        <div id="vm-monitor"></div>
+        <div id="outputPanel"></div>
       </div>
 
     </div>
