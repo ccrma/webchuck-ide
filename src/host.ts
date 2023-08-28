@@ -1,3 +1,7 @@
+//--------------------------------------------------------
+// title: Host
+// desc: Host configuration for ChucK Web Audio Node and 
+//       all things Web Audio API
 import { Chuck } from "webchuck";
 
 let theChuck: Chuck;

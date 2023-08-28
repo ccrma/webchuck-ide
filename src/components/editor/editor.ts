@@ -1,3 +1,12 @@
+//------------------------------------------------------------------
+// title: Editor
+// desc:  Monaco editor and functionality for WebChucK IDE
+//        Depends on all files in the editor folder
+//
+// author: terry feng
+// date:   May 2023
+//------------------------------------------------------------------
+
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode } from "monaco-vim";

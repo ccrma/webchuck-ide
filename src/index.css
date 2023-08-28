@@ -30,8 +30,9 @@
 }
 
 .dropdown {
-    @apply absolute z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none
-    origin-top-right transition;
+    @apply absolute z-20 bg-white divide-y divide-gray-100 
+    max-h-96 overflow-y-auto rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none
+    origin-top-right transition
 }
 /*
 DROPDOWN SAMPLE CODE

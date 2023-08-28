@@ -1,19 +1,19 @@
 //--------------------------------------------------------------------
 // title: ChuckBar
-// desc: ChuckBar is the interface for buttons for communicating
-//       with the ChucK VM. Also contains some extra logic for
-//       WebChucK IDE
+// desc:  Button interface for communicating with ChucK VM. 
 //
-//       Left:
-//       Start VM, Mic On, Compile and Play, Replace Shred,
-//       Remove Shred
+//        Left:
+//        Start VM, Mic On, Compile and Play, Replace Shred,
+//        Remove Shred
 //
-//       Right:
-//       ChucK Time
-//       Share Button
+//        Right:
+//        ChucK Time
+//        Share Button
 //
 // author: terry feng
+// date:   August 2023
 //--------------------------------------------------------------------
+
 import { theChuck, startChuck } from "../host";
 import { getEditorCode } from "./editor/editor";
 

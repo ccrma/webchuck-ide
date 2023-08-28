@@ -1,3 +1,11 @@
+//-------------------------------------------------------
+// title: WebChucK IDE Navbar
+// desc:  Dropdowns and basic configuration functionality
+//
+// author: terry feng
+// date:   August 2023
+//-------------------------------------------------------
+
 export class NavBar {
     constructor() {
         this.buildDropdowns();
