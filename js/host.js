@@ -142,6 +142,23 @@ function handleFiles()
                 localStorage['chuckCacheName'] = globalFileName = file.name;
                 loadChuckFileFromString(e.target.result);
                 printToOutputConsole("Loaded chuck file: " + file.name);
+
+                // text to array buffer
+                var data = new Uint8Array(e.target.result.length);
+                for (var i = 0; i < e.target.result.length; i++)
+                {
+                    data[i] = e.target.result.charCodeAt(i);
+                }
+
+                // If chuck is already running, create file
+                if (theChuck !== undefined)
+                {
+                    theChuck.createFile("", file.name, data);
+                } else
+                {
+                    // If chuck is not running, add file to preUploadFiles
+                    preUploadFiles.add(file);
+                }
             };
             reader.readAsText(file);
         }
