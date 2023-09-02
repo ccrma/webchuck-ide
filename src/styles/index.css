@@ -1,36 +1,26 @@
+@import "animation.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* LAYOUTS */
 /* WEBCHUCK IDE LAYOUT */
-#navbar
-{
+#navbar {
     grid-area: nav;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
-#chuck-bar
-{
+#chuck-bar {
     grid-area: chuck-bar;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
-#app
-{
+#webchuck-ide {
     display: grid;
-    grid-area: app;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 5fr) minmax(0, 3fr);
-    grid-template-rows: auto 200px auto auto;
-    grid-template-areas:
-        "file-explorer editor vm-monitor"
-        "file-explorer editor vm-monitor"
-        "file-explorer editor outputPanel"
-        "file-explorer inputPanel outputPanel";
-}
-
-#webchuck-ide
-{
-    display: grid;
-    grid-template-rows: minmax(0, 0.5fr) minmax(0, 0.7fr) minmax(0, 8.8fr);
+    /* grid-template-rows: minmax(0, 0.5fr) minmax(0, 0.7fr) minmax(0, 8.8fr); */
+    grid-template-rows: 0.5fr 0.7fr minmax(0, 8.8fr);
     grid-template-columns: 100%;
     grid-template-areas:
         "nav"
@@ -38,111 +28,171 @@
         "app";
 }
 
+#app {
+    grid-area: app;
+    display: grid;
+    height: 100%;
+    grid-template-areas: "app-left splitV1 app-middle splitV2 app-right";
+    grid-template-columns: 2fr 2px 6fr 2px 4fr;
+    grid-template-rows: 1fr;
+}
+
 /* APP LAYOUT */
-#file-explorer
-{
-    grid-area: file-explorer;
-    @apply bg-red-500;
+#splitV1 {
+    grid-area: splitV1;
+}
+#splitV2 {
+    grid-area: splitV2;
+}
+#splitH1 {
+    grid-area: splitH1;
+}
+#splitH2 {
+    grid-area: splitH2;
 }
 
-#editor
-{
-    grid-area: editor;
+#app-left {
+    grid-area: app-left;
+    min-width: 1rem;
+    height: 100%;
+    width: 100%;
+}
+#app-middle {
+    grid-area: app-middle;
+    background-color: red;
+    min-width: 4rem;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        "editorPanel"
+        "splitH1"
+        "inputPanel";
+    grid-template-columns: 1fr;
+    grid-template-rows: 9.6fr 2px 0.4fr;
+}
+#app-right {
+    grid-area: app-right;
+    background-color: yellow;
+    min-width: 1rem;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        "vm-monitor"
+        "splitH2"
+        "outputPanel";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2px 1fr;
+}
+
+#fileExplorer {
+    @apply bg-red-500 h-full w-full;
+}
+
+#editorPanel {
     @apply bg-green-500;
+    grid-area: editorPanel;
 }
 
-#inputPanel
-{
-    grid-area: inputPanel;
+#inputPanel {
     @apply bg-blue-500;
+    grid-area: inputPanel;
 }
 
-#vm-monitor
-{
-    grid-area: vm-monitor;
+#vmMonitor {
     @apply bg-yellow-500;
+    grid-area: vm-monitor;
+    min-height: 80px;
 }
 
-#outputPanel
-{
-    grid-area: outputPanel;
+#outputPanel {
     @apply bg-sky-blue-200;
-}
-
-/* Animation for entering */
-@keyframes enter-transition
-{
-    from
-    {
-        transform: scale(0.95);
-        opacity: 0;
-    }
-
-    to
-    {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes leave-transition
-{
-    from
-    {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    to
-    {
-        transform: scale(0.95);
-        opacity: 0;
-    }
+    grid-area: outputPanel;
 }
 
 /* NAVBAR */
-.dropdownButton
-{
+.dropdownButton {
     @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 transition focus:outline-none;
 }
 
-.dropdown
-{
+.dropdown {
     @apply absolute z-20 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md w-48 dark:bg-gray-700 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
 /* CHUCK BAR */
-.chuck-button
-{
+.chuck-button {
     @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 enabled:hover:drop-shadow-lg transition duration-300;
 }
 
+/* EDITOR */
+#monaco-editor {
+    position: relative;
+}
+
+#monaco-editor > * {
+    max-height: 100%;
+    max-width: 100%;
+}
 
 /* COMPONENTS */
 .divider,
 .divider-vert {
-  display: block;
-  position: relative;
+    display: block;
+    position: relative;
 }
 
 .divider[data-content]::after,
 .divider-vert[data-content]::after {
-  background: #fff;
-  color: #bcc3ce;
-  content: attr(data-content);
-  display: inline-block;
-  font-size: .7rem;
-  padding: 0 .4rem;
-  transform: translateY(-.65rem);
+    background: #fff;
+    color: #bcc3ce;
+    content: attr(data-content);
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0 0.4rem;
+    transform: translateY(-0.65rem);
 }
 
 .divider {
-  border-top: .06rem solid #e1e3e5;
-  height: .05rem;
-  margin: .4rem 0;
+    border-top: 0.06rem solid #e1e3e5;
+    height: 0.05rem;
+    margin: 0.4rem 0;
 }
 
 .divider[data-content] {
-  margin: .8rem 0;
+    margin: 0.8rem 0;
+}
+
+.resizer.hSplit {
+    cursor: row-resize;
+    position: relative;
+    @apply hover:bg-orange hover:transition hover:opacity-60 hover:h-2 hover:-top-1;
+}
+.hSplit::after {
+    display: block;
+    content: "";
+    width: 100%;
+    position: absolute;
+    top: -4px;
+    height: 7px;
+    z-index: 30;
+}
+
+.resizer.vSplit {
+    cursor: col-resize;
+    position: relative;
+    @apply hover:bg-orange hover:transition hover:opacity-60 hover:w-2 hover:-left-1;
+}
+
+.vSplit::after {
+    display: block;
+    content: "";
+    height: 100%;
+    position: absolute;
+    left: -4px;
+    width: 7px;
+    z-index: 30;
+}
+
+.resizer {
+    @apply opacity-5 z-30 bg-sky-blue-900 dark:bg-gray-200;
 }

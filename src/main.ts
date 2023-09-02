@@ -9,6 +9,7 @@
 import { createEditor } from "./components/editor/editor";
 import { NavBar } from "./components/navbar";
 import { ChuckBar } from "./components/chuckBar";
+import { initAppSplitters } from "./services/appLayoutHandler";
 
 class Main {
     public navBar: NavBar;
@@ -20,7 +21,8 @@ class Main {
     }
 
     init() {
-        createEditor(document.querySelector<HTMLDivElement>("#monaco")!);
+        // createEditor(document.querySelector<HTMLDivElement>("#monacoEditor")!);
+        initAppSplitters();
 
         Main.keyboardShortcuts();
     }

@@ -87,7 +87,7 @@
               <div id="editDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="vim-toggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <button id="vimToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
                       Vim Mode: Off
                     </button>
                   </li>
@@ -198,9 +198,9 @@
 
       <!-- CHUCK BAR -->
       <div id="chuck-bar" class="bg-orange-peach">
-        <div class="w-full h-full flex justify-start items-center px-2">
+        <div class="w-full h-full flex justify-start items-center px-2 py-1">
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-48 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
+            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center">
                 <button id="micButton"     type="button" class="chuck-button" disabled>
@@ -223,17 +223,31 @@
       <!-- APP -->
       <div id="app">
 
-        <div id="file-explorer"> </div>
-        <div id="editor" class="w-full flex flex-col items-start">
-            <br>
-            <div>
-                <div id="monaco" style="width: 300px; height: 300px; border: 1px solid grey"></div>
-                <div id=vim-status></div>
-            </div>
+        <div id="app-left">
+          <div id="fileExplorer"></div>
         </div>
-        <div id="inputPanel"></div>
-        <div id="vm-monitor"></div>
-        <div id="outputPanel"></div>
+
+        <div id="splitV1" class="resizer vSplit"></div>
+
+        <div id="app-middle">
+          <div id="editorPanel">
+            <div id="editorPanelHeader" class="w-full h-6 px-2 font-bold">File</div>
+                <!-- on window resize -->
+                <div id="monacoEditor"></div>
+          </div>
+          <div id="splitH1" class="resizer hSplit"></div>
+          <div id="inputPanel">
+                  <div id=vimStatus></div>
+          </div>
+        </div>
+
+        <div id="splitV2" class="resizer vSplit"></div>
+
+        <div id="app-right">
+          <div id="vmMonitor"></div>
+          <div id="splitH2" class="resizer hSplit"></div>
+          <div id="outputPanel"></div>
+        </div>
       </div>
 
     </div>

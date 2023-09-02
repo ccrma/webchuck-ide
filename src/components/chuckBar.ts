@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------
 // title: ChuckBar
-// desc:  Button interface for communicating with ChucK VM. 
+// desc:  Button interface for communicating with ChucK VM.
 //
 //        Left:
 //        Start VM, Mic On, Compile and Play, Replace Shred,
@@ -36,7 +36,6 @@ export class ChuckBar {
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
         this.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
-
 
         // Add button event listeners
         this.webchuckButton.addEventListener("click", async () => {

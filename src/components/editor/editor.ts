@@ -27,33 +27,22 @@ export function createEditor(editorDiv: HTMLDivElement) {
         minimap: {
             enabled: false,
         },
-
         model: editorConfig,
         theme: "miniAudicleLight",
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
     });
 
     // Connect vim toggle button
-    vimToggle = document.querySelector<HTMLButtonElement>("#vim-toggle")!;
+    vimToggle = document.querySelector<HTMLButtonElement>("#vimToggle")!;
     vimToggle.addEventListener("click", () => {
         toggleVimMode();
     });
 
     // Initialize Vim mode
     vimMode ? vimModeOn() : vimModeOff();
-}
 
-function vimModeOn() {
-    vimModule = initVimMode(editor, document.getElementById("vim-status"));
-    localStorage.setItem("vimMode", "true");
-    vimToggle.innerText = "Vim Mode: On";
-    vimMode = true;
-}
-
-function vimModeOff() {
-    vimModule?.dispose();
-    localStorage.setItem("vimMode", "false");
-    vimToggle.innerText = "Vim Mode: Off";
-    vimMode = false;
+    return editor;
 }
 
 export function toggleVimMode() {
@@ -67,4 +56,22 @@ export function toggleVimMode() {
 export function getEditorCode(): string {
     // get the contents of the editor
     return editor?.getValue();
+}
+
+//---------------------------------------
+// Helper Functions
+//---------------------------------------
+
+function vimModeOn() {
+    vimModule = initVimMode(editor, document.getElementById("vimStatus"));
+    localStorage.setItem("vimMode", "true");
+    vimToggle.innerText = "Vim Mode: On";
+    vimMode = true;
+}
+
+function vimModeOff() {
+    vimModule?.dispose();
+    localStorage.setItem("vimMode", "false");
+    vimToggle.innerText = "Vim Mode: Off";
+    vimMode = false;
 }
