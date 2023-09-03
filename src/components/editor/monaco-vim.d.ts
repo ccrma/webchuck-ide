@@ -33,12 +33,6 @@ declare module "monaco-vim" {
             editor: monaco.editor.IStandaloneCodeEditor,
             status?: HTMLElement | null
         ): void;
-
-        /**
-         * Dispose Vim keybindings and commands from a Monaco editor instance.
-         * @param editor The editor instance to dispose Vim from.
-         */
-        dispose(editor: monaco.editor.IStandaloneCodeEditor): void;
     }
 
     const vim: IVim;

@@ -10,7 +10,7 @@
  *  Limitations : Works only with CSS Grid areas
  *
  *****************************************************************************************************/
-import Resizer from "../components/Resizer";
+import Resizer from "../components/resizer";
 
 const CLASS_V_SPLIT: string = "vSplit";
 const CLASS_H_SPLIT: string = "hSplit";

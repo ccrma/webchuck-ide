@@ -6,24 +6,28 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
-import { createEditor } from "./components/editor/editor";
-import { NavBar } from "./components/navbar";
-import { ChuckBar } from "./components/chuckBar";
+import NavBar from "./components/navbar";
+import ChuckBar from "./components/chuckBar";
+import Editor from "./components/editor/editor";
 import { initAppSplitters } from "./services/appLayoutHandler";
 
 class Main {
     public navBar: NavBar;
     public chuckBar: ChuckBar;
+    public Editor: Editor;
 
     constructor() {
         this.navBar = new NavBar();
         this.chuckBar = new ChuckBar();
+
+        // Create Monaco Editor
+        this.Editor = new Editor(
+            document.querySelector<HTMLDivElement>("#monacoEditor")!
+        );
     }
 
     init() {
-        // createEditor(document.querySelector<HTMLDivElement>("#monacoEditor")!);
         initAppSplitters();
-
         Main.keyboardShortcuts();
     }
 
@@ -36,6 +40,12 @@ class Main {
                 ChuckBar.runEditorCode();
             }
 
+            // cmd + \ or ctrl + \
+            if ((e.metaKey || e.ctrlKey) && e.key === "\\") {
+                e.preventDefault();
+                ChuckBar.replaceCode();
+            }
+
             // cmd + backspace or ctrl + backspace
             if ((e.metaKey || e.ctrlKey) && e.key === "Backspace") {
                 e.preventDefault();
@@ -45,5 +55,6 @@ class Main {
     }
 }
 
+// Main entry point
 const main = new Main();
 main.init();

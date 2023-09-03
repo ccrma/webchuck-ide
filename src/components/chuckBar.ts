@@ -15,71 +15,78 @@
 //--------------------------------------------------------------------
 
 import { theChuck, startChuck } from "../host";
-import { getEditorCode } from "./editor/editor";
+import Editor from "./editor/editor";
 
-export class ChuckBar {
-    public webchuckButton: HTMLButtonElement;
-    public micButton: HTMLButtonElement;
-    public playButton: HTMLButtonElement;
-    public replaceButton: HTMLButtonElement;
-    public removeButton: HTMLButtonElement;
+export default class ChuckBar {
+    public static webchuckButton: HTMLButtonElement;
+    public static micButton: HTMLButtonElement;
+    public static playButton: HTMLButtonElement;
+    public static replaceButton: HTMLButtonElement;
+    public static removeButton: HTMLButtonElement;
+
+    public static running: boolean = false;
 
     constructor() {
         // Connect all buttons
-        this.webchuckButton =
+        ChuckBar.webchuckButton =
             document.querySelector<HTMLButtonElement>("#webchuckButton")!;
-        this.micButton =
+        ChuckBar.micButton =
             document.querySelector<HTMLButtonElement>("#micButton")!;
-        this.playButton =
+        ChuckBar.playButton =
             document.querySelector<HTMLButtonElement>("#playButton")!;
-        this.replaceButton =
+        ChuckBar.replaceButton =
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
-        this.removeButton =
+        ChuckBar.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
 
         // Add button event listeners
-        this.webchuckButton.addEventListener("click", async () => {
-            await this.startWebchuck();
+        ChuckBar.webchuckButton.addEventListener("click", async () => {
+            await ChuckBar.startWebchuck();
         });
-        this.micButton.addEventListener("click", async () => {});
-        this.playButton.addEventListener("click", async () => {
+        ChuckBar.micButton.addEventListener("click", async () => {});
+        ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
             // TODO: Add to shred table...
         });
-        this.replaceButton.addEventListener("click", async () => {
+        ChuckBar.replaceButton.addEventListener("click", async () => {
             ChuckBar.replaceCode();
             // TODO: Replace shred in shred table...
         });
-        this.removeButton.addEventListener("click", async () => {
+        ChuckBar.removeButton.addEventListener("click", async () => {
             ChuckBar.removeCode();
             // TODO: Remove shred from shred table...
         });
     }
 
     static runEditorCode() {
-        theChuck?.runCode(getEditorCode());
+        theChuck?.runCode(Editor.getEditorCode());
     }
 
     static replaceCode() {
-        theChuck?.removeLastCode();
-        ChuckBar.runEditorCode();
+        theChuck?.replaceCode(Editor.getEditorCode());
     }
 
     static removeCode() {
         theChuck?.removeLastCode();
     }
 
-    async startWebchuck() {
+    static async startWebchuck() {
+        if (ChuckBar.running) {
+            return;
+        }
+
         // Start WebChuck Host
-        this.webchuckButton.innerText = "Loading...";
+        ChuckBar.webchuckButton.innerText = "Loading...";
         await startChuck();
-        this.webchuckButton.innerText = "WebChucK running...";
-        this.webchuckButton.disabled = true;
+        ChuckBar.webchuckButton.innerText = "WebChucK running...";
+        ChuckBar.webchuckButton.disabled = true;
 
         // Enable the ChuckBar buttons
-        this.micButton.disabled = false;
-        this.playButton.disabled = false;
-        this.replaceButton.disabled = false;
-        this.removeButton.disabled = false;
+        ChuckBar.micButton.disabled = false;
+        ChuckBar.playButton.disabled = false;
+        ChuckBar.replaceButton.disabled = false;
+        ChuckBar.removeButton.disabled = false;
+
+        ChuckBar.running = true;
     }
 }

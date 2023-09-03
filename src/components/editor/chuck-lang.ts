@@ -291,7 +291,7 @@ monaco.languages.registerHoverProvider("chuck", {
         // Get the word at current mouse position
         const word: monaco.editor.IWordAtPosition =
             model.getWordAtPosition(position)!; // ! TS check that word is not null
-        const token: string = word.word;
+        const token: string = word?.word;
 
         // If we have a hover for that word
         if (chuck_modules.includes(token)) {

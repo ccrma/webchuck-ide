@@ -34,7 +34,7 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
         },
     ],
     colors: {
-        "editor.background": "#FFFFE0",
+        "editor.background": "#FEFEFF",
     },
 };
 

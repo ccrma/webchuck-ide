@@ -12,7 +12,7 @@ import Dropdown from "./dropdown";
  * NavBar class to handle dropdowns
  * @class NavBar
  */
-export class NavBar {
+export default class NavBar {
     constructor() {
         NavBar.buildDropdowns();
     }
