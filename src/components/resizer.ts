@@ -55,9 +55,15 @@ export default class Resizer {
 
         // Check if the new sizes are too small
         if (this.isHorizDrag) {
-            newTopLeftSize = newTopLeftSize < this.MIN_SIZE_H ? this.MIN_SIZE_H : newTopLeftSize;
+            newTopLeftSize =
+                newTopLeftSize < this.MIN_SIZE_H
+                    ? this.MIN_SIZE_H
+                    : newTopLeftSize;
         } else {
-            newTopLeftSize = newTopLeftSize < this.MIN_SIZE_V ? this.MIN_SIZE_V : newTopLeftSize;
+            newTopLeftSize =
+                newTopLeftSize < this.MIN_SIZE_V
+                    ? this.MIN_SIZE_V
+                    : newTopLeftSize;
         }
 
         let newBotRightSize: number =
@@ -67,16 +73,21 @@ export default class Resizer {
             newTopLeftSize;
 
         if (this.isHorizDrag) {
-            newBotRightSize = newBotRightSize < this.MIN_SIZE_H ? this.MIN_SIZE_H : newBotRightSize;
+            newBotRightSize =
+                newBotRightSize < this.MIN_SIZE_H
+                    ? this.MIN_SIZE_H
+                    : newBotRightSize;
         } else {
-            newBotRightSize = newBotRightSize < this.MIN_SIZE_V ? this.MIN_SIZE_V : newBotRightSize;
-        } 
-            newTopLeftSize =
-                bottomRightEnd -
-                topLeftStart -
-                this.SPLITTER_THICKNESS -
-                newBotRightSize;
-
+            newBotRightSize =
+                newBotRightSize < this.MIN_SIZE_V
+                    ? this.MIN_SIZE_V
+                    : newBotRightSize;
+        }
+        newTopLeftSize =
+            bottomRightEnd -
+            topLeftStart -
+            this.SPLITTER_THICKNESS -
+            newBotRightSize;
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
