@@ -1,7 +1,8 @@
 export default class Resizer {
     // Constants
     readonly SPLITTER_THICKNESS: number = 2;
-    readonly MIN_SIZE: number = 20;
+    readonly MIN_SIZE_H: number = 64;
+    readonly MIN_SIZE_V: number = 20;
     // Members
     private isHorizDrag: boolean;
     private split: HTMLElement;
@@ -53,8 +54,10 @@ export default class Resizer {
             : event.clientY - topLeftStart;
 
         // Check if the new sizes are too small
-        if (newTopLeftSize < this.MIN_SIZE) {
-            newTopLeftSize = this.MIN_SIZE;
+        if (this.isHorizDrag) {
+            newTopLeftSize = newTopLeftSize < this.MIN_SIZE_H ? this.MIN_SIZE_H : newTopLeftSize;
+        } else {
+            newTopLeftSize = newTopLeftSize < this.MIN_SIZE_V ? this.MIN_SIZE_V : newTopLeftSize;
         }
 
         let newBotRightSize: number =
@@ -63,15 +66,17 @@ export default class Resizer {
             this.SPLITTER_THICKNESS -
             newTopLeftSize;
 
-        // Check if the new sizes are too small
-        if (newBotRightSize < this.MIN_SIZE) {
-            newBotRightSize = this.MIN_SIZE;
+        if (this.isHorizDrag) {
+            newBotRightSize = newBotRightSize < this.MIN_SIZE_H ? this.MIN_SIZE_H : newBotRightSize;
+        } else {
+            newBotRightSize = newBotRightSize < this.MIN_SIZE_V ? this.MIN_SIZE_V : newBotRightSize;
+        } 
             newTopLeftSize =
                 bottomRightEnd -
                 topLeftStart -
                 this.SPLITTER_THICKNESS -
                 newBotRightSize;
-        }
+
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {

@@ -41,6 +41,7 @@ export default class Editor {
             },
             model: editorConfig,
             theme: "miniAudicleLight",
+            automaticLayout: true,
             scrollBeyondLastLine: false,
             fontSize: 14,
             cursorBlinking: "smooth",

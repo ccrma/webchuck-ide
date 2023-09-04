@@ -65,8 +65,10 @@
         "editorPanel"
         "splitH1"
         "inputPanel";
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     grid-template-rows: 9.6fr 2px 0.4fr;
+    overflow: hidden;
+    min-width: 64px;
 }
 #app-right {
     grid-area: app-right;
@@ -77,7 +79,7 @@
         "vm-monitor"
         "splitH2"
         "outputPanel";
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     grid-template-rows: 1fr 2px 1fr;
 }
 
@@ -122,7 +124,12 @@
 
 /* EDITOR */
 #monaco-editor {
-    position: absolute !important;
+    /* position: absolute !important; */
+}
+
+#vimStatus {
+    min-width: 64px;
+    overflow: hidden;
 }
 
 #vimStatus > span > span > input {
