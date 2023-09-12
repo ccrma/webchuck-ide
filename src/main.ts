@@ -6,28 +6,35 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
-import NavBar from "./components/navbar";
-import ChuckBar from "./components/chuckBar";
-import Editor from "./components/editor/editor";
-import { initAppSplitters } from "./services/appLayoutHandler";
+import NavBar from "@components/navbar";
+import ChuckBar from "@components/chuckBar";
+import Editor from "@components/monaco/editor";
+import { initAppSplitters } from "@utils/appLayout";
+import { initDarkModeToggle, setColorScheme } from "./utils/theme";
 
 class Main {
-    public navBar: NavBar;
-    public chuckBar: ChuckBar;
-    public Editor: Editor;
+    public static navBar: NavBar;
+    public static chuckBar: ChuckBar;
+    public static Editor: Editor;
 
     constructor() {
-        this.navBar = new NavBar();
-        this.chuckBar = new ChuckBar();
+        // Set Color Scheme
+        setColorScheme();
 
+        // Construct Components
+        Main.navBar = new NavBar();
+        Main.chuckBar = new ChuckBar();
         // Create Monaco Editor
-        this.Editor = new Editor(
+        Main.Editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
     }
 
     init() {
+        // Layout and Buttons
         initAppSplitters();
+        initDarkModeToggle();
+
         Main.keyboardShortcuts();
     }
 

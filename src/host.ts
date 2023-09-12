@@ -1,5 +1,5 @@
 //--------------------------------------------------------
-// title: Host (Audio)
+// title: Host (Web Audio)
 // desc:  Audio Host for WebChucK IDE, managing everything
 //        related to Web Audio API
 //

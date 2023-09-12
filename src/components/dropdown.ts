@@ -4,6 +4,7 @@
  * @param {HTMLDivElement} container - The container div
  * @param {HTMLButtonElement} button - The button element
  * @param {HTMLDivElement} dropdown - The dropdown div
+ * @param {boolean} open - Whether the dropdown is open or not
  */
 export default class Dropdown {
     public container: HTMLDivElement;

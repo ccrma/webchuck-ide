@@ -14,8 +14,8 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import { theChuck, startChuck } from "../host";
-import Editor from "./editor/editor";
+import { theChuck, startChuck } from "@/Host";
+import Editor from "@/components/monaco/editor";
 
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;

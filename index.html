@@ -35,7 +35,7 @@
 
     <!-- WEBCHUCK IDE -->
     <div id="webchuck-ide" class="grid w-full h-screen bg-sky-blue dark:bg-dark
-    text-base text-dark dark:text-gray-400">
+    text-base text-dark dark:text-light">
 
       <!-- NAVBAR -->
       <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4">
@@ -44,11 +44,11 @@
         <div class="flex justify-left items-center">
           <!-- ChucK Logo -->
           <a href="#" class="">
-            <img src="images/icons/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+            <img src="assets/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
           </a>
 
           <!-- Nav Items -->
-          <div id="menuItems" class="text-dark dark:text-gray-400 w-full px-2 flex items-center">
+          <div id="menuItems" class="text-dark dark:text-gray-300 w-full px-2 flex items-center">
 
             <!-- File -->
             <div id="fileContainer" class="relative inline-block">
@@ -60,18 +60,18 @@
               </button>
               <button id="fileBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
               <div id="fileDropdown" class="hidden dropdown transition-colors">
-                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">New</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Export</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
                   </li>
                 </ul>
               </div>
@@ -87,7 +87,7 @@
               <div id="editDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="vimToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <button id="vimToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
                       Vim Mode: Off
                     </button>
                   </li>
@@ -105,7 +105,7 @@
               <div id="viewDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="darkModeToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <button id="darkModeToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
                       Dark Mode: Off
                     </button>
                   </li>
@@ -123,16 +123,16 @@
               <div id="examplesDropdown" class="hidden dropdown">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">New</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Upload</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Export</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Export</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
                   </li>
                 </ul>
               </div>
@@ -150,23 +150,23 @@
               ">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Class Reference</a>
+                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Class Reference</a>
                   </li>
                   <li>
-                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Documentation</a>
+                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
                   </li>
-                  <li class="divider"></li>
+                  <li class="divider dark:border-t-gray-400"></li>
                   <li class>
-                    <a href="https://chuck.stanford.edu" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">ChucK</a>
+                    <a href="https://chuck.stanford.edu" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">ChucK</a>
                   </li>
                   <li>
-                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">WebChucK</a>
+                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">WebChucK</a>
                   </li>
                   <li>
-                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">GitHub</a>
+                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">GitHub</a>
                   </li>
                   <li>
-                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Discord</a>
+                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Discord</a>
                   </li>
                 </ul>
               </div>
@@ -177,7 +177,7 @@
         <!-- Right -->
         <!-- More Menu Button-->
         <div class="">
-          <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-white focus:outline-none">
+          <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
             <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
               <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
             </svg>
@@ -187,23 +187,23 @@
 
 
       <!-- CHUCK BAR -->
-      <div id="chuck-bar" class="bg-orange-peach dark:bg-dark dark:outline-1 dark:outline outline-slate-600">
+      <div id="chuck-bar" class="bg-orange-peach dark:bg-dark-4">
         <div class="w-full h-full flex justify-start items-center px-2 py-1">
             <!-- WebChucK Button-->
             <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center">
-                <button id="micButton"     type="button" class="chuck-button" disabled>
-                    <img src="images/icons/mic.svg" alt="Microphone" class="h-11" draggable="false">
+                <button id="micButton"      type="button" class="chuck-button" disabled>
+                    <img src="assets/mic.svg" alt="Microphone" class="h-11" draggable="false">
                 </button>
                 <button id="playButton"     type="button" class="chuck-button" disabled>
-                    <img src="images/icons/play.svg" alt="Play" class="h-11" draggable="false">
+                    <img src="assets/play.svg" alt="Play" class="h-11" draggable="false">
                 </button>
                 <button id="replaceButton"  type="button" class="chuck-button" disabled>
-                    <img src="images/icons/replace.svg" alt="Replace" class="h-11" draggable="false">
+                    <img src="assets/replace.svg" alt="Replace" class="h-11" draggable="false">
                 </button>
                 <button id="removeButton"   type="button" class="chuck-button" disabled>
-                    <img src="images/icons/remove.svg" alt="Remove" class="h-11" draggable="false">
+                    <img src="assets/remove.svg" alt="Remove" class="h-11" draggable="false">
                 </button>
             </div>
         </div>
@@ -221,13 +221,17 @@
 
         <div id="app-middle">
           <div id="editorPanel" class="h-full flex flex-col justify-start">
-            <div id="editorPanelHeader" class="header h-8 font-bold justify-start">
-              <button id="fileToggle" class="header-item icon"></button> 
-              <div id="filename" class="header-item">File</div>
+            <div id="editorPanelHeader" class="header h-8 min-h-8 justify-start">
+              <button id="fileToggle" type="button" class="header-item icon mr-1">
+                <svg class="w-6 h-5 hover:bg-sky-blue-800" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke="currentColor" d="M3 0C1.35862 0 0 1.35862 0 3V21C0 22.6414 1.35862 24 3 24H27C28.6414 24 30 22.6414 30 21V6C30 4.35862 28.6414 3 27 3H15L12 0H3ZM3 3H10.7578L13.7578 6H27V21H3V3Z" fill="currentColor"/>
+                </svg>
+              </button> 
+              <div id="filename" class="header-item">untitled.ck</div>
             </div>
                 <!-- on window resize -->
                 <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
-                <div id=vimStatus class="border-none bg-gray-200 dark:bg-gray-800 w-full h-7 px-0.5 text-sm items-center hidden"></div>
+                <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 min-h-7 px-0.5 text-sm items-center hidden"></div>
           </div>
           <div id="splitH1" class="resizer hSplit"></div>
           <div id="inputPanel"></div>

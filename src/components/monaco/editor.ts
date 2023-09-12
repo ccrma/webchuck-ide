@@ -7,7 +7,7 @@
 // date:   May 2023
 //------------------------------------------------------------------
 
-import ChuckBar from "../chuckBar";
+import ChuckBar from "@components/chuckBar";
 
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
@@ -15,7 +15,7 @@ import { initVimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
 
 // Constants
-const HEADER_HEIGHT: string = "1.5rem";
+const HEADER_HEIGHT: string = "2rem";
 const VIM_STATUS_HEIGHT: string = "1.75rem";
 
 // Define editor themes
@@ -41,37 +41,24 @@ export default class Editor {
             },
             model: editorConfig,
             theme: "miniAudicleLight",
-            automaticLayout: true,
+            automaticLayout: false,
             scrollBeyondLastLine: false,
             fontSize: 14,
             cursorBlinking: "smooth",
         });
 
-        /*
-        // we need the parent of the editor
-const parent = editorContainer.parentElement;
+        // Resize editor on window resize
+        window.addEventListener("resize", () => {
+            Editor.resizeEditor();
+        });
 
-// when rows or columns change, style changes, etc.
-window.addEventListener('resize', () => {
-  // make editor as small as possible
-  Editor.editor.layout({ width: 0, height: 0 })
-
-  // wait for next frame to ensure last layout finished
-  window.requestAnimationFrame(() => {
-    // get the parent dimensions and re-layout the editor
-    const rect = parent!.getBoundingClientRect()
-    Editor.editor.layout({ width: rect.width, height: rect.height })
-  })
-})
-*/
-
-        // Connect vim toggle button
+        // Vim Toggle
         Editor.vimToggle =
             document.querySelector<HTMLButtonElement>("#vimToggle")!;
         Editor.vimToggle.addEventListener("click", () => {
             this.toggleVimMode();
+            Editor.resizeEditor();
         });
-
         // Initialize Vim mode
         Editor.vimStatus =
             document.querySelector<HTMLDivElement>("#vimStatus")!;
@@ -79,6 +66,13 @@ window.addEventListener('resize', () => {
 
         // Keybindings
         this.initMonacoKeyBindings();
+    }
+
+    /**
+     * Resize the editor
+     */
+    static resizeEditor() {
+        Editor.editor.layout();
     }
 
     /**
@@ -148,7 +142,7 @@ window.addEventListener('resize', () => {
             "style",
             `height: calc(100% - ${HEADER_HEIGHT} - ${VIM_STATUS_HEIGHT} - 1px)`
         );
-        Editor.editor.layout();
+        Editor.resizeEditor();
         Editor.vimModule = initVimMode(Editor.editor, Editor.vimStatus);
         // editor block cursor
         Editor.vimToggle.innerText = "Vim Mode: On";
@@ -167,7 +161,7 @@ window.addEventListener('resize', () => {
             "style",
             `height: calc(100% - ${HEADER_HEIGHT} - 1px)`
         );
-        Editor.editor.layout();
+        Editor.resizeEditor();
         Editor.vimModule?.dispose();
         Editor.editor.updateOptions({
             cursorStyle: "line",

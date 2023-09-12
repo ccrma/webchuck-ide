@@ -32,7 +32,7 @@
     display: grid;
     height: 100%;
     grid-template-areas: "app-left splitV1 app-middle splitV2 app-right";
-    grid-template-columns: 2fr 2px 6fr 2px 4fr;
+    grid-template-columns: 2fr 2px 6fr 2px 4fr; /* app column widths */
     grid-template-rows: 1fr;
 }
 
@@ -123,8 +123,9 @@
 }
 
 /* EDITOR */
-#monaco-editor {
+#monacoEditor {
     /* position: absolute !important; */
+    height: 100%;
 }
 
 #vimStatus {
@@ -167,7 +168,7 @@
 .resizer.hSplit {
     cursor: row-resize;
     position: relative;
-    @apply hover:bg-orange hover:transition hover:opacity-60 hover:h-2 hover:-top-1;
+    @apply hover:bg-orange hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
 }
 .hSplit::after {
     display: block;
@@ -182,7 +183,7 @@
 .resizer.vSplit {
     cursor: col-resize;
     position: relative;
-    @apply hover:bg-orange hover:transition hover:opacity-60 hover:w-2 hover:-left-1;
+    @apply hover:bg-orange hover:transition hover:opacity-100 hover:w-2 hover:-left-1;
 }
 
 .vSplit::after {
@@ -197,4 +198,11 @@
 
 .resizer {
     @apply opacity-5 z-30 bg-sky-blue-900 dark:bg-gray-200;
+}
+
+.header {
+    @apply w-full flex items-center px-2;
+}
+.header-item {
+    @apply px-1;
 }

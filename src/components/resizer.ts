@@ -1,12 +1,19 @@
+import { AppLayoutConstants, setCurrentWidths } from "@utils/appLayout";
+import Editor from "@components/monaco/editor";
+
+/**
+ * Resizer class draggable splitters in App (the main section of the IDE)
+ * @class Resizer
+ * @param split a resizable splitter
+ * @param isHorizDrag whether the splitter is horizontal or vertical running
+ * @param splitContainer App container
+ */
 export default class Resizer {
-    // Constants
-    readonly SPLITTER_THICKNESS: number = 2;
-    readonly MIN_SIZE_H: number = 64;
-    readonly MIN_SIZE_V: number = 20;
     // Members
     private isHorizDrag: boolean;
     private split: HTMLElement;
     private splitContainer: HTMLElement;
+
     // Function References
     private onDragHandler: (event: MouseEvent) => void;
     private onEndDragHandler: (event: MouseEvent) => void;
@@ -49,45 +56,49 @@ export default class Resizer {
             ? bottomRight.getBoundingClientRect().right
             : bottomRight.getBoundingClientRect().bottom;
 
+        // New size for top/left element
         let newTopLeftSize: number = this.isHorizDrag
             ? event.clientX - topLeftStart
             : event.clientY - topLeftStart;
 
-        // Check if the new sizes are too small
+        // Don't get smaller than minimum size
         if (this.isHorizDrag) {
             newTopLeftSize =
-                newTopLeftSize < this.MIN_SIZE_H
-                    ? this.MIN_SIZE_H
+                newTopLeftSize < AppLayoutConstants.MIN_SIZE_H
+                    ? AppLayoutConstants.MIN_SIZE_H
                     : newTopLeftSize;
         } else {
             newTopLeftSize =
-                newTopLeftSize < this.MIN_SIZE_V
-                    ? this.MIN_SIZE_V
+                newTopLeftSize < AppLayoutConstants.MIN_SIZE_V
+                    ? AppLayoutConstants.MIN_SIZE_V
                     : newTopLeftSize;
         }
 
+        // Calculate new size for bottom/right element
         let newBotRightSize: number =
             bottomRightEnd -
             topLeftStart -
-            this.SPLITTER_THICKNESS -
+            AppLayoutConstants.SPLITTER_THICKNESS -
             newTopLeftSize;
 
+        // Don't get smaller than minimum size
         if (this.isHorizDrag) {
             newBotRightSize =
-                newBotRightSize < this.MIN_SIZE_H
-                    ? this.MIN_SIZE_H
+                newBotRightSize < AppLayoutConstants.MIN_SIZE_H
+                    ? AppLayoutConstants.MIN_SIZE_H
                     : newBotRightSize;
         } else {
             newBotRightSize =
-                newBotRightSize < this.MIN_SIZE_V
-                    ? this.MIN_SIZE_V
+                newBotRightSize < AppLayoutConstants.MIN_SIZE_V
+                    ? AppLayoutConstants.MIN_SIZE_V
                     : newBotRightSize;
         }
         newTopLeftSize =
             bottomRightEnd -
             topLeftStart -
-            this.SPLITTER_THICKNESS -
+            AppLayoutConstants.SPLITTER_THICKNESS -
             newBotRightSize;
+
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
@@ -99,9 +110,10 @@ export default class Resizer {
             // These heights are used to create a new style element for the widths
             const rows: string[] = [
                 `${newTopPercent}%`,
-                `${this.SPLITTER_THICKNESS}px`,
+                `${AppLayoutConstants.SPLITTER_THICKNESS}px`,
                 `${newBottomPercent}%`,
             ];
+            // Set row heights
             this.splitContainer.style.gridTemplateRows = rows.join(" ");
         } else {
             // HORIZONTAL DRAG EVENT, more complicated calculation
@@ -115,14 +127,16 @@ export default class Resizer {
             let colPercents: number[] = colWidths.map((width) => {
                 return (width / this.splitContainer.clientWidth) * 100;
             });
-            let cols: string[] = [
-                `${colPercents[0]}%`,
-                `${this.SPLITTER_THICKNESS}px`,
-                `${colPercents[1]}%`,
-                `${this.SPLITTER_THICKNESS}px`,
-                `${colPercents[2]}%`,
-            ];
-            this.splitContainer.style.gridTemplateColumns = cols.join(" ");
+
+            // Set current column widths in pixels
+            setCurrentWidths(colPercents);
+        }
+
+        // If left or right element is the editor, manually call the 
+        // editor resize function to match the new parent container size
+        if (topLeft.id === "editorPanel" || bottomRight.id === "editorPanel" ||
+            topLeft.id === "app-middle" || bottomRight.id === "app-middle") {
+            Editor.resizeEditor();
         }
     }
 
@@ -139,6 +153,20 @@ export default class Resizer {
     }
 }
 
+
+//-----------------------------------------------------------
+// Helper Functions
+//-----------------------------------------------------------
+
+/**
+ * Given the left element id, put the sizes into the correct order
+ * left width, middle width, right width
+ * 
+ * @param leftID id of the left element
+ * @param newLeftTopSize size of left/top element
+ * @param newRightBotSize size of right/bottom element
+ * @returns returns sizes corresponding to app left middle and right
+ */
 function sortColWidths(
     leftID: string,
     newLeftTopSize: number,
