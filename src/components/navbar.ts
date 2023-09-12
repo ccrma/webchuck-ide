@@ -13,7 +13,6 @@ import Dropdown from "@components/dropdown";
  * @class NavBar
  */
 export default class NavBar {
-
     constructor() {
         NavBar.buildDropdowns();
     }

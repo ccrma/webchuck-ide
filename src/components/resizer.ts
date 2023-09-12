@@ -99,7 +99,6 @@ export default class Resizer {
             AppLayoutConstants.SPLITTER_THICKNESS -
             newBotRightSize;
 
-
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
             // convert to percentages
@@ -132,10 +131,14 @@ export default class Resizer {
             setCurrentWidths(colPercents);
         }
 
-        // If left or right element is the editor, manually call the 
+        // If left or right element is the editor, manually call the
         // editor resize function to match the new parent container size
-        if (topLeft.id === "editorPanel" || bottomRight.id === "editorPanel" ||
-            topLeft.id === "app-middle" || bottomRight.id === "app-middle") {
+        if (
+            topLeft.id === "editorPanel" ||
+            bottomRight.id === "editorPanel" ||
+            topLeft.id === "app-middle" ||
+            bottomRight.id === "app-middle"
+        ) {
             Editor.resizeEditor();
         }
     }
@@ -153,7 +156,6 @@ export default class Resizer {
     }
 }
 
-
 //-----------------------------------------------------------
 // Helper Functions
 //-----------------------------------------------------------
@@ -161,7 +163,7 @@ export default class Resizer {
 /**
  * Given the left element id, put the sizes into the correct order
  * left width, middle width, right width
- * 
+ *
  * @param leftID id of the left element
  * @param newLeftTopSize size of left/top element
  * @param newRightBotSize size of right/bottom element

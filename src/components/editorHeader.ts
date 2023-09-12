@@ -10,7 +10,8 @@ export default class EditorHeader {
     public fileName: HTMLDivElement;
 
     constructor() {
-        this.fileToggle = document.querySelector<HTMLButtonElement>("#fileToggle")!;
+        this.fileToggle =
+            document.querySelector<HTMLButtonElement>("#fileToggle")!;
         this.fileName = document.querySelector<HTMLDivElement>("#fileName")!;
 
         // read in both svg files

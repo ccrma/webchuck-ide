@@ -3,7 +3,7 @@
 // desc:  Handles the responsive layout of the app
 //        Allows the resizing of adjacent <div> elements (right-left or top-bottom)
 //        separated by a splitter element that is also a <div>
-// 
+//
 // usage: - Set the class for vertical and horizontal splitter bar divs to 'classVSplit'
 //          and 'classHSplit' respectively.
 //        - Set the thickness of the splitter bars to 2px
@@ -26,9 +26,9 @@ const MIDDLE_WIDTH: number = 50;
 const RIGHT_WIDTH: number = 33.33;
 
 // Globals
-let left = document.getElementById("app-left")!;
-let middle = document.getElementById("app-middle")!;
-let right = document.getElementById("app-right")!;
+// let left = document.getElementById("app-left")!;
+// let middle = document.getElementById("app-middle")!;
+// let right = document.getElementById("app-right")!;
 let splitContainer = document.getElementById("app")!;
 let left_width: number;
 let middle_width: number;
