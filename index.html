@@ -244,13 +244,14 @@
         <div id="app-right">
           <div id="vmMonitor"></div>
           <div id="splitH2" class="resizer hSplit"></div>
+          <!-- Output Panel -->
           <div id="outputPanel" class="flex flex-col">
             <div id="outputPanelHeader" class="header dark:bg-dark h-7 justify-start flex-none">
-              <div id="consoleToggle" class="header-item text-sm px-2">CONSOLE</div>
-              <div id="consoleToggle" class="header-item text-sm px-2">VISUALIZER</div>
+              <button id="consoleTab" type="button" class="header-item text-sm px-2 text-orange underline transition">CONSOLE</button>
+              <button id="visualizerTab" type="button" class="header-item text-sm px-2">VISUALIZER</button>
             </div >
             <div id="console" class="flex-grow bg-dark text-white"> console </div>
-            <div id="visualizer" class="flex-grow bg-green-500 hidden"> console </div>
+            <div id="visualizer" class="flex-grow bg-green-500 hidden"> visualizer </div>
           </div>
         </div>
 
