@@ -213,25 +213,26 @@
       <!-- APP -->
       <div id="app">
 
+        <!-- Left -->
         <div id="app-left">
           <div id="fileExplorer"></div>
         </div>
 
         <div id="splitV1" class="resizer vSplit"></div>
 
+        <!-- Middle -->
         <div id="app-middle">
           <div id="editorPanel" class="h-full flex flex-col justify-start">
-            <div id="editorPanelHeader" class="header h-8 min-h-8 justify-start">
-              <button id="fileToggle" type="button" class="header-item icon mr-1">
+            <div id="editorPanelHeader" class="header h-8 justify-start flex-none">
+              <button id="fileToggle" type="button" class="header-item icon px-1 mr-1">
                 <svg class="w-6 h-5 hover:bg-sky-blue-800" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path stroke="currentColor" d="M3 0C1.35862 0 0 1.35862 0 3V21C0 22.6414 1.35862 24 3 24H27C28.6414 24 30 22.6414 30 21V6C30 4.35862 28.6414 3 27 3H15L12 0H3ZM3 3H10.7578L13.7578 6H27V21H3V3Z" fill="currentColor"/>
                 </svg>
               </button> 
               <div id="filename" class="header-item">untitled.ck</div>
             </div>
-                <!-- on window resize -->
-                <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
-                <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 min-h-7 px-0.5 text-sm items-center hidden"></div>
+            <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
+            <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 px-0.5 text-sm items-center flex-none hidden"></div>
           </div>
           <div id="splitH1" class="resizer hSplit"></div>
           <div id="inputPanel"></div>
@@ -239,11 +240,20 @@
 
         <div id="splitV2" class="resizer vSplit"></div>
 
+        <!-- Right -->
         <div id="app-right">
           <div id="vmMonitor"></div>
           <div id="splitH2" class="resizer hSplit"></div>
-          <div id="outputPanel"></div>
+          <div id="outputPanel" class="flex flex-col">
+            <div id="outputPanelHeader" class="header dark:bg-dark h-7 justify-start flex-none">
+              <div id="consoleToggle" class="header-item text-sm px-2">CONSOLE</div>
+              <div id="consoleToggle" class="header-item text-sm px-2">VISUALIZER</div>
+            </div >
+            <div id="console" class="flex-grow bg-dark text-white"> console </div>
+            <div id="visualizer" class="flex-grow bg-green-500 hidden"> console </div>
+          </div>
         </div>
+
       </div>
 
     </div>

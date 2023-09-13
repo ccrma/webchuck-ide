@@ -25,6 +25,7 @@
         "nav"
         "chuck-bar"
         "app";
+    overflow: hidden;
 }
 
 #app {
@@ -67,7 +68,6 @@
         "inputPanel";
     grid-template-columns: 100%;
     grid-template-rows: 9.6fr 2px 0.4fr;
-    overflow: hidden;
     min-width: 64px;
 }
 #app-right {
@@ -89,6 +89,7 @@
 
 #editorPanel {
     grid-area: editorPanel;
+    overflow: hidden;
 }
 
 #inputPanel {
@@ -103,7 +104,6 @@
 }
 
 #outputPanel {
-    @apply bg-purple-400;
     grid-area: outputPanel;
 }
 
@@ -201,8 +201,5 @@
 }
 
 .header {
-    @apply w-full flex items-center px-2;
-}
-.header-item {
-    @apply px-1;
+    @apply w-full flex items-center px-1;
 }
