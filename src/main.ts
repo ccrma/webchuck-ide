@@ -10,20 +10,22 @@ import NavBar from "@components/navbar";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
 import { initAppSplitters } from "@utils/appLayout";
-import { initDarkModeToggle, setColorScheme } from "./utils/theme";
+import { initTheme } from "./utils/theme";
+import OutputPanelHeader from "@components/header/outputPanelHeader";
 
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
     public static Editor: Editor;
+    public static outputPanelHeader: OutputPanelHeader;
 
     constructor() {
-        // Set Color Scheme
-        setColorScheme();
-
         // Construct Components
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
+        // Headers
+        Main.outputPanelHeader = new OutputPanelHeader();
+
         // Create Monaco Editor
         Main.Editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
@@ -31,9 +33,8 @@ class Main {
     }
 
     init() {
-        // Layout and Buttons
-        initAppSplitters();
-        initDarkModeToggle();
+        initTheme(); // Set theme
+        initAppSplitters(); // Drag resizable panels
 
         Main.keyboardShortcuts();
     }

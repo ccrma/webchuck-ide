@@ -18,20 +18,22 @@ export function setColorScheme() {
             window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
         document.documentElement.classList.add("dark");
+        darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
         document.documentElement.classList.remove("dark");
+        darkModeToggle.innerHTML = "Dark Mode: Off";
     }
 }
 
 /**
  * Initialize the dark mode toggle button
  */
-export function initDarkModeToggle() {
-    darkModeToggle =
-        document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
+export function initTheme() {
+    darkModeToggle = document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
+    setColorScheme();
 }
 
 /**
@@ -40,7 +42,6 @@ export function initDarkModeToggle() {
 function darkModeOff() {
     // turn off dark mode
     localStorage.theme = "light";
-    darkModeToggle.innerHTML = "Dark Mode: Off";
     setColorScheme();
 }
 
@@ -50,7 +51,6 @@ function darkModeOff() {
 function darkModeOn() {
     // turn on dark mode
     localStorage.theme = "dark";
-    darkModeToggle.innerHTML = "Dark Mode: On";
     setColorScheme();
 }
 
