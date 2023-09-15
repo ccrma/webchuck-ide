@@ -190,7 +190,7 @@
       <div id="chuck-bar" class="bg-orange-peach dark:bg-dark-4">
         <div class="w-full h-full flex justify-start items-center px-2 py-1">
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
+            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 2xl:w-64 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
@@ -246,12 +246,14 @@
           <div id="splitH2" class="resizer hSplit"></div>
           <!-- Output Panel -->
           <div id="outputPanel" class="flex flex-col">
-            <div id="outputPanelHeader" class="header dark:bg-dark h-7 justify-start flex-none">
-              <button id="consoleTab" type="button" class="header-item text-sm px-2 text-orange underline transition">CONSOLE</button>
-              <button id="visualizerTab" type="button" class="header-item text-sm px-2">VISUALIZER</button>
+            <div id="outputPanelHeader" class="header text-dark-7 dark:bg-dark h-7 justify-start flex-none">
+              <button id="consoleTab"    type="button" class="header-item text-sm px-2 hover:text-orange text-orange underline transition">CONSOLE</button>
+              <button id="visualizerTab" type="button" class="header-item text-sm px-2 hover:text-orange">VISUALIZER</button>
             </div >
-            <div id="console" class="flex-grow bg-dark text-white"> console </div>
-            <div id="visualizer" class="flex-grow bg-green-500 hidden"> visualizer </div>
+            <div id="consoleContainer" class="" style="height: calc(100% - 1.75rem)">
+              <div id="console" class="bg-black h-full"></div>
+            </div>
+            <div id="visualizer" class="flex-1 bg-green-500 hidden"> visualizer </div>
           </div>
         </div>
 

@@ -19,6 +19,7 @@
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@services/*": ["./src/services/*"],
+      "@styles/*": ["./src/styles/*"],
     },
   },
   "include": ["src"],

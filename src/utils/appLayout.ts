@@ -19,7 +19,7 @@ const CLASS_H_SPLIT: string = "hSplit";
 
 const SPLITTER_THICKNESS: number = 2;
 const MIN_SIZE_H: number = 64;
-const MIN_SIZE_V: number = 24;
+const MIN_SIZE_V: number = 28;
 
 const LEFT_WIDTH: number = 16.67;
 const MIDDLE_WIDTH: number = 50;

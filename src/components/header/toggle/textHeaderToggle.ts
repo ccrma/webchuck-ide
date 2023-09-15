@@ -1,6 +1,6 @@
 import HeaderToggle from "./headerToggle"
 
-export default class textHeaderToggle extends HeaderToggle {
+export default class TextHeaderToggle extends HeaderToggle {
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,

@@ -23,47 +23,47 @@ export default class NavBar {
      */
     static buildDropdowns() {
         // File
-        let fileContainer =
+        const fileContainer =
             document.querySelector<HTMLDivElement>("#fileContainer")!;
-        let fileButton =
+        const fileButton =
             document.querySelector<HTMLButtonElement>("#fileButton")!;
-        let fileDropdown =
+        const fileDropdown =
             document.querySelector<HTMLDivElement>("#fileDropdown")!;
         new Dropdown(fileContainer, fileButton, fileDropdown);
 
         // Edit
-        let editContainer =
+        const editContainer =
             document.querySelector<HTMLDivElement>("#editContainer")!;
-        let editButton =
+        const editButton =
             document.querySelector<HTMLButtonElement>("#editButton")!;
-        let editDropdown =
+        const editDropdown =
             document.querySelector<HTMLDivElement>("#editDropdown")!;
         new Dropdown(editContainer, editButton, editDropdown);
 
         // View
-        let viewContainer =
+        const viewContainer =
             document.querySelector<HTMLDivElement>("#viewContainer")!;
-        let viewButton =
+        const viewButton =
             document.querySelector<HTMLButtonElement>("#viewButton")!;
-        let viewDropdown =
+        const viewDropdown =
             document.querySelector<HTMLDivElement>("#viewDropdown")!;
         new Dropdown(viewContainer, viewButton, viewDropdown);
 
         // Examples
-        let examplesContainer =
+        const examplesContainer =
             document.querySelector<HTMLDivElement>("#examplesContainer")!;
-        let examplesButton =
+        const examplesButton =
             document.querySelector<HTMLButtonElement>("#examplesButton")!;
-        let examplesDropdown =
+        const examplesDropdown =
             document.querySelector<HTMLDivElement>("#examplesDropdown")!;
         new Dropdown(examplesContainer, examplesButton, examplesDropdown);
 
         // Help
-        let helpContainer =
+        const helpContainer =
             document.querySelector<HTMLDivElement>("#helpContainer")!;
-        let helpButton =
+        const helpButton =
             document.querySelector<HTMLButtonElement>("#helpButton")!;
-        let helpDropdown =
+        const helpDropdown =
             document.querySelector<HTMLDivElement>("#helpDropdown")!;
         new Dropdown(helpContainer, helpButton, helpDropdown);
     }

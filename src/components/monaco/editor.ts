@@ -47,11 +47,6 @@ export default class Editor {
             cursorBlinking: "smooth",
         });
 
-        // Resize editor on window resize
-        window.addEventListener("resize", () => {
-            Editor.resizeEditor();
-        });
-
         // Vim Toggle
         Editor.vimToggle =
             document.querySelector<HTMLButtonElement>("#vimToggle")!;
@@ -66,6 +61,11 @@ export default class Editor {
 
         // Keybindings
         this.initMonacoKeyBindings();
+
+        // Resize editor on window resize
+        window.addEventListener("resize", () => {
+            Editor.resizeEditor();
+        });
     }
 
     /**

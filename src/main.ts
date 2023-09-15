@@ -11,25 +11,27 @@ import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "./utils/theme";
-import OutputPanelHeader from "@components/header/outputPanelHeader";
+import OutputPanelHeader from "@/components/header/outputPanelHeader";
+import Console from "@components/console";
 
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
     public static Editor: Editor;
     public static outputPanelHeader: OutputPanelHeader;
+    public static console: Console;
 
     constructor() {
-        // Construct Components
+        // CONSTRUCT IDE COMPONENTS
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
-        // Headers
-        Main.outputPanelHeader = new OutputPanelHeader();
 
-        // Create Monaco Editor
+        // CONSTRUCT APP COMPONENTS
+        Main.outputPanelHeader = new OutputPanelHeader();
         Main.Editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
+        Main.console = new Console();
     }
 
     init() {
@@ -42,6 +44,12 @@ class Main {
     static keyboardShortcuts() {
         // global keyboard shortcuts
         document.addEventListener("keydown", (e) => {
+            // cmd + . or ctrl + .
+            if ((e.metaKey || e.ctrlKey) && e.key === ".") {
+                e.preventDefault();
+                ChuckBar.startWebchuck();
+            }
+
             // cmd + enter or ctrl + enter
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
                 e.preventDefault();

@@ -25,7 +25,6 @@
         "nav"
         "chuck-bar"
         "app";
-    overflow: hidden;
 }
 
 #app {
@@ -34,7 +33,7 @@
     height: 100%;
     grid-template-areas: "app-left splitV1 app-middle splitV2 app-right";
     grid-template-columns: 2fr 2px 6fr 2px 4fr; /* app column widths */
-    grid-template-rows: 1fr;
+    grid-template-rows: 100%;
 }
 
 /* APP LAYOUT */
@@ -60,7 +59,6 @@
 #app-middle {
     grid-area: app-middle;
     min-width: 4rem;
-    height: 100%;
     display: grid;
     grid-template-areas:
         "editorPanel"
@@ -73,14 +71,13 @@
 #app-right {
     grid-area: app-right;
     min-width: 1rem;
-    height: 100%;
     display: grid;
     grid-template-areas:
         "vm-monitor"
         "splitH2"
         "outputPanel";
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 2px 1fr;
+    grid-template-rows: 5fr 2px 5fr;
 }
 
 #fileExplorer {
@@ -100,7 +97,6 @@
 #vmMonitor {
     @apply bg-yellow-500;
     grid-area: vm-monitor;
-    min-height: 80px;
 }
 
 #outputPanel {

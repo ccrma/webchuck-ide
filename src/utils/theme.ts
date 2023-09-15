@@ -26,6 +26,14 @@ export function setColorScheme() {
 }
 
 /**
+ * Return the current color scheme
+ * @returns {string} "dark" or "light"
+ */
+export function getColorScheme(): string {
+    return localStorage.theme;
+}
+
+/**
  * Initialize the dark mode toggle button
  */
 export function initTheme() {
