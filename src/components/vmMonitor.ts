@@ -60,7 +60,6 @@ export default class VmMonitor {
                 // minutes and seconds
                 let m = Math.floor(elapsed / 60);
                 let s = Math.floor(elapsed % 60);
-                console.log(elapsed);
 
                 // Piggyback off time keeper to remove row
                 // if shred is removed

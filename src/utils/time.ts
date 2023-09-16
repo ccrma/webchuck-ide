@@ -13,7 +13,7 @@ let displayDigits: number = 0; // e.g. 5 in 44100
  * @param sampleRate The sample rate
  */
 export function calculateDisplayDigits(sampleRate: number) {
-    displayDigits = Math.log(sampleRate) * Math.LOG10E + 1 | 0;
+    displayDigits = (Math.log(sampleRate) * Math.LOG10E + 1) | 0;
 }
 
 /**

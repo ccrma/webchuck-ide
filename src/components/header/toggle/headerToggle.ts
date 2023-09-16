@@ -16,7 +16,7 @@ export default class HeaderToggle {
             this.toggle();
         });
 
-        // If intialOpen is true, then 
+        // If intialOpen is true, then
         if (initialOpen) {
             this.toggle();
         }

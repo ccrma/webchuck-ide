@@ -25,6 +25,7 @@
         "nav"
         "chuck-bar"
         "app";
+    overflow: hidden;
 }
 
 #app {
@@ -145,6 +146,9 @@ tr:nth-of-type(even) {
     @apply bg-sky-blue-300;
 }
 
+td:nth-child(3) {
+    @apply min-w-fit;
+}
 td:nth-child(4) {
     @apply block text-center align-middle;
 }

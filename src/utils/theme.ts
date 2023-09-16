@@ -37,7 +37,8 @@ export function getColorScheme(): string {
  * Initialize the dark mode toggle button
  */
 export function initTheme() {
-    darkModeToggle = document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
+    darkModeToggle =
+        document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });

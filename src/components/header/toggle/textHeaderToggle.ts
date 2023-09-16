@@ -1,4 +1,4 @@
-import HeaderToggle from "./headerToggle"
+import HeaderToggle from "./headerToggle";
 
 export default class TextHeaderToggle extends HeaderToggle {
     constructor(

@@ -52,18 +52,19 @@ export async function startChuck() {
         })
         .finally(() => Console.print("WebChucK is ready!"));
 
-    setTimeout(chuckGetNow, 50);
+    setInterval(chuckGetNow, 50);
 
     // TODO: temporary
     (window as any).theChuck = theChuck;
 }
 
+/**
+ * Get the current time from theChuck
+ * Cache the value to TS
+ */
 function chuckGetNow() {
     // cast to number
-    theChuck.now().then((samples: number | unknown) => {
+    theChuck.now().then((samples) => {
         chuckNowCached = samples as number;
-        console.log(chuckNowCached);
-
-        // TODO: process time for display
     });
 }

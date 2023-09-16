@@ -10,12 +10,13 @@ export default class EditorPanelHeader {
     public static fileToggle: HTMLButtonElement;
     public static fileNameElement: HTMLDivElement;
 
-    public static fileName: string = "untitled.ck"
+    public static fileName: string = "untitled.ck";
 
     constructor() {
         EditorPanelHeader.fileToggle =
             document.querySelector<HTMLButtonElement>("#fileToggle")!;
-        EditorPanelHeader.fileNameElement = document.querySelector<HTMLDivElement>("#fileName")!;
+        EditorPanelHeader.fileNameElement =
+            document.querySelector<HTMLDivElement>("#fileName")!;
 
         // read in both svg files
 

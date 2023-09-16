@@ -11,19 +11,30 @@ export default class OutputPanelHeader {
     constructor() {
         // Setup the Output Panel Header
         // Console
-        const consoleButton = document.querySelector<HTMLButtonElement>("#consoleTab")!;
-        OutputPanelHeader.consoleContent = document.querySelector<HTMLDivElement>("#consoleContainer")!;
+        const consoleButton =
+            document.querySelector<HTMLButtonElement>("#consoleTab")!;
+        OutputPanelHeader.consoleContent =
+            document.querySelector<HTMLDivElement>("#consoleContainer")!;
         // Visualizer
-        const visualizerButton = document.querySelector<HTMLButtonElement>("#visualizerTab")!;
-        OutputPanelHeader.visualizerContent = document.querySelector<HTMLDivElement>("#visualizer")!;
+        const visualizerButton =
+            document.querySelector<HTMLButtonElement>("#visualizerTab")!;
+        OutputPanelHeader.visualizerContent =
+            document.querySelector<HTMLDivElement>("#visualizer")!;
 
         // Build toggles
-        new OutputHeaderToggle(consoleButton, OutputPanelHeader.consoleContent, true);
-        new OutputHeaderToggle(visualizerButton, OutputPanelHeader.visualizerContent);
+        new OutputHeaderToggle(
+            consoleButton,
+            OutputPanelHeader.consoleContent,
+            true
+        );
+        new OutputHeaderToggle(
+            visualizerButton,
+            OutputPanelHeader.visualizerContent
+        );
     }
 
     /**
-     * Updates the split height css based on the number of 
+     * Updates the split height css based on the number of
      * tabs active in the Output panel header
      */
     static updateSplitHeight() {
@@ -37,5 +48,4 @@ export default class OutputPanelHeader {
 
         this.prevTabsActive = tabsActive;
     }
-
 }
