@@ -1,4 +1,5 @@
 import { toggleLeft } from "@utils/appLayout";
+import Editor from "../monaco/editor";
 
 /**
  * Editor Header class
@@ -6,26 +7,41 @@ import { toggleLeft } from "@utils/appLayout";
  * @param fileName The current file being edited
  */
 export default class EditorPanelHeader {
-    public fileToggle: HTMLButtonElement;
-    public fileName: HTMLDivElement;
+    public static fileToggle: HTMLButtonElement;
+    public static fileNameElement: HTMLDivElement;
+
+    public static fileName: string = "untitled.ck"
 
     constructor() {
-        this.fileToggle =
+        EditorPanelHeader.fileToggle =
             document.querySelector<HTMLButtonElement>("#fileToggle")!;
-        this.fileName = document.querySelector<HTMLDivElement>("#fileName")!;
+        EditorPanelHeader.fileNameElement = document.querySelector<HTMLDivElement>("#fileName")!;
 
         // read in both svg files
 
-        EditorPanelHeader.buildFileToggle(this.fileToggle);
+        EditorPanelHeader.buildFileToggle();
     }
 
     /**
      * Build the functionality for the file toggle button
      * @param fileToggle fileToggle button icon
      */
-    static buildFileToggle(fileToggle: HTMLButtonElement) {
-        fileToggle.addEventListener("click", () => {
+    static buildFileToggle() {
+        EditorPanelHeader.fileToggle.addEventListener("click", () => {
             toggleLeft();
         });
+    }
+
+    /**
+     * Set the file name
+     * @param name The file name
+     */
+    static setFileName(name: string) {
+        EditorPanelHeader.fileName = name;
+        EditorPanelHeader.fileNameElement.innerText = name;
+    }
+
+    static getFileName(): string {
+        return EditorPanelHeader.fileName;
     }
 }

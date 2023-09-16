@@ -9,15 +9,17 @@
 import NavBar from "@components/navbar";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
-import { initAppSplitters } from "@utils/appLayout";
-import { initTheme } from "./utils/theme";
 import OutputPanelHeader from "@/components/header/outputPanelHeader";
 import Console from "@components/console";
+import VmMonitor from "@components/vmMonitor";
+import { initAppSplitters } from "@utils/appLayout";
+import { initTheme } from "@utils/theme";
 
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
     public static Editor: Editor;
+    public static vmMonitor: VmMonitor;
     public static outputPanelHeader: OutputPanelHeader;
     public static console: Console;
 
@@ -27,6 +29,7 @@ class Main {
         Main.chuckBar = new ChuckBar();
 
         // CONSTRUCT APP COMPONENTS
+        Main.vmMonitor = new VmMonitor();
         Main.outputPanelHeader = new OutputPanelHeader();
         Main.Editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!

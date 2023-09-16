@@ -95,8 +95,8 @@
 }
 
 #vmMonitor {
-    @apply bg-yellow-500;
     grid-area: vm-monitor;
+    overflow: auto;
 }
 
 #outputPanel {
@@ -131,6 +131,26 @@
 
 #vimStatus > span > span > input {
     @apply outline-none bg-transparent border-none;
+}
+
+/* VM Monitor */
+table thead tr th {
+    @apply px-4 bg-sky-blue-300;
+}
+
+table tbody tr td {
+    @apply py-3 px-4 border-b border-sky-blue-700;
+}
+tr:nth-of-type(even) {
+    @apply bg-sky-blue-300;
+}
+
+td:nth-child(4) {
+    @apply block text-center align-middle;
+}
+
+.removeButton {
+    @apply h-7 px-2 m-auto block focus:outline-none hover:filter hover:invert-20 transition duration-300;
 }
 
 /* COMPONENTS */
@@ -173,7 +193,7 @@
     position: absolute;
     top: -4px;
     height: 8px;
-    z-index: 30;
+    z-index: 1;
 }
 
 .resizer.vSplit {
@@ -189,11 +209,11 @@
     position: absolute;
     left: -4px;
     width: 8px;
-    z-index: 30;
+    z-index: 1;
 }
 
 .resizer {
-    @apply opacity-5 z-30 bg-sky-blue-900 dark:bg-gray-200;
+    @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
 }
 
 .header {

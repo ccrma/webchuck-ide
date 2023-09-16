@@ -12,21 +12,26 @@
 
 import { Chuck } from "webchuck";
 import Console from "@components/console";
+import { calculateDisplayDigits } from "@utils/time";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
 
-// Chuck Time 
-// let sampleRate: number = 0;
-// let chuckNowCached: number = 0;
-// let displayDigits: number = 0;
+export { theChuck, audioContext };
+
+// Chuck Time
+let sampleRate: number = 0;
+let chuckNowCached: number = 0;
+
+export { sampleRate, chuckNowCached };
 
 export async function startChuck() {
     audioContext = new AudioContext();
-    // sampleRate = audioContext.sampleRate;
+    sampleRate = audioContext.sampleRate;
+    calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    Console.print("Starting WebChucK...")
+    Console.print("Starting WebChucK...");
     const ChucK = (await import("webchuck")).Chuck;
     theChuck = await ChucK.init([], audioContext);
     theChuck.connect(audioContext.destination);
@@ -36,15 +41,29 @@ export async function startChuck() {
     theChuck.setParamInt("TTY_COLOR", 1);
     theChuck.setParamInt("TTY_WIDTH_HINT", Console.getWidth());
 
-     // Print audio info
-     theChuck.getParamInt("SAMPLE_RATE")
-     .then( (value) => { Console.print("sample rate: " + value); } );
-     theChuck.getParamString("VERSION")
-     .then( (value) => { Console.print("system version: " + value); } )
-     .finally( () => Console.print("WebChucK is ready!") );
+    // Print audio info
+    theChuck.getParamInt("SAMPLE_RATE").then((value) => {
+        Console.print("sample rate: " + value);
+    });
+    theChuck
+        .getParamString("VERSION")
+        .then((value) => {
+            Console.print("system version: " + value);
+        })
+        .finally(() => Console.print("WebChucK is ready!"));
 
-     // TODO: temporary
-     (window as any).theChuck = theChuck;
+    setTimeout(chuckGetNow, 50);
+
+    // TODO: temporary
+    (window as any).theChuck = theChuck;
 }
 
-export { theChuck, audioContext };
+function chuckGetNow() {
+    // cast to number
+    theChuck.now().then((samples: number | unknown) => {
+        chuckNowCached = samples as number;
+        console.log(chuckNowCached);
+
+        // TODO: process time for display
+    });
+}

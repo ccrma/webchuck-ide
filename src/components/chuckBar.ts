@@ -16,6 +16,7 @@
 
 import { theChuck, startChuck } from "@/Host";
 import Editor from "@/components/monaco/editor";
+import VmMonitor from "@/components/vmMonitor";
 
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
@@ -46,7 +47,6 @@ export default class ChuckBar {
         ChuckBar.micButton.addEventListener("click", async () => {});
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
-            // TODO: Add to shred table...
         });
         ChuckBar.replaceButton.addEventListener("click", async () => {
             ChuckBar.replaceCode();
@@ -59,7 +59,10 @@ export default class ChuckBar {
     }
 
     static runEditorCode() {
-        theChuck?.runCode(Editor.getEditorCode());
+        theChuck?.runCode(Editor.getEditorCode()).then(
+            (shredID) => VmMonitor.addShredRow(shredID as number),
+            () => {}
+        );
     }
 
     static replaceCode() {

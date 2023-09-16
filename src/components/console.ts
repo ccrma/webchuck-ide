@@ -50,7 +50,6 @@ export default class Console {
     static resizeConsole() {
         Console.fit();
         theChuck?.setParamInt("TTY_WIDTH", Console.getWidth());
-        console.log("resized");
     }
 
     /**
