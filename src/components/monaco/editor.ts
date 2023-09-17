@@ -11,7 +11,7 @@ import ChuckBar from "@components/chuckBar";
 
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
-import { initVimMode } from "monaco-vim";
+import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
 
 // Constants
@@ -66,6 +66,12 @@ export default class Editor {
         window.addEventListener("resize", () => {
             Editor.resizeEditor();
         });
+
+        // VimMode.Vim.defineEx(name, shorthand, callback);
+        VimMode.Vim.defineEx("write", "w", function () {
+            // your own implementation on what you want to do when :w is pressed
+            console.log(Editor.getEditorCode());
+        });
     }
 
     /**
@@ -109,12 +115,6 @@ export default class Editor {
         );
     }
 
-    /**
-     * Toggle Vim mode
-     */
-    toggleVimMode() {
-        Editor.vimMode ? this.vimModeOff() : this.vimModeOn();
-    }
 
     /**
      * Get the contents of the editor
@@ -134,6 +134,12 @@ export default class Editor {
     }
 
     /**
+     * Toggle Vim mode
+     */
+    toggleVimMode() {
+        Editor.vimMode ? this.vimModeOff() : this.vimModeOn();
+    }
+    /**
      * Turn on Vim mode and configure the editor height
      */
     vimModeOn() {
@@ -151,7 +157,6 @@ export default class Editor {
         localStorage.setItem("vimMode", "true");
         Editor.vimMode = true;
     }
-
     /**
      * Turn off Vim mode
      */

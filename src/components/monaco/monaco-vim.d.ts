@@ -1,41 +1,23 @@
 declare module "monaco-vim" {
     import type { monaco } from "./monacoLite";
 
-    interface IVimOptions {
-        /**
-         * Whether to use block cursor or not.
-         * Defaults to true.
-         */
-        useBlockCursor?: boolean;
+    /**
+     * Initialize Vim mode on a Monaco editor instance.
+     * @param editor The editor instance to initialize Vim mode on.
+     * @param status The status bar element to show Vim mode on.
+     */
+    export function initVimMode(
+        editor: monaco.editor.IStandaloneCodeEditor,
+        status?: HTMLElement | null
+    ): VimMode;
 
-        /**
-         * Whether to highlight the current line or not.
-         * Defaults to true.
-         */
-        highlightCurrentLine?: boolean;
+    export class VimMode {
+        static Vim;
 
-        /**
-         * Whether to highlight the search matches or not.
-         * Defaults to true.
-         */
-        highlightSearchMatches?: boolean;
-
-        // Add more options as needed...
-    }
-
-    interface IVim {
-        /**
-         * Initialize Vim mode on a Monaco editor instance.
-         * @param editor The editor instance to initialize Vim mode on.
-         * @param status The status bar element to show Vim mode on.
-         */
-        initVimMode(
-            editor: monaco.editor.IStandaloneCodeEditor,
-            status?: HTMLElement | null
+        static defineEx(
+          name: string,
+          shorthand: string,
+          callback: () => void
         ): void;
-    }
-
-    const vim: IVim;
-
-    export = vim;
+      }
 }
