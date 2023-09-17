@@ -60,17 +60,29 @@ export default class ChuckBar {
 
     static runEditorCode() {
         theChuck?.runCode(Editor.getEditorCode()).then(
+            // Success
             (shredID) => VmMonitor.addShredRow(shredID as number),
-            () => {}
+            () => {} // Failure, do nothing
         );
     }
 
     static replaceCode() {
-        theChuck?.replaceCode(Editor.getEditorCode());
+        theChuck?.replaceCode(Editor.getEditorCode()).then(
+            // Success
+            (shreds) => {
+                VmMonitor.removeShredRow(shreds.oldShred);
+                VmMonitor.addShredRow(shreds.newShred);
+            }
+        ),
+            () => {}; // Failure, do nothing
     }
 
     static removeCode() {
-        theChuck?.removeLastCode();
+        theChuck?.removeLastCode().then(
+            // Success
+            (shredID) => VmMonitor.removeShredRow(shredID as number),
+            () => {} // Failure, do nothing
+        );
     }
 
     static async startWebchuck() {
