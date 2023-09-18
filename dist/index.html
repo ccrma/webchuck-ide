@@ -28,8 +28,8 @@
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     
 
-    <script type="module" crossorigin src="./assets/index-a185b9ee.js"></script>
-    <link rel="stylesheet" href="./assets/index-092cf15f.css">
+    <script type="module" crossorigin src="./assets/index-526c2209.js"></script>
+    <link rel="stylesheet" href="./assets/index-c5524649.css">
   </head>
 
   <body class="h-full w-full">
@@ -225,6 +225,7 @@
         <!-- Middle -->
         <div id="app-middle">
           <div id="editorPanel" class="h-full flex flex-col justify-start">
+            <!-- Monaco Editor -->
             <div id="editorPanelHeader" class="header h-8 justify-start flex-none">
               <button id="fileToggle" type="button" class="header-item icon px-1 mr-1">
                 <svg class="w-6 h-5 hover:bg-sky-blue-800" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -237,6 +238,7 @@
             <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 px-0.5 text-sm items-center flex-none hidden"></div>
           </div>
           <div id="splitH1" class="resizer hSplit"></div>
+          <!-- Input Panel -->
           <div id="inputPanel"></div>
         </div>
 
@@ -244,16 +246,30 @@
 
         <!-- Right -->
         <div id="app-right">
-          <div id="vmMonitor"></div>
+          <!-- VM Monitor -->
+          <div id="vmMonitor">
+            <table id="shredTable" class="w-full table-auto relative text-left overflow-auto">
+              <thead class="h-8 align-middle font-medium border-b sticky top-0 z-10 drop-shadow-sm">
+                <tr>
+                  <th scope="col">Shred</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Time</th>
+                  <th scope="col" style="width: 10%;">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
           <div id="splitH2" class="resizer hSplit"></div>
           <!-- Output Panel -->
-          <div id="outputPanel" class="flex flex-col">
-            <div id="outputPanelHeader" class="header text-dark-7 dark:bg-dark h-7 justify-start flex-none">
+          <div id="outputPanel" class="flex flex-col bg-sky-blue dark:bg-dark z-10">
+            <div id="outputPanelHeader" class="header text-dark-5 h-7 justify-start flex-none">
               <button id="consoleTab"    type="button" class="header-item text-sm px-2 hover:text-orange text-orange underline transition">CONSOLE</button>
               <button id="visualizerTab" type="button" class="header-item text-sm px-2 hover:text-orange">VISUALIZER</button>
             </div >
             <div id="consoleContainer" class="" style="height: calc(100% - 1.75rem)">
-              <div id="console" class="bg-black h-full"></div>
+              <div id="console" class="bg-dark-1 dark:bg-dark-1 h-full"></div>
             </div>
             <div id="visualizer" class="flex-1 bg-green-500 hidden"> visualizer </div>
           </div>

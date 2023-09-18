@@ -1,5 +1,4 @@
 import { toggleLeft } from "@utils/appLayout";
-import Editor from "../monaco/editor";
 
 /**
  * Editor Header class
