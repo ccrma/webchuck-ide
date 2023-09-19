@@ -1,4 +1,4 @@
-import { File, fetchFile, fetchTextFile } from "@/utils/fileLoader";
+import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import DropdownElement from "./dropdownElement";
 import Editor from "@components/monaco/editor";
 import EditorPanelHeader from "@components/header/editorPanelHeader";
@@ -68,7 +68,7 @@ async function loadExample(url: string): Promise<void> {
  * @param url url to data file
  */
 async function loadExampleDataFile(url: string): Promise<void> {
-    let example: File = await fetchFile(url);
+    let example: File = await fetchDataFile(url);
     // TODO: check for preloading/file system
     theChuck?.createFile("", example.name, example.data);
     Console.print(`Loaded file: ${example.name}`);

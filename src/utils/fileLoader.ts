@@ -25,7 +25,7 @@ export async function fetchTextFile(url: string): Promise<File> {
 /**
  * Load a binary file, good for loading wav files
  */
-export async function fetchFile(url: string): Promise<File> {
+export async function fetchDataFile(url: string): Promise<File> {
     // const fileName = url.split('/').pop();
     // let response = await fetch(url)
     // let blob = await response.blob();
