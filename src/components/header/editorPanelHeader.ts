@@ -3,19 +3,19 @@ import { toggleLeft } from "@utils/appLayout";
 /**
  * Editor Header class
  * @param fileToggle The file toggle button
- * @param fileName The current file being edited
+ * @param filename The current file being edited
  */
 export default class EditorPanelHeader {
     public static fileToggle: HTMLButtonElement;
-    public static fileNameElement: HTMLDivElement;
+    public static filenameElement: HTMLDivElement;
 
-    public static fileName: string = "untitled.ck";
+    public static filename: string = "untitled.ck";
 
     constructor() {
         EditorPanelHeader.fileToggle =
             document.querySelector<HTMLButtonElement>("#fileToggle")!;
-        EditorPanelHeader.fileNameElement =
-            document.querySelector<HTMLDivElement>("#fileName")!;
+        EditorPanelHeader.filenameElement =
+            document.querySelector<HTMLDivElement>("#filename")!;
 
         // read in both svg files
 
@@ -37,11 +37,15 @@ export default class EditorPanelHeader {
      * @param name The file name
      */
     static setFileName(name: string) {
-        EditorPanelHeader.fileName = name;
-        EditorPanelHeader.fileNameElement.innerText = name;
+        EditorPanelHeader.filename = name;
+        EditorPanelHeader.filenameElement.innerText = name;
     }
 
+    /**
+     * Get the current file name
+     * @returns The current file name
+     */
     static getFileName(): string {
-        return EditorPanelHeader.fileName;
+        return EditorPanelHeader.filename;
     }
 }

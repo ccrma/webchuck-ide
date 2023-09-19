@@ -115,7 +115,6 @@ export default class Editor {
         );
     }
 
-
     /**
      * Get the contents of the editor
      * @returns the contents of the editor
@@ -129,7 +128,7 @@ export default class Editor {
      * Set the contents of the editor
      * @param code code to replace in the editor
      */
-    setEditorCode(code: string) {
+    public static setEditorCode(code: string) {
         Editor.editor.setValue(code);
     }
 

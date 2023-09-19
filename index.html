@@ -58,8 +58,8 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="fileBG" tabindex="-1" class="hidden fixed z-10 inset-0 h-full w-full cursor-default"></button>
-              <div id="fileDropdown" class="hidden dropdown transition-colors">
+              <button id="fileBG" tabindex="-1" class="hidden fixed inset-0 h-full w-full cursor-default"></button>
+              <div id="fileDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">New</a>
@@ -84,7 +84,7 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="editDropdown" class="hidden dropdown">
+              <div id="editDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
                     <button id="vimToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
@@ -102,7 +102,7 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="viewDropdown" class="hidden dropdown">
+              <div id="viewDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
                     <button id="darkModeToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
@@ -120,20 +120,8 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="examplesDropdown" class="hidden dropdown">
-                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">New</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Export</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
-                  </li>
+              <div id="examplesDropdown" class="hidden dropdown w-48">
+                <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                 </ul>
               </div>
             </div>
@@ -145,9 +133,7 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="helpDropdown" class="hidden dropdown
-              ring-1 ring-black ring-opacity-5
-              ">
+              <div id="helpDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
                     <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Class Reference</a>
@@ -155,7 +141,7 @@
                   <li>
                     <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
                   </li>
-                  <li class="divider dark:border-t-gray-400"></li>
+                  <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
                   <li class>
                     <a href="https://chuck.stanford.edu" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">ChucK</a>
                   </li>
@@ -247,7 +233,7 @@
           <!-- VM Monitor -->
           <div id="vmMonitor">
             <table id="shredTable" class="w-full table-auto relative text-left overflow-auto">
-              <thead class="h-8 align-middle font-medium border-b sticky top-0 z-10 drop-shadow-sm">
+              <thead class="h-8 align-middle font-medium border-b sticky top-0 drop-shadow-sm">
                 <tr>
                   <th scope="col">Shred</th>
                   <th scope="col">Code</th>
@@ -261,13 +247,13 @@
           </div>
           <div id="splitH2" class="resizer hSplit"></div>
           <!-- Output Panel -->
-          <div id="outputPanel" class="flex flex-col bg-sky-blue dark:bg-dark z-10">
-            <div id="outputPanelHeader" class="header text-dark-5 h-7 justify-start flex-none">
+          <div id="outputPanel" class="flex flex-col bg-sky-blue dark:bg-dark">
+            <div id="outputPanelHeader" class="header text-dark-5 h-7 justify-start flex-none drop-shadow-sm">
               <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
               <button id="visualizerTab" type="button" class="header-item hover:text-dark-8">VISUALIZER</button>
             </div >
             <div id="consoleContainer" class="" style="height: calc(100% - 1.75rem)">
-              <div id="console" class="light dark:bg-dark-2 h-full"></div>
+              <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>
             </div>
             <div id="visualizer" class="flex-1 bg-green-500 hidden"> visualizer </div>
           </div>

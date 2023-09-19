@@ -79,7 +79,7 @@
 }
 
 .xterm .composition-view {
-    /* TODO: Composition position got messed up somewhere */
+    /* HM @xterm: Composition position got messed up somewhere */
     background: #000;
     color: #fff;
     display: none;

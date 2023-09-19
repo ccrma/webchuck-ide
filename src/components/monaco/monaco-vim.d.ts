@@ -15,9 +15,9 @@ declare module "monaco-vim" {
         static Vim;
 
         static defineEx(
-          name: string,
-          shorthand: string,
-          callback: () => void
+            name: string,
+            shorthand: string,
+            callback: () => void
         ): void;
-      }
+    }
 }

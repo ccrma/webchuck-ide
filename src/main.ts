@@ -6,22 +6,26 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
+import { initAppSplitters } from "@utils/appLayout";
+import { initTheme } from "@utils/theme";
 import NavBar from "@components/navbar";
+import Examples from "@components/examples";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
+import EditorPanelHeader from "@components/header/editorPanelHeader";
 import OutputPanelHeader from "@/components/header/outputPanelHeader";
 import Console from "@components/console";
 import VmMonitor from "@components/vmMonitor";
-import { initAppSplitters } from "@utils/appLayout";
-import { initTheme } from "@utils/theme";
 
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
-    public static Editor: Editor;
+    public static editor: Editor;
+    public static editorPanelHeader: EditorPanelHeader;
     public static vmMonitor: VmMonitor;
     public static outputPanelHeader: OutputPanelHeader;
     public static console: Console;
+    public static examples: Examples;
 
     constructor() {
         // CONSTRUCT IDE COMPONENTS
@@ -31,10 +35,12 @@ class Main {
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
         Main.outputPanelHeader = new OutputPanelHeader();
-        Main.Editor = new Editor(
+        Main.editorPanelHeader = new EditorPanelHeader();
+        Main.editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
         Main.console = new Console();
+        Main.examples = new Examples();
     }
 
     init() {

@@ -50,11 +50,9 @@ export default class ChuckBar {
         });
         ChuckBar.replaceButton.addEventListener("click", async () => {
             ChuckBar.replaceCode();
-            // TODO: Replace shred in shred table...
         });
         ChuckBar.removeButton.addEventListener("click", async () => {
             ChuckBar.removeCode();
-            // TODO: Remove shred from shred table...
         });
     }
 

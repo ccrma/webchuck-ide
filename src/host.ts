@@ -54,7 +54,7 @@ export async function startChuck() {
 
     setInterval(chuckGetNow, 50);
 
-    // TODO: temporary
+    // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;
 }
 

@@ -77,21 +77,20 @@ export default class Console {
      * Dark Theme
      */
     static setDarkTheme() {
-        Console.terminal.options.theme = ({
+        Console.terminal.options.theme = {
             background: "#222222",
             foreground: "#ffffff",
-        });
+        };
     }
 
     /**
      * Light Theme
      */
     static setLightTheme() {
-        Console.terminal.options.theme = ({ background: "#ffffff" });
-        Console.terminal.options.theme = ({
+        Console.terminal.options.theme = {
             foreground: "#222222",
             background: "#ffffff",
-        });
+        };
     }
 
     /**
@@ -107,5 +106,4 @@ export default class Console {
     static getRowHeight(): number {
         return Console.terminal.rows;
     }
-
 }
