@@ -25,7 +25,7 @@ export default class Console {
             cursorInactiveStyle: "none",
             fontFamily: "monaco, consolas, monospace",
             disableStdin: true,
-            fontSize: 14,
+            fontSize: 15,
             rows: 1, // start with 1 row, then grow
         });
 
