@@ -22,6 +22,7 @@ export default class OutputHeaderToggle extends TextHeaderToggle {
             this.open = true;
             this.button.classList.add("underline");
             this.button.classList.add("text-orange");
+            this.button.classList.remove("hover:text-dark-8");
             this.contentContainer.classList.remove("hidden");
             setTabsActive(getTabsActive() + 1);
         }
@@ -36,6 +37,7 @@ export default class OutputHeaderToggle extends TextHeaderToggle {
         this.open = false;
         this.button.classList.remove("underline");
         this.button.classList.remove("text-orange");
+        this.button.classList.add("hover:text-dark-8");
         this.contentContainer.classList.add("hidden");
     }
 }

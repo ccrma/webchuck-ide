@@ -197,7 +197,7 @@ td:nth-child(4) {
     position: absolute;
     top: -4px;
     height: 8px;
-    z-index: 1;
+    z-index: 30;
 }
 
 .resizer.vSplit {
@@ -213,13 +213,17 @@ td:nth-child(4) {
     position: absolute;
     left: -4px;
     width: 8px;
-    z-index: 1;
+    z-index: 30;
 }
 
 .resizer {
-    @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
+    @apply opacity-10 z-30 bg-sky-blue-900 dark:bg-gray-200;
 }
 
 .header {
     @apply w-full flex items-center px-1;
+}
+
+.header-item {
+    @apply text-sm px-2 transition duration-300;
 }

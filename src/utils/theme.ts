@@ -5,6 +5,9 @@
 // author: terry feng
 // date:   August 2023
 //--------------------------------------------------------------------
+
+import Console from "@/components/console";
+
 let darkModeToggle: HTMLButtonElement;
 
 /**
@@ -18,9 +21,11 @@ export function setColorScheme() {
             window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
         document.documentElement.classList.add("dark");
+        Console.setDarkTheme();
         darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
         document.documentElement.classList.remove("dark");
+        Console.setLightTheme();
         darkModeToggle.innerHTML = "Dark Mode: Off";
     }
 }

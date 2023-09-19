@@ -25,6 +25,7 @@ export default class Console {
             cursorInactiveStyle: "none",
             fontFamily: "monaco, consolas, monospace",
             disableStdin: true,
+            fontSize: 14,
             rows: 1, // start with 1 row, then grow
         });
 
@@ -73,9 +74,38 @@ export default class Console {
     }
 
     /**
+     * Dark Theme
+     */
+    static setDarkTheme() {
+        Console.terminal.options.theme = ({
+            background: "#222222",
+            foreground: "#ffffff",
+        });
+    }
+
+    /**
+     * Light Theme
+     */
+    static setLightTheme() {
+        Console.terminal.options.theme = ({ background: "#ffffff" });
+        Console.terminal.options.theme = ({
+            foreground: "#222222",
+            background: "#ffffff",
+        });
+    }
+
+    /**
      * Get the console width
      */
     static getWidth(): number {
         return Console.terminal.cols;
     }
+
+    /**
+     * Get height of a single row in px
+     */
+    static getRowHeight(): number {
+        return Console.terminal.rows;
+    }
+
 }

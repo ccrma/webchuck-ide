@@ -41,6 +41,8 @@
     user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .xterm.focus,
@@ -92,7 +94,7 @@
 
 .xterm .xterm-viewport {
     /* On OS X this is required in order for the scroll bar to appear fully opaque */
-    background-color: #111 !important;
+    background-color: #111;
     overflow-y: auto;
     cursor: default;
     position: absolute;
