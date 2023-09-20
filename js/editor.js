@@ -43,13 +43,13 @@ var globalFileName = (localStorage['chuckCacheName'] !== undefined) ? localStora
 /* Check if we have a cached chuck file */
 var doesChuckCacheExist = (localStorage['chuckCacheExist'] === 'true') || false; // default state
 
-var fileLoadSuccess = false;
 /* Load in chuck file from cache for edit, or load in the default chuck file */
 var launchChuckFile = async function ()
 {
     // Get url parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const fileURL = urlParams.get('url');
+    // Get chuck file 'url' or 'URL' parameter
+    const fileURL = urlParams.get('url') || urlParams.get('URL');
 
     if (fileURL !== null && fileURL.endsWith(".ck")) {
         // fetch chuck file from url
@@ -60,21 +60,13 @@ var launchChuckFile = async function ()
                     loadChuckFileFromString(text);
                     globalFileName = fileURL.split("/").pop();
                     printToOutputConsole("Loaded file from URL: " + globalFileName);
-                    fileLoadSuccess = true;
                 });
         } catch (error) {
             printToOutputConsole("Failed to load chuck URL: " + fileURL);
         }
-
-        // If file was loaded from url, don't load from cache
-        if (fileLoadSuccess) {
-            return;
-        }
-    }
-
-    // If urlParam is not null, or if fails to load chuck file from cache, load load cache or default chuck file
-    if (doesChuckCacheExist) 
+    } else if (doesChuckCacheExist) 
     {
+    // If urlParam is not null, or if fails to load chuck file from cache, load load cache or default chuck file
         // Set chuck file to last saved file
         loadChuckFileFromString(localStorage['chuckCache']);
         // Wait until the page is loaded to print this to the console
@@ -83,16 +75,18 @@ var launchChuckFile = async function ()
             // Set the chuck file name
             printToOutputConsole("Loaded autosave: " + localStorage['chuckCacheName'] + " (" + localStorage['chuckCacheDate'] + ")");
             globalFileName = localStorage['chuckCacheName'];
+            // cast to int
+            drawing(parseInt(localStorage.getItem("graphicStatus")));
         };
-    }
-    else
-    {
+    } else {
         // New default chuck file
         // TODO: Up to interpretation, but I think this should be a default chuck file
         loadServerFile("./template/untitled.ck");
     }
-};
 
+    // Generate GUI, eval from global context
+    return Promise.resolve();
+};
 /* Create a new chuck file */
 var newChuckFileButton = document.getElementById("newFileButton");
 var createNewChuckFile = function ()
@@ -281,9 +275,10 @@ var exportChuckFile = function ()
 };
 exportChuckButton.addEventListener("click", exportChuckFile);
 
+var chuckFileLoaded; // Promise to load chuck file
 // RUN THIS ON STARTUP!!!
 /* This will load in all cached values from localStorage or set defaults */
-launchChuckFile();
+chuckFileLoaded = launchChuckFile();
 setDarkMode(darkMode);
 setVimMode(vimMode);
 setViewChuckNow(chuckNowMode);
