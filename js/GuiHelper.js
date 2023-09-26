@@ -434,4 +434,3 @@ class onelinetext
 		line(this.x, this.y + 2, this.x + (this.w < 10 ? 10 : this.w), this.y + 2)
 	}
 }
-

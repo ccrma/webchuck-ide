@@ -166,8 +166,12 @@ function UI()
 	drawing(0)
 }
 
-async function generateGUI() {
+async function preload() {
 	await chuckFileLoaded;
+}
+
+async function generateGUI() {
+	preload();
 	eval.call(window, setUI());
 }
 generateGUI(); // this works too
