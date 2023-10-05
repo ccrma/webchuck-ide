@@ -52,33 +52,35 @@ while( true )
     while( hid.recv( msg ) )
     {
         if( msg.isButtonDown() ) {
-
-            // NOTES
-            <<< "key string:", msg.key, "key ascii:", msg.which >>>;
-            if ( msg.which >= 1 && msg.which <= 9) {
-                Std.mtof( notes[msg.which-1] + octave ) => float freq;
-
+            // print key (debugging)
+            <<< "[key]", msg.key, "(ascii)", msg.which >>>;
+            
+            // Play notes
+            if ( msg.which >= '1' && msg.which <= '9') {
+                // convert ascii representation to notes array index
+                // gets MIDI value and applies octave shift
+                // convert MIDI to freq
+                Std.mtof( notes[msg.which-'1'] + octave ) => float freq;
                 freq => organ.freq;
                 1 => organ.noteOn;
             }
-            if (msg.which == 0) {
+            if (msg.which == '0') {
                 Std.mtof( notes[length-1] + octave ) => float freq;
-
                 freq => organ.freq;
                 1 => organ.noteOn;
             }
-            if (msg.key == "y") {
+            if (msg.which == 'Y') {
                 Std.mtof( spiceNote + octave ) => float freq;
                 freq => organ.freq;
                 1 => organ.noteOn;
             }
 
-            // OCTAVE CONTROL
-            if (msg.key == "x") {
+            // octave shift
+            if (msg.which == 'X') {
                 <<< "octave up", "" >>>;
                 12 +=> octave;
             } 
-            else if (msg.key == "z")  {
+            else if (msg.which == 'Z')  {
                 <<< "octave down", "" >>>;
                 12 -=> octave;
             }

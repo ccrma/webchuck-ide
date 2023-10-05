@@ -10,12 +10,12 @@ let _kbdActive = false;
 
 async function kbdActive() {
   const x = await theChuck.getInt("_kbdActive");
-  x === 1 ? _kbdActive = true : _kbdActive = false;
+  _kbdActive = x == 1;
 }
 
 async function mouseActive() {
   const x = await theChuck.getInt("_mouseActive");
-  x === 1 ? _mouseActive = true : _mouseActive = false;
+  _mouseActive = x == 1;
 }
 
 function getMousePos(mouseEvent) {
