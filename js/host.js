@@ -543,7 +543,12 @@ theChuckReady.then(function ()
     
         //The argument here is just to execute older code
         function int recv(HidMsg msg){
-            return _isDown;
+            if(isKBDOpen)
+                return _isDown;
+            if(isMouseOpen)
+                return _isMouseDown;
+
+            return 0;
         }
     }
         `);
