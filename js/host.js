@@ -409,7 +409,7 @@ theChuckReady.then(function ()
     global float _deltaY;
     
     global string _key;
-    global int _isDown;
+    1 => global int _isDown;
     global int _isMouseDown;
     global int _isMouseUp;
     global int _isScroll;
@@ -434,7 +434,7 @@ theChuckReady.then(function ()
     
         function int isButtonDown() {
             if(_isMouseDown || _isDown){
-                0 => _isMouseDown;
+                0 => _isMouseDown => _isDown;
                 return 1;
             }
             return 0;
@@ -458,7 +458,6 @@ theChuckReady.then(function ()
     
         function void _set(){
             while(true){
-                _hid => now;
                 _cursorX => cursorX;
                 _cursorY => cursorY;
                 _key => key;
@@ -468,6 +467,7 @@ theChuckReady.then(function ()
                 _deltaY => deltaY;
                 _scaledCursorX => scaledCursorX;
                 _scaledCursorY => scaledCursorY;
+                samp => now;
             }
         }
         spork~_set();
@@ -501,7 +501,7 @@ theChuckReady.then(function ()
     
         0 => int isMouseOpen;
         0 => int isKBDOpen;
-        int active;
+        0 => int active;
     
         string deviceName; 
     
@@ -542,8 +542,8 @@ theChuckReady.then(function ()
         spork~_hackEvent();
     
         //The argument here is just to execute older code
-        function time recv(HidMsg msg){
-            return _msg => now;
+        function int recv(HidMsg msg){
+            return _isDown;
         }
     }
         `);
