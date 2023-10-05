@@ -54,7 +54,7 @@ while( true )
         if( msg.isButtonDown() ) {
 
             // NOTES
-            <<< "key:", msg.key >>>;
+            <<< "key string:", msg.key, "key ascii:", msg.which >>>;
             if ( msg.which >= 1 && msg.which <= 9) {
                 Std.mtof( notes[msg.which-1] + octave ) => float freq;
 
@@ -67,18 +67,18 @@ while( true )
                 freq => organ.freq;
                 1 => organ.noteOn;
             }
-            if (msg.which == 'y') {
+            if (msg.key == "y") {
                 Std.mtof( spiceNote + octave ) => float freq;
                 freq => organ.freq;
                 1 => organ.noteOn;
             }
 
             // OCTAVE CONTROL
-            if (msg.which == 'x') {
+            if (msg.key == "x") {
                 <<< "octave up", "" >>>;
                 12 +=> octave;
             } 
-            else if (msg.which == 'z')  {
+            else if (msg.key == "z")  {
                 <<< "octave down", "" >>>;
                 12 -=> octave;
             }
