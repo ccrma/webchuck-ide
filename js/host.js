@@ -15,7 +15,8 @@ var fileUploadButton = document.getElementById("fileUploadButton");
 var fileUploader = document.getElementById("fileUploader");
 
 // For preloading files
-var serverFilesToPreload = serverFilesToPreload || [];
+// hack for 220a moved to index.html
+// var serverFilesToPreload = serverFilesToPreload || [];
 var preloadedFilesReady = preloadFilenames(serverFilesToPreload);
 
 // VM audio params
@@ -27,6 +28,10 @@ var displayDigits = 0; // how many digits e.g., 5 digits in 44100
 // so they can be replaced later if desired
 var chuckCompileButton = function ()
 {
+
+// hack for 220a, get name from index.html
+    theChuck.runFile(vFilename220a);
+    
     if(precompilerMode === 0) {
         theChuck.runCode(window.localStorage.getItem('chuckCache')).then(
             function (shredID)
