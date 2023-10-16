@@ -65,6 +65,9 @@
                         <li class="menu-item">
                             <button class="btn btn-link" id="exportChuckButton">Export as ChucK file</button>
                         </li>
+                        <li class="menu-item">
+                            <button class="btn btn-link" id="exportWebChuckButton">Export WebChucK Page</button>
+                        </li>
                     </ul>
                 </div>
                 <!-- Edit -->
@@ -269,6 +272,33 @@
                 </div>
             </div>
         </div>
+        <!-- Export WebChucK Page-->
+        <div class="modal modal-sm" id="exportWebChuckPage"><a class="modal-overlay" href="#" aria-label="Close"></a>
+            <div class="modal-container" role="document">
+              <div class="modal-header"><a class="btn btn-clear float-right" href="#" aria-label="Close"></a>
+                <div class="modal-title h5">Export WebChucK Page</div>
+              </div>
+              <div class="modal-body">
+                <div class="content">
+                  <form id="exportWebChuckPageForm">
+                    <div class="form-group">
+                      <label class="form-label" for="export-title">Title</label>
+                      <input class="form-input" id="export-title" type="text" placeholder="IsoRhythm" oninput="cacheInput(this)">
+
+                      <label class="form-label" for="export-name">Name</label>
+                      <input class="form-input" id="export-name" type="text" placeholder="Terry Feng" oninput="cacheInput(this)">
+
+                      <label class="form-label" for="export-desc">Description</label>
+                      <textarea class="form-input" id="export-desc" placeholder="Tell me about this..." rows="3" onchange="cacheInput(this)"></textarea>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button id="submitExport" class="btn btn-primary">Submit</button><a class="btn btn-link" href="#modals-sizes" aria-label="Close">Close</a>
+              </div>
+            </div>
+        </div>
     </div>
     
     <!-- POST SCRIPTS -->
@@ -293,6 +323,7 @@
     <script type="text/javascript" src="./js/host.js"></script> <!-- Hook up our IDE to WebChucK -->
     <script type="text/javascript" src="./js/gui.js"></script> <!-- Set up the gui generator -->
     <script type="text/javascript" src="./js/examples.js"></script> <!-- For loading more examples -->
+    <script type="text/javascript" src="./js/exportPage.js"></script> <!-- For loading more examples -->
     <!-- Specify where ChucK is -->
 </body>
 

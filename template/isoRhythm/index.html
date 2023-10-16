@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISORhythm WebChuck</title>
+    <script type="text/javascript" src="https://ccrma.stanford.edu/~cc/220a/webchuck220a/js/ace.js"
+        charset="utf-8"></script>
+    <script type="text/javascript" src="https://ccrma.stanford.edu/~cc/220a/webchuck220a/js/editor.js"></script>
+    <link rel="stylesheet" href="https://ccrma.stanford.edu/~cc/220a/webchuck220a/css/editor.css">
+    <style>
+    body {background-color: #DEF; font-family: Arial, Helvetica, sans-serif;}
+    button {padding: 10px 20px; background-color: bisque; border: 2px solid orange; border-radius: 5px; cursor: pointer; color: #333}
+    button:hover {background-color: orange; color: white; transition: 300ms;}
+    </style>
+</head>
+
+<body>
+    <h1>${TITLE}</h1>
+    <h2>Music 220A - ${NAME}</h2>
+    <p>${DESCRIPTION}</p>
+    <button id="play">Play</button>
+    <button id="stop">Stop</button>
+    <br>
+    <br>
+    <div id="editor" class="ace_editor ace-chuck"></div>
+
+    <!-- SCRIPT -->
+    <script type="module">
+        import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
+
+        let firstTime = true;
+        let CODE = ""
+
+        // Play
+        document.getElementById('play').addEventListener('click', async () => {
+            // Initialize default ChucK object, if not already initialized
+            window.theChuck ??= await Chuck.init([
+                { 
+                    serverFilename: "https://ccrma.stanford.edu/~cc/220a/hw2/isoRhythm.ck", 
+                    virtualFilename: "isoRhythmClass.ck" 
+                }
+            ]);
+
+            // First time starting ChucK
+            if (firstTime) {
+                theChuck.runFile("isoRhythmClass.ck");
+                firstTime = false;
+            }
+
+            // Run ChucK code
+            theChuck.runCode(editor.getValue());
+        });
+
+        // Stop
+        document.getElementById('stop').addEventListener('click', async () => {
+            theChuck.removeLastCode();
+        });
+
+        // Submitted Code
+        const code = `${CODE}`;
+
+        // Set Chuck Code
+        const editor = newChuckEditor('editor');
+        editor.setValue(code, 1);
+
+    </script>
+
+</body>
+
+</html>
