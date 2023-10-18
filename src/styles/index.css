@@ -110,7 +110,7 @@
 }
 
 .dropdown {
-    @apply absolute z-40 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply absolute z-40 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
@@ -174,6 +174,10 @@ td:nth-child(4) {
     font-size: 0.8rem;
     padding: 0 0.6rem 0 1rem;
     transform: translateY(-0.85rem);
+}
+
+.dark .divider[data-content]::after {
+    background: #333;
 }
 
 .divider {
