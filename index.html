@@ -28,6 +28,14 @@
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     <link rel="stylesheet" href="./src/styles/index.css" />
 
+    <script>
+      // Set color theme
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
   </head>
 
   <body class="h-full w-full">
@@ -43,7 +51,7 @@
         <!-- Left -->
         <div class="flex justify-left items-center">
           <!-- ChucK Logo -->
-          <a href="#" class="">
+          <a href="#" class="w-10 md:w-8">
             <img src="assets/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
           </a>
 
@@ -178,7 +186,7 @@
             <!-- WebChucK Button-->
             <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 2xl:w-64 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
-            <div class="flex h-full justify-start items-center">
+            <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem)">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
                     <img src="assets/mic.svg" alt="Microphone" class="h-11" draggable="false">
                 </button>

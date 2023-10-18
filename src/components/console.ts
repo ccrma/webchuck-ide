@@ -17,6 +17,7 @@ export default class Console {
     public static terminal: Terminal;
     public static terminalElement: HTMLDivElement;
     public static fitAddon: FitAddon;
+    public static theme: string = "light";
 
     private static firstPrint: boolean = true;
 
@@ -27,6 +28,10 @@ export default class Console {
             disableStdin: true,
             fontSize: 15,
             rows: 1, // start with 1 row, then grow
+            theme: {
+                foreground: Console.theme === "light" ? "#222222" : "#ffffff",
+                background: Console.theme === "light" ? "#ffffff" : "#222222",
+            },
         });
 
         Console.terminalElement =
@@ -77,20 +82,26 @@ export default class Console {
      * Dark Theme
      */
     static setDarkTheme() {
-        Console.terminal.options.theme = {
-            background: "#222222",
-            foreground: "#ffffff",
-        };
+        Console.theme = "dark";
+        if (Console.terminal) {
+            Console.terminal.options.theme = {
+                background: "#222222",
+                foreground: "#ffffff",
+            };
+        }
     }
 
     /**
      * Light Theme
      */
     static setLightTheme() {
-        Console.terminal.options.theme = {
-            foreground: "#222222",
-            background: "#ffffff",
-        };
+        Console.theme = "light";
+        if (Console.terminal) {
+            Console.terminal.options.theme = {
+                foreground: "#222222",
+                background: "#ffffff",
+            };
+        }
     }
 
     /**

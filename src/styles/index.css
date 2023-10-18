@@ -115,8 +115,8 @@
 }
 
 /* CHUCK BAR */
-.chuck-button {
-    @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 enabled:hover:drop-shadow-lg transition duration-300;
+#chuck-bar .chuck-button {
+    @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 transition duration-300;
 }
 
 /* EDITOR */

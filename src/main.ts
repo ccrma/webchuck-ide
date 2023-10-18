@@ -28,6 +28,8 @@ class Main {
     public static examples: Examples;
 
     constructor() {
+        initTheme(); // Set color scheme
+
         // CONSTRUCT IDE COMPONENTS
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
@@ -44,7 +46,6 @@ class Main {
     }
 
     init() {
-        initTheme(); // Set theme
         initAppSplitters(); // Drag resizable panels
 
         Main.keyboardShortcuts();
