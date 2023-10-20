@@ -12,7 +12,9 @@
 // date:   September 2023
 //------------------------------------------------------------
 
+import Editor from "@/components/monaco/editor";
 import Resizer from "../components/resizer";
+import Console from "@/components/console";
 
 const CLASS_V_SPLIT: string = "vSplit";
 const CLASS_H_SPLIT: string = "hSplit";
@@ -30,9 +32,11 @@ const RIGHT_WIDTH: number = 33.33;
 // let middle = document.getElementById("app-middle")!;
 // let right = document.getElementById("app-right")!;
 let splitContainer = document.getElementById("app")!;
-let left_width: number;
-let middle_width: number;
-let right_width: number;
+let left_width: number = LEFT_WIDTH;
+let middle_width: number = MIDDLE_WIDTH;
+let right_width: number = RIGHT_WIDTH;
+
+let splitters: Resizer[] = [];
 
 // export Constants
 export const AppLayoutConstants = {
@@ -79,21 +83,32 @@ export function setCurrentWidths(colPercents: number[]) {
  * Toggle the left file Explorer visibility
  */
 export function toggleLeft() {
+    let leftPanel = document.getElementById("app-left")!;
     if (localStorage.leftVisible === "true") {
         // hide left
         const widths = getCurrentWidths();
-        setCurrentWidths([0, widths[0] + widths[1], widths[2]]);
+        // only continue if widths are valid
+        if (widths === null) return;
+        console.log(widths);
+        setCurrentWidths([0, widths[1] + widths[0]/2, widths[2] + widths[0]/2]);
+        splitters[0].deactivate(); // Deactive the left resizer
+        leftPanel.classList.add("hidden"); // Hide the left panel
         localStorage.leftVisible = "false";
     } else {
         // show left
         const widths = getCurrentWidths();
         setCurrentWidths([
             LEFT_WIDTH,
-            widths[0] + widths[1] - LEFT_WIDTH,
-            widths[2],
+            widths[1] - LEFT_WIDTH/2,
+            widths[2] - LEFT_WIDTH/2,
         ]);
+        leftPanel.classList.remove("hidden");
+        splitters[0].activate();
         localStorage.leftVisible = "true";
     }
+
+    Editor.resizeEditor();
+    Console.resizeConsole();
 }
 
 //-----------------------------------
@@ -106,7 +121,7 @@ function findSplitObjects(selector: string) {
     if (splits.length !== 0) {
         splits.forEach((split) => {
             let isHorizDrag = split.classList.contains(CLASS_V_SPLIT);
-            new Resizer(split, isHorizDrag);
+            splitters.push(new Resizer(split, isHorizDrag));
         });
     }
 }

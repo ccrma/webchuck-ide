@@ -1,3 +1,6 @@
+/**
+ * Abstract Header Toggle Implementation Class
+ */
 export default class HeaderToggle {
     public button: HTMLButtonElement;
     public contentContainer: HTMLDivElement;

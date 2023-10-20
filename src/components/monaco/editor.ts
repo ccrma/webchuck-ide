@@ -78,7 +78,7 @@ export default class Editor {
      * Resize the editor
      */
     static resizeEditor() {
-        Editor.editor.layout();
+        Editor.editor?.layout();
     }
 
     /**

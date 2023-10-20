@@ -75,7 +75,7 @@ export default class Console {
      * Fit the console to the container
      */
     static fit() {
-        Console.fitAddon.fit();
+        Console.fitAddon?.fit();
     }
 
     /**

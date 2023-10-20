@@ -10,6 +10,14 @@ import Console from "@/components/console";
 
 let darkModeToggle: HTMLButtonElement;
 
+/* Header Theme */
+let accentColorClass: string = "text-orange";
+let textColorClass: string = "text-dark-5";
+let inactiveHoverColorClass: string = "hover:text-dark-8";
+let darkTextColorClass: string = "dark:text-dark-8";
+let darkInactiveHoverColorClass: string = "dark:hover:text-dark-a";
+export {accentColorClass, textColorClass, inactiveHoverColorClass, darkTextColorClass, darkInactiveHoverColorClass};
+
 /**
  * Set the color scheme of the page
  */

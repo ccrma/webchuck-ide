@@ -1,4 +1,5 @@
 import { toggleLeft } from "@utils/appLayout";
+import SVGToggle from "./toggle/svgToggle";
 
 /**
  * Editor Header class
@@ -17,9 +18,10 @@ export default class EditorPanelHeader {
         EditorPanelHeader.filenameElement =
             document.querySelector<HTMLDivElement>("#filename")!;
 
-        // read in both svg files
-
-        EditorPanelHeader.buildFileToggle();
+        // Build SVG Folder Toggle
+        new SVGToggle(EditorPanelHeader.fileToggle, () => {
+            toggleLeft();
+        }, false);
     }
 
     /**

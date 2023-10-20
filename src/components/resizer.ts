@@ -165,6 +165,16 @@ export default class Resizer {
             this.onEndDragHandler
         );
     }
+
+    deactivate() {
+        // Hide the splitter
+        this.split.classList.add("hidden");
+    }
+
+    activate() {
+        // Show the splitter
+        this.split.classList.remove("hidden");
+    }
 }
 
 //-----------------------------------------------------------

@@ -233,3 +233,7 @@ td:nth-child(4) {
 .header-item {
     @apply text-sm px-2 transition duration-300;
 }
+
+.header-text {
+    @apply text-dark-5 hover:text-dark-8 dark:text-dark-8 dark:hover:text-sky-blue;
+}
