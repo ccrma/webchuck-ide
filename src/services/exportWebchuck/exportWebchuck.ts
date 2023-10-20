@@ -11,7 +11,7 @@ export function initExport() {
 }
 
 async function exportWebchuck() {
-    let template = await (await fetch("/templates/export.html")).text();
+    let template = await (await fetch("templates/export.html")).text();
     // fill in template with information
     template = template.replace("${CODE}", Editor.getEditorCode());
 
