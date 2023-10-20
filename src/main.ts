@@ -38,10 +38,10 @@ class Main {
         Main.vmMonitor = new VmMonitor();
         Main.outputPanelHeader = new OutputPanelHeader();
         Main.editorPanelHeader = new EditorPanelHeader();
+        Main.console = new Console();
         Main.editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
-        Main.console = new Console();
         Main.examples = new Examples();
     }
 

@@ -13,6 +13,8 @@ import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
+import EditorPanelHeader from "../header/editorPanelHeader";
+import Console from "../console";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
@@ -47,6 +49,14 @@ export default class Editor {
             cursorBlinking: "smooth",
         });
 
+        // Editor autosave config
+        Editor.editor.setValue(localStorage.getItem("editorCode") || "");
+        Editor.loadAutoSave();
+        // When the editor is changed, save the code to local storage
+        Editor.editor.onDidChangeModelContent(() => {
+            Editor.saveCode();
+        });
+
         // Vim Toggle
         Editor.vimToggle =
             document.querySelector<HTMLButtonElement>("#vimToggle")!;
@@ -59,9 +69,6 @@ export default class Editor {
             document.querySelector<HTMLDivElement>("#vimStatus")!;
         Editor.vimMode ? this.vimModeOn() : this.vimModeOff();
 
-        // Keybindings
-        this.initMonacoKeyBindings();
-
         // Resize editor on window resize
         window.addEventListener("resize", () => {
             Editor.resizeEditor();
@@ -69,9 +76,27 @@ export default class Editor {
 
         // VimMode.Vim.defineEx(name, shorthand, callback);
         VimMode.Vim.defineEx("write", "w", function () {
-            // your own implementation on what you want to do when :w is pressed
-            console.log(Editor.getEditorCode());
+            Editor.saveCode();
         });
+        // Keybindings
+        this.initMonacoKeyBindings();
+    }
+
+    /**
+     * Load the autosave from local storage
+     */
+    static loadAutoSave() {
+        Editor.setEditorCode(localStorage.getItem("editorCode") || "");
+        Console.print(`Loaded autosave: \x1b[38;2;34;178;254m${localStorage.getItem("editorFilename")}\x1b[0m (${localStorage.getItem("editorCodeTime")}`)
+    }
+
+    /**
+     * Save the code to local storage
+     */
+    static saveCode() {
+        localStorage.setItem("editorCode", Editor.getEditorCode());
+        localStorage.setItem("editorFilename", EditorPanelHeader.getFileName());
+        localStorage.setItem("editorCodeTime", new Date().toLocaleString());
     }
 
     /**

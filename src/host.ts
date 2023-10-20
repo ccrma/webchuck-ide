@@ -59,6 +59,26 @@ export async function startChuck() {
 }
 
 /**
+ * Connect microphone input to theChuck
+ */
+export async function connectMic() {
+    // Get microphone with no constraints
+    navigator.mediaDevices
+        .getUserMedia({
+            video: false,
+            audio: {
+                echoCancellation: false,
+                autoGainControl: false,
+                noiseSuppression: false,
+            },
+        })
+        .then((stream) => {
+            const adc = audioContext.createMediaStreamSource(stream);
+            adc.connect(theChuck);
+        });
+}
+
+/**
  * Get the current time from theChuck
  * Cache the value to TS
  */

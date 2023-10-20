@@ -14,7 +14,7 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import { theChuck, startChuck } from "@/Host";
+import { theChuck, startChuck, connectMic } from "@/Host";
 import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 
@@ -44,7 +44,10 @@ export default class ChuckBar {
         ChuckBar.webchuckButton.addEventListener("click", async () => {
             await ChuckBar.startWebchuck();
         });
-        ChuckBar.micButton.addEventListener("click", async () => {});
+        ChuckBar.micButton.addEventListener("click", async () => {
+            connectMic();
+            ChuckBar.micButton.disabled = true;
+        });
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
         });
@@ -70,9 +73,9 @@ export default class ChuckBar {
             (shreds) => {
                 VmMonitor.removeShredRow(shreds.oldShred);
                 VmMonitor.addShredRow(shreds.newShred);
-            }
-        ),
-            () => {}; // Failure, do nothing
+            },
+            () => {} // Failure, do nothing
+        );
     }
 
     static removeCode() {
