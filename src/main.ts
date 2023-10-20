@@ -6,8 +6,6 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
-import { initAppSplitters } from "@utils/appLayout";
-import { initTheme } from "@utils/theme";
 import NavBar from "@components/navbar";
 import Examples from "@components/examples";
 import ChuckBar from "@components/chuckBar";
@@ -16,6 +14,11 @@ import EditorPanelHeader from "@components/header/editorPanelHeader";
 import OutputPanelHeader from "@/components/header/outputPanelHeader";
 import Console from "@components/console";
 import VmMonitor from "@components/vmMonitor";
+
+import { initAppSplitters } from "@utils/appLayout";
+import { initTheme } from "@utils/theme";
+import { initExport } from "@services/exportWebchuck/exportWebchuck";
+
 
 class Main {
     public static navBar: NavBar;
@@ -49,6 +52,9 @@ class Main {
         initAppSplitters(); // Drag resizable panels
 
         Main.keyboardShortcuts();
+
+        // SERVICES
+        initExport();
     }
 
     static keyboardShortcuts() {
@@ -84,3 +90,4 @@ class Main {
 // Main entry point
 const main = new Main();
 main.init();
+

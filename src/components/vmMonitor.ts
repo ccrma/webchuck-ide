@@ -90,7 +90,7 @@ export default class VmMonitor {
         // Remove button
         let removeButton = document.createElement("input");
         removeButton.setAttribute("type", "image");
-        removeButton.setAttribute("src", "assets/remove.svg");
+        removeButton.setAttribute("src", "img/remove.svg");
         removeButton.classList.add("removeButton");
         removeButton.setAttribute("alt", "remove button");
         remove.appendChild(removeButton);

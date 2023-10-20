@@ -17,7 +17,7 @@
     <meta property="og:title" content="WebChucK IDE" />
     <meta property="og:url" content="https://chuck.stanford.edu/ide/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://chuck.stanford.edu/ide/assets/chuck_logo.png" />
+    <meta property="og:image" content="https://chuck.stanford.edu/ide/img/chuck_logo.png" />
     <meta property="fb:app_id" content="966242223397117" /> <!--default app id-->
     <meta name="keywords"
       content="ChucK, WebChucK, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
@@ -28,8 +28,16 @@
     <link rel="manifest" href="./favicon_io/site.webmanifest">
     
 
-    <script type="module" crossorigin src="./assets/index-765886b2.js"></script>
-    <link rel="stylesheet" href="./assets/index-326aedda.css">
+    <script>
+      // Set color theme
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-3a04ee16.js"></script>
+    <link rel="stylesheet" href="./assets/index-545e2aaa.css">
   </head>
 
   <body class="h-full w-full">
@@ -45,8 +53,8 @@
         <!-- Left -->
         <div class="flex justify-left items-center">
           <!-- ChucK Logo -->
-          <a href="#" class="">
-            <img src="assets/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+          <a href="#" class="w-10 md:w-8">
+            <img src="img/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
           </a>
 
           <!-- Nav Items -->
@@ -69,8 +77,10 @@
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
                   </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Export</a>
+                  <li id="">
+                    <button id="exportWebchuck" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                      Export
+                    </button>
                   </li>
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
@@ -180,18 +190,18 @@
             <!-- WebChucK Button-->
             <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-24 md:w-44 2xl:w-64 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
             <!-- Chuck Buttons -->
-            <div class="flex h-full justify-start items-center">
+            <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem)">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
-                    <img src="assets/mic.svg" alt="Microphone" class="h-11" draggable="false">
+                    <img src="img/mic.svg" alt="Microphone" class="h-11" draggable="false">
                 </button>
                 <button id="playButton"     type="button" class="chuck-button" disabled>
-                    <img src="assets/play.svg" alt="Play" class="h-11" draggable="false">
+                    <img src="img/play.svg" alt="Play" class="h-11" draggable="false">
                 </button>
                 <button id="replaceButton"  type="button" class="chuck-button" disabled>
-                    <img src="assets/replace.svg" alt="Replace" class="h-11" draggable="false">
+                    <img src="img/replace.svg" alt="Replace" class="h-11" draggable="false">
                 </button>
                 <button id="removeButton"   type="button" class="chuck-button" disabled>
-                    <img src="assets/remove.svg" alt="Remove" class="h-11" draggable="false">
+                    <img src="img/remove.svg" alt="Remove" class="h-11" draggable="false">
                 </button>
             </div>
         </div>
@@ -214,7 +224,7 @@
             <!-- Monaco Editor -->
             <div id="editorPanelHeader" class="header h-8 justify-start flex-none">
               <button id="fileToggle" type="button" class="header-item icon px-1 mr-1">
-                <svg class="w-6 h-5 hover:bg-sky-blue-800" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-6 h-5" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path stroke="currentColor" d="M3 0C1.35862 0 0 1.35862 0 3V21C0 22.6414 1.35862 24 3 24H27C28.6414 24 30 22.6414 30 21V6C30 4.35862 28.6414 3 27 3H15L12 0H3ZM3 3H10.7578L13.7578 6H27V21H3V3Z" fill="currentColor"/>
                 </svg>
               </button> 
@@ -250,9 +260,9 @@
           <div id="splitH2" class="resizer hSplit"></div>
           <!-- Output Panel -->
           <div id="outputPanel" class="flex flex-col bg-sky-blue dark:bg-dark">
-            <div id="outputPanelHeader" class="header text-dark-5 h-7 justify-start flex-none drop-shadow-sm">
+            <div id="outputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
               <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
-              <button id="visualizerTab" type="button" class="header-item hover:text-dark-8">VISUALIZER</button>
+              <button id="visualizerTab" type="button" class="header-item text-dark-5 hover:text-dark-8 dark:hover:text-dark-a">VISUALIZER</button>
             </div >
             <div id="consoleContainer" class="" style="height: calc(100% - 1.75rem)">
               <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>

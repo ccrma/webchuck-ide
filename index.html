@@ -17,7 +17,7 @@
     <meta property="og:title" content="WebChucK IDE" />
     <meta property="og:url" content="https://chuck.stanford.edu/ide/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://chuck.stanford.edu/ide/assets/chuck_logo.png" />
+    <meta property="og:image" content="https://chuck.stanford.edu/ide/img/chuck_logo.png" />
     <meta property="fb:app_id" content="966242223397117" /> <!--default app id-->
     <meta name="keywords"
       content="ChucK, WebChucK, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
@@ -52,7 +52,7 @@
         <div class="flex justify-left items-center">
           <!-- ChucK Logo -->
           <a href="#" class="w-10 md:w-8">
-            <img src="assets/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+            <img src="img/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
           </a>
 
           <!-- Nav Items -->
@@ -75,8 +75,10 @@
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
                   </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Export</a>
+                  <li id="">
+                    <button id="exportWebchuck" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                      Export
+                    </button>
                   </li>
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
@@ -188,16 +190,16 @@
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem)">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
-                    <img src="assets/mic.svg" alt="Microphone" class="h-11" draggable="false">
+                    <img src="img/mic.svg" alt="Microphone" class="h-11" draggable="false">
                 </button>
                 <button id="playButton"     type="button" class="chuck-button" disabled>
-                    <img src="assets/play.svg" alt="Play" class="h-11" draggable="false">
+                    <img src="img/play.svg" alt="Play" class="h-11" draggable="false">
                 </button>
                 <button id="replaceButton"  type="button" class="chuck-button" disabled>
-                    <img src="assets/replace.svg" alt="Replace" class="h-11" draggable="false">
+                    <img src="img/replace.svg" alt="Replace" class="h-11" draggable="false">
                 </button>
                 <button id="removeButton"   type="button" class="chuck-button" disabled>
-                    <img src="assets/remove.svg" alt="Remove" class="h-11" draggable="false">
+                    <img src="img/remove.svg" alt="Remove" class="h-11" draggable="false">
                 </button>
             </div>
         </div>
