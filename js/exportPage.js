@@ -6,7 +6,8 @@ const inputs = form.getElementsByClassName("form-input");
 /* Save editor contents to chuck file */
 var exportWebChuckButton = document.getElementById("exportWebChuckButton");
 exportWebChuckButton.addEventListener("click", function () {
-    window.location.hash = "exportWebChuckPage"; 
+    location.replace("#exportWebChuckPage");
+    history.replaceState({}, "", "#");
 });
 
 var submitExport = document.getElementById("submitExport");
@@ -37,14 +38,14 @@ submitExport.addEventListener("click", exportWebChuckPage);
 
 // Cache form input
 function cacheInput(e) {
-    localStorage.setItem(e.attributes["id"].value, e.value)
+    sessionStorage.setItem(e.attributes["id"].value, e.value)
 }
 
 // Load cached form input
 for (let i = 0; i < inputs.length; i++) {
     console.log(i)
     let el = inputs[i];
-    let cachedVal = localStorage.getItem(el.attributes["id"].value)
+    let cachedVal = sessionStorage.getItem(el.attributes["id"].value)
     console.log(cachedVal)
     if (cachedVal != null) {
         el.value = cachedVal;
