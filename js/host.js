@@ -4,6 +4,7 @@ var compileButton = document.getElementById("compileButton");
 var replaceButton = document.getElementById("replaceButton");
 var removeButton = document.getElementById("removeButton");
 var micButton = document.getElementById("micButton");
+var recButton = document.getElementById("recordButton");
 
 /* Connect Shreds and Console to WebChucK */
 var shredsToRows = {};
@@ -287,6 +288,7 @@ compileButton.disabled = true;
 replaceButton.disabled = true;
 removeButton.disabled = true;
 micButton.disabled = true;
+recButton.disabled = true;
 
 // Connect buttons to WebChucK
 compileButton.addEventListener("click", chuckCompileButton);
@@ -378,6 +380,7 @@ theChuckReady.then(function ()
     replaceButton.disabled = false;
     removeButton.disabled = false;
     micButton.disabled = false;
+    recButton.disabled = false;
     // Load preUploadFiles into ChucK
     processPreUploadFiles();
 

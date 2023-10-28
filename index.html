@@ -189,6 +189,12 @@
                         <div class="panel-body">
                             <div id="file-explorer"></div>
                         </div>
+                        <div>
+                            <div id="recorder">
+                                <input class="chuckButton" id="recordButton" type="image" src="./assets/icons/record.png" disabled
+                                alt="compile and play" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Ace Editor -->
@@ -316,6 +322,8 @@
                 }
               ];
     </script> 
+    <!-- load recorder javascript files -->
+    <script src="./js/recorder.js"></script>
     <!-- Connect Web Audio API, Connect webchuck.js and webchuck.wasm -->
     <script type="text/javascript" src="./src/webchuck_host.js"></script> <!-- WebChucK IDE modules -->
     <script type="text/javascript" src="./js/Visualizer.js"></script> <!-- WebChucK to WebAudioAPI -->
