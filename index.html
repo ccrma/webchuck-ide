@@ -61,7 +61,7 @@
             <!-- File -->
             <div id="fileContainer" class="relative inline-block">
               <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                File 
+                File
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -89,7 +89,7 @@
             <!-- Edit -->
             <div id="editContainer" class="relative inline-block">
               <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Edit  
+                Edit
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -107,7 +107,7 @@
             <!-- View  -->
             <div id="viewContainer" class="relative inline-block">
               <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                View  
+                View
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -125,7 +125,7 @@
             <!-- Examples -->
             <div id="examplesContainer" class="relative inline-block">
               <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Examples   
+                Examples
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -138,7 +138,7 @@
             <!-- Help -->
             <div id="helpContainer" class="relative inline-block">
               <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Help  
+                Help
                 <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -225,7 +225,7 @@
                 <svg class="w-6 h-5" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path stroke="currentColor" d="M3 0C1.35862 0 0 1.35862 0 3V21C0 22.6414 1.35862 24 3 24H27C28.6414 24 30 22.6414 30 21V6C30 4.35862 28.6414 3 27 3H15L12 0H3ZM3 3H10.7578L13.7578 6H27V21H3V3Z" fill="currentColor"/>
                 </svg>
-              </button> 
+              </button>
               <div id="filename" class="header-item">untitled.ck</div>
             </div>
             <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
@@ -270,6 +270,28 @@
         </div>
 
       </div>
+
+      <dialog class="px-8 py-4 rounded min-w-[320px] w-1/2 max-w-[960px]" id="export-modal">
+        <form class="flex flex-col gap-2" method="dialog">
+          <h1 class="text-xl">Export WebChucK</h1>
+          <label class="flex flex-col">
+            Name
+            <input class="border px-2 py-1 rounded" type="text">
+          </label>
+          <label class="flex flex-col">
+            Author
+            <input class="border px-2 py-1 rounded" type="text">
+          </label>
+          <label class="flex flex-col">
+            Description
+            <textarea class="border px-2 py-1 rounded"></textarea>
+          </label>
+          <div class="flex gap-4">
+            <button id="export-btn" type="submit" class="bg-orange hover:bg-orange-light px-2 py-1 rounded text-white transition">Export</button>
+            <button id="export-cancel-btn" type="button" class="hover:text-orange-light px-2 py-1 rounded text-orange transition">Cancel</button>
+          </div>
+        </form>
+      </dialog>
 
     </div>
 

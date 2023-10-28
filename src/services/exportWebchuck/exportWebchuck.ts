@@ -1,31 +1,40 @@
-import Editor from "@/components/monaco/editor";
+import Editor from '@/components/monaco/editor';
 
 const exportWebchuckButton = document.querySelector<HTMLButtonElement>(
-    "#exportWebchuck"
+  '#exportWebchuck'
 )!;
 
+const exportWebchuckCancel: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#export-cancel-btn')!;
+const exportDialog: HTMLDialogElement = document.querySelector<HTMLDialogElement>('#export-modal')!;
+const exportBtn: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#export-btn')!;
+
 export function initExport() {
-    exportWebchuckButton.addEventListener("click", () => {
-        exportWebchuck();
-    });
+  exportWebchuckButton.addEventListener('click', () => {
+    exportWebchuck();
+  });
+
+  exportWebchuckCancel.addEventListener('click', () => {
+    exportDialog.close();
+  });
+
+  exportDialog.addEventListener('click', (e: MouseEvent): any => e.target === exportDialog && exportDialog.close());
 }
 
 async function exportWebchuck() {
-    let template = await (await fetch("templates/export.html")).text();
-    // fill in template with information
-    template = template.replace("${CODE}", Editor.getEditorCode());
+  exportDialog.showModal();
 
-    // Create blob
-    const webchuckFileBlob = new Blob([template], { type: "text/plain" });
-    window.URL = window.URL || window.webkitURL;
-    const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
-    // Create invisible download link
-    const downloadLink = document.createElement("a");
-    downloadLink.href = webchuckFileURL;
-    downloadLink.download = "index.html";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+  // let template = await (await fetch('templates/export.html')).text();
+  //
+  // const doc: Document = new DOMParser().parseFromString(template, 'text/html');
+  // doc.querySelector<HTMLScriptElement>('#chuck')!.textContent = Editor.getEditorCode();
+  //
+  // // Create blob
+  // const webchuckFileBlob = new Blob([doc.documentElement.outerHTML], { type: 'text/html' });
+  // window.URL = window.URL || window.webkitURL;
+  // const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
+  // // Create invisible download link
+  // const downloadLink = document.createElement('a');
+  // downloadLink.href = webchuckFileURL;
+  // downloadLink.download = 'index.html';
+  // downloadLink.click();
 }
-
-export {};
