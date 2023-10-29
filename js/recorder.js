@@ -26,8 +26,6 @@ let counter = 0
 
         dataArray.push(ev.data)
 
-        console.log(dataArray)
-
         let audioData = new Blob(dataArray,{'type': 'audio/webm;' });
         let audioSrc = window.URL.createObjectURL(audioData);
 
@@ -44,8 +42,8 @@ let counter = 0
         }
 
         var titleRec = document.createElement('p')
-        titleRec.innerHTML = "Recorded Audio("+ counter + ")" + new Date(Date.now()).toDateString()
-        mainaudio.innerHTML = '<audio controls><source> src="'+ URL.createObjectURL(audioData) + '"" type="audio/webm"> <audio/>';
+        titleRec.innerHTML = "Recorded Audio ("+ counter + ") " + new Date(Date.now()).toDateString()
+        mainaudio.innerHTML = '<audio controls src="'+ URL.createObjectURL(audioData) + '"> </audio>';
         counter++
         mainaudio.src = audioSrc
         mainaudio.load()
