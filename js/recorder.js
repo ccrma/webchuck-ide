@@ -33,17 +33,18 @@ let counter = 0
         var mainaudio = document.createElement('audio')
 
         mainaudio.setAttribute('controls','controls')
+        mainaudio.setAttribute('src',URL.createObjectURL(audioData))
         
         if(firstTime){
             var instructionsRec = document.createElement('p')
-            instructionsRec.innerHTML = "Click play to listen, after clicking play you can download it using the three dots on the right"
+            instructionsRec.innerHTML = "Click play to listen, after clicking play you can download it with right click on the recorded audio, save audio as xxxxx.webm"
             audio.append(instructionsRec)
             firstTime = false
         }
 
         var titleRec = document.createElement('p')
         titleRec.innerHTML = "Recorded Audio ("+ counter + ") " + new Date(Date.now()).toDateString()
-        mainaudio.innerHTML = '<audio controls src="'+ URL.createObjectURL(audioData) + '"> </audio>';
+        mainaudio.innerHTML = '<audio src="'+ URL.createObjectURL(audioData) + '"> </audio>';
         counter++
         mainaudio.src = audioSrc
         mainaudio.load()
