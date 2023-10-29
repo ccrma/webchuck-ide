@@ -8,25 +8,26 @@ let counter = 0
   recordButton.addEventListener("click", startRecording)
 
   stopButton = document.getElementById('removeButton')
-  stopButton.addEventListener("click", stopRecording);
+  stopButton.addEventListener("click", stopRecording)
 
   let dataArray = []; 
 
   function startRecording() {
     console.log("Recording");
 
-    const stream = GLOBAL_audioContext.createMediaStreamDestination();
-    
+    const stream = GLOBAL_audioContext.createMediaStreamDestination()
+    recordButton.style.backgroundColor = "green"
+    recordButton.innerHTML = "Recording..."
     recorder = new MediaRecorder(stream.stream);
-    GLOBAL_audioSend.connect(stream);
+    GLOBAL_audioSend.connect(stream)
 
-    recorder.start();
+    recorder.start()
 
     recorder.ondataavailable = function (ev) {
 
         dataArray.push(ev.data)
 
-        let audioData = new Blob(dataArray,{'type': 'audio/webm;' });
+        let audioData = new Blob(dataArray,{'type': 'audio/wav;' });
         let audioSrc = window.URL.createObjectURL(audioData);
 
         var audio = document.getElementById('recorder');
@@ -44,7 +45,7 @@ let counter = 0
 
         var titleRec = document.createElement('p')
         titleRec.innerHTML = "Recorded Audio ("+ counter + ") " + new Date(Date.now()).toDateString()
-        mainaudio.innerHTML = '<audio src="'+ URL.createObjectURL(audioData) + '"> </audio>';
+        mainaudio.innerHTML = '<audio src="'+ URL.createObjectURL(audioData) + '" type="audio/wav"> </audio>';
         counter++
         mainaudio.src = audioSrc
         mainaudio.load()
@@ -63,7 +64,9 @@ let counter = 0
 
 
 function stopRecording() {
-recorder.stop();
+    recorder.stop()
+    recordButton.innerHTML = "Record"
+    recordButton.style.backgroundColor = "red"
 }
 
 
