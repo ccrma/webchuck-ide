@@ -37,7 +37,7 @@ let counter = 0
         
         if(firstTime){
             var instructionsRec = document.createElement('p')
-            instructionsRec.innerHTML = "Click play to listen, after clicking play you can download it with right click on the recorded audio, save audio as xxxxx.webm"
+            instructionsRec.innerHTML = "Click play to listen, after clicking play you can download it with right click on the recorded audio, save audio as ..."
             audio.append(instructionsRec)
             firstTime = false
         }
