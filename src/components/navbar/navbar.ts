@@ -6,7 +6,7 @@
 // date:   August 2023
 //-------------------------------------------------------
 
-import Dropdown from "@components/dropdown";
+import Dropdown from "@/components/navbar/dropdown";
 
 /**
  * NavBar class to handle dropdowns

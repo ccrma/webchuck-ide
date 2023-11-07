@@ -1,9 +1,18 @@
+//----------------------------------------------------------------------
+// title: examples
+// desc: basic examples dropdown in navbar
+//       loads examples from public/examples
+//
+// author: terry feng
+// date:   August 2023
+//----------------------------------------------------------------------
+
 import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import DropdownElement from "./dropdownElement";
 import Editor from "@components/monaco/editor";
 import EditorPanelHeader from "@components/header/editorPanelHeader";
-import Console from "@components/console";
-import { theChuck } from "@/Host";
+import Console from "@/components/app-right/console";
+import { theChuck } from "@/host";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;

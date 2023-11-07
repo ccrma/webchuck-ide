@@ -1,4 +1,4 @@
-import Console from "@components/console";
+import Console from "@/components/app-right/console";
 import OutputHeaderToggle from "./toggle/outputHeaderToggle";
 import { splitHeightCSS, getTabsActive } from "@/utils/outputLayout";
 

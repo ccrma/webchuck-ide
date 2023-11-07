@@ -6,7 +6,7 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import Console from "@/components/console";
+import Console from "@/components/app-right/console";
 
 let darkModeToggle: HTMLButtonElement;
 

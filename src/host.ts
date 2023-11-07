@@ -11,7 +11,7 @@
 //--------------------------------------------------------
 
 import { Chuck } from "webchuck";
-import Console from "@components/console";
+import Console from "@/components/app-right/console";
 import { calculateDisplayDigits } from "@utils/time";
 
 let theChuck: Chuck;

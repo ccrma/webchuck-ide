@@ -14,7 +14,7 @@
 
 import Editor from "@/components/monaco/editor";
 import Resizer from "../components/resizer";
-import Console from "@/components/console";
+import Console from "@/components/app-right/console";
 
 const CLASS_V_SPLIT: string = "vSplit";
 const CLASS_H_SPLIT: string = "hSplit";
