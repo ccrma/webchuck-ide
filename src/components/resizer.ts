@@ -1,6 +1,7 @@
 import { AppLayoutConstants, setCurrentWidths } from "@utils/appLayout";
 import Editor from "@components/monaco/editor";
-import Console from "@/components/app-right/console";
+import Console from "@/components/console";
+import { visual } from "@/host";
 
 /**
  * Resizer class draggable splitters in App (the main section of the IDE)
@@ -151,6 +152,7 @@ export default class Resizer {
             bottomRight.id === "app-right"
         ) {
             Console.resizeConsole();
+            visual?.resize();
         }
     }
 

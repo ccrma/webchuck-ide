@@ -13,8 +13,8 @@ import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
-import EditorPanelHeader from "../header/editorPanelHeader";
-import Console from "../app-right/console";
+import EditorPanelHeader from "../panelHeader/editorPanelHeader";
+import Console from "../console";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
@@ -87,7 +87,11 @@ export default class Editor {
      */
     static loadAutoSave() {
         Editor.setEditorCode(localStorage.getItem("editorCode") || "");
-        Console.print(`Loaded autosave: \x1b[38;2;34;178;254m${localStorage.getItem("editorFilename")}\x1b[0m (${localStorage.getItem("editorCodeTime")})`)
+        Console.print(
+            `Loaded autosave: \x1b[38;2;34;178;254m${localStorage.getItem(
+                "editorFilename"
+            )}\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+        );
     }
 
     /**

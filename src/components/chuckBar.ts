@@ -16,7 +16,7 @@
 
 import { theChuck, startChuck, connectMic } from "@/host";
 import Editor from "@/components/monaco/editor";
-import VmMonitor from "@/components/app-right/vmMonitor";
+import VmMonitor from "@/components/vmMonitor";
 
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;

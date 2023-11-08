@@ -6,17 +6,25 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import Console from "@/components/app-right/console";
+import Console from "@/components/console";
+import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;
 
 /* Header Theme */
 let accentColorClass: string = "text-orange";
 let textColorClass: string = "text-dark-5";
-let inactiveHoverColorClass: string = "hover:text-dark-8";
-let darkTextColorClass: string = "dark:text-dark-8";
-let darkInactiveHoverColorClass: string = "dark:hover:text-dark-a";
-export {accentColorClass, textColorClass, inactiveHoverColorClass, darkTextColorClass, darkInactiveHoverColorClass};
+let hoverColorClass: string = "hover:text-dark-8";
+let darkTextColorClass: string = "dark:text-dark-a";
+let darkHoverColorClass: string = "dark:hover:text-dark-c";
+
+export {
+    accentColorClass,
+    textColorClass,
+    hoverColorClass,
+    darkTextColorClass,
+    darkHoverColorClass,
+};
 
 /**
  * Set the color scheme of the page
@@ -30,10 +38,12 @@ export function setColorScheme() {
     ) {
         document.documentElement.classList.add("dark");
         Console.setDarkTheme();
+        visual?.theme(true);
         darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
         document.documentElement.classList.remove("dark");
         Console.setLightTheme();
+        visual?.theme(false);
         darkModeToggle.innerHTML = "Dark Mode: Off";
     }
 }

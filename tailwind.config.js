@@ -33,6 +33,7 @@ module.exports = {
         },
         light: "#EEEEEE",
         dark: {
+          0: "#000000",
           1: "#111111",
           2: "#222222",
           DEFAULT: "#333333",
@@ -43,6 +44,12 @@ module.exports = {
           8: "#888888",
           9: "#999999",
           a: "#AAAAAA",
+          b: "#BBBBBB",
+          c: "#CCCCCC",
+          d: "#DDDDDD",
+          e: "#EEEEEE",
+          f: "#FFFFFF",
+
         }
       },
     },

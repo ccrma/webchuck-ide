@@ -8,7 +8,7 @@
 //---------------------------------------------------
 
 import { chuckNowCached, sampleRate, theChuck } from "@/host";
-import EditorPanelHeader from "../header/editorPanelHeader";
+import EditorPanelHeader from "./panelHeader/editorPanelHeader";
 import { displayFormatTime } from "@/utils/time";
 
 export default class VmMonitor {

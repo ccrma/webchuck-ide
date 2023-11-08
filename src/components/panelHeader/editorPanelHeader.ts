@@ -19,9 +19,13 @@ export default class EditorPanelHeader {
             document.querySelector<HTMLDivElement>("#filename")!;
 
         // Build SVG Folder Toggle
-        new SVGToggle(EditorPanelHeader.fileToggle, () => {
-            toggleLeft();
-        }, false);
+        new SVGToggle(
+            EditorPanelHeader.fileToggle,
+            () => {
+                toggleLeft();
+            },
+            false
+        );
     }
 
     /**

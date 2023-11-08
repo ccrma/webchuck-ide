@@ -1,8 +1,7 @@
 import Editor from "@/components/monaco/editor";
 
-const exportWebchuckButton = document.querySelector<HTMLButtonElement>(
-    "#exportWebchuck"
-)!;
+const exportWebchuckButton =
+    document.querySelector<HTMLButtonElement>("#exportWebchuck")!;
 
 export function initExport() {
     exportWebchuckButton.addEventListener("click", () => {

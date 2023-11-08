@@ -14,7 +14,7 @@
 
 import Editor from "@/components/monaco/editor";
 import Resizer from "../components/resizer";
-import Console from "@/components/app-right/console";
+import Console from "@/components/console";
 
 const CLASS_V_SPLIT: string = "vSplit";
 const CLASS_H_SPLIT: string = "hSplit";
@@ -88,7 +88,7 @@ export function toggleLeft() {
         // hide left
         const widths = getCurrentWidths();
         const left = 0;
-        const middle = widths[1] + widths[0]/2.0;
+        const middle = widths[1] + widths[0] / 2.0;
         const right = 100 - middle;
         setCurrentWidths([left, middle, right]);
         splitters[0].deactivate(); // Deactive the left resizer
@@ -99,8 +99,8 @@ export function toggleLeft() {
         const widths = getCurrentWidths();
         setCurrentWidths([
             LEFT_WIDTH,
-            widths[1] - LEFT_WIDTH/2.0,
-            100 - LEFT_WIDTH - (widths[1] - LEFT_WIDTH/2.0)
+            widths[1] - LEFT_WIDTH / 2.0,
+            100 - LEFT_WIDTH - (widths[1] - LEFT_WIDTH / 2.0),
         ]);
         leftPanel.classList.remove("hidden");
         splitters[0].activate();
