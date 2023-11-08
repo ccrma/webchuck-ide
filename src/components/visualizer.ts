@@ -49,7 +49,7 @@ export default class Visualizer {
 
     private waveformColor: string = waveformColorLight;
     private spectrumColor: string = spectrumColorLight;
-	private spectrumFill: string = spectrumFillLight;
+    private spectrumFill: string = spectrumFillLight;
 
     constructor(canvas: HTMLCanvasElement, analyserNode: AnalyserNode) {
         const visualizerDefaultOptions = {
@@ -67,15 +67,15 @@ export default class Visualizer {
             visualizerDefaultOptions.frameSize
         );
 
-		// Set theme
-		this.theme(getColorScheme() === "dark");
+        // Set theme
+        this.theme(getColorScheme() === "dark");
     }
 
     drawWaveform_() {
         this.analyserNode.getFloatTimeDomainData(this.waveformData);
         const width: number = this.context2D.canvas.width;
         const height: number = this.context2D.canvas.height;
-        const size: number = this.waveformData.length; 
+        const size: number = this.waveformData.length;
         // Draw twice the width of the canvas
         const increment: number = (width * 2.0) / size;
         this.context2D.beginPath();
@@ -108,27 +108,31 @@ export default class Visualizer {
         // We only care about below nyquist / 4.
         const increment = width / (this.frequencyData.length * 0.25);
         // |frequencyData| is between 0.0dBFS ~ -200dbFS.
-		const normalizeHeight = (y: number) => (y * height) / -200;
+        const normalizeHeight = (y: number) => (y * height) / -200;
         this.context2D.beginPath();
         for (let x = 0, i = 0; x < width; x += increment, ++i) {
             if (i === 0) {
-                this.context2D.moveTo(x, normalizeHeight(this.frequencyData[i]));
+                this.context2D.moveTo(
+                    x,
+                    normalizeHeight(this.frequencyData[i])
+                );
             } else {
-                this.context2D.lineTo(x, normalizeHeight(this.frequencyData[i]));
+                this.context2D.lineTo(
+                    x,
+                    normalizeHeight(this.frequencyData[i])
+                );
             }
         }
-		this.context2D.lineTo(width, height);
-		this.context2D.lineTo(0, height);
-		this.context2D.closePath();
-		this.context2D.fillStyle = this.spectrumFill;
-		this.context2D.fill();
+        this.context2D.lineTo(width, height);
+        this.context2D.lineTo(0, height);
+        this.context2D.closePath();
+        this.context2D.fillStyle = this.spectrumFill;
+        this.context2D.fill();
         this.context2D.strokeStyle = this.spectrumColor;
         // make line width only for spectrum
         this.context2D.lineWidth = 2;
         this.context2D.stroke();
         this.context2D.lineWidth = 1;
-
-
     }
 
     /**
@@ -163,26 +167,26 @@ export default class Visualizer {
         this.running = false;
     }
 
-	/** 
-	 * Set the visualizer dimensions
-	 */
+    /**
+     * Set the visualizer dimensions
+     */
     resize() {
         this.canvas.width = this.canvas.clientWidth;
         this.canvas.height = this.canvas.clientHeight;
     }
 
-	/**
-	 * Set the visualizer theme
-	 */
-	theme(isDark: boolean) {
-		if (isDark) {
-			this.waveformColor = waveformColorDark;
-			this.spectrumColor = spectrumColorDark;
-			this.spectrumFill = spectrumFillDark;
-		} else {
-			this.waveformColor = waveformColorLight;
-			this.spectrumColor = spectrumColorLight;
-			this.spectrumFill = spectrumFillLight;
-		}
-	}
+    /**
+     * Set the visualizer theme
+     */
+    theme(isDark: boolean) {
+        if (isDark) {
+            this.waveformColor = waveformColorDark;
+            this.spectrumColor = spectrumColorDark;
+            this.spectrumFill = spectrumFillDark;
+        } else {
+            this.waveformColor = waveformColorLight;
+            this.spectrumColor = spectrumColorLight;
+            this.spectrumFill = spectrumFillLight;
+        }
+    }
 }

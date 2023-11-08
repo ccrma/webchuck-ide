@@ -36,8 +36,8 @@
         document.documentElement.classList.remove("dark");
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-e664c168.js"></script>
-    <link rel="stylesheet" href="./assets/index-545e2aaa.css">
+    <script type="module" crossorigin src="./assets/index-64c5e4a1.js"></script>
+    <link rel="stylesheet" href="./assets/index-68ecf222.css">
   </head>
 
   <body class="h-full w-full">
@@ -262,12 +262,14 @@
           <div id="outputPanel" class="flex flex-col bg-sky-blue dark:bg-dark">
             <div id="outputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
               <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
-              <button id="visualizerTab" type="button" class="header-item text-dark-5 hover:text-dark-8 dark:hover:text-dark-a">VISUALIZER</button>
-            </div >
-            <div id="consoleContainer" class="" style="height: calc(100% - 1.75rem)">
+              <button id="visualizerTab" type="button" class="header-item text-dark-5">VISUALIZER</button>
+            </div>
+            <div id="consoleContainer" style="height: calc(100% - 1.75rem)">
               <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>
             </div>
-            <div id="visualizer" class="flex-1 bg-green-500 hidden"> visualizer </div>
+            <div id="visualizerContainer" class="flex-1 bg-white dark:bg-dark-2 hidden">
+              <canvas id="visualizer" class="w-full h-full"></canvas>
+            </div>
           </div>
         </div>
 

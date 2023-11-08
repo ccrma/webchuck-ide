@@ -42,7 +42,7 @@ export default class OutputPanelHeader {
      */
     static updateSplitHeight() {
         const tabsActive: number = getTabsActive();
-        console.log(tabsActive)
+        console.log(tabsActive);
         if (OutputPanelHeader.prevTabsActive === tabsActive) return;
 
         const splitHeight: string = splitHeightCSS;
