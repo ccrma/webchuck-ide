@@ -127,6 +127,7 @@ var chuckMicButton = function ()
             const adc = audioContext.createMediaStreamSource(stream);
             adc.connect(theChuck);
         });
+    micButton.disabled = true;
 };
 
 /* File handling */
