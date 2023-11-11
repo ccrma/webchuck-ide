@@ -115,12 +115,17 @@ var chuckRemoveButton = function ()
 var chuckMicButton = function ()
 {
     navigator.mediaDevices
-        .getUserMedia({ audio: true, video: false })
-        .then(function (stream)
-        {
-            micButton.disabled = true;
-            const source = audioContext.createMediaStreamSource(stream);
-            source.connect(theChuck);
+        .getUserMedia({
+            video: false,
+            audio: {
+                echoCancellation: false,
+                autoGainControl: false,
+                noiseSuppression: false,
+            },
+        })
+        .then((stream) => {
+            const adc = audioContext.createMediaStreamSource(stream);
+            adc.connect(theChuck);
         });
 };
 
