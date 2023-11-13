@@ -18,23 +18,32 @@ export function initExport() {
   });
 
   exportDialog.addEventListener('click', (e: MouseEvent): any => e.target === exportDialog && exportDialog.close());
+
+  exportBtn.addEventListener('click', async () => {
+    let template = await (await fetch('templates/export.html')).text();
+
+    const doc: Document = new DOMParser().parseFromString(template, 'text/html');
+    doc.querySelector<HTMLScriptElement>('#chuck')!.textContent = Editor.getEditorCode();
+    doc.querySelector<HTMLDivElement>('#description')!.textContent = document.querySelector<HTMLTextAreaElement>('#export-description')!.value;
+    doc.querySelector<HTMLHeadingElement>('#name')!.textContent = document.querySelector<HTMLInputElement>('#export-name')!.value;
+    doc.querySelector<HTMLHeadingElement>('#author')!.textContent = document.querySelector<HTMLInputElement>('#export-author')!.value;
+
+    // Create blob
+    const webchuckFileBlob = new Blob([doc.documentElement.outerHTML], { type: 'text/html' });
+    window.URL = window.URL || window.webkitURL;
+    const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
+    // Create invisible download link
+    const downloadLink = document.createElement('a');
+    downloadLink.href = webchuckFileURL;
+    downloadLink.download = 'index.html';
+    downloadLink.click();
+
+    document.querySelector<HTMLTextAreaElement>('#export-description')!.value = '';
+    document.querySelector<HTMLInputElement>('#export-name')!.value = '';
+    document.querySelector<HTMLInputElement>('#export-author')!.value = '';
+  });
 }
 
 async function exportWebchuck() {
   exportDialog.showModal();
-
-  // let template = await (await fetch('templates/export.html')).text();
-  //
-  // const doc: Document = new DOMParser().parseFromString(template, 'text/html');
-  // doc.querySelector<HTMLScriptElement>('#chuck')!.textContent = Editor.getEditorCode();
-  //
-  // // Create blob
-  // const webchuckFileBlob = new Blob([doc.documentElement.outerHTML], { type: 'text/html' });
-  // window.URL = window.URL || window.webkitURL;
-  // const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
-  // // Create invisible download link
-  // const downloadLink = document.createElement('a');
-  // downloadLink.href = webchuckFileURL;
-  // downloadLink.download = 'index.html';
-  // downloadLink.click();
 }
