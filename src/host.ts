@@ -11,13 +11,18 @@
 //--------------------------------------------------------
 
 import { Chuck } from "webchuck";
-import Console from "@components/console";
 import { calculateDisplayDigits } from "@utils/time";
+import Console from "@/components/console";
+import Visualizer from "@/components/visualizer";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
 
-export { theChuck, audioContext };
+// Audio Visualizer
+let analyser: AnalyserNode;
+let visual: Visualizer;
+
+export { theChuck, audioContext, visual };
 
 // Chuck Time
 let sampleRate: number = 0;
@@ -54,6 +59,9 @@ export async function startChuck() {
 
     setInterval(chuckGetNow, 50);
 
+    // Start audio visualizer
+    startVisualizer();
+
     // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;
 }
@@ -87,4 +95,23 @@ function chuckGetNow() {
     theChuck.now().then((samples) => {
         chuckNowCached = samples as number;
     });
+}
+
+/**
+ * Start the audio visualizer for time/frequency domain
+ *
+ */
+function startVisualizer() {
+    let cnv: HTMLCanvasElement = document.getElementById(
+        "visualizer"
+    )! as HTMLCanvasElement;
+
+    analyser = audioContext.createAnalyser();
+    // instantiate visualizer
+    visual = new Visualizer(cnv, analyser);
+    // connect chuck output to analyser
+    theChuck.connect(analyser);
+    // start visualizer
+    visual.drawVisualization_();
+    visual.start();
 }

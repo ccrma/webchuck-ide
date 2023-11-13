@@ -7,8 +7,8 @@
 // date:   September 2023
 //---------------------------------------------------
 
-import { chuckNowCached, sampleRate, theChuck } from "@/Host";
-import EditorPanelHeader from "./header/editorPanelHeader";
+import { chuckNowCached, sampleRate, theChuck } from "@/host";
+import EditorPanelHeader from "./panelHeader/editorPanelHeader";
 import { displayFormatTime } from "@/utils/time";
 
 export default class VmMonitor {

@@ -11,7 +11,7 @@ import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "@styles/xterm.css";
 
-import { theChuck } from "@/Host";
+import { theChuck } from "@/host";
 
 export default class Console {
     public static terminal: Terminal;

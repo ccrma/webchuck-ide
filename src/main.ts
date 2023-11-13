@@ -6,19 +6,18 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
-import NavBar from "@components/navbar";
-import Examples from "@components/examples";
+import NavBar from "@/components/navbar/navbar";
+import Examples from "@/components/navbar/examples";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
-import EditorPanelHeader from "@components/header/editorPanelHeader";
-import OutputPanelHeader from "@/components/header/outputPanelHeader";
-import Console from "@components/console";
-import VmMonitor from "@components/vmMonitor";
+import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
+import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
+import Console from "@/components/console";
+import VmMonitor from "@/components/vmMonitor";
 
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExport } from "@services/exportWebchuck/exportWebchuck";
-
 
 class Main {
     public static navBar: NavBar;
@@ -90,4 +89,3 @@ class Main {
 // Main entry point
 const main = new Main();
 main.init();
-

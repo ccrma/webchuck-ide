@@ -1,4 +1,9 @@
-import { accentColorClass, darkInactiveHoverColorClass, inactiveHoverColorClass, textColorClass } from "@/utils/theme";
+import {
+    accentColorClass,
+    darkHoverColorClass,
+    hoverColorClass,
+    textColorClass,
+} from "@/utils/theme";
 
 export default class SVGToggle {
     public button: HTMLButtonElement;
@@ -37,8 +42,8 @@ export default class SVGToggle {
         this.callback();
         this.button.classList.remove(accentColorClass);
         this.button.classList.add(textColorClass);
-        this.button.classList.add(inactiveHoverColorClass);
-        this.button.classList.add(darkInactiveHoverColorClass);
+        this.button.classList.add(hoverColorClass);
+        this.button.classList.add(darkHoverColorClass);
     }
 
     call() {
@@ -48,7 +53,7 @@ export default class SVGToggle {
         this.callback();
         this.button.classList.add(accentColorClass);
         this.button.classList.remove(textColorClass);
-        this.button.classList.remove(inactiveHoverColorClass);
-        this.button.classList.remove(darkInactiveHoverColorClass);
+        this.button.classList.remove(hoverColorClass);
+        this.button.classList.remove(darkHoverColorClass);
     }
 }

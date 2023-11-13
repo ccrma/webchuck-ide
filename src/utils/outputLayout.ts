@@ -8,7 +8,7 @@
 
 const OUTPUT_HEADER_HEIGHT: number = 1.75; // rem
 
-let tabsActive: number = 0;
+let tabsActive: number = 1;
 let splitHeightCSS: string = `calc((100% - ${OUTPUT_HEADER_HEIGHT}rem)/${tabsActive})`;
 export { splitHeightCSS };
 

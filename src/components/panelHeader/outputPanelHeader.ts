@@ -1,12 +1,13 @@
-import Console from "@components/console";
+import Console from "@/components/console";
 import OutputHeaderToggle from "./toggle/outputHeaderToggle";
 import { splitHeightCSS, getTabsActive } from "@/utils/outputLayout";
+import { visual } from "@/host";
 
 export default class OutputPanelHeader {
     public static consoleContent: HTMLDivElement;
     public static visualizerContent: HTMLDivElement;
 
-    private static prevTabsActive: number = 1;
+    private static prevTabsActive: number = 0;
 
     constructor() {
         // Setup the Output Panel Header
@@ -19,7 +20,7 @@ export default class OutputPanelHeader {
         const visualizerButton =
             document.querySelector<HTMLButtonElement>("#visualizerTab")!;
         OutputPanelHeader.visualizerContent =
-            document.querySelector<HTMLDivElement>("#visualizer")!;
+            document.querySelector<HTMLDivElement>("#visualizerContainer")!;
 
         // Build toggles
         new OutputHeaderToggle(
@@ -31,6 +32,8 @@ export default class OutputPanelHeader {
             visualizerButton,
             OutputPanelHeader.visualizerContent
         );
+
+        OutputPanelHeader.updateSplitHeight();
     }
 
     /**
@@ -39,6 +42,7 @@ export default class OutputPanelHeader {
      */
     static updateSplitHeight() {
         const tabsActive: number = getTabsActive();
+        console.log(tabsActive);
         if (OutputPanelHeader.prevTabsActive === tabsActive) return;
 
         const splitHeight: string = splitHeightCSS;
@@ -47,5 +51,6 @@ export default class OutputPanelHeader {
         OutputPanelHeader.visualizerContent.style.height = splitHeight;
 
         this.prevTabsActive = tabsActive;
+        visual?.resize();
     }
 }
