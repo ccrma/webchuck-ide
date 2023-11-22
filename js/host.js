@@ -402,14 +402,15 @@ theChuckReady.then(function ()
     
     global Event _hid;
     global int _hidMultiple;
-    global int _cursorX;
-    global int _cursorY;
-    
-    global float _deltaX;
-    global float _deltaY;
+    0 => global int _cursorX;
+    0 => global int _cursorY;
+
+    0 => global float _deltaX;
+    0 => global float _deltaY;
     
     global string _key;
-    1 => global int _isDown;
+    global int _isDown;
+    global int _isUp;
     global int _isMouseDown;
     global int _isMouseUp;
     global int _isScroll;
@@ -433,17 +434,33 @@ theChuckReady.then(function ()
         float scaledCursorY;
     
         function int isButtonDown() {
-            if(_isMouseDown || _isDown){
-                0 => _isMouseDown => _isDown;
-                return 1;
+            if(_mouseActive){
+                if(_isMouseDown){
+                    0 => _isMouseDown;
+                    return 1;
+                }
+            }
+            if(_kbdActive){
+                if(_isDown){
+                    0 => _isDown;
+                    return 1;
+                }
             }
             return 0;
         }
     
         function int isButtonUp() {
-            if(_isMouseUp){
-                0 => _isMouseUp;
-                return 1;
+            if(_mouseActive){
+                if(_isMouseUp){
+                    0 => _isMouseUp;
+                    return 1;
+                }
+            }
+            if(_kbdActive){
+                if(_isUp){
+                    0 => _isUp;
+                    return 1;
+                }
             }
             return 0;
         }
@@ -458,6 +475,7 @@ theChuckReady.then(function ()
     
         function void _set(){
             while(true){
+                _hid => now;
                 _cursorX => cursorX;
                 _cursorY => cursorY;
                 _key => key;
@@ -467,7 +485,6 @@ theChuckReady.then(function ()
                 _deltaY => deltaY;
                 _scaledCursorX => scaledCursorX;
                 _scaledCursorY => scaledCursorY;
-                samp => now;
             }
         }
         spork~_set();
@@ -486,6 +503,7 @@ theChuckReady.then(function ()
     
     global string _key;
     global int _isDown;
+    global int _isUp;
     global int _isMouseDown;
     global int _isMouseUp;
     global int _isScroll;
@@ -542,13 +560,8 @@ theChuckReady.then(function ()
         spork~_hackEvent();
     
         //The argument here is just to execute older code
-        function int recv(HidMsg msg){
-            if(isKBDOpen)
-                return _isDown;
-            if(isMouseOpen)
-                return _isMouseDown;
-
-            return 0;
+        function time recv(HidMsg msg){
+            return _msg => now;
         }
     }
         `);

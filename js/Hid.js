@@ -126,6 +126,7 @@ function getMousePos(mouseEvent) {
         keymap[e.keyCode] = 0;
         theChuck.broadcastEvent("_hid");
         theChuck.setInt("_isDown", 0);
+        theChuck.setInt("_isUp", 1);
         theChuck.setString("_key", e.key);
         theChuck.setInt("_which", e.which);
         theChuck.setInt("_ascii", e.keyCode);
