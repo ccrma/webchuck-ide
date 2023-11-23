@@ -30,7 +30,7 @@
 
     <script>
       // Set color theme
-      if (localStorage.getItem("theme") === "dark") {
+      if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
@@ -161,10 +161,10 @@
                     <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">WebChucK</a>
                   </li>
                   <li>
-                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github</a>
+                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">View on Github</a>
                   </li>
                   <li>
-                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Discord</a>
+                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join our Discord</a>
                   </li>
                 </ul>
               </div>
