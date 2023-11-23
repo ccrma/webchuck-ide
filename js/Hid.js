@@ -8,6 +8,8 @@ var lastPos = mousePos;
 let _mouseActive = false;
 let _kbdActive = false;
 
+const clampVal = (num, min, max) => Math.min(Math.max(num, min), max)
+
 async function kbdActive() {
   const x = await theChuck.getInt("_kbdActive");
   _kbdActive = x == 1;
@@ -102,8 +104,8 @@ function getMousePos(mouseEvent) {
           theChuck.setInt("_mouseMotion",1);
         }
         theChuck.setInt("_isScroll",1);
-        theChuck.setFloat("_deltaX",e.deltaX);
-        theChuck.setFloat("_deltaY",e.deltaY);
+        theChuck.setFloat("_deltaX",clampVal(e.deltaX,-1,1));
+        theChuck.setFloat("_deltaY",clampVal(e.deltaY,-1,1));
         theChuck.broadcastEvent("_hid");
         theChuck.broadcastEvent("_msg");
       }
