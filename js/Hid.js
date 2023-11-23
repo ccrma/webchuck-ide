@@ -29,8 +29,8 @@ function getMousePos(mouseEvent) {
     if(activeHID){
       mouseActive();
       if(_mouseActive){
-        e.stopImmediatePropagation();
-        e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.preventDefault();
         mousePos = getMousePos(e);
         if(lastPos.x === mousePos.x && lastPos.y === mousePos.y){
           theChuck.setInt("_mouseMotion",0);
@@ -40,6 +40,8 @@ function getMousePos(mouseEvent) {
           theChuck.setInt("_hidMouse",1);
           theChuck.setInt("_cursorX", mousePos.x);
           theChuck.setInt("_cursorY", mousePos.y);
+          theChuck.setFloat("_deltaX",e.movementX);
+          theChuck.setFloat("_deltaY",e.movementY);
           theChuck.setFloat("_scaledCursorX", mousePos.x/document.documentElement.clientWidth);
           theChuck.setFloat("_scaledCursorY", mousePos.y/document.documentElement.clientHeight);
           theChuck.broadcastEvent("_msg");
@@ -53,8 +55,8 @@ function getMousePos(mouseEvent) {
     if(activeHID){
       mouseActive();
       if(_mouseActive){
-        e.stopImmediatePropagation();
-        e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.preventDefault();
         if(lastPos.x === mousePos.x && lastPos.y === mousePos.y){
           theChuck.setInt("_mouseMotion",0);
         } else {
@@ -74,8 +76,8 @@ function getMousePos(mouseEvent) {
     if(activeHID){
       mouseActive();
       if(_mouseActive){
-        e.stopImmediatePropagation();
-        e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.preventDefault();
         if(lastPos.x === mousePos.x && lastPos.y === mousePos.y){
           theChuck.setInt("_mouseMotion",0);
         } else {
@@ -148,6 +150,7 @@ function getMousePos(mouseEvent) {
         }
       })
       theChuck.setInt("_isDown", 1);
+      theChuck.setInt("_isUp", 1);
       theChuck.setInt("_hidMultiple", counter);
       counter = 0;
       theChuck.broadcastEvent("_msg");
