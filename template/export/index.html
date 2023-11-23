@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ISORhythm WebChuck</title>
+        <script type="text/javascript" src="https://ccrma.stanford.edu/~cc/220a/webchuck220a/js/ace.js"
+            charset="utf-8"></script>
+        <script type="text/javascript" src="https://ccrma.stanford.edu/~cc/220a/webchuck220a/js/editor.js"></script>
+        <link rel="stylesheet" href="https://ccrma.stanford.edu/~cc/220a/webchuck220a/css/editor.css">
+        <style>
+            body {
+                background-color: #DEF;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            button {
+                padding: 10px 20px;
+                border: 1px solid #333;
+                border-radius: 5px;
+                background-color: bisque;
+                color: #333;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #333;
+                color: bisque;
+                transition: 300ms;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>${TITLE}</h1>
+        <h2>Music 220A - ${NAME}</h2>
+        <p>${DESCRIPTION}</p>
+        <p style="color: salmon;"><small><em>WebChucK with HID</em></small></p>
+        <button id="play">Play</button>
+        <button id="stop">Stop</button>
+        <br>
+        <br>
+        <div id="editor" class="ace_editor ace-chuck"></div>
+
+        <!-- SCRIPT -->
+        <script type="module">
+            import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
+
+            let firstTime = true;
+            let CODE = ""
+
+            // Play
+            document.getElementById('play').addEventListener('click', async () => {
+                // First time
+                if (firstTime) {
+                    // Initialize Chuck and HID
+                    document.getElementById('play').innerText = 'Loading...';
+                    window.theChuck = await Chuck.init([]);
+
+                    theChuck.runCode(window.HidMsg);
+                    theChuck.runCode(window.Hid);
+                    window.activeHID = true;
+                    firstTime = false;
+                }
+
+                // Run ChucK code
+                theChuck.runCode(editor.getValue());
+                document.getElementById('play').innerText = 'Play';
+            });
+
+            // Stop
+            document.getElementById('stop').addEventListener('click', async () => {
+                theChuck.removeLastCode();
+            });
+
+            // Submitted Code
+            const code = `${CODE}`;
+
+            // Set Chuck Code
+            const editor = newChuckEditor('editor');
+            editor.setValue(code, 1);
+
+        </script>
+        <script text="javascript">
+            // HID CODE - celeste betancur
+            // Feel free to ignore the rest of this code... but
+            // Read me if you want to know how the HID works
+            // If you do figure out how it works, talk to terry feng @ tzfeng@stanford.edu
+            window.HidMsg = `
+            global Event _msg;
+            
+            global Event _hid;
+            global int _hidMultiple;
+            0 => global int _cursorX;
+            0 => global int _cursorY;
+
+            0 => global float _deltaX;
+            0 => global float _deltaY;
+            
+            global string _key;
+            global int _isDown;
+            global int _isUp;
+            global int _isMouseDown;
+            global int _isMouseUp;
+            global int _isScroll;
+            global int _ascii;
+            global int _which;
+            global int _mouseActive;
+            global int _kbdActive;
+            global int _mouseMotion;
+            global float _scaledCursorX;
+            global float _scaledCursorY;
+            
+            public class HidMsg {
+                int cursorX;
+                int cursorY;
+                float deltaX;
+                float deltaY;
+                string key;
+                int ascii;
+                int which;
+                float scaledCursorX;
+                float scaledCursorY;
+            
+                function int isButtonDown() {
+                    if(_mouseActive){
+                        if(_isMouseDown){
+                            0 => _isMouseDown;
+                            return 1;
+                        }
+                    }
+                    if(_kbdActive){
+                        if(_isDown){
+                            0 => _isDown;
+                            return 1;
+                        }
+                    }
+                    return 0;
+                }
+            
+                function int isButtonUp() {
+                    if(_mouseActive){
+                        if(_isMouseUp){
+                            0 => _isMouseUp;
+                            return 1;
+                        }
+                    }
+                    if(_kbdActive){
+                        if(_isUp){
+                            0 => _isUp;
+                            return 1;
+                        }
+                    }
+                    return 0;
+                }
+            
+                function int isMouseMotion(){
+                    return _mouseMotion;
+                }
+            
+                function int isWheelMotion(){
+                    return _isScroll;
+                }
+            
+                function void _set(){
+                    while(true){
+                        _hid => now;
+                        _cursorX => cursorX;
+                        _cursorY => cursorY;
+                        _key => key;
+                        _ascii => ascii;
+                        _which => which;
+                        _deltaX => deltaX;
+                        _deltaY => deltaY;
+                        _scaledCursorX => scaledCursorX;
+                        _scaledCursorY => scaledCursorY;
+                    }
+                }
+                spork~_set();
+            }
+            `;
+            window.Hid = `
+            global Event _msg;
+            
+            global Event _hid;
+            global int _hidMultiple;
+            global int _cursorX;
+            global int _cursorY;
+            
+            global float _deltaX;
+            global float _deltaY;
+            
+            global string _key;
+            global int _isDown;
+            global int _isUp;
+            global int _isMouseDown;
+            global int _isMouseUp;
+            global int _isScroll;
+            global int _ascii;
+            global int _which;
+            global int _mouseActive;
+            global int _kbdActive;
+            global int _mouseMotion;
+            global float _scaledCursorX;
+            global float _scaledCursorY;
+            
+            public class Hid extends Event{
+            
+                0 => int isMouseOpen;
+                0 => int isKBDOpen;
+                0 => int active;
+            
+                string deviceName; 
+            
+                function string name(){
+                    return deviceName;
+                }
+            
+                // just a way to stop the interface for now
+                function int openMouse(int num){
+                    if(num == -1){
+                        false => active;
+                    } else {
+                        "virtualJS mouse/trackpad" => deviceName;
+                        true => active;
+                    }
+                    active => isMouseOpen => _mouseActive;;
+                    return active;
+                }
+            
+                function int openKeyboard(int num){
+                    if(num == -1){
+                        false => active => _kbdActive;
+                    } else {
+                        "virtualJS keyboard" => deviceName;
+                        true => active ;
+                    }
+                    active => isKBDOpen => _kbdActive;
+                    return active;
+                }
+            
+                // Global event gets hacked by local object
+                function void _hackEvent(){
+                    while(true){
+                        _hid => now;
+                        this.broadcast();
+                    }
+                }
+                spork~_hackEvent();
+            
+                //The argument here is just to execute older code
+                function int recv(HidMsg msg){
+                    _msg => now;
+                    return 1;
+                }
+            }
+            `;
+            let keymap = new Array(255).fill(0);
+
+            let counter = 0;
+
+            var mousePos = { x: 0, y: 0 };
+            var lastPos = mousePos;
+
+            let _mouseActive = false;
+            let _kbdActive = false;
+            activeHID = false;
+
+            const clampVal = (num, min, max) => Math.min(Math.max(num, min), max)
+
+            async function kbdActive() {
+                const x = await theChuck.getInt("_kbdActive");
+                _kbdActive = x == 1;
+            }
+
+            async function mouseActive() {
+                const x = await theChuck.getInt("_mouseActive");
+                _mouseActive = x == 1;
+            }
+
+            function getMousePos(mouseEvent) {
+                return {
+                    x: mouseEvent.clientX,
+                    y: mouseEvent.clientY
+                };
+            }
+
+            document.addEventListener("mousemove", function (e) {
+                if (activeHID) {
+                    mouseActive();
+                    if (_mouseActive) {
+                        // e.stopImmediatePropagation();
+                        // e.preventDefault();
+                        mousePos = getMousePos(e);
+                        if (lastPos.x === mousePos.x && lastPos.y === mousePos.y) {
+                            theChuck.setInt("_mouseMotion", 0);
+                        } else {
+                            theChuck.setInt("_mouseMotion", 1);
+                            theChuck.broadcastEvent("_hid");
+                            theChuck.setInt("_hidMouse", 1);
+                            theChuck.setInt("_cursorX", mousePos.x);
+                            theChuck.setInt("_cursorY", mousePos.y);
+                            theChuck.setFloat("_deltaX", e.movementX);
+                            theChuck.setFloat("_deltaY", e.movementY);
+                            theChuck.setFloat("_scaledCursorX", mousePos.x / document.documentElement.clientWidth);
+                            theChuck.setFloat("_scaledCursorY", mousePos.y / document.documentElement.clientHeight);
+                            theChuck.broadcastEvent("_msg");
+                        }
+                        lastPos = mousePos;
+                    }
+                }
+            }, true);
+
+            document.addEventListener("mousedown", function (e) {
+                if (activeHID) {
+                    mouseActive();
+                    if (_mouseActive) {
+                        // e.stopImmediatePropagation();
+                        // e.preventDefault();
+                        if (lastPos.x === mousePos.x && lastPos.y === mousePos.y) {
+                            theChuck.setInt("_mouseMotion", 0);
+                        } else {
+                            theChuck.setInt("_mouseMotion", 1);
+                        }
+
+                        theChuck.setInt("_isMouseDown", 1);
+                        theChuck.broadcastEvent("_hid");
+                        theChuck.setInt("_hidMouse", 1);
+                        theChuck.setInt("_which", e.which);
+                        theChuck.broadcastEvent("_msg");
+                    }
+                }
+            }, true);
+
+            document.addEventListener("mouseup", function (e) {
+                if (activeHID) {
+                    mouseActive();
+                    if (_mouseActive) {
+                        // e.stopImmediatePropagation();
+                        // e.preventDefault();
+                        if (lastPos.x === mousePos.x && lastPos.y === mousePos.y) {
+                            theChuck.setInt("_mouseMotion", 0);
+                        } else {
+                            theChuck.setInt("_mouseMotion", 1);
+                        }
+                        theChuck.setInt("_isMouseUp", 1);
+                        theChuck.broadcastEvent("_hid");
+                        theChuck.setInt("_hidMouse", 1);
+                        theChuck.setInt("_which", e.which);
+                        theChuck.broadcastEvent("_msg");
+                    }
+                }
+            }, true);
+
+            document.addEventListener("wheel", function (e) {
+                if (activeHID) {
+                    mouseActive();
+                    if (_mouseActive) {
+                        if (lastPos.x === mousePos.x && lastPos.y === mousePos.y) {
+                            theChuck.setInt("_mouseMotion", 0);
+                        } else {
+                            theChuck.setInt("_mouseMotion", 1);
+                        }
+                        theChuck.setInt("_isScroll", 1);
+                        theChuck.setFloat("_deltaX", clampVal(e.deltaX, -1, 1));
+                        theChuck.setFloat("_deltaY", clampVal(e.deltaY, -1, 1));
+                        theChuck.broadcastEvent("_hid");
+                        theChuck.broadcastEvent("_msg");
+                    }
+                }
+            }, true);
+
+            window.addEventListener("keydown", (e) => {
+                if (activeHID) {
+                    kbdActive();
+                    if (keymap[e.keyCode] === 0) {
+                        keymap[e.keyCode] = 1;
+                        counter++;
+                        eventManager(e, 1);
+                    }
+                }
+            });
+
+            window.addEventListener("keyup", (e) => {
+                if (activeHID) {
+                    kbdActive();
+                    if (_kbdActive) {
+                        keymap[e.keyCode] = 0;
+                        counter--;
+                        eventManager(e, 0);
+                    }
+                }
+            });
+
+            function eventManager(e, isDown) {
+                theChuck.broadcastEvent("_hid");
+                theChuck.setString("_key", e.key);
+                theChuck.setInt("_which", e.which);
+                theChuck.setInt("_ascii", e.keyCode);
+                theChuck.setInt("_isDown", isDown);
+                theChuck.setInt("_isUp", !isDown);
+                theChuck.setInt("_hidMultiple", counter);
+                theChuck.broadcastEvent("_msg");
+            }
+
+        </script>
+
+    </body>
+
+</html>

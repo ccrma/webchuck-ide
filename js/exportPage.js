@@ -14,7 +14,7 @@ var submitExport = document.getElementById("submitExport");
 var exportWebChuckPage = async function ()
 {
     // Fetch template
-    let template = await ( await fetch("template/isoRhythm/index.html")).text();
+    let template = await ( await fetch("template/export/index.html")).text();
     // fill in template with information
     template = template.replace("${TITLE}", inputs[0].value);
     template = template.replace("${NAME}", inputs[1].value);
