@@ -11,9 +11,10 @@
 //--------------------------------------------------------
 
 import { Chuck } from "webchuck";
-import { calculateDisplayDigits } from "@utils/time";
+import { calculateDisplayDigits, displayFormatSamples, displayFormatTime } from "@utils/time";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
+import VmMonitor, { ChuckNow } from "./components/vmMonitor";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -91,9 +92,29 @@ export async function connectMic() {
  * Cache the value to TS
  */
 function chuckGetNow() {
-    // cast to number
     theChuck.now().then((samples) => {
-        chuckNowCached = samples as number;
+        chuckNowCached = samples;
+
+        // Update time in visualizer
+        // samples
+        const samplesDisplay = samples % sampleRate;
+        // seconds
+        const secondsTotal = samples / sampleRate;
+        const secondsDisplay = Math.floor(secondsTotal % 60);
+        // minutes
+        const minutesTotal = secondsTotal / 60;
+        const minutesDisplay = Math.floor(minutesTotal % 60);
+        // hours
+        const hoursTotal = minutesTotal / 60;
+        const hoursDisplay = Math.floor(hoursTotal);
+
+        // the display value
+        const timeStr = displayFormatTime(hoursDisplay) + ":"
+             + displayFormatTime(minutesDisplay) + ":"
+             + displayFormatTime(secondsDisplay) + "."
+             + displayFormatSamples(samplesDisplay);
+
+        ChuckNow.updateChuckNow(timeStr);
     });
 }
 

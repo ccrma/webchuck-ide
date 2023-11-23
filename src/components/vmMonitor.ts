@@ -2,6 +2,7 @@
 // title: vmMonitor
 // desc:  Monitor for Chuck Virtual Machine
 //        Displays VM time, and shred table
+//        Include chuckNow class
 //
 // author: terry feng
 // date:   September 2023
@@ -10,6 +11,7 @@
 import { chuckNowCached, sampleRate, theChuck } from "@/host";
 import EditorPanelHeader from "./panelHeader/editorPanelHeader";
 import { displayFormatTime } from "@/utils/time";
+import { Chuck } from "webchuck";
 
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
@@ -24,6 +26,8 @@ export default class VmMonitor {
         const shredTable =
             document.querySelector<HTMLDivElement>("#shredTable")!;
         VmMonitor.shredTableBody = shredTable.getElementsByTagName("tbody")[0]!;
+
+        new ChuckNow();
     }
 
     /**
@@ -117,6 +121,59 @@ export default class VmMonitor {
                 VmMonitor.shredsToRows[theShred]
             );
             delete VmMonitor.shredsToRows[theShred];
+        }
+    }
+}
+
+export class ChuckNow {
+    public static chuckNowToggle: HTMLButtonElement;
+    public static chuckNowStatus: HTMLDivElement;
+    public static chuckNowTime: HTMLSpanElement;
+
+    private static isDisplay: boolean = false;
+
+    constructor() {
+        ChuckNow.chuckNowToggle = document.querySelector<HTMLButtonElement>(
+            "#chuckNowToggle"
+        )!;
+        ChuckNow.chuckNowStatus = document.querySelector<HTMLDivElement>(
+            "#chuckNowStatus"
+        )!;
+        ChuckNow.chuckNowTime = document.querySelector<HTMLSpanElement>(
+            "#chuckNowTime"
+        )!;
+
+        ChuckNow.isDisplay = localStorage["chuckNow"] === "true";
+        ChuckNow.setDisplay(ChuckNow.isDisplay);
+
+        ChuckNow.chuckNowToggle.addEventListener("click", () => {
+            ChuckNow.toggleDisplay();
+        });
+    }
+
+    /**
+     * Update the chuckNow time
+     */
+    static updateChuckNow(timeString: string) {
+        if (ChuckNow.isDisplay) {
+            ChuckNow.chuckNowTime.innerText = timeString;
+        }
+    }
+
+    static toggleDisplay() {
+        this.setDisplay(!ChuckNow.isDisplay);
+    }
+
+    static setDisplay(isDisplay: boolean) {
+        if (isDisplay) {
+            // On
+            ChuckNow.chuckNowToggle.innerText = "ChucK Time: On";
+            ChuckNow.chuckNowStatus.style.display = "block";
+            ChuckNow.isDisplay = localStorage["chuckNow"] = true;
+        } else {
+            ChuckNow.chuckNowToggle.innerText = "ChucK Time: Off";
+            ChuckNow.chuckNowStatus.style.display = "none";
+            ChuckNow.isDisplay = localStorage["chuckNow"] = false;
         }
     }
 }
