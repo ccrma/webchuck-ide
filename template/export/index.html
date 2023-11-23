@@ -37,7 +37,7 @@
         <h1>${TITLE}</h1>
         <h2>Music 220A - ${NAME}</h2>
         <p>${DESCRIPTION}</p>
-        <p style="color: salmon;"><small><em>WebChucK with HID</em></small></p>
+        <p style="color: salmon;"><small><em>WebChucK with HID: </em><span id="hidString"></span></small></p>
         <button id="play">Play</button>
         <button id="stop">Stop</button>
         <br>
@@ -259,6 +259,9 @@
             `;
             let keymap = new Array(255).fill(0);
 
+            const hidString = (device, key, event) => `${device} [${key}]: ${event}`;
+            const hidStatus = document.getElementById('hidString');
+
             let counter = 0;
 
             var mousePos = { x: 0, y: 0 };
@@ -307,6 +310,7 @@
                             theChuck.setFloat("_scaledCursorX", mousePos.x / document.documentElement.clientWidth);
                             theChuck.setFloat("_scaledCursorY", mousePos.y / document.documentElement.clientHeight);
                             theChuck.broadcastEvent("_msg");
+                            hidStatus.innerText = hidString("mouse", "move", "(deltaX: " + e.movementX + ", deltaY: " + e.movementY + ")");
                         }
                         lastPos = mousePos;
                     }
@@ -330,6 +334,7 @@
                         theChuck.setInt("_hidMouse", 1);
                         theChuck.setInt("_which", e.which);
                         theChuck.broadcastEvent("_msg");
+                        hidStatus.innerText = hidString("mouse", "click " + e.which, "down");
                     }
                 }
             }, true);
@@ -350,6 +355,7 @@
                         theChuck.setInt("_hidMouse", 1);
                         theChuck.setInt("_which", e.which);
                         theChuck.broadcastEvent("_msg");
+                        hidStatus.innerText = hidString("mouse", "click " + e.which, "up");
                     }
                 }
             }, true);
@@ -368,6 +374,7 @@
                         theChuck.setFloat("_deltaY", clampVal(e.deltaY, -1, 1));
                         theChuck.broadcastEvent("_hid");
                         theChuck.broadcastEvent("_msg");
+                        hidStatus.innerText = hidString("mouse", "wheel", "(deltaX: " + clampVal(e.deltaX,-1,1) + ", deltaY: " + clampVal(e.deltaY,-1,1) + ")");
                     }
                 }
             }, true);
@@ -378,6 +385,7 @@
                     if (keymap[e.keyCode] === 0) {
                         keymap[e.keyCode] = 1;
                         counter++;
+                        hidStatus.innerText = hidString("key", e.key, "down");
                         eventManager(e, 1);
                     }
                 }
@@ -389,6 +397,7 @@
                     if (_kbdActive) {
                         keymap[e.keyCode] = 0;
                         counter--;
+                        hidStatus.innerText = hidString("key", e.key, "up");
                         eventManager(e, 0);
                     }
                 }
