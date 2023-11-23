@@ -560,8 +560,9 @@ theChuckReady.then(function ()
         spork~_hackEvent();
     
         //The argument here is just to execute older code
-        function time recv(HidMsg msg){
-            return _msg => now;
+        function int recv(HidMsg msg){
+            _msg => now;
+            return 1;
         }
     }
         `);

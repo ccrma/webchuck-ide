@@ -23,6 +23,7 @@
         "machine",
         "class",
         "shred",
+        "hid",
         "string",
         "filter",
         "effects",
@@ -61,6 +62,7 @@
     "tracking": [
         "Tracking.ck",
         "pitch-track.ck",
+        "Smacking.ck",
         "harm.ck",
         "pitch-seventh.ck",
         "pitch-third.ck",
@@ -68,25 +70,42 @@
     ],
     "array": [
         "array_associative.ck",
+        "foreach-6.ck",
         "array_zero.ck",
         "array_reverse.ck",
+        "foreach-auto2.ck",
+        "foreach-2.ck",
+        "foreach-3.ck",
+        "array_sort.ck",
+        "array_range.ck",
         "array_mmixed.ck",
         "array_capacity.ck",
         "array_resize.ck",
         "array_argument.ck",
         "array_assign.ck",
+        "array_erase.ck",
         "array_sub_assign.ck",
+        "array_append.ck",
         "array_dynamic.ck",
         "array_negative.ck",
+        "foreach-4.ck",
         "array_shuffle.ck",
+        "foreach-5.ck",
+        "array_erase2.ck",
         "array_mdim.ck",
-        "array_storage.ck"
+        "array_storage.ck",
+        "foreach-auto1.ck",
+        "foreach-1.ck"
     ],
     "ctrl": [
+        "ctrl_repeat.ck",
+        "ctrl_while.ck",
         "ctrl_until.ck",
         "ctrl_for_loop.ck",
         "ctrl_do_until.ck",
+        "ctrl_do_while.ck",
         "ctrl_break.ck",
+        "ctrl_foreach.ck",
         "ctrl_continue.ck",
         "ctrl_break_nested.ck",
         "ctrl_sequencer.ck"
@@ -99,6 +118,7 @@
     "io": [
         "write-byte.ck",
         "read-int.ck",
+        "write-auto.ck",
         "read-byte.ck",
         "write2.ck",
         "seek.ck",
@@ -217,8 +237,11 @@
         "stifkarp.ck"
     ],
     "math": [
+        "int-dist.ck",
         "map.ck",
-        "math-help.ck"
+        "maybe.ck",
+        "math-help.ck",
+        "randomize.ck"
     ],
     "time": [
         "time_types.ck",
@@ -253,6 +276,7 @@
         "type_object.ck",
         "type_primitives.ck",
         "polymorph.ck",
+        "type_auto.ck",
         "type_analysis.ck"
     ],
     "pca": [
@@ -302,9 +326,14 @@
     ],
     "machine": [
         "eval.ck",
+        "test2.ck",
+        "eval-global.ck",
         "intsize.ck",
         "machine-shred.ck",
         "is-realtime.ck",
+        "test1.ck",
+        "machine-help.ck",
+        "version.ck",
         "crash.ck"
     ],
     "class": [
@@ -320,8 +349,22 @@
         "spork2-exit.ck",
         "dir.ck"
     ],
+    "hid": [
+        "joy-fm.ck",
+        "keyboard-organ.ck",
+        "joy-shake.ck",
+        "kb.ck",
+        "mouse-abs.ck",
+        "joy.ck",
+        "tilt.ck",
+        "mouse.ck",
+        "gametra.ck",
+        "mouse-fm.ck",
+        "joy-noise.ck"
+    ],
     "string": [
         "strops.ck",
+        "replace.ck",
         "strops2.ck",
         "escape.ck",
         "token.ck",
@@ -362,20 +405,28 @@
     ],
     "vector": [
         "vec3.ck",
+        "vec2.ck",
         "interpolate.ck",
+        "vecs-cast.ck",
         "vec4.ck"
     ],
     "event": [
         "broadcast.ck",
         "event-extend.ck",
         "signal4.ck",
+        "event-extend2.ck",
         "signal.ck"
     ],
     "oper": [
         "oper_assign.ck",
+        "overload_overview.ck",
+        "overload_gru.ck",
+        "overload_class.ck",
+        "overload_pre_post.ck",
         "oper_arith_chuck.ck",
         "oper_logic.ck",
         "oper_post_inc.ck",
+        "overload_public.ck",
         "oper_pre_inc.ck"
     ],
     "func": [

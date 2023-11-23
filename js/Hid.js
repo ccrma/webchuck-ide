@@ -117,7 +117,8 @@ function getMousePos(mouseEvent) {
       kbdActive();
       if (keymap[e.keyCode] === 0){
         keymap[e.keyCode] = 1;
-        eventManager(e);
+        counter++;
+        eventManager(e, 1);
       }
     }
   });
@@ -126,35 +127,20 @@ function getMousePos(mouseEvent) {
     if(activeHID){
       kbdActive();
       if(_kbdActive){
-        e.stopPropagation();
         keymap[e.keyCode] = 0;
-        theChuck.broadcastEvent("_hid");
-        theChuck.setInt("_isDown", 0);
-        theChuck.setInt("_isUp", 1);
-        theChuck.setString("_key", e.key);
-        theChuck.setInt("_which", e.which);
-        theChuck.setInt("_ascii", e.keyCode);
-        theChuck.broadcastEvent("_msg");
+        counter--;
+        eventManager(e, 0);
       }
     }
   });
 
-  function eventManager(e){
-    if(activeHID){
-      e.stopPropagation();
-      theChuck.broadcastEvent("_hid");
-      keymap.forEach((t, index) => {
-        if(t === 1){
-          theChuck.setString("_key", e.key);
-          theChuck.setInt("_which", e.which);
-          theChuck.setInt("_ascii", index);
-          counter++;
-        }
-      })
-      theChuck.setInt("_isDown", 1);
-      theChuck.setInt("_isUp", 1);
-      theChuck.setInt("_hidMultiple", counter);
-      counter = 0;
-      theChuck.broadcastEvent("_msg");
-    }
+  function eventManager(e, isDown){
+    theChuck.broadcastEvent("_hid");
+    theChuck.setString("_key", e.key);
+    theChuck.setInt("_which", e.which);
+    theChuck.setInt("_ascii", e.keyCode);
+    theChuck.setInt("_isDown", isDown);
+    theChuck.setInt("_isUp", !isDown);
+    theChuck.setInt("_hidMultiple", counter);
+    theChuck.broadcastEvent("_msg");
   }
