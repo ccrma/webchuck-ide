@@ -11,7 +11,6 @@
 import { chuckNowCached, sampleRate, theChuck } from "@/host";
 import EditorPanelHeader from "./panelHeader/editorPanelHeader";
 import { displayFormatTime } from "@/utils/time";
-import { Chuck } from "webchuck";
 
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
@@ -35,6 +34,12 @@ export default class VmMonitor {
      * @param theShred Shred ID
      */
     static addShredRow(theShred: number) {
+        // Check if shred already exists
+        if (theShred in VmMonitor.shredsToRows) {
+            return;
+        }
+
+        // Create new row
         let newRow = VmMonitor.shredTableBody.insertRow();
         let id = newRow.insertCell(0);
         let name = newRow.insertCell(1);
@@ -103,7 +108,6 @@ export default class VmMonitor {
             theChuck?.removeShred(theShred).then(
                 // Success
                 (removedShredID) => {
-                    VmMonitor.removeShredRow(removedShredID as number);
                 },
                 // Failure, do nothing
                 () => {}
