@@ -2,10 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" type="image/png">
     <style>
       :root {
-        --accent-color: salmon;
+        --accent-color: bisque;
+      }
+
+      @media screen and (max-device-width: 768px) {
+        body, html {
+          font-size: 6pt;
+          grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh) !important;
+        }
+
+        main {
+          flex-direction: column;
+          gap: 0.5em;
+        }
+
+        section {
+          font-size: 8pt;
+        }
+
+        #mixer {
+          display: none;
+          flex-basis: 40% !important;
+        }
+      }
+
+      @media screen and (min-device-width: 1441px) {
+        section {
+          display: flex;
+          justify-content: center;
+
+          & > div {
+            max-width: 1200px;
+          }
+        }
       }
 
       body, html {
@@ -19,33 +52,31 @@
         background: #def;
         display: grid;
         gap: 2em;
-        grid-template-rows: minmax(0, 1fr) minmax(0, 8fr) minmax(0, 1fr);
+        grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh);
       }
 
       button {
         align-items: center;
-        background: var(--accent-color);
-        border: 1px solid var(--accent-color);
+        background: none;
+        border: 1px solid black;
         border-radius: 5px;
-        color: white;
+        color: black;
         cursor: pointer;
         display: flex;
         justify-content: center;
-        margin-bottom: 1em;
-        margin-left: 1em;
-        margin-right: 1em;
+        margin: 0 1em;
         transition: all 0.1s ease-in-out;
       }
 
       button:hover {
-        filter: invert(5%);
-        scale: .99;
+        background: var(--accent-color);
+        color: black;
       }
 
       header {
         align-items: center;
         display: flex;
-        gap: 0.5em;
+        gap: 2em;
         padding: 0 2em;
       }
 
@@ -159,6 +190,12 @@
         margin-top: 0;
       }
 
+      section {
+        padding: 0 4em;
+        overflow-y: scroll;
+      }
+
+      /* noinspection CssUnusedSymbol */
       .slider-wrap {
         align-items: center;
         display: flex;
@@ -173,7 +210,10 @@
       }
 
       #editor-wrap {
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
+        gap: 1em;
       }
 
       #logo {
@@ -184,13 +224,13 @@
       #mixer {
         align-items: center;
         background: var(--accent-color);
-        display: flex;
+        display: none;
         flex-basis: 20%;
         flex-wrap: wrap;
         gap: 1em;
         justify-content: center;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: scroll;
         padding: 0.5em;
       }
     </style>
@@ -203,8 +243,7 @@
       for (o of d.querySelectorAll(t + '[type=chuck]')) o[x] = 'export default `' + o[x] + '`', o.setAttribute('type', 'inline-module');
       for (o of d.querySelectorAll(t + '[type=inline-module]')) l = d.createElement(t), o.id ? l.id = o.id : 0, l.type = 'module', l[x] = o[x].replace(p, (u, a, z) => (e = d.querySelector(t + z + '[type=module][src]')) ? a + `/* ${ z } */'${ e.src }'` : u), l.src = URL.createObjectURL(new Blob([l[x]], { type: 'application/java' + t })), o.replaceWith(l);//inline
     </script>
-    <script id="chuck" type="chuck">${CODE}
-    </script>
+    <script id="chuck" type="chuck"></script>
     <script type="inline-module">
       import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
       import chuck from '#chuck';
@@ -267,6 +306,8 @@
       const sliders = [...chuck.matchAll(/^\s*(?!\/\/ +)global float (\w+)/gm)]
         .map(([, variable]) => variable);
 
+      if (sliders.length > 0) mixer.style.display = 'flex';
+
       sliders.forEach(variable => {
         const div = document.createElement('div');
         div.classList.add('slider-wrap');
@@ -292,20 +333,24 @@
   <body>
     <header>
       <img id="logo" src="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" alt="ChucK Logo">
-      <h1>WebChucK</h1>
+      <h1 id="name"></h1>
+      <h2 id="author"></h2>
     </header>
+    <section>
+      <div id="description"></div>
+    </section>
     <main>
+      <div id="mixer"></div>
       <div id="editor-wrap">
+        <button id="action">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play"
+               viewBox="0 0 16 16">
+            <path
+              d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+          </svg>
+        </button>
         <div id="editor" class="ace_editor ace-chuck"></div>
       </div>
-      <div id="mixer"></div>
     </main>
-    <button id="action">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play"
-           viewBox="0 0 16 16">
-        <path
-          d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
-      </svg>
-    </button>
   </body>
 </html>
