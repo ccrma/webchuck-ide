@@ -8,6 +8,17 @@
 
 import { getColorScheme } from "@/utils/theme";
 
+const MIN_DBFS: number = -120;
+
+function clamp(value: number, min: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
+}
+
+function freqHeightScale(dbfs: number, height: number): number {
+    const value: number  = clamp(dbfs, MIN_DBFS, 0); // -120 to 0
+    const percent: number = value / MIN_DBFS; // 0.0 to 1.0
+    return percent * height; // 0.0 to height (downward)
+}
 /**
 	drawSpectrum_()
 	{
@@ -64,7 +75,7 @@ export default class Visualizer {
             visualizerDefaultOptions.frameSize
         );
         this.frequencyData = new Float32Array(
-            visualizerDefaultOptions.frameSize
+            visualizerDefaultOptions.frameSize / 2
         );
 
         // Set theme
@@ -103,23 +114,23 @@ export default class Visualizer {
 
     drawSpectrum_() {
         this.analyserNode.getFloatFrequencyData(this.frequencyData);
+        // get min max of frequency data
         const width = this.context2D.canvas.width;
         const height = this.context2D.canvas.height;
-        // We only care about below nyquist / 4.
-        const increment = width / (this.frequencyData.length * 0.25);
-        // |frequencyData| is between 0.0dBFS ~ -200dbFS.
-        const normalizeHeight = (y: number) => (y * height) / -200;
+        // We only visualize 0 to half of nyquist.
+        const increment = width / (this.frequencyData.length / 2);
+        // |frequencyData| is clamped between 0.0dBFS ~ MIN_DBFS (-120)
         this.context2D.beginPath();
         for (let x = 0, i = 0; x < width; x += increment, ++i) {
             if (i === 0) {
                 this.context2D.moveTo(
                     x,
-                    normalizeHeight(this.frequencyData[i])
+                    freqHeightScale(this.frequencyData[i], height)
                 );
             } else {
                 this.context2D.lineTo(
                     x,
-                    normalizeHeight(this.frequencyData[i])
+                    freqHeightScale(this.frequencyData[i], height)
                 );
             }
         }

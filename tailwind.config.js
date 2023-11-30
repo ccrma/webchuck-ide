@@ -7,6 +7,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'mono': ['"Monaco"', '"Consolas"', 'monospace'],
+      },
       invert: {
         20: '.2',
       },
