@@ -24,7 +24,7 @@ if( !hi.openMouse( device ) ) me.exit();
 // Pulse Wave Oscillator
 // Initialize with frequency of 220Hz
 PulseOsc foo(220) => dac;
-0.5 => foo.gain;
+0.3 => foo.gain;
 
 // infinite event loop
 while( true )
@@ -66,7 +66,7 @@ while( true )
             
             // Unmute oscillator
             if (msg.which == 1) {
-                foo.gain(0.5);
+                foo.gain(0.3);
             }
         }
         
