@@ -11,8 +11,8 @@
 //         https://www.youtube.com/watch?v=es6oiJEvI_M
 //-----------------------------------------------------------------------------
 
-// keyboard device number
-1 => int device;
+// webchuck keyboard device
+0 => int device;
 
 // HID input and HID message
 Hid hid;
