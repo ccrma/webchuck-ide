@@ -1,12 +1,17 @@
 //-----------------------------------------------------------------------------
-// name: Mouse Oscillator
-// desc: Use your mouse to control a pulse wave oscillator
-//       x-pos: frequency
-//       y-pos: pulse wave width
-//       click to mute
+// name: Mouse PWM Oscillator
+// desc: Use your mouse to control a pulse width modulated oscillator
+//       mouse x: frequency (220Hz - 440Hz)
+//       mouse y: pulse width (0 - 1)
+//       mouse click: mute
+//
+//       Open the visualizer to see PWM in action
 //
 //       Adapted from mouse.ck by Ge Wang
 //       https://chuck.stanford.edu/doc/examples/hid/mouse.ck
+//
+//       Learn about pulse width oscillator modulation:
+//       https://chuck.stanford.edu/doc/examples/basic/pulse.ck
 //
 // author: Terry Feng
 //-----------------------------------------------------------------------------
@@ -24,7 +29,7 @@ if( !hi.openMouse( device ) ) me.exit();
 // Pulse Wave Oscillator
 // Initialize with frequency of 220Hz
 PulseOsc foo(220) => dac;
-0.3 => foo.gain;
+0.2 => foo.gain;
 
 // infinite event loop
 while( true )
@@ -66,7 +71,7 @@ while( true )
             
             // Unmute oscillator
             if (msg.which == 1) {
-                foo.gain(0.3);
+                foo.gain(0.2);
             }
         }
         
