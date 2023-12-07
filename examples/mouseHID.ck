@@ -26,7 +26,7 @@ HidMsg msg;
 if( !hi.openMouse( device ) ) me.exit();
 <<< "mouse '" + hi.name() + "' ready", "" >>>;
 
-// Pulse Wave Oscillator
+// Pulse Width Oscillator
 // Initialize with frequency of 220Hz
 PulseOsc foo(220) => dac;
 0.2 => foo.gain;
