@@ -15,7 +15,7 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 function freqHeightScale(dbfs: number, height: number): number {
-    const value: number  = clamp(dbfs, MIN_DBFS, 0); // -120 to 0
+    const value: number = clamp(dbfs, MIN_DBFS, 0); // -120 to 0
     const percent: number = value / MIN_DBFS; // 0.0 to 1.0
     return percent * height; // 0.0 to height (downward)
 }

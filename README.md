@@ -1,5 +1,7 @@
 # WebChucK IDE
 
+[![Node.js Build](https://github.com/terryzfeng/vitechuck-ide/actions/workflows/node.js.yml/badge.svg)](https://github.com/terryzfeng/vitechuck-ide/actions/workflows/node.js.yml)
+
 A web-based integrated development environment (IDE) for real-time sound synthesis and music creation with [ChucK](https://chuck.stanford.edu)!
 
 Try it here: [https://chuck.stanford.edu/ide/](https://chuck.stanford.edu/ide/)

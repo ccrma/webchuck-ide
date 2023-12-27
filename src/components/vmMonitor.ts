@@ -107,8 +107,7 @@ export default class VmMonitor {
         remove.addEventListener("click", () => {
             theChuck?.removeShred(theShred).then(
                 // Success
-                (removedShredID) => {
-                },
+                () => {},
                 // Failure, do nothing
                 () => {}
             );
@@ -137,15 +136,12 @@ export class ChuckNow {
     private static isDisplay: boolean = false;
 
     constructor() {
-        ChuckNow.chuckNowToggle = document.querySelector<HTMLButtonElement>(
-            "#chuckNowToggle"
-        )!;
-        ChuckNow.chuckNowStatus = document.querySelector<HTMLDivElement>(
-            "#chuckNowStatus"
-        )!;
-        ChuckNow.chuckNowTime = document.querySelector<HTMLSpanElement>(
-            "#chuckNowTime"
-        )!;
+        ChuckNow.chuckNowToggle =
+            document.querySelector<HTMLButtonElement>("#chuckNowToggle")!;
+        ChuckNow.chuckNowStatus =
+            document.querySelector<HTMLDivElement>("#chuckNowStatus")!;
+        ChuckNow.chuckNowTime =
+            document.querySelector<HTMLSpanElement>("#chuckNowTime")!;
 
         ChuckNow.isDisplay = localStorage["chuckNow"] === "true";
         ChuckNow.setDisplay(ChuckNow.isDisplay);

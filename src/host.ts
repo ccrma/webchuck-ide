@@ -11,10 +11,14 @@
 //--------------------------------------------------------
 
 import { Chuck } from "webchuck";
-import { calculateDisplayDigits, displayFormatSamples, displayFormatTime } from "@utils/time";
+import {
+    calculateDisplayDigits,
+    displayFormatSamples,
+    displayFormatTime,
+} from "@utils/time";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
-import VmMonitor, { ChuckNow } from "./components/vmMonitor";
+import { ChuckNow } from "./components/vmMonitor";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -109,10 +113,14 @@ function chuckGetNow() {
         const hoursDisplay = Math.floor(hoursTotal);
 
         // the display value
-        const timeStr = displayFormatTime(hoursDisplay) + ":"
-             + displayFormatTime(minutesDisplay) + ":"
-             + displayFormatTime(secondsDisplay) + "."
-             + displayFormatSamples(samplesDisplay);
+        const timeStr =
+            displayFormatTime(hoursDisplay) +
+            ":" +
+            displayFormatTime(minutesDisplay) +
+            ":" +
+            displayFormatTime(secondsDisplay) +
+            "." +
+            displayFormatSamples(samplesDisplay);
 
         ChuckNow.updateChuckNow(timeStr);
     });
