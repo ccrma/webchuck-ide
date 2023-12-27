@@ -26,10 +26,10 @@ jobs:
     - run: npm run build --if-present
 
     - name: Deploy dist to prod
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: dist
-          remote: ${{ secrets.IDE_LOCATION }}
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: dist
+        remote: ${{ secrets.IDE_LOCATION }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
