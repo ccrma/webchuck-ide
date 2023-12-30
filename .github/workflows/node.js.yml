@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 18
       uses: actions/setup-node@v3
       with:
         node-version: 18
@@ -25,11 +25,12 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
-    - name: Deploy dist to prod
-      uses: garygrossgarten/github-action-scp@release
-      with:
-        local: dist
-        remote: ${{ secrets.IDE_LOCATION }}
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.SSH_USER }}
-        password: ${{ secrets.SSH_PASSWORD }}
+    - name: Deploy dist to production
+      uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -avzr --delete
+          path: dist
+          remote_path: ${{ secrets.IDE_LOCATION }}
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
