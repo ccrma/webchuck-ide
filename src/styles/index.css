@@ -19,7 +19,7 @@
 
 #webchuck-ide {
     display: grid;
-    grid-template-rows: 0.5fr 0.6fr minmax(0, 8.9fr);
+    grid-template-rows: 3rem 3.5rem auto;
     grid-template-columns: 100%;
     grid-template-areas:
         "nav"
@@ -35,6 +35,31 @@
     grid-template-areas: "app-left splitV1 app-middle splitV2 app-right";
     grid-template-columns: 2fr 2px 6fr 2px 4fr; /* app column widths */
     grid-template-rows: 100%;
+}
+
+/* Mobile Layout */
+@media (max-width: 640px) { 
+    #webchuck-ide {
+        height: 160vh;
+    }
+    #app {
+        @apply px-2 pb-2;
+        grid-template-areas: 
+            "app-middle" 
+            "splitH2" 
+            "app-right";
+        grid-template-rows: 5fr 2px 5fr;
+        grid-template-columns: 100%;
+    }
+    #chuckBarLeft {
+        width: 100%;
+    }
+    #chuckBarRight {
+        display: none;
+    }
+    #fileToggle {
+        pointer-events: none;
+    }
 }
 
 /* APP LAYOUT */
@@ -224,6 +249,12 @@ td:nth-child(4) {
 
 .resizer {
     @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
+}
+
+@media (max-width: 640px) { 
+    .resizer {
+        pointer-events: none;
+    }
 }
 
 .header {
