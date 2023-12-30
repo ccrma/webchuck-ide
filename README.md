@@ -1,36 +1,37 @@
 # WebChucK IDE
 
-[![Node.js Build](https://github.com/terryzfeng/vitechuck-ide/actions/workflows/node.js.yml/badge.svg)](https://github.com/terryzfeng/vitechuck-ide/actions/workflows/node.js.yml)
-
-A web-based integrated development environment (IDE) for real-time sound synthesis and music creation with [ChucK](https://chuck.stanford.edu)!
+A web-based integrated development environment (IDE) for real-time sound synthesis and music creation with ChucK!
 
 Try it here: [https://chuck.stanford.edu/ide/](https://chuck.stanford.edu/ide/)
 
 ## What is WebChucK IDE?
 
-Write and run ChucK code in the browser, learn ChucK with interactive examples, and prototype projects with WebChucK IDE! 
-WebChucK IDE runs the latest version of ChucK through [WebChucK](https://chuck.stanford.edu/webchuck), WebAsembly running via the Web Audio API. Try ChucK online and share your projects on the web!
+Well first of all, what's WebChucK? Take all of computer music, advances in programming digital sound, the web and web browsers and create an enjoyable playground for sound exploration. That’s WebChucK. WebChucK IDE takes that one step further and creates a playground for you to experience and develop with all that WebChucK and native ChucK have to offer, now on the web!
 
-Learn more about WebChucK here:
+Use WebChucK IDE to prototype ChucK code, build WebChucK projects, but most importantly, take your ChucK on the go! WebChucK IDE runs ChucK on your desktop browser or mobile computing device! To learn more about WebChucK and what it can do, check out the following links: 
 
-1. [Github](https://github.com/ccrma/webchuck) for WebChucK 
-2. [WebChucK Tutorials](https://chuck.stanford.edu/webchuck/tutorial) by Mike Mulshine
+1. [Tutorials](https://chuck.stanford.edu/webchuck/tutorial) for WebChucK by Mike Mulshine
+2. [Github](https://github.com/ccrma/webchuck) for WebChucK
+
+*How much web could a WebChucK ChucK if we **all** could ChucK on the web?*
 
 ## WebChucK IDE Features
 
-- Syntax highlighting with [Monaco editor](https://github.com/microsoft/monaco-editor)
-
 - Monitor runtime of ChucK's virtual machine
 
-- Spectral frequency and waveform visualizer
+- Cross platform development for ChucK (mobile, iPad)
+
+- Audio Visualizer
 
 - Auto-generated GUI
 
-- ChucK's [Example Library](https://chuck.stanford.edu/doc/examples/)
+- Access to ChucK's example library
 
-- Export to WebChucK web app
+- Vim keybinding support
 
-- *Coming soon: Ability to load and share your code via Github Gists*
+- Dark mode
+
+- Precompilers (to play with possible new worlds)
 
 ## Usage
 
@@ -40,20 +41,10 @@ Clone this repository
 git clone https://github.com/ccrma/webchuck-ide
 ```
 
-Install [Node](https://nodejs.org/en/download) dependencies
+Run `index.html` with a web server (VSCode: [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)), or create one with Python 3
 
 ```
-npm install
+python -m http.server 8000
 ```
 
-Run development server to run WebChucK IDE
-
-```
-npm run dev
-```
-
-(Deployment) Build static WebChucK IDE website to `/dist` folder
-
-```
-npm run build
-```
+You can go to this server by going to the URL `localhost:8000` in your web browser.
