@@ -43,7 +43,10 @@ export default class Editor {
             },
             model: editorConfig,
             theme: "miniAudicleLight",
-            automaticLayout: false,
+            // TODO: change this to false
+            // For some reason, monaco height can't be resized to smaller, doesn't respond
+            // This trick temp fixes it but is really slow
+            automaticLayout: true, 
             scrollBeyondLastLine: false,
             fontSize: 14,
             cursorBlinking: "smooth",
