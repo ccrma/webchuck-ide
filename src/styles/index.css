@@ -91,7 +91,7 @@
         "splitH1"
         "inputPanel";
     grid-template-columns: 100%;
-    grid-template-rows: 9.6fr 2px 0.4fr;
+    grid-template-rows: minmax(auto, 1fr) 2px 28px;
     min-width: 64px;
 }
 #app-right {
@@ -103,7 +103,9 @@
         "splitH2"
         "outputPanel";
     grid-template-columns: 100%;
-    grid-template-rows: 5fr 2px 5fr;
+    grid-template-rows: calc(50% - 2px) 2px 50%;
+    height: 100%;
+    overflow: none;
 }
 
 #fileExplorer {

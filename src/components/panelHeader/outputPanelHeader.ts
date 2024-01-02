@@ -1,55 +1,59 @@
 import Console from "@/components/console";
 import OutputHeaderToggle from "./toggle/outputHeaderToggle";
-import { splitHeightCSS, getTabsActive } from "@/utils/outputLayout";
 import { visual } from "@/host";
+import { openOutputPanel } from "@/utils/appLayout";
+
+const OUTPUT_HEADER_HEIGHT: number = 1.75; // rem
 
 export default class OutputPanelHeader {
-    public static consoleContent: HTMLDivElement;
-    public static visualizerContent: HTMLDivElement;
-
-    private static prevTabsActive: number = 0;
+    public static consoleContainer: HTMLDivElement;
+    public static visualizerContainer: HTMLDivElement;
 
     constructor() {
-        // Setup the Output Panel Header
+        // Setup Output Panel Header Tabs
         // Console
         const consoleButton =
             document.querySelector<HTMLButtonElement>("#consoleTab")!;
-        OutputPanelHeader.consoleContent =
+        OutputPanelHeader.consoleContainer =
             document.querySelector<HTMLDivElement>("#consoleContainer")!;
         // Visualizer
         const visualizerButton =
             document.querySelector<HTMLButtonElement>("#visualizerTab")!;
-        OutputPanelHeader.visualizerContent =
+        OutputPanelHeader.visualizerContainer =
             document.querySelector<HTMLDivElement>("#visualizerContainer")!;
 
         // Build toggles
         new OutputHeaderToggle(
             consoleButton,
-            OutputPanelHeader.consoleContent,
+            OutputPanelHeader.consoleContainer,
             true
         );
         new OutputHeaderToggle(
             visualizerButton,
-            OutputPanelHeader.visualizerContent
+            OutputPanelHeader.visualizerContainer
         );
-
-        OutputPanelHeader.updateSplitHeight();
     }
 
     /**
-     * Updates the split height css based on the number of
-     * tabs active in the Output panel header
+     * Update the CSS for the Output Panel based on the number of tabs that are toggled
+     * @param tabsActive number of tabs active
+     * @param totalTabs total tabs
+     * @returns 
      */
-    static updateSplitHeight() {
-        const tabsActive: number = getTabsActive();
-        if (OutputPanelHeader.prevTabsActive === tabsActive) return;
+    static updateOutputPanel(tabsActive: number) {
+        // Open output panel if more than 0 tab is open
+        if (tabsActive == 0) {
+            openOutputPanel(false);
+            return;
+        }
 
-        const splitHeight: string = splitHeightCSS;
-        OutputPanelHeader.consoleContent.style.height = splitHeight;
+        openOutputPanel(true);
+        // Split the container heights evenly
+        const splitHeight: string = `calc((100% - ${OUTPUT_HEADER_HEIGHT}rem)/${tabsActive})`;
+        OutputPanelHeader.consoleContainer.style.height = splitHeight;
+        OutputPanelHeader.visualizerContainer.style.height = splitHeight;
+
         Console.resizeConsole();
-        OutputPanelHeader.visualizerContent.style.height = splitHeight;
-
-        this.prevTabsActive = tabsActive;
         visual?.resize();
     }
 }

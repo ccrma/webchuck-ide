@@ -4,7 +4,6 @@
 export default class HeaderToggle {
     public button: HTMLButtonElement;
     public contentContainer: HTMLDivElement;
-
     protected open: boolean = false;
 
     constructor(

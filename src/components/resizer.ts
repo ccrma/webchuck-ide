@@ -1,4 +1,4 @@
-import { AppLayoutConstants, setCurrentWidths } from "@utils/appLayout";
+import { AppLayoutConstants, setAppColumnWidths, setContainerRowHeights } from "@utils/appLayout";
 import Editor from "@components/monaco/editor";
 import Console from "@/components/console";
 import { visual } from "@/host";
@@ -103,19 +103,17 @@ export default class Resizer {
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
-            // convert to percentages
-            let newTopPercent: number =
-                (newTopLeftSize / (bottomRightEnd - topLeftStart)) * 100;
-            let newBottomPercent: number =
-                (newBotRightSize / (bottomRightEnd - topLeftStart)) * 100;
-            // These heights are used to create a new style element for the widths
-            const rows: string[] = [
-                `${newTopPercent}%`,
-                `${AppLayoutConstants.SPLITTER_THICKNESS}px`,
-                `${newBottomPercent}%`,
-            ];
-            // Set row heights
-            this.splitContainer.style.gridTemplateRows = rows.join(" ");
+            const isBottomOpen = newBotRightSize == AppLayoutConstants.MIN_SIZE_V;
+            if (isBottomOpen) {
+                setContainerRowHeights(this.splitContainer, -1, `${newBotRightSize}`)
+            } else {
+                // convert to percentages
+                let newTopPercent: number =
+                    (newTopLeftSize / (bottomRightEnd - topLeftStart)) * 100;
+                let newBottomPercent: number =
+                    (newBotRightSize / (bottomRightEnd - topLeftStart)) * 100;
+                setContainerRowHeights(this.splitContainer, newTopPercent, newBottomPercent);
+            }
         } else {
             // HORIZONTAL DRAG EVENT, more complicated calculation
             // Figure out which column is not being resized
@@ -130,7 +128,7 @@ export default class Resizer {
             });
 
             // Set current column widths in pixels
-            setCurrentWidths(colPercents);
+            setAppColumnWidths(colPercents);
         }
 
         // If left or right element is the editor, manually call the

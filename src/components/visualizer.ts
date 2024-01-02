@@ -19,26 +19,6 @@ function freqHeightScale(dbfs: number, height: number): number {
     const percent: number = value / MIN_DBFS; // 0.0 to 1.0
     return percent * height; // 0.0 to height (downward)
 }
-/**
-	drawSpectrum_()
-	{
-		this.analyserNode.getFloatFrequencyData(this.frequencyData);
-		const width = this.context2D.canvas.width;
-		const height = this.context2D.canvas.height;
-		// We only care about below nyquist. 
-		const increment = width / (this.frequencyData.length * 0.5);
-		this.context2D.beginPath();
-		this.context2D.moveTo(0, height * 0.5);
-		for (let x = 0, i = 0; x < width; x += increment, ++i)
-		{
-			// |frequencyData| is between 0.0dBFS ~ -200dbFS.
-			this.context2D.lineTo(x, -this.frequencyData[i]);
-		}
-		this.context2D.stroke();
-	}
-	*/
-
-// TODO: Check visualizer height initialization
 
 // light theme
 const waveformColorLight = "#333";

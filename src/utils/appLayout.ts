@@ -18,27 +18,47 @@ import Console from "@/components/console";
 
 const CLASS_V_SPLIT: string = "vSplit";
 const CLASS_H_SPLIT: string = "hSplit";
+const SPLITTER_THICKNESS: number = 2; // px
+const MIN_SIZE_H: number = 64; // px
+const MIN_SIZE_V: number = 28; // px
 
-const SPLITTER_THICKNESS: number = 2;
-const MIN_SIZE_H: number = 64;
-const MIN_SIZE_V: number = 28;
-
+// Default Layout Opened Dimensions (%)
 const LEFT_WIDTH: number = 16.67;
 const MIDDLE_WIDTH: number = 50;
 const RIGHT_WIDTH: number = 33.33;
+const EDITOR_PANEL_HEIGHT: number = 70;
+const INPUT_PANEL_HEIGHT: number = 30;
+const VM_MONITOR_HEIGHT: number = 50;
+const OUTPUT_PANEL_HEIGHT: number = 50;
 
-// Globals
-// let left = document.getElementById("app-left")!;
-// let middle = document.getElementById("app-middle")!;
-// let right = document.getElementById("app-right")!;
-let splitContainer = document.getElementById("app")!;
+// App Layout Panels
+const appContainer = document.getElementById("app")!;
+const left_panel = document.getElementById("app-left")!;
+const middle_panel = document.getElementById("app-middle")!;
+const right_panel = document.getElementById("app-right")!;
+const editor_panel = document.getElementById("editorPanel")!;
+const input_panel = document.getElementById("inputPanel")!;
+const vm_monitor_panel = document.getElementById("vmMonitor")!;
+const output_panel = document.getElementById("outputPanel")!;
+
+// Initialize App Dimensions
 let left_width: number = LEFT_WIDTH;
 let middle_width: number = MIDDLE_WIDTH;
 let right_width: number = RIGHT_WIDTH;
 
+// App State (Open Panels)
+let left_open = true;
+// let middle_open = true;
+// let right_open = true;
+//let editor_open = true;
+let input_panel_open = false;
+//let vm_monitor = true;
+let output_panel_open = true;
+
+// App Layout Splitters
 let splitters: Resizer[] = [];
 
-// export Constants
+// Export Constants
 export const AppLayoutConstants = {
     SPLITTER_THICKNESS: SPLITTER_THICKNESS,
     MIN_SIZE_H: MIN_SIZE_H,
@@ -46,6 +66,10 @@ export const AppLayoutConstants = {
     LEFT_WIDTH: LEFT_WIDTH,
     MIDDLE_WIDTH: MIDDLE_WIDTH,
     RIGHT_WIDTH: RIGHT_WIDTH,
+    EDITOR_PANEL_HEIGHT: EDITOR_PANEL_HEIGHT,
+    VM_MONITOR_HEIGHT: VM_MONITOR_HEIGHT,
+    INPUT_PANEL_HEIGHT: INPUT_PANEL_HEIGHT,
+    OUTPUT_PANEL_HEIGHT: OUTPUT_PANEL_HEIGHT
 };
 
 // Initialize the app splitters
@@ -53,10 +77,11 @@ export function initAppSplitters() {
     findSplitObjects(`.${CLASS_V_SPLIT},.${CLASS_H_SPLIT}`);
 }
 
+
 //-----------------------------------
-// Global Functions
+// APP LAYOUT FUNCTIONS
 //-----------------------------------
-export function getCurrentWidths(): [number, number, number] {
+export function getAppColumnWidths(): [number, number, number] {
     return [left_width, middle_width, right_width];
 }
 
@@ -64,56 +89,122 @@ export function getCurrentWidths(): [number, number, number] {
  * Three widths in percents for the left, middle, and right
  * @param colWidths
  */
-export function setCurrentWidths(colPercents: number[]) {
+export function setAppColumnWidths(colPercents: number[]) {
     left_width = colPercents[0];
     middle_width = colPercents[1];
-    right_width = colPercents[2];
+    right_width = colPercents[2]; // estimated percent
 
     let cols: string[] = [
         `${colPercents[0]}%`,
         `${SPLITTER_THICKNESS}px`,
-        `${colPercents[1]}%`,
+        `${middle_width}%`,
         `${SPLITTER_THICKNESS}px`,
-        `${colPercents[2]}%`,
+        `calc(${100 - (left_width + middle_width)}% - ${2*SPLITTER_THICKNESS}px)` // actual percent in CSS
     ];
-    splitContainer.style.gridTemplateColumns = cols.join(" ");
+    appContainer.style.gridTemplateColumns = cols.join(' ');
+}
+
+/**
+ * Vertical Height Set
+ */
+export function setContainerRowHeights(container: HTMLElement, _top: number, bottom: number | string) {
+    let heights: string[];
+    // If a percent is passed in, the bottom panel is open
+    // if a string is passed in, that is to mean the closed height of the bottom panel
+    let isBottomOpen: boolean;
+    if (typeof bottom === 'number') {
+        heights = [
+            `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom}%)`,
+            `${SPLITTER_THICKNESS}px`,
+            `${bottom}%`,
+        ]
+        isBottomOpen = true;
+    } else {
+        heights = [
+            `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom})`, // bottom is a px string
+            `${SPLITTER_THICKNESS}px`,
+            bottom
+        ]
+        isBottomOpen = false;
+    }
+    if (container.id == "app-middle") {
+        input_panel_open = isBottomOpen;
+    } else {
+        output_panel_open = isBottomOpen;
+    }
+    container.style.gridTemplateRows = heights.join(' ');
 }
 
 /**
  * Toggle the left file Explorer visibility
  */
 export function toggleLeft() {
-    let leftPanel = document.getElementById("app-left")!;
-    if (localStorage.leftVisible === "true") {
+    if (left_open) {
         // hide left
-        const widths = getCurrentWidths();
+        const widths = getAppColumnWidths();
         const left = 0;
         const middle = widths[1] + widths[0] / 2.0;
         const right = 100 - middle;
-        setCurrentWidths([left, middle, right]);
+        setAppColumnWidths([left, middle, right]);
         splitters[0].deactivate(); // Deactive the left resizer
-        leftPanel.classList.add("hidden"); // Hide the left panel
-        localStorage.leftVisible = "false";
+        left_panel.classList.add("hidden"); // Hide the left panel
+        left_open = false;
     } else {
         // show left
-        const widths = getCurrentWidths();
-        setCurrentWidths([
+        const widths = getAppColumnWidths();
+        setAppColumnWidths([
             LEFT_WIDTH,
             widths[1] - LEFT_WIDTH / 2.0,
             100 - LEFT_WIDTH - (widths[1] - LEFT_WIDTH / 2.0),
         ]);
-        leftPanel.classList.remove("hidden");
+        left_panel.classList.remove("hidden");
         splitters[0].activate();
-        localStorage.leftVisible = "true";
+        left_open = true;
     }
-
     Editor.resizeEditor();
     Console.resizeConsole();
 }
 
-//-----------------------------------
-// Helper Function for resizers
-//-----------------------------------
+/**
+ * Open the Input Panel to the default height
+ * @param open 
+ */
+export function openInputPanel(open: boolean) {
+    if (open == input_panel_open) return;
+
+    if (open) {
+        // open input panel
+        setContainerRowHeights(middle_panel, EDITOR_PANEL_HEIGHT, INPUT_PANEL_HEIGHT);
+        input_panel_open = true;
+    } else {
+        // close input panel
+        setContainerRowHeights(middle_panel, -1, `${MIN_SIZE_V}px`);
+        input_panel_open = false;
+    }
+    Editor.resizeEditor();
+}
+
+/**
+ * Open the Output Panel to the default height
+ * @param open 
+ */
+export function openOutputPanel(open: boolean) {
+    if (open == output_panel_open) return;
+
+    if (open) {
+        // open output panel
+        setContainerRowHeights(right_panel, VM_MONITOR_HEIGHT, OUTPUT_PANEL_HEIGHT);
+        output_panel_open = true;
+    } else {
+        // close output panel
+        setContainerRowHeights(right_panel, -1, `${MIN_SIZE_V}px`);
+        output_panel_open = false;
+    }
+}
+
+/**
+ * Helper Function for resizers
+ */
 function findSplitObjects(selector: string) {
     const splits: HTMLElement[] = Array.from(
         document.querySelectorAll(selector)
