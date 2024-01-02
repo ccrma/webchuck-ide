@@ -1,12 +1,11 @@
 //---------------------------------------------------------
-// title: Output Header Toggle
-// desc: Define functionality for Output Panel Toggles
-//       Hide or show the Console and Visualizer Container
+// title: Input Header Toggle
+// desc: Define functionality for Input Panel Toggles
+//       Hide or show the Input Panel and the GUI/HID interface
 //
 // author: terry feng
-// date:   December 2023
+// date:   January 2024
 //---------------------------------------------------------
-import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import {
     accentColorClass,
     darkHoverColorClass,
@@ -15,34 +14,28 @@ import {
     textColorClass,
 } from "@/utils/theme";
 import HeaderToggle from "./headerToggle";
+import InputPanelHeader from "../inputPanelHeader";
 
-export default class OutputHeaderToggle extends HeaderToggle {
-    public static numToggles = 0;
-    public static numActive = 0;
+export default class InputHeaderToggle extends HeaderToggle {
+    public tabIndex: number;
 
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,
-        initialOpen: boolean = false
+        tabIndex: number
     ) {
-        OutputHeaderToggle.numToggles++;
-        // If initialOpen, increment active
-        if (initialOpen) {
-            OutputHeaderToggle.numActive++;
-        }
-        super(button, contentContainer, initialOpen);
+        super(button, contentContainer, false);
+        this.tabIndex = tabIndex;
     }
 
     toggle() {
-        // If already open
-        if (this.open) {
-            OutputHeaderToggle.numActive--;
-        } else {
-            OutputHeaderToggle.numActive++;
-        }
-        this.setActive(!this.open);
+        InputPanelHeader.updateActiveTab(this.tabIndex);
     }
 
+    /**
+     * Boolean to activate/deactivate this Toggle Container
+     * @param open open or close the tab/container
+     */
     setActive(open: boolean) {
         if (open) {
             // active
@@ -67,8 +60,5 @@ export default class OutputHeaderToggle extends HeaderToggle {
 
             this.open = false;
         }
-
-        // Update the CSS
-        OutputPanelHeader.updateOutputPanel(OutputHeaderToggle.numActive);
     }
 }

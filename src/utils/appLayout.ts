@@ -36,10 +36,10 @@ const appContainer = document.getElementById("app")!;
 const left_panel = document.getElementById("app-left")!;
 const middle_panel = document.getElementById("app-middle")!;
 const right_panel = document.getElementById("app-right")!;
-const editor_panel = document.getElementById("editorPanel")!;
-const input_panel = document.getElementById("inputPanel")!;
-const vm_monitor_panel = document.getElementById("vmMonitor")!;
-const output_panel = document.getElementById("outputPanel")!;
+// const editor_panel = document.getElementById("editorPanel")!;
+// const input_panel = document.getElementById("inputPanel")!;
+// const vm_monitor_panel = document.getElementById("vmMonitor")!;
+// const output_panel = document.getElementById("outputPanel")!;
 
 // Initialize App Dimensions
 let left_width: number = LEFT_WIDTH;
@@ -69,14 +69,13 @@ export const AppLayoutConstants = {
     EDITOR_PANEL_HEIGHT: EDITOR_PANEL_HEIGHT,
     VM_MONITOR_HEIGHT: VM_MONITOR_HEIGHT,
     INPUT_PANEL_HEIGHT: INPUT_PANEL_HEIGHT,
-    OUTPUT_PANEL_HEIGHT: OUTPUT_PANEL_HEIGHT
+    OUTPUT_PANEL_HEIGHT: OUTPUT_PANEL_HEIGHT,
 };
 
 // Initialize the app splitters
 export function initAppSplitters() {
     findSplitObjects(`.${CLASS_V_SPLIT},.${CLASS_H_SPLIT}`);
 }
-
 
 //-----------------------------------
 // APP LAYOUT FUNCTIONS
@@ -99,32 +98,38 @@ export function setAppColumnWidths(colPercents: number[]) {
         `${SPLITTER_THICKNESS}px`,
         `${middle_width}%`,
         `${SPLITTER_THICKNESS}px`,
-        `calc(${100 - (left_width + middle_width)}% - ${2*SPLITTER_THICKNESS}px)` // actual percent in CSS
+        `calc(${100 - (left_width + middle_width)}% - ${
+            2 * SPLITTER_THICKNESS
+        }px)`, // actual percent in CSS
     ];
-    appContainer.style.gridTemplateColumns = cols.join(' ');
+    appContainer.style.gridTemplateColumns = cols.join(" ");
 }
 
 /**
  * Vertical Height Set
  */
-export function setContainerRowHeights(container: HTMLElement, _top: number, bottom: number | string) {
+export function setContainerRowHeights(
+    container: HTMLElement,
+    _top: number,
+    bottom: number | string
+) {
     let heights: string[];
     // If a percent is passed in, the bottom panel is open
     // if a string is passed in, that is to mean the closed height of the bottom panel
     let isBottomOpen: boolean;
-    if (typeof bottom === 'number') {
+    if (typeof bottom === "number") {
         heights = [
             `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom}%)`,
             `${SPLITTER_THICKNESS}px`,
             `${bottom}%`,
-        ]
+        ];
         isBottomOpen = true;
     } else {
         heights = [
             `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom})`, // bottom is a px string
             `${SPLITTER_THICKNESS}px`,
-            bottom
-        ]
+            bottom,
+        ];
         isBottomOpen = false;
     }
     if (container.id == "app-middle") {
@@ -132,7 +137,7 @@ export function setContainerRowHeights(container: HTMLElement, _top: number, bot
     } else {
         output_panel_open = isBottomOpen;
     }
-    container.style.gridTemplateRows = heights.join(' ');
+    container.style.gridTemplateRows = heights.join(" ");
 }
 
 /**
@@ -167,14 +172,18 @@ export function toggleLeft() {
 
 /**
  * Open the Input Panel to the default height
- * @param open 
+ * @param open
  */
 export function openInputPanel(open: boolean) {
     if (open == input_panel_open) return;
 
     if (open) {
         // open input panel
-        setContainerRowHeights(middle_panel, EDITOR_PANEL_HEIGHT, INPUT_PANEL_HEIGHT);
+        setContainerRowHeights(
+            middle_panel,
+            EDITOR_PANEL_HEIGHT,
+            INPUT_PANEL_HEIGHT
+        );
         input_panel_open = true;
     } else {
         // close input panel
@@ -186,14 +195,18 @@ export function openInputPanel(open: boolean) {
 
 /**
  * Open the Output Panel to the default height
- * @param open 
+ * @param open
  */
 export function openOutputPanel(open: boolean) {
     if (open == output_panel_open) return;
 
     if (open) {
         // open output panel
-        setContainerRowHeights(right_panel, VM_MONITOR_HEIGHT, OUTPUT_PANEL_HEIGHT);
+        setContainerRowHeights(
+            right_panel,
+            VM_MONITOR_HEIGHT,
+            OUTPUT_PANEL_HEIGHT
+        );
         output_panel_open = true;
     } else {
         // close output panel

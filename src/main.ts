@@ -18,6 +18,7 @@ import VmMonitor from "@/components/vmMonitor";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExport } from "@services/exportWebchuck/exportWebchuck";
+import InputPanelHeader from "./components/panelHeader/inputPanelHeader";
 
 class Main {
     public static navBar: NavBar;
@@ -25,6 +26,7 @@ class Main {
     public static editor: Editor;
     public static editorPanelHeader: EditorPanelHeader;
     public static vmMonitor: VmMonitor;
+    public static inputPanelHeader: InputPanelHeader;
     public static outputPanelHeader: OutputPanelHeader;
     public static console: Console;
     public static examples: Examples;
@@ -38,6 +40,7 @@ class Main {
 
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
+        Main.inputPanelHeader = new InputPanelHeader();
         Main.outputPanelHeader = new OutputPanelHeader();
         Main.editorPanelHeader = new EditorPanelHeader();
         Main.console = new Console();

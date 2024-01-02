@@ -38,15 +38,15 @@
 }
 
 /* Mobile Layout */
-@media (max-width: 640px) { 
+@media (max-width: 640px) {
     #webchuck-ide {
         height: 160vh;
     }
     #app {
         @apply px-2 pb-2;
-        grid-template-areas: 
-            "app-middle" 
-            "splitH2" 
+        grid-template-areas:
+            "app-middle"
+            "splitH2"
             "app-right";
         grid-template-rows: 5fr 2px 5fr;
         grid-template-columns: 100%;
@@ -118,7 +118,6 @@
 }
 
 #inputPanel {
-    @apply bg-blue-500;
     grid-area: inputPanel;
 }
 
@@ -253,7 +252,7 @@ td:nth-child(4) {
     @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
 }
 
-@media (max-width: 640px) { 
+@media (max-width: 640px) {
     .resizer {
         pointer-events: none;
     }

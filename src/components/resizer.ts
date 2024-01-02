@@ -1,4 +1,8 @@
-import { AppLayoutConstants, setAppColumnWidths, setContainerRowHeights } from "@utils/appLayout";
+import {
+    AppLayoutConstants,
+    setAppColumnWidths,
+    setContainerRowHeights,
+} from "@utils/appLayout";
 import Editor from "@components/monaco/editor";
 import Console from "@/components/console";
 import { visual } from "@/host";
@@ -103,16 +107,25 @@ export default class Resizer {
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
-            const isBottomOpen = newBotRightSize == AppLayoutConstants.MIN_SIZE_V;
+            const isBottomOpen =
+                newBotRightSize == AppLayoutConstants.MIN_SIZE_V;
             if (isBottomOpen) {
-                setContainerRowHeights(this.splitContainer, -1, `${newBotRightSize}`)
+                setContainerRowHeights(
+                    this.splitContainer,
+                    -1,
+                    `${newBotRightSize}`
+                );
             } else {
                 // convert to percentages
                 let newTopPercent: number =
                     (newTopLeftSize / (bottomRightEnd - topLeftStart)) * 100;
                 let newBottomPercent: number =
                     (newBotRightSize / (bottomRightEnd - topLeftStart)) * 100;
-                setContainerRowHeights(this.splitContainer, newTopPercent, newBottomPercent);
+                setContainerRowHeights(
+                    this.splitContainer,
+                    newTopPercent,
+                    newBottomPercent
+                );
             }
         } else {
             // HORIZONTAL DRAG EVENT, more complicated calculation

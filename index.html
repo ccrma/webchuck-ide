@@ -233,8 +233,9 @@
 
         <!-- Middle -->
         <div id="app-middle">
+          <!-- Editor Panel -->
           <div id="editorPanel" class="h-full flex flex-col justify-start">
-            <!-- Monaco Editor -->
+            <!-- Monaco -->
             <div id="editorPanelHeader" class="header h-8 justify-start flex-none">
               <button id="fileToggle" type="button" class="header-item icon px-1 mr-1">
                 <svg class="w-6 h-5" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +249,18 @@
           </div>
           <div id="splitH1" class="resizer hSplit"></div>
           <!-- Input Panel -->
-          <div id="inputPanel"></div>
+          <div id="inputPanel" class="flex flex-col bg-sky-blue dark:bg-dark">
+            <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
+              <button id="GUITab" type="button" class="header-item text-dark-5">GUI</button>
+              <button id="HIDTab" type="button" class="header-item text-dark-5">HID</button>
+            </div>
+            <div id="GUIContainer" class="bg-red-300 dark:bg-dark-2 w-full h-full">
+              <div id="GUIPanel" class="w-full h-full"></div>
+            </div>
+            <div id="HIDContainer" class="bg-green-400 dark:bg-dark-2 w-full h-full">
+              <div id="HIDPanel" class="w-full h-full"></div>
+            </div>
+          </div>
         </div>
 
         <div id="splitV2" class="resizer vSplit"></div>
