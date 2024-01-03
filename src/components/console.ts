@@ -31,6 +31,7 @@ export default class Console {
             theme: {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
                 background: Console.theme === "light" ? "#ffffff" : "#222222",
+                selectionBackground: Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
             },
         });
 
@@ -87,6 +88,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 background: "#222222",
                 foreground: "#ffffff",
+                selectionBackground: "#eeeeee55",
             };
         }
     }
@@ -100,6 +102,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 foreground: "#222222",
                 background: "#ffffff",
+                selectionBackground: "#cccccc55",
             };
         }
     }

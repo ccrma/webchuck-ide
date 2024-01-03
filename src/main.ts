@@ -11,6 +11,7 @@ import Examples from "@/components/navbar/examples";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
 import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
+import InputPanelHeader from "@/components/panelHeader/inputPanelHeader";
 import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
@@ -18,7 +19,6 @@ import VmMonitor from "@/components/vmMonitor";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExport } from "@services/exportWebchuck/exportWebchuck";
-import InputPanelHeader from "./components/panelHeader/inputPanelHeader";
 
 class Main {
     public static navBar: NavBar;

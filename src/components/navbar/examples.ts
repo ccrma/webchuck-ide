@@ -37,6 +37,12 @@ export default class Examples {
         Examples.newExample("Harmonic Series Arp", () =>
             loadExample("examples/harmonicSeriesArp.ck")
         );
+        Examples.newExample("Mouse PWM HID", () =>
+            loadExample("examples/mouseHID.ck")
+        );
+        Examples.newExample("Keyboard Organ HID", () =>
+            loadExample("examples/keyboardHID.ck")
+        );
         Examples.newExample("Play Lofi Beats", () => {
             loadExample("examples/slammin/slammin.ck");
             loadExampleDataFile("examples/slammin/were_slammin.wav");

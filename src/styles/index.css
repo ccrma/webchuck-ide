@@ -119,15 +119,18 @@
 
 #inputPanel {
     grid-area: inputPanel;
+    user-select: none;
 }
 
 #vmMonitor {
     grid-area: vm-monitor;
     overflow: auto;
+    user-select: none;
 }
 
 #outputPanel {
     grid-area: outputPanel;
+    user-select: none;
 }
 
 /* NAVBAR */
@@ -169,9 +172,11 @@ table thead tr th {
 table tbody tr td {
     @apply py-3 px-4 border-b border-sky-blue-700;
 }
+/*
 tr:nth-of-type(even) {
-    /* @apply bg-sky-blue-300 dark:bg-dark; */
+    @apply bg-sky-blue-300 dark:bg-dark;
 }
+*/
 
 td:nth-child(3) {
     @apply min-w-fit;
@@ -184,7 +189,15 @@ td:nth-child(4) {
     @apply h-7 px-2 m-auto block focus:outline-none hover:filter hover:invert-20 transition duration-300;
 }
 
-/* COMPONENTS */
+/* INPUT PANEL */
+.input-button {
+    @apply m-2 p-1 w-32 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50; 
+}
+.input-button.active {
+    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400 rounded transition-all disabled:opacity-50;
+}
+
+/* MISC. COMPONENTS */
 .divider,
 .divider-vert {
     display: block;
@@ -250,6 +263,7 @@ td:nth-child(4) {
 
 .resizer {
     @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
+    user-select: none;
 }
 
 @media (max-width: 640px) {
@@ -264,8 +278,5 @@ td:nth-child(4) {
 
 .header-item {
     @apply text-sm px-2 transition duration-300;
-}
-
-.header-text {
-    @apply text-dark-5 hover:text-dark-8 dark:text-dark-8 dark:hover:text-sky-blue;
+    user-select: none;
 }

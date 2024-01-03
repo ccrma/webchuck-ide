@@ -1,4 +1,4 @@
-import InputHeaderToggle from "./toggle/inputHeaderToggle";
+import InputHeaderToggle from "@components/toggle/inputHeaderToggle";
 import { openInputPanel } from "@/utils/appLayout";
 
 export default class InputPanelHeader {

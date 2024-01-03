@@ -10,15 +10,16 @@
 // date:   August 2023
 //--------------------------------------------------------
 
-import { Chuck } from "webchuck";
+import { Chuck, HID } from "webchuck";
 import {
     calculateDisplayDigits,
     displayFormatSamples,
     displayFormatTime,
 } from "@utils/time";
+import { ChuckNow } from "@/components/vmMonitor";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
-import { ChuckNow } from "./components/vmMonitor";
+import HidPanel from "@/components/hidPanel";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -27,7 +28,10 @@ let audioContext: AudioContext;
 let analyser: AnalyserNode;
 let visual: Visualizer;
 
-export { theChuck, audioContext, visual };
+// HID
+let hid: HID;
+
+export { theChuck, audioContext, visual, hid };
 
 // Chuck Time
 let sampleRate: number = 0;
@@ -66,6 +70,10 @@ export async function startChuck() {
 
     // Start audio visualizer
     startVisualizer();
+
+    // Start HID, mouse and keyboard on
+    hid = await HID.init(theChuck);
+    startHidPanel(hid);
 
     // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;
@@ -143,4 +151,11 @@ function startVisualizer() {
     // start visualizer
     visual.drawVisualization_();
     visual.start();
+}
+
+/**
+ * Start the Hid Panel
+ */
+function startHidPanel(hid: HID) {
+    new HidPanel(hid);
 }

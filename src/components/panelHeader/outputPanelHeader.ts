@@ -1,5 +1,5 @@
 import Console from "@/components/console";
-import OutputHeaderToggle from "./toggle/outputHeaderToggle";
+import OutputHeaderToggle from "@components/toggle/outputHeaderToggle";
 import { visual } from "@/host";
 import { openOutputPanel } from "@/utils/appLayout";
 

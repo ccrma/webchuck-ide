@@ -1,5 +1,5 @@
 import { toggleLeft } from "@utils/appLayout";
-import SVGToggle from "./toggle/svgToggle";
+import SVGToggle from "@components/toggle/svgToggle";
 
 /**
  * Editor Header class

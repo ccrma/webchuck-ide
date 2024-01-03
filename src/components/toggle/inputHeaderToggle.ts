@@ -14,7 +14,7 @@ import {
     textColorClass,
 } from "@/utils/theme";
 import HeaderToggle from "./headerToggle";
-import InputPanelHeader from "../inputPanelHeader";
+import InputPanelHeader from "../panelHeader/inputPanelHeader";
 
 export default class InputHeaderToggle extends HeaderToggle {
     public tabIndex: number;

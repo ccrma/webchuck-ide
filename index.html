@@ -191,7 +191,7 @@
           <div id="chuckBarLeft" class="flex justify-left items-center">
 
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded enabled:hover:shadow-lg transition-all overflow-hidden truncate disabled:opacity-50 ">Start WebChucK</button>
+            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50">Start WebChucK</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem); min-width: 13rem;">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
@@ -257,8 +257,11 @@
             <div id="GUIContainer" class="bg-red-300 dark:bg-dark-2 w-full h-full">
               <div id="GUIPanel" class="w-full h-full"></div>
             </div>
-            <div id="HIDContainer" class="bg-green-400 dark:bg-dark-2 w-full h-full">
-              <div id="HIDPanel" class="w-full h-full"></div>
+            <div id="HIDContainer" class="dark:bg-dark-2 w-full h-full">
+              <div id="HIDPanel" class="w-full h-full">
+                <button id="mouseHIDButton" class="input-button" disabled>Mouse: Off</button>
+                <button id="keyboardHIDButton" class="input-button" disabled>Keyboard: Off</button>
+              </div>
             </div>
           </div>
         </div>
@@ -270,7 +273,7 @@
           <!-- VM Monitor -->
           <div id="vmMonitor">
             <table id="shredTable" class="w-full table-auto relative text-left overflow-auto">
-              <thead class="h-8 align-middle font-medium border-b sticky top-0 drop-shadow-sm">
+              <thead class="h-8 align-middle font-medium border-b sticky top-0 drop-shadow-sm transition">
                 <tr>
                   <th scope="col">Shred</th>
                   <th scope="col">Code</th>

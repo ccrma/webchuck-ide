@@ -9,6 +9,7 @@ export default class SVGToggle {
     public button: HTMLButtonElement;
     public callback: () => void;
     protected open: boolean = false;
+
     constructor(
         button: HTMLButtonElement,
         callback: () => void,
