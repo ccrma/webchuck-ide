@@ -35,15 +35,16 @@ export default class Resizer {
 
         this.split.addEventListener("mousedown", () => {
             this.onStartDrag();
+            this.activate();
         });
     }
 
     onStartDrag() {
         this.splitContainer.addEventListener("mousemove", this.onDragHandler);
-        this.splitContainer.addEventListener(
-            "mouseleave",
-            this.onEndDragHandler
-        );
+        // this.splitContainer.addEventListener(
+        //     "mouseleave",
+        //     this.onEndDragHandler
+        // );
         this.splitContainer.addEventListener("mouseup", this.onEndDragHandler);
     }
 
@@ -177,16 +178,17 @@ export default class Resizer {
             "mouseup",
             this.onEndDragHandler
         );
+        this.deactivate();
     }
 
     deactivate() {
-        // Hide the splitter
-        this.split.classList.add("hidden");
+        // Hide orange
+        this.split.classList.remove("active");
     }
 
     activate() {
-        // Show the splitter
-        this.split.classList.remove("hidden");
+        // Make orange
+        this.split.classList.add("active");
     }
 }
 

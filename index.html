@@ -251,16 +251,16 @@
           <!-- Input Panel -->
           <div id="inputPanel" class="flex flex-col bg-sky-blue dark:bg-dark">
             <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
-              <button id="GUITab" type="button" class="header-item text-dark-5">GUI</button>
-              <button id="HIDTab" type="button" class="header-item text-dark-5">HID</button>
+              <button id="GUITab" type="button" class="header-item">GUI</button>
+              <button id="HIDTab" type="button" class="header-item">HID</button>
             </div>
             <div id="GUIContainer" class="bg-red-300 dark:bg-dark-2 w-full h-full">
               <div id="GUIPanel" class="w-full h-full"></div>
             </div>
             <div id="HIDContainer" class="dark:bg-dark-2 w-full h-full">
               <div id="HIDPanel" class="w-full h-full">
-                <button id="mouseHIDButton" class="input-button" disabled>Mouse: Off</button>
-                <button id="keyboardHIDButton" class="input-button" disabled>Keyboard: Off</button>
+                <button id="mouseHIDButton" class="toggle-button w-32" disabled>Mouse: Off</button>
+                <button id="keyboardHIDButton" class="toggle-button w-32" disabled>Keyboard: Off</button>
               </div>
             </div>
           </div>
