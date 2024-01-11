@@ -119,14 +119,14 @@ export function setContainerRowHeights(
     let isBottomOpen: boolean;
     if (typeof bottom === "number") {
         heights = [
-            `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom}%)`,
+            `1fr`,
             `${SPLITTER_THICKNESS}px`,
             `${bottom}%`,
         ];
         isBottomOpen = true;
     } else {
         heights = [
-            `calc(100% - ${SPLITTER_THICKNESS}px - ${bottom})`, // bottom is a px string
+            `1fr`,
             `${SPLITTER_THICKNESS}px`,
             bottom,
         ];

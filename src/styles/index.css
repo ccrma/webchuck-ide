@@ -91,7 +91,7 @@
         "splitH1"
         "inputPanel";
     grid-template-columns: 100%;
-    grid-template-rows: minmax(auto, 1fr) 2px 28px;
+    grid-template-rows: 1fr 2px 28px;
     min-width: 64px;
 }
 #app-right {
