@@ -197,6 +197,21 @@ td:nth-child(4) {
     @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400 rounded transition-all disabled:opacity-50;
 }
 
+/* HID CONTAINER */
+#hidLog {
+    @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-gray-300 rounded-lg bg-white dark:bg-dark dark:border-gray-700;
+    width: 280px;
+    height: 120px;
+}
+.logEvent {
+    margin-bottom: 5px;
+    opacity: 1;
+    transition: opacity 1s;
+}
+.fade-out {
+    opacity: 0;
+}
+
 /* MISC. COMPONENTS */
 .divider,
 .divider-vert {
