@@ -20,6 +20,7 @@ import { ChuckNow } from "@/components/vmMonitor";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
+import ChuckBar from "@/components/chuckBar";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -39,16 +40,23 @@ let chuckNowCached: number = 0;
 
 export { sampleRate, chuckNowCached };
 
-export async function startChuck() {
+export async function initChuck() {
     audioContext = new AudioContext();
     sampleRate = audioContext.sampleRate;
     calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    Console.print("Starting WebChucK...");
-    const ChucK = (await import("webchuck")).Chuck;
-    theChuck = await ChucK.init([], audioContext);
+    theChuck = await Chuck.init([], audioContext);
     theChuck.connect(audioContext.destination);
+    Console.print("WebChucK is ready!");
+
+    audioContext.suspend();
+    ChuckBar.webchuckButton.disabled = false;
+    ChuckBar.webchuckButton.innerText = "Start WebChucK";
+}
+
+export async function startChuck() {
+    audioContext.resume();
 
     // Hook up theChuck to the console
     theChuck.chuckPrint = Console.print;
@@ -64,7 +72,7 @@ export async function startChuck() {
         .then((value) => {
             Console.print("system version: " + value);
         })
-        .finally(() => Console.print("WebChucK is ready!"));
+        // .finally(() => Console.print("WebChucK is running!"));
 
     setInterval(chuckGetNow, 50);
 
@@ -73,30 +81,10 @@ export async function startChuck() {
 
     // Start HID, mouse and keyboard on
     hid = await HID.init(theChuck);
-    startHidPanel(hid);
+    new HidPanel(hid);
 
     // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;
-}
-
-/**
- * Connect microphone input to theChuck
- */
-export async function connectMic() {
-    // Get microphone with no constraints
-    navigator.mediaDevices
-        .getUserMedia({
-            video: false,
-            audio: {
-                echoCancellation: false,
-                autoGainControl: false,
-                noiseSuppression: false,
-            },
-        })
-        .then((stream) => {
-            const adc = audioContext.createMediaStreamSource(stream);
-            adc.connect(theChuck);
-        });
 }
 
 /**
@@ -135,6 +123,26 @@ function chuckGetNow() {
 }
 
 /**
+ * Connect microphone input to theChuck
+ */
+export async function connectMic() {
+    // Get microphone with no constraints
+    navigator.mediaDevices
+        .getUserMedia({
+            video: false,
+            audio: {
+                echoCancellation: false,
+                autoGainControl: false,
+                noiseSuppression: false,
+            },
+        })
+        .then((stream) => {
+            const adc = audioContext.createMediaStreamSource(stream);
+            adc.connect(theChuck);
+        });
+}
+
+/**
  * Start the audio visualizer for time/frequency domain
  *
  */
@@ -151,11 +159,4 @@ function startVisualizer() {
     // start visualizer
     visual.drawVisualization_();
     visual.start();
-}
-
-/**
- * Start the Hid Panel
- */
-function startHidPanel(hid: HID) {
-    new HidPanel(hid);
 }

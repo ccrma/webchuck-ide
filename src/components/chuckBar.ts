@@ -92,10 +92,9 @@ export default class ChuckBar {
         }
 
         // Start WebChuck Host
-        ChuckBar.webchuckButton.disabled = true;
-        ChuckBar.webchuckButton.innerText = "Loading...";
         await startChuck();
         ChuckBar.webchuckButton.innerText = "WebChucK running...";
+        ChuckBar.webchuckButton.disabled = true;
 
         // Enable the ChuckBar buttons
         ChuckBar.micButton.disabled = false;

@@ -19,6 +19,7 @@ import VmMonitor from "@/components/vmMonitor";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExport } from "@services/exportWebchuck/exportWebchuck";
+import { initChuck } from "@/host";
 
 class Main {
     public static navBar: NavBar;
@@ -55,8 +56,17 @@ class Main {
 
         Main.keyboardShortcuts();
 
+        // Prevent accidental page refresh/close
+        // window.addEventListener("beforeunload", (e) => {
+        //     e.preventDefault();
+        //     e.returnValue = "";
+        // });
+
         // SERVICES
         initExport();
+
+        // Init WebChucK
+        initChuck();
     }
 
     static keyboardShortcuts() {
