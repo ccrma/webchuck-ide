@@ -31,6 +31,7 @@ export default class Dropdown {
                 currentDropdown.close();
             }
             this.toggle();
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
             currentDropdown = this;
         });
 

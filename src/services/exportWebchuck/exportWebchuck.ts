@@ -26,7 +26,7 @@ export function initExport() {
     );
 
     exportBtn.addEventListener("click", async () => {
-        let template = await (await fetch("templates/export.html")).text();
+        const template = await (await fetch("templates/export.html")).text();
 
         const doc: Document = new DOMParser().parseFromString(
             template,

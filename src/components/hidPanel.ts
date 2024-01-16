@@ -17,7 +17,7 @@ export default class HidPanel {
             "Mouse: Off",
             () => {
                 hid.enableMouse(),
-                    document.addEventListener("mousedown", logMouseClick);
+                document.addEventListener("mousedown", logMouseClick);
                 document.addEventListener("mouseup", logMouseClick);
                 document.addEventListener("mousemove", logMouseMoveEvent);
                 document.addEventListener("wheel", logWheelEvent);
@@ -38,7 +38,7 @@ export default class HidPanel {
             "Keyboard: Off",
             () => {
                 hid.enableKeyboard,
-                    document.addEventListener("keydown", logKeyEvent);
+                document.addEventListener("keydown", logKeyEvent);
                 document.addEventListener("keyup", logKeyEvent);
             },
             () => {

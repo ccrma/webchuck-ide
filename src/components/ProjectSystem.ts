@@ -116,7 +116,7 @@ export default class ProjectSystem {
 
         for (let i = 0; i < fileList.length; i++) {
             const file = fileList[i];
-            var reader = new FileReader();
+            const reader = new FileReader();
             if (file.name.endsWith(".ck")) {
                 reader.onload = (e) => {
                     const data = e.target!.result as string;
@@ -135,7 +135,7 @@ export default class ProjectSystem {
                 reader.readAsText(file);
             } else {
                 reader.onload = function (e) {
-                    var data = new Uint8Array(e.target!.result as ArrayBuffer);
+                    const data = new Uint8Array(e.target!.result as ArrayBuffer);
 
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {

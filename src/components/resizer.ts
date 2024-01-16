@@ -118,9 +118,9 @@ export default class Resizer {
                 );
             } else {
                 // convert to percentages
-                let newTopPercent: number =
+                const newTopPercent: number =
                     (newTopLeftSize / (bottomRightEnd - topLeftStart)) * 100;
-                let newBottomPercent: number =
+                const newBottomPercent: number =
                     (newBotRightSize / (bottomRightEnd - topLeftStart)) * 100;
                 setContainerRowHeights(
                     this.splitContainer,
@@ -131,13 +131,13 @@ export default class Resizer {
         } else {
             // HORIZONTAL DRAG EVENT, more complicated calculation
             // Figure out which column is not being resized
-            let leftID = this.split.previousElementSibling!.id;
-            let colWidths: [number, number, number] = sortColWidths(
+            const leftID = this.split.previousElementSibling!.id;
+            const colWidths: [number, number, number] = sortColWidths(
                 leftID,
                 newTopLeftSize,
                 newBotRightSize
             );
-            let colPercents: number[] = colWidths.map((width) => {
+            const colPercents: number[] = colWidths.map((width) => {
                 return (width / this.splitContainer.clientWidth) * 100;
             });
 

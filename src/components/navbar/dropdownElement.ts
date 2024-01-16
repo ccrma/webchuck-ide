@@ -14,7 +14,7 @@ export default class DropdownElement {
         callback: () => void
     ) {
         // create element
-        let dropdownElement = document.createElement("li");
+        const dropdownElement = document.createElement("li");
         dropdownElement.classList.add(
             "block",
             "w-full",

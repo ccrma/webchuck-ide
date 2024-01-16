@@ -66,7 +66,7 @@ export default class Examples {
  * @param url url to fetch example from
  */
 export async function loadExample(url: string): Promise<void> {
-    let example: File = await fetchTextFile(url);
+    const example: File = await fetchTextFile(url);
     // TODO: create a new file in the file system
     Editor.setEditorCode(example.data as string);
     Editor.setFileName(example.name);
@@ -82,7 +82,7 @@ export async function loadExample(url: string): Promise<void> {
  * @param url url to data file
  */
 async function loadExampleDataFile(url: string): Promise<void> {
-    let example: File = await fetchDataFile(url);
+    const example: File = await fetchDataFile(url);
     // TODO: check for preloading/file system
     theChuck?.createFile("", example.name, example.data);
     Console.print(`Loaded file: ${example.name}`);

@@ -12,11 +12,11 @@ import { visual } from "@/host";
 let darkModeToggle: HTMLButtonElement;
 
 /* Header Theme */
-let accentColorClass: string = "text-orange";
-let textColorClass: string = "text-dark-5";
-let hoverColorClass: string = "hover:text-dark-8";
-let darkTextColorClass: string = "dark:text-dark-a";
-let darkHoverColorClass: string = "dark:hover:text-dark-c";
+const accentColorClass: string = "text-orange";
+const textColorClass: string = "text-dark-5";
+const hoverColorClass: string = "hover:text-dark-8";
+const darkTextColorClass: string = "dark:text-dark-a";
+const darkHoverColorClass: string = "dark:hover:text-dark-c";
 
 export {
     accentColorClass,

@@ -40,11 +40,11 @@ export default class VmMonitor {
         }
 
         // Create new row
-        let newRow = VmMonitor.shredTableBody.insertRow();
-        let id = newRow.insertCell(0);
-        let name = newRow.insertCell(1);
-        let time = newRow.insertCell(2);
-        let remove = newRow.insertCell(3);
+        const newRow = VmMonitor.shredTableBody.insertRow();
+        const id = newRow.insertCell(0);
+        const name = newRow.insertCell(1);
+        const time = newRow.insertCell(2);
+        const remove = newRow.insertCell(3);
 
         VmMonitor.shredsToRows[theShred] = newRow;
 
@@ -58,17 +58,17 @@ export default class VmMonitor {
         // kinda ugly but it works
         (function (cell: HTMLTableCellElement, myShred: number) {
             // get chuck current time | 1.5.0.8
-            let startTime: number = chuckNowCached;
+            const startTime: number = chuckNowCached;
             let removed: boolean = false;
 
             function updateTime() {
                 // Get chuck current time
-                let now: number = chuckNowCached;
+                const now: number = chuckNowCached;
                 // Convert to seconds
-                let elapsed: number = (now - startTime) / sampleRate;
+                const elapsed: number = (now - startTime) / sampleRate;
                 // minutes and seconds
-                let m = Math.floor(elapsed / 60);
-                let s = Math.floor(elapsed % 60);
+                const m = Math.floor(elapsed / 60);
+                const s = Math.floor(elapsed % 60);
 
                 // Piggyback off time keeper to remove row
                 // if shred is removed
@@ -97,7 +97,7 @@ export default class VmMonitor {
         })(time, theShred);
 
         // Remove button
-        let removeButton = document.createElement("input");
+        const removeButton = document.createElement("input");
         removeButton.setAttribute("type", "image");
         removeButton.setAttribute("src", "img/remove.svg");
         removeButton.classList.add("removeButton");

@@ -151,7 +151,7 @@ export async function connectMic() {
  *
  */
 function startVisualizer() {
-    let cnv: HTMLCanvasElement = document.getElementById(
+    const cnv: HTMLCanvasElement = document.getElementById(
         "visualizer"
     )! as HTMLCanvasElement;
 
