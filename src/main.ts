@@ -15,6 +15,7 @@ import InputPanelHeader from "@/components/panelHeader/inputPanelHeader";
 import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
+import ProjectSystem from "@/components/ProjectSystem";
 
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
@@ -24,6 +25,7 @@ import { initChuck } from "@/host";
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
+    public static projectSystem: ProjectSystem;
     public static editor: Editor;
     public static editorPanelHeader: EditorPanelHeader;
     public static vmMonitor: VmMonitor;
@@ -38,6 +40,7 @@ class Main {
         // CONSTRUCT IDE COMPONENTS
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
+        Main.projectSystem = new ProjectSystem(); 
 
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
@@ -66,7 +69,9 @@ class Main {
         initExport();
 
         // Init WebChucK
-        initChuck();
+        window.addEventListener("load", () => {
+            initChuck();
+        });
     }
 
     static keyboardShortcuts() {

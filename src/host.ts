@@ -21,6 +21,7 @@ import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
+import ProjectSystem from "@/components/ProjectSystem";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -51,8 +52,13 @@ export async function initChuck() {
     Console.print("WebChucK is ready!");
 
     audioContext.suspend();
+    onChuckReady();
+}
+
+export async function onChuckReady() {
     ChuckBar.webchuckButton.disabled = false;
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
+    ProjectSystem.uploadFilesButton.disabled = false;
 }
 
 export async function startChuck() {

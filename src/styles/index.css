@@ -109,7 +109,36 @@
 }
 
 #fileExplorer {
-    @apply bg-red-500 h-full w-full;
+    @apply h-full w-full;
+}
+.fileExplorerItem {
+    @apply px-2 m-1 hover:bg-gray-200 dark:hover:bg-gray-700;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.fileExplorerItem::before {
+    content: url(../../img/file.svg);
+    display: inline-block;
+    box-sizing: border-box;
+    padding-right: 2px;
+    height: 26px;
+    transform: scale(0.9);
+}
+.fileExplorerItem[type="ck"]::before {
+    content: url(../../img/ck-color.svg);
+}
+.fileExplorerItem[type="wav"]::before {
+    content: url(../../img/audio.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="txt"]::before {
+    content: url(../../img/txt.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="csv"]::before {
+    content: url(../../img/csv.svg);
+    @apply dark:filter dark:invert;
 }
 
 #editorPanel {

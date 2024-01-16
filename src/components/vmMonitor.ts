@@ -9,8 +9,8 @@
 //---------------------------------------------------
 
 import { chuckNowCached, sampleRate, theChuck } from "@/host";
-import EditorPanelHeader from "./panelHeader/editorPanelHeader";
 import { displayFormatTime } from "@/utils/time";
+import Editor from "./monaco/editor";
 
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
@@ -52,7 +52,7 @@ export default class VmMonitor {
         id.innerText = theShred.toString();
 
         // Shred Name
-        name.innerText = EditorPanelHeader.getFileName();
+        name.innerText = Editor.getFileName();
 
         // Shred Time
         // kinda ugly but it works

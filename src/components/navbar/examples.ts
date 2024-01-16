@@ -66,11 +66,11 @@ export default class Examples {
  * Load a chuck example from a url
  * @param url url to fetch example from
  */
-async function loadExample(url: string): Promise<void> {
+export async function loadExample(url: string): Promise<void> {
     let example: File = await fetchTextFile(url);
     // TODO: create a new file in the file system
     Editor.setEditorCode(example.data as string);
-    EditorPanelHeader.setFileName(example.name);
+    Editor.setFileName(example.name);
     const type =
         example.name.split(".").pop() === "ck"
             ? "chuck"
