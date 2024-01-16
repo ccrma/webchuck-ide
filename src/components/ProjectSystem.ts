@@ -135,7 +135,9 @@ export default class ProjectSystem {
                 reader.readAsText(file);
             } else {
                 reader.onload = function (e) {
-                    const data = new Uint8Array(e.target!.result as ArrayBuffer);
+                    const data = new Uint8Array(
+                        e.target!.result as ArrayBuffer
+                    );
 
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {

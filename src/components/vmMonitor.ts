@@ -77,7 +77,7 @@ export default class VmMonitor {
                 }
 
                 // Check if shred active, if not, remove row
-                theChuck?.isShredActive(myShred).then((active) => {
+                theChuck?.isShredActive(myShred).then((active: number) => {
                     if (!active && !removed) {
                         removed = true;
                         VmMonitor.removeShredRow(myShred);

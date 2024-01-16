@@ -62,7 +62,7 @@ export default class ChuckBar {
     static runEditorCode() {
         theChuck?.runCode(Editor.getEditorCode()).then(
             // Success
-            (shredID) => VmMonitor.addShredRow(shredID as number),
+            (shredID: number) => VmMonitor.addShredRow(shredID),
             () => {} // Failure, do nothing
         );
     }
@@ -70,7 +70,7 @@ export default class ChuckBar {
     static replaceCode() {
         theChuck?.replaceCode(Editor.getEditorCode()).then(
             // Success
-            (shreds) => {
+            (shreds: { oldShred: number; newShred: number }) => {
                 VmMonitor.removeShredRow(shreds.oldShred);
                 VmMonitor.addShredRow(shreds.newShred);
             },
@@ -81,7 +81,7 @@ export default class ChuckBar {
     static removeCode() {
         theChuck?.removeLastCode().then(
             // Success
-            (shredID) => VmMonitor.removeShredRow(shredID as number),
+            (shredID: number) => VmMonitor.removeShredRow(shredID),
             () => {} // Failure, do nothing
         );
     }

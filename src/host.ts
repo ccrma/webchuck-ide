@@ -70,10 +70,10 @@ export async function startChuck() {
     theChuck.setParamInt("TTY_WIDTH_HINT", Console.getWidth());
 
     // Print audio info
-    theChuck.getParamInt("SAMPLE_RATE").then((value) => {
+    theChuck.getParamInt("SAMPLE_RATE").then((value: number) => {
         Console.print("sample rate: " + value);
     });
-    theChuck.getParamString("VERSION").then((value) => {
+    theChuck.getParamString("VERSION").then((value: string) => {
         Console.print("system version: " + value);
     });
     // .finally(() => Console.print("WebChucK is running!"));
@@ -96,7 +96,7 @@ export async function startChuck() {
  * Cache the value to TS
  */
 function chuckGetNow() {
-    theChuck.now().then((samples) => {
+    theChuck.now().then((samples: number) => {
         chuckNowCached = samples;
 
         // Update time in visualizer
