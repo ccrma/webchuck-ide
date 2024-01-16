@@ -17,8 +17,8 @@ export interface File {
  */
 export async function fetchTextFile(url: string): Promise<File> {
     const fileName = url.split("/").pop();
-    let response = await fetch(url);
-    let text = await response.text();
+    const response = await fetch(url);
+    const text = await response.text();
     return { name: fileName!, data: text };
 }
 

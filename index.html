@@ -70,18 +70,25 @@
               <div id="fileDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">New</a>
+                    <button id="newFile" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                      New
+                    </button>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Upload</a>
+                    <input id="fileUploader" type="file" multiple hidden />
+                    <button id="uploadFiles" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light disabled:opacity-50" disabled>
+                      Upload Files
+                    </button>
+                  </li>
+                  <li>
+                    <button id="newProject" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                      New Project
+                    </button>
                   </li>
                   <li id="">
                     <button id="exportWebchuck" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
                       Export
                     </button>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Settings</a>
                   </li>
                 </ul>
               </div>
@@ -151,20 +158,20 @@
               <div id="helpDropdown" class="hidden dropdown w-48">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Class Reference</a>
+                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Class Reference</a>
                   </li>
                   <li>
-                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
+                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
                   </li>
                   <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
                   <li>
-                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">WebChucK</a>
+                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">WebChucK</a>
                   </li>
                   <li>
-                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">View on Github</a>
+                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github</a>
                   </li>
                   <li>
-                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join our Discord</a>
+                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join ChucK Discord</a>
                   </li>
                 </ul>
               </div>
@@ -191,7 +198,7 @@
           <div id="chuckBarLeft" class="flex justify-left items-center">
 
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50">Start WebChucK</button>
+            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem); min-width: 13rem;">
                 <button id="micButton"      type="button" class="chuck-button" disabled>
@@ -226,7 +233,12 @@
 
         <!-- Left -->
         <div id="app-left">
-          <div id="fileExplorer"></div>
+          <div id="fileExplorerPanel" class="h-full flex flex-col justify-start">
+            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
+              <div class="px-2">File Explorer</div>
+            </div>
+            <div id="fileExplorer"></div>
+          </div>
         </div>
 
         <div id="splitV1" class="resizer vSplit"></div>
@@ -274,7 +286,7 @@
           <!-- VM Monitor -->
           <div id="vmMonitor" class="relative">
             <table id="shredTable" class="w-full table-auto absolute text-left overflow-auto">
-              <thead class="h-8 align-middle font-medium border-b sticky top-0 drop-shadow-sm transition">
+              <thead class="h-8 align-middle font-medium border-b drop-shadow-sm">
                 <tr>
                   <th scope="col">Shred</th>
                   <th scope="col">Code</th>

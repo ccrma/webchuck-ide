@@ -47,7 +47,7 @@ export default class InputPanelHeader {
         for (let i = 0; i < InputPanelHeader.inputButtons.length; i++) {
             InputPanelHeader.inputToggles[i].setActive(
                 i == newToggleIndex &&
-                newToggleIndex != InputPanelHeader.activeToggleIndex
+                    newToggleIndex != InputPanelHeader.activeToggleIndex
             );
         }
 

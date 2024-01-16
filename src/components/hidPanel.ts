@@ -16,14 +16,14 @@ export default class HidPanel {
             "Mouse: On",
             "Mouse: Off",
             () => {
-                hid.enableMouse(),
+                hid.enableMouse();
                 document.addEventListener("mousedown", logMouseClick);
                 document.addEventListener("mouseup", logMouseClick);
                 document.addEventListener("mousemove", logMouseMoveEvent);
                 document.addEventListener("wheel", logWheelEvent);
             },
             () => {
-                hid.disableMouse()
+                hid.disableMouse();
                 document.removeEventListener("mousedown", logMouseClick);
                 document.removeEventListener("mouseup", logMouseClick);
                 document.removeEventListener("mousemove", logMouseMoveEvent);
@@ -37,12 +37,12 @@ export default class HidPanel {
             "Keyboard: On",
             "Keyboard: Off",
             () => {
-                hid.enableKeyboard,
+                hid.enableKeyboard();
                 document.addEventListener("keydown", logKeyEvent);
                 document.addEventListener("keyup", logKeyEvent);
             },
             () => {
-                hid.disableKeyboard
+                hid.disableKeyboard;
                 document.removeEventListener("keydown", logKeyEvent);
                 document.removeEventListener("keyup", logKeyEvent);
             }
@@ -74,11 +74,11 @@ function logMouseClick(event: MouseEvent) {
 
 function logMouseMoveEvent(event: MouseEvent) {
     logEvent(
-        `${event.type}: X=${
-            (event.clientX / document.documentElement.clientWidth).toFixed(3)
-        }, Y=${
-            (event.clientY / document.documentElement.clientHeight).toFixed(3)
-        }`
+        `${event.type}: X=${(
+            event.clientX / document.documentElement.clientWidth
+        ).toFixed(3)}, Y=${(
+            event.clientY / document.documentElement.clientHeight
+        ).toFixed(3)}`
     );
 }
 

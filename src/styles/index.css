@@ -109,7 +109,37 @@
 }
 
 #fileExplorer {
-    @apply bg-red-500 h-full w-full;
+    @apply h-full w-full;
+}
+.fileExplorerItem {
+    @apply px-2 m-1 hover:bg-gray-200 dark:hover:bg-gray-700;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.fileExplorerItem::before {
+    content: url(/img/file.svg);
+    @apply dark:filter dark:invert;
+    display: inline-block;
+    box-sizing: border-box;
+    padding-right: 2px;
+    height: 26px;
+    transform: scale(0.9);
+}
+.fileExplorerItem[type="ck"]::before {
+    content: url(/img/ck-color.svg);
+}
+.fileExplorerItem[type="wav"]::before {
+    content: url(/img/audio.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="txt"]::before {
+    content: url(/img/txt.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="csv"]::before {
+    content: url(/img/csv.svg);
+    @apply dark:filter dark:invert;
 }
 
 #editorPanel {
@@ -191,7 +221,7 @@ td:nth-child(4) {
 
 /* INPUT PANEL */
 .toggle-button {
-    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50; 
+    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
 }
 .toggle-button.active {
     @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400 rounded transition-all disabled:opacity-50;
@@ -276,7 +306,8 @@ td:nth-child(4) {
     z-index: 30;
 }
 
-.vSplit.active, .hSplit.active{
+.vSplit.active,
+.hSplit.active {
     @apply bg-orange;
 }
 

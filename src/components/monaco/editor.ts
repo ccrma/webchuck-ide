@@ -13,8 +13,9 @@ import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight } from "./miniAudicleTheme";
-import EditorPanelHeader from "../panelHeader/editorPanelHeader";
-import Console from "../console";
+import { loadExample } from "@components/navbar/examples";
+import EditorPanelHeader from "@components/panelHeader/editorPanelHeader";
+import Console from "@components/console";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
@@ -27,6 +28,7 @@ export default class Editor {
     // Private variables
     private static editor: monaco.editor.IStandaloneCodeEditor;
     // Staic variables
+    public static filename: string = "untitled.ck";
     public static editorContainer: HTMLDivElement;
     public static vimStatus: HTMLDivElement;
     public static vimToggle: HTMLButtonElement;
@@ -89,12 +91,24 @@ export default class Editor {
      * Load the autosave from local storage
      */
     static loadAutoSave() {
-        Editor.setEditorCode(localStorage.getItem("editorCode") || "");
+        const code = localStorage.getItem("editorCode") || "";
+        if (code === "") {
+            Editor.loadDefault();
+            return;
+        }
+        Editor.filename =
+            localStorage.getItem("editorFilename") || "untitled.ck";
+        EditorPanelHeader.updateFileName(Editor.filename);
+        Editor.setEditorCode(code);
         Console.print(
-            `Loaded autosave: \x1b[38;2;34;178;254m${localStorage.getItem(
-                "editorFilename"
-            )}\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+            `Loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
+            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
         );
+    }
+
+    static loadDefault() {
+        loadExample("examples/helloSine.ck");
     }
 
     /**
@@ -102,7 +116,7 @@ export default class Editor {
      */
     static saveCode() {
         localStorage.setItem("editorCode", Editor.getEditorCode());
-        localStorage.setItem("editorFilename", EditorPanelHeader.getFileName());
+        localStorage.setItem("editorFilename", Editor.getFileName());
         localStorage.setItem("editorCodeTime", new Date().toLocaleString());
     }
 
@@ -162,6 +176,24 @@ export default class Editor {
      */
     public static setEditorCode(code: string) {
         Editor.editor.setValue(code);
+    }
+
+    /**
+     * Set the file name
+     * @param name The file name
+     */
+    static setFileName(name: string) {
+        Editor.filename = name;
+        localStorage.setItem("editorFilename", name);
+        EditorPanelHeader.updateFileName(name);
+    }
+
+    /**
+     * Get the current file name
+     * @returns The current file name
+     */
+    static getFileName(): string {
+        return Editor.filename;
     }
 
     /**

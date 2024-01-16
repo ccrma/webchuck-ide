@@ -10,7 +10,6 @@
 import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import DropdownElement from "./dropdownElement";
 import Editor from "@components/monaco/editor";
-import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
 import Console from "@/components/console";
 import { theChuck } from "@/host";
 
@@ -66,11 +65,11 @@ export default class Examples {
  * Load a chuck example from a url
  * @param url url to fetch example from
  */
-async function loadExample(url: string): Promise<void> {
-    let example: File = await fetchTextFile(url);
+export async function loadExample(url: string): Promise<void> {
+    const example: File = await fetchTextFile(url);
     // TODO: create a new file in the file system
     Editor.setEditorCode(example.data as string);
-    EditorPanelHeader.setFileName(example.name);
+    Editor.setFileName(example.name);
     const type =
         example.name.split(".").pop() === "ck"
             ? "chuck"
@@ -83,7 +82,7 @@ async function loadExample(url: string): Promise<void> {
  * @param url url to data file
  */
 async function loadExampleDataFile(url: string): Promise<void> {
-    let example: File = await fetchDataFile(url);
+    const example: File = await fetchDataFile(url);
     // TODO: check for preloading/file system
     theChuck?.createFile("", example.name, example.data);
     Console.print(`Loaded file: ${example.name}`);

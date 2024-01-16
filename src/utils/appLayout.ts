@@ -56,7 +56,7 @@ let input_panel_open = false;
 let output_panel_open = true;
 
 // App Layout Splitters
-let splitters: Resizer[] = [];
+const splitters: Resizer[] = [];
 
 // Export Constants
 export const AppLayoutConstants = {
@@ -93,7 +93,7 @@ export function setAppColumnWidths(colPercents: number[]) {
     middle_width = colPercents[1];
     right_width = colPercents[2]; // estimated percent
 
-    let cols: string[] = [
+    const cols: string[] = [
         `${colPercents[0]}%`,
         `${SPLITTER_THICKNESS}px`,
         `${middle_width}%`,
@@ -118,18 +118,10 @@ export function setContainerRowHeights(
     // if a string is passed in, that is to mean the closed height of the bottom panel
     let isBottomOpen: boolean;
     if (typeof bottom === "number") {
-        heights = [
-            `1fr`,
-            `${SPLITTER_THICKNESS}px`,
-            `${bottom}%`,
-        ];
+        heights = [`1fr`, `${SPLITTER_THICKNESS}px`, `${bottom}%`];
         isBottomOpen = true;
     } else {
-        heights = [
-            `1fr`,
-            `${SPLITTER_THICKNESS}px`,
-            bottom,
-        ];
+        heights = [`1fr`, `${SPLITTER_THICKNESS}px`, bottom];
         isBottomOpen = false;
     }
     if (container.id == "app-middle") {
@@ -224,7 +216,7 @@ function findSplitObjects(selector: string) {
     );
     if (splits.length !== 0) {
         splits.forEach((split) => {
-            let isHorizDrag = split.classList.contains(CLASS_V_SPLIT);
+            const isHorizDrag = split.classList.contains(CLASS_V_SPLIT);
             splitters.push(new Resizer(split, isHorizDrag));
         });
     }
