@@ -11,20 +11,17 @@
 //--------------------------------------------------------
 
 import { Chuck, HID } from "webchuck";
-import {
-    calculateDisplayDigits,
-    displayFormatSamples,
-    displayFormatTime,
-} from "@utils/time";
+import { calculateDisplayDigits } from "@utils/time";
 import { ChuckNow } from "@/components/vmMonitor";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
-import ProjectSystem from "@/components/ProjectSystem";
+import ProjectSystem from "@/components/projectSystem";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
+let sampleRate: number = 0;
 
 // Audio Visualizer
 let analyser: AnalyserNode;
@@ -33,14 +30,15 @@ let visual: Visualizer;
 // HID
 let hid: HID;
 
-export { theChuck, audioContext, visual, hid };
+export { theChuck, audioContext, sampleRate, visual, hid };
 
 // Chuck Time
-let sampleRate: number = 0;
 let chuckNowCached: number = 0;
 
-export { sampleRate, chuckNowCached };
-
+/**
+ * Initialize theChuck and audio context
+ * Audio Context will be suspended until the user presses "Start WebChucK"
+ */
 export async function initChuck() {
     audioContext = new AudioContext();
     sampleRate = audioContext.sampleRate;
@@ -55,12 +53,20 @@ export async function initChuck() {
     onChuckReady();
 }
 
+/**
+ * Called when theChuck is ready
+ */
 export async function onChuckReady() {
     ChuckBar.webchuckButton.disabled = false;
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
     ProjectSystem.uploadFilesButton.disabled = false;
 }
 
+/**
+ * Start theChuck (when user presses "Start WebChucK")
+ * Audio context will resume
+ * Build theChuck connections for VM time, HID, and visualizer
+ */
 export async function startChuck() {
     audioContext.resume();
 
@@ -78,7 +84,7 @@ export async function startChuck() {
     });
     // .finally(() => Console.print("WebChucK is running!"));
 
-    setInterval(chuckGetNow, 50);
+    setInterval(updateChuckNow, 50);
 
     // Start audio visualizer
     startVisualizer();
@@ -95,35 +101,19 @@ export async function startChuck() {
  * Get the current time from theChuck
  * Cache the value to TS
  */
-function chuckGetNow() {
+function updateChuckNow() {
     theChuck.now().then((samples: number) => {
         chuckNowCached = samples;
-
         // Update time in visualizer
-        // samples
-        const samplesDisplay = samples % sampleRate;
-        // seconds
-        const secondsTotal = samples / sampleRate;
-        const secondsDisplay = Math.floor(secondsTotal % 60);
-        // minutes
-        const minutesTotal = secondsTotal / 60;
-        const minutesDisplay = Math.floor(minutesTotal % 60);
-        // hours
-        const hoursTotal = minutesTotal / 60;
-        const hoursDisplay = Math.floor(hoursTotal);
-
-        // the display value
-        const timeStr =
-            displayFormatTime(hoursDisplay) +
-            ":" +
-            displayFormatTime(minutesDisplay) +
-            ":" +
-            displayFormatTime(secondsDisplay) +
-            "." +
-            displayFormatSamples(samplesDisplay);
-
-        ChuckNow.updateChuckNow(timeStr);
+        ChuckNow.updateChuckNow(samples);
     });
+}
+
+/**
+ * Return the current saved time in samples
+ */
+export function getChuckNow(): number {
+    return chuckNowCached;
 }
 
 /**

@@ -17,7 +17,7 @@ export function calculateDisplayDigits(sampleRate: number) {
 }
 
 /**
- * Convert number to time string for HH:MM:SS
+ * Pad number to 2 digit time string for HH:MM:SS usage
  * @param i current time as a number
  * @returns time string
  */
@@ -39,4 +39,53 @@ export function displayFormatSamples(i: number): string {
         str = "0" + str;
     }
     return str;
+}
+
+/**
+ * Convert current time in samples to HH:MM:SS.SSSSS (samples)
+ * @param samples current samples to convert
+ * @param sampleRate sample rate
+ * @returns time string
+ */
+export function samplesToTimeHMSS(samples: number, sampleRate: number): string {
+    // samples
+    const samplesDisplay = samples % sampleRate;
+    // seconds
+    const secondsTotal = samples / sampleRate;
+    const secondsDisplay = Math.floor(secondsTotal % 60);
+    // minutes
+    const minutesTotal = secondsTotal / 60;
+    const minutesDisplay = Math.floor(minutesTotal % 60);
+    // hours
+    const hoursTotal = minutesTotal / 60;
+    const hoursDisplay = Math.floor(hoursTotal);
+
+    // the display value
+    const timeStr =
+        displayFormatTime(hoursDisplay) +
+        ":" +
+        displayFormatTime(minutesDisplay) +
+        ":" +
+        displayFormatTime(secondsDisplay) +
+        "." +
+        displayFormatSamples(samplesDisplay);
+
+    return timeStr;
+}
+
+/**
+ * Convert current time in samples to MM:SS
+ * @param samples current samples to convert
+ * @param sampleRate sample rate
+ * @returns time string
+ */
+export function sampelsToTimeMS(samples: number, sampleRate: number): string {
+    // minutes
+    const totalSeconds = samples / sampleRate;
+    const minutesDisplay = Math.floor(totalSeconds / 60);
+    const secondsDisplay = Math.floor(totalSeconds % 60);
+
+    return `${displayFormatTime(minutesDisplay)}:
+            ${displayFormatTime(secondsDisplay)}
+    `;
 }
