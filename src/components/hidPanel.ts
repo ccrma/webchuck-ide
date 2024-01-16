@@ -65,7 +65,6 @@ function clamp(value: number, min: number, max: number) {
 function logKeyEvent(event: KeyboardEvent) {
     if (!event.repeat) {
         if (event.type === "keyup") {
-            console.log("hi");
             logEvent(`keyup:   ${event.key} (${event.which})`);
         } else {
             logEvent(`${event.type}: ${event.key} (${event.which})`);

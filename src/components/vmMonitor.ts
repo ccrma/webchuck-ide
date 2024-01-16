@@ -1,17 +1,19 @@
 //---------------------------------------------------
-// title: vmMonitor
+// title: VmMonitor + ChuckNow
 // desc:  Monitor for Chuck Virtual Machine
-//        Displays VM time, and shred table
-//        Include chuckNow class
+//        Displays ChucK Now VM time, and shred table
 //
 // author: terry feng
 // date:   September 2023
 //---------------------------------------------------
 
-import { chuckNowCached, sampleRate, theChuck } from "@/host";
-import { displayFormatTime } from "@/utils/time";
-import Editor from "./monaco/editor";
+import { getChuckNow, sampleRate, theChuck } from "@/host";
+import { displayFormatTime, samplesToTimeHMSS } from "@/utils/time";
+import Editor from "@components/monaco/editor";
 
+/**
+ * VmMonitor Class for handling VM time and shred table
+ */
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
     public static vmTime: HTMLDivElement;
@@ -58,12 +60,12 @@ export default class VmMonitor {
         // kinda ugly but it works
         (function (cell: HTMLTableCellElement, myShred: number) {
             // get chuck current time | 1.5.0.8
-            const startTime: number = chuckNowCached;
+            const startTime: number = getChuckNow();
             let removed: boolean = false;
 
             function updateTime() {
                 // Get chuck current time
-                const now: number = chuckNowCached;
+                const now: number = getChuckNow();
                 // Convert to seconds
                 const elapsed: number = (now - startTime) / sampleRate;
                 // minutes and seconds
@@ -128,6 +130,9 @@ export default class VmMonitor {
     }
 }
 
+/**
+ * ChuckNow Class for displaying the current time in the VM
+ */
 export class ChuckNow {
     public static chuckNowToggle: HTMLButtonElement;
     public static chuckNowStatus: HTMLDivElement;
@@ -154,9 +159,12 @@ export class ChuckNow {
     /**
      * Update the chuckNow time
      */
-    static updateChuckNow(timeString: string) {
+    static updateChuckNow(samples: number) {
         if (ChuckNow.isDisplay) {
-            ChuckNow.chuckNowTime.innerText = timeString;
+            ChuckNow.chuckNowTime.innerText = samplesToTimeHMSS(
+                samples,
+                sampleRate
+            );
         }
     }
 

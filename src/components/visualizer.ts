@@ -62,10 +62,8 @@ export default class Visualizer {
         this.theme(getColorScheme() === "dark");
     }
 
-    drawWaveform_() {
+    drawWaveform_(width: number, height: number) {
         this.analyserNode.getFloatTimeDomainData(this.waveformData);
-        const width: number = this.context2D.canvas.width;
-        const height: number = this.context2D.canvas.height;
         const size: number = this.waveformData.length;
         // Draw twice the width of the canvas
         const increment: number = (width * 2.0) / size;
@@ -92,11 +90,9 @@ export default class Visualizer {
         this.context2D.stroke();
     }
 
-    drawSpectrum_() {
+    drawSpectrum_(width: number, height: number) {
         this.analyserNode.getFloatFrequencyData(this.frequencyData);
         // get min max of frequency data
-        const width = this.context2D.canvas.width;
-        const height = this.context2D.canvas.height;
         // We only visualize 0 to half of nyquist.
         const increment = width / (this.frequencyData.length / 2);
         // |frequencyData| is clamped between 0.0dBFS ~ MIN_DBFS (-120)
@@ -137,8 +133,10 @@ export default class Visualizer {
             this.context2D.canvas.width,
             this.context2D.canvas.height
         );
-        this.drawSpectrum_();
-        this.drawWaveform_();
+        const w = this.context2D.canvas.width;
+        const h = this.context2D.canvas.height;
+        this.drawSpectrum_(w, h);
+        this.drawWaveform_(w, h);
         requestAnimationFrame(this.drawVisualization_.bind(this));
     }
 
