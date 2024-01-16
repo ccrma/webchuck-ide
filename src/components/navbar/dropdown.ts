@@ -34,7 +34,7 @@ export default class Dropdown {
             currentDropdown = this;
         });
 
-        this.container.addEventListener("click", (event: MouseEvent) => {
+        this.container.addEventListener("click", () => {
             const mouseLeaveHandler = () => {
                 this.close();
                 this.container.removeEventListener(

@@ -10,7 +10,6 @@
 import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import DropdownElement from "./dropdownElement";
 import Editor from "@components/monaco/editor";
-import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
 import Console from "@/components/console";
 import { theChuck } from "@/host";
 

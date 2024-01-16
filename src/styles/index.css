@@ -118,7 +118,8 @@
     white-space: nowrap;
 }
 .fileExplorerItem::before {
-    content: url(../../img/file.svg);
+    content: url(/img/file.svg);
+    @apply dark:filter dark:invert;
     display: inline-block;
     box-sizing: border-box;
     padding-right: 2px;
@@ -126,18 +127,18 @@
     transform: scale(0.9);
 }
 .fileExplorerItem[type="ck"]::before {
-    content: url(../../img/ck-color.svg);
+    content: url(/img/ck-color.svg);
 }
 .fileExplorerItem[type="wav"]::before {
-    content: url(../../img/audio.svg);
+    content: url(/img/audio.svg);
     @apply dark:filter dark:invert;
 }
 .fileExplorerItem[type="txt"]::before {
-    content: url(../../img/txt.svg);
+    content: url(/img/txt.svg);
     @apply dark:filter dark:invert;
 }
 .fileExplorerItem[type="csv"]::before {
-    content: url(../../img/csv.svg);
+    content: url(/img/csv.svg);
     @apply dark:filter dark:invert;
 }
 
