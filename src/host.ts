@@ -21,7 +21,7 @@ import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
-import ProjectSystem from "@/components/ProjectSystem";
+import ProjectSystem from "@/components/projectSystem";
 
 let theChuck: Chuck;
 let audioContext: AudioContext;

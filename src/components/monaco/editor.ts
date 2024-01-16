@@ -142,21 +142,21 @@ export default class Editor {
         Editor.editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
             () => {
-                ChuckBar.runEditorCode();
+                if (ChuckBar.running) ChuckBar.runEditorCode();
             }
         );
 
         Editor.editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.Backslash,
             () => {
-                ChuckBar.replaceCode();
+                if (ChuckBar.running) ChuckBar.replaceCode();
             }
         );
 
         Editor.editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.Backspace,
             () => {
-                ChuckBar.removeCode();
+                if (ChuckBar.running) ChuckBar.removeCode();
             }
         );
     }

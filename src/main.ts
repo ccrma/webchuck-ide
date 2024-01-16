@@ -15,7 +15,7 @@ import InputPanelHeader from "@/components/panelHeader/inputPanelHeader";
 import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
-import ProjectSystem from "@/components/ProjectSystem";
+import ProjectSystem from "@/components/projectSystem";
 
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
@@ -82,6 +82,8 @@ class Main {
                 e.preventDefault();
                 ChuckBar.startWebchuck();
             }
+
+            if (ChuckBar.running == false) return;
 
             // cmd + enter or ctrl + enter
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {

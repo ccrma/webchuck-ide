@@ -13,7 +13,7 @@
 //------------------------------------------------------------
 
 import Editor from "@/components/monaco/editor";
-import Resizer from "../components/resizer";
+import Resizer from "@/components/resizer";
 import Console from "@/components/console";
 
 const CLASS_V_SPLIT: string = "vSplit";
@@ -26,10 +26,16 @@ const MIN_SIZE_V: number = 28; // px
 const LEFT_WIDTH: number = 16.67;
 const MIDDLE_WIDTH: number = 50;
 const RIGHT_WIDTH: number = 33.33;
-const EDITOR_PANEL_HEIGHT: number = 70;
-const INPUT_PANEL_HEIGHT: number = 30;
+const EDITOR_PANEL_HEIGHT: number = window.innerWidth <= 800 ? 60 : 70; // mobile
+const INPUT_PANEL_HEIGHT: number = window.innerWidth <= 800 ? 40 : 30;
 const VM_MONITOR_HEIGHT: number = 50;
 const OUTPUT_PANEL_HEIGHT: number = 50;
+
+// if mobile, set INPUT height to 50
+// if mobile, set OUTPUT height to 50
+// detect if mobile
+// if (window.innerWidth <= 800) {
+//     INPUT_PANEL_HEIGHT = 50;
 
 // App Layout Panels
 const appContainer = document.getElementById("app")!;

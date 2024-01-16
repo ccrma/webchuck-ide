@@ -64,12 +64,21 @@ function clamp(value: number, min: number, max: number) {
 
 function logKeyEvent(event: KeyboardEvent) {
     if (!event.repeat) {
-        logEvent(`${event.type}: ${event.key} (${event.which})`);
+        if (event.type === "keyup") {
+            console.log("hi");
+            logEvent(`keyup:   ${event.key} (${event.which})`);
+        } else {
+            logEvent(`${event.type}: ${event.key} (${event.which})`);
+        }
     }
 }
 
 function logMouseClick(event: MouseEvent) {
-    logEvent(`${event.type}: button=${event.which}`);
+    if (event.type === "mouseup") {
+        logEvent(`mouseup:   button=${event.which}`);
+    } else {
+        logEvent(`${event.type}: button=${event.which}`);
+    }
 }
 
 function logMouseMoveEvent(event: MouseEvent) {
@@ -96,14 +105,14 @@ function logWheelEvent(event: WheelEvent) {
  * @param message HID event message to log
  */
 function logEvent(message: string) {
-    const logEntry = document.createElement("div");
+    const logEntry = document.createElement("pre");
     logEntry.className = "logEvent";
     logEntry.textContent = message;
 
     hidLog.appendChild(logEntry);
 
     // Remove excess entries, keeping only the last 5
-    while (hidLog.children.length > 4) {
+    while (hidLog.children.length > 5) {
         hidLog.removeChild(hidLog.children[0]);
     }
 
@@ -113,5 +122,5 @@ function logEvent(message: string) {
     // Add fade-out class after a short delay
     setTimeout(() => {
         logEntry.classList.add("fade-out");
-    }, 1000);
+    }, 1500);
 }
