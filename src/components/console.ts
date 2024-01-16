@@ -31,7 +31,8 @@ export default class Console {
             theme: {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
                 background: Console.theme === "light" ? "#ffffff" : "#222222",
-                selectionBackground: Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
+                selectionBackground:
+                    Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
             },
         });
 

@@ -220,7 +220,7 @@ td:nth-child(4) {
 
 /* INPUT PANEL */
 .toggle-button {
-    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50; 
+    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
 }
 .toggle-button.active {
     @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400 rounded transition-all disabled:opacity-50;
@@ -305,7 +305,8 @@ td:nth-child(4) {
     z-index: 30;
 }
 
-.vSplit.active, .hSplit.active{
+.vSplit.active,
+.hSplit.active {
     @apply bg-orange;
 }
 

@@ -19,9 +19,8 @@ export default class ProjectSystem {
     public static fileExplorer: HTMLDivElement;
 
     constructor() {
-        ProjectSystem.newFileButton = document.querySelector<HTMLButtonElement>(
-            "#newFile"
-        )!;
+        ProjectSystem.newFileButton =
+            document.querySelector<HTMLButtonElement>("#newFile")!;
         ProjectSystem.newFileButton.addEventListener("click", () => {
             ProjectSystem.newFile();
         });
@@ -33,9 +32,13 @@ export default class ProjectSystem {
         ProjectSystem.uploadFilesButton.addEventListener("click", () => {
             ProjectSystem.fileUploader.click();
         });
-        ProjectSystem.fileUploader.addEventListener("change", (event) => {
-            ProjectSystem.uploadFiles(event);
-        }, false);
+        ProjectSystem.fileUploader.addEventListener(
+            "change",
+            (event) => {
+                ProjectSystem.uploadFiles(event);
+            },
+            false
+        );
 
         ProjectSystem.newProjectButton =
             document.querySelector<HTMLButtonElement>("#newProject")!;
@@ -43,8 +46,8 @@ export default class ProjectSystem {
             ProjectSystem.newProject();
         });
 
-        ProjectSystem.fileExplorer = document.querySelector<HTMLDivElement>("#fileExplorer")!;
-
+        ProjectSystem.fileExplorer =
+            document.querySelector<HTMLDivElement>("#fileExplorer")!;
     }
 
     /**
@@ -63,8 +66,8 @@ export default class ProjectSystem {
 
     /**
      * TODO: abstract this to a class
-     * UI update function to add a file to the file explorer 
-     * @param filename Add a file to the file explorer 
+     * UI update function to add a file to the file explorer
+     * @param filename Add a file to the file explorer
      */
     static addFileToExplorer(filename: string) {
         const fileItem = document.createElement("div");
@@ -105,7 +108,8 @@ export default class ProjectSystem {
      */
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
-        const fileList: FileList | null = (event.target as HTMLInputElement).files;
+        const fileList: FileList | null = (event.target as HTMLInputElement)
+            .files;
         if (fileList === null) {
             return;
         }
@@ -146,5 +150,4 @@ export default class ProjectSystem {
             }
         }
     }
-
 }

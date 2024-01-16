@@ -73,12 +73,10 @@ export async function startChuck() {
     theChuck.getParamInt("SAMPLE_RATE").then((value) => {
         Console.print("sample rate: " + value);
     });
-    theChuck
-        .getParamString("VERSION")
-        .then((value) => {
-            Console.print("system version: " + value);
-        })
-        // .finally(() => Console.print("WebChucK is running!"));
+    theChuck.getParamString("VERSION").then((value) => {
+        Console.print("system version: " + value);
+    });
+    // .finally(() => Console.print("WebChucK is running!"));
 
     setInterval(chuckGetNow, 50);
 

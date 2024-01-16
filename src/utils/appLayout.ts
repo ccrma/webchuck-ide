@@ -118,18 +118,10 @@ export function setContainerRowHeights(
     // if a string is passed in, that is to mean the closed height of the bottom panel
     let isBottomOpen: boolean;
     if (typeof bottom === "number") {
-        heights = [
-            `1fr`,
-            `${SPLITTER_THICKNESS}px`,
-            `${bottom}%`,
-        ];
+        heights = [`1fr`, `${SPLITTER_THICKNESS}px`, `${bottom}%`];
         isBottomOpen = true;
     } else {
-        heights = [
-            `1fr`,
-            `${SPLITTER_THICKNESS}px`,
-            bottom,
-        ];
+        heights = [`1fr`, `${SPLITTER_THICKNESS}px`, bottom];
         isBottomOpen = false;
     }
     if (container.id == "app-middle") {

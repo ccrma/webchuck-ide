@@ -25,9 +25,7 @@ export default class ButtonToggle {
         this.inactiveCallback = inactiveCallback;
         this.setActive(initialState);
 
-        button.addEventListener("click", 
-            () => this.toggle()
-        )
+        button.addEventListener("click", () => this.toggle());
     }
 
     toggle() {

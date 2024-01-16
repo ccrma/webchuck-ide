@@ -96,11 +96,14 @@ export default class Editor {
             Editor.loadDefault();
             return;
         }
-        Editor.filename = localStorage.getItem("editorFilename") || "untitled.ck";
+        Editor.filename =
+            localStorage.getItem("editorFilename") || "untitled.ck";
         EditorPanelHeader.updateFileName(Editor.filename);
         Editor.setEditorCode(code);
         Console.print(
-            `Loaded autosave: \x1b[38;2;34;178;254m${Editor.filename}\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+            `Loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
+            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
         );
     }
 

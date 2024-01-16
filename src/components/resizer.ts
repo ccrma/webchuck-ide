@@ -108,7 +108,8 @@ export default class Resizer {
 
         // VERTICAL DRAG EVENT, easy calculation
         if (!this.isHorizDrag) {
-            const isBottomClosed = newBotRightSize == AppLayoutConstants.MIN_SIZE_V;
+            const isBottomClosed =
+                newBotRightSize == AppLayoutConstants.MIN_SIZE_V;
             if (isBottomClosed) {
                 setContainerRowHeights(
                     this.splitContainer,

@@ -37,17 +37,22 @@ export default class Dropdown {
         this.container.addEventListener("click", (event: MouseEvent) => {
             const mouseLeaveHandler = () => {
                 this.close();
-                this.container.removeEventListener("mouseleave", mouseLeaveHandler);
+                this.container.removeEventListener(
+                    "mouseleave",
+                    mouseLeaveHandler
+                );
             };
             this.container.addEventListener("mouseleave", mouseLeaveHandler);
         });
 
         document.addEventListener("click", (event: MouseEvent) => {
-            if (!this.button.contains(event.target as Node) && !this.container.contains(event.target as Node)) {
+            if (
+                !this.button.contains(event.target as Node) &&
+                !this.container.contains(event.target as Node)
+            ) {
                 this.close();
             }
         });
-
     }
 
     toggle() {

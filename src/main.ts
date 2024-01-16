@@ -40,7 +40,7 @@ class Main {
         // CONSTRUCT IDE COMPONENTS
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
-        Main.projectSystem = new ProjectSystem(); 
+        Main.projectSystem = new ProjectSystem();
 
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
