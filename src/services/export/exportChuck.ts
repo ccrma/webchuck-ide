@@ -1,6 +1,7 @@
 import Editor from "@/components/monaco/editor";
 
-const exportChuckButton = document.querySelector<HTMLButtonElement>("#exportChuck")!;
+const exportChuckButton =
+    document.querySelector<HTMLButtonElement>("#exportChuck")!;
 const fileDropdown = document.querySelector<HTMLDivElement>("#fileDropdown")!;
 
 /**

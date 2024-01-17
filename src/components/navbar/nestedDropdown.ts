@@ -41,7 +41,6 @@ export default class NestedDropdown {
         this.container.addEventListener("mouseleave", () => {
             this.close();
         });
-
     }
 
     toggle() {

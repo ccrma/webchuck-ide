@@ -168,7 +168,7 @@
     @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 transition focus:outline-none;
 }
 .dropdownItem {
-    @apply block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light
+    @apply block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light;
 }
 
 .dropdown {
@@ -176,7 +176,7 @@
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 .nestedDropdownButton {
-    @apply flex items-center justify-between w-full
+    @apply flex items-center justify-between w-full;
 }
 .nestedDropdown {
     @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-red-900 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
