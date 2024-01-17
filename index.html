@@ -316,24 +316,24 @@
 
       </div>
 
-      <dialog class="px-8 py-4 rounded min-w-[320px] w-1/2 max-w-[960px]" id="export-modal">
-        <form class="flex flex-col gap-2" method="dialog">
-          <h1 class="text-xl">Export WebChucK</h1>
-          <label class="flex flex-col">
-            Name
-            <input id="export-name" class="border px-2 py-1 rounded" type="text">
-          </label>
-          <label class="flex flex-col">
+      <!-- MODALS -->
+      <!-- Export to WebChucK -->
+      <dialog class="modal" id="export-modal">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
+          <label class="form-label">Title</label>
+          <input id="export-title" class="border px-2 py-1 rounded" type="text" placeholder="Hello Sine">
+          <label class="form-label">
             Author
-            <input id="export-author" class="border px-2 py-1 rounded" type="text">
           </label>
+          <input id="export-author" class="border px-2 py-1 rounded" type="text" placeholder="Terry Feng">
           <label class="flex flex-col">
             Description
-            <textarea id="export-description" class="border px-2 py-1 rounded"></textarea>
           </label>
-          <div class="flex gap-4">
-            <button id="export-btn" type="submit" class="bg-orange hover:bg-orange-light px-2 py-1 rounded text-white transition">Export</button>
-            <button id="export-cancel-btn" type="button" class="hover:text-orange-light px-2 py-1 rounded text-orange transition">Cancel</button>
+          <textarea id="export-description" class="border px-2 py-1 h-20 rounded" placeholder="A very cool sine wave!"></textarea>
+          <div class="flex gap-4 justify-end pt-4">
+            <button id="export-cancel-btn" type="button" class="button secondary">Cancel</button>
+            <button id="export-btn" type="submit" class="button primary">Export</button>
           </div>
         </form>
       </dialog>

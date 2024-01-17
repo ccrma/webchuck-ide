@@ -243,6 +243,42 @@ td:nth-child(4) {
 }
 
 /* MISC. COMPONENTS */
+.button.primary {
+    @apply bg-orange hover:bg-orange-light px-2 py-1 text-white transition rounded;
+}
+
+.button.secondary {
+    @apply hover:text-orange-light px-2 py-1 rounded text-orange transition;
+}
+
+dialog {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 7px 10px rgba(0, 0, 0, 0.05);
+}
+dialog::backdrop {
+    @apply bg-white bg-opacity-50;
+}
+.modal {
+    max-height: 75vh;
+    width: 640px;
+    @apply px-8 py-6 rounded dark:bg-dark dark:text-white;
+}
+.modal form input,
+.modal form textarea,
+.modal form select {
+    @apply dark:bg-dark-4 dark:border-dark-a;
+}
+.form-label {
+    display: block;
+    line-height: 1.2rem;
+    padding: 0.3rem 0;
+}
+.modal-sm {
+    max-width: 320px;
+}
+.modal-lg {
+    max-width: 960px;
+}
+
 .divider,
 .divider-vert {
     display: block;

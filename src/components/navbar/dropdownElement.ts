@@ -15,7 +15,10 @@ export default class DropdownElement {
     ) {
         // create element
         const dropdownElement = document.createElement("li");
-        dropdownElement.classList.add(
+        const buttonElement = document.createElement("button");
+        dropdownElement.appendChild(buttonElement);
+
+        buttonElement.classList.add(
             "block",
             "w-full",
             "text-left",
@@ -26,10 +29,10 @@ export default class DropdownElement {
             "dark:hover:bg-gray-600",
             "dark:hover:text-light"
         );
-        dropdownElement.innerHTML = content;
+        buttonElement.innerHTML = content;
 
         // add event listener
-        dropdownElement.addEventListener("click", () => {
+        buttonElement.addEventListener("click", () => {
             callback();
         });
 

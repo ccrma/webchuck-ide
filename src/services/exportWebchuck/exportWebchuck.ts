@@ -20,7 +20,7 @@ export function initExport() {
     });
 
     exportDialog.addEventListener(
-        "click",
+        "mousedown",
         (e: MouseEvent): any =>
             e.target === exportDialog && exportDialog.close()
     );
@@ -39,7 +39,7 @@ export function initExport() {
                 "#export-description"
             )!.value;
         doc.querySelector<HTMLHeadingElement>("#name")!.textContent =
-            document.querySelector<HTMLInputElement>("#export-name")!.value;
+            document.querySelector<HTMLInputElement>("#export-title")!.value;
         doc.querySelector<HTMLHeadingElement>("#author")!.textContent =
             document.querySelector<HTMLInputElement>("#export-author")!.value;
 
@@ -58,11 +58,42 @@ export function initExport() {
         document.querySelector<HTMLTextAreaElement>(
             "#export-description"
         )!.value = "";
-        document.querySelector<HTMLInputElement>("#export-name")!.value = "";
+        document.querySelector<HTMLInputElement>("#export-title")!.value = "";
         document.querySelector<HTMLInputElement>("#export-author")!.value = "";
     });
 }
 
+/**
+ * Opens the export dialog
+ */
 async function exportWebchuck() {
     exportDialog.showModal();
 }
+exportWebchuck();
+
+// Save form input values before closing the dialog
+exportDialog.addEventListener("close", () => {
+    sessionStorage.setItem(
+        "export-description",
+        document.querySelector<HTMLTextAreaElement>("#export-description")!
+            .value
+    );
+    sessionStorage.setItem(
+        "export-title",
+        document.querySelector<HTMLInputElement>("#export-title")!.value
+    );
+    sessionStorage.setItem(
+        "export-author",
+        document.querySelector<HTMLInputElement>("#export-author")!.value
+    );
+});
+
+// Restore form input values when opening the dialog
+exportDialog.addEventListener("show", () => {
+    document.querySelector<HTMLTextAreaElement>("#export-description")!.value =
+        sessionStorage.getItem("export-description") || "";
+    document.querySelector<HTMLInputElement>("#export-title")!.value =
+        sessionStorage.getItem("export-title") || "";
+    document.querySelector<HTMLInputElement>("#export-author")!.value =
+        sessionStorage.getItem("export-author") || "";
+});
