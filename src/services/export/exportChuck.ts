@@ -1,8 +1,8 @@
 import Editor from "@/components/monaco/editor";
+import NavBar from "@/components/navbar/navbar";
 
 const exportChuckButton =
     document.querySelector<HTMLButtonElement>("#exportChuck")!;
-const fileDropdown = document.querySelector<HTMLDivElement>("#fileDropdown")!;
 
 /**
  * Export Editor code to a .ck file
@@ -11,7 +11,7 @@ export function initExportChuck() {
     exportChuckButton.addEventListener("click", async () => {
         const code = Editor.getEditorCode();
         const filename = Editor.getFileName();
-        fileDropdown.classList.add("hidden");
+        NavBar.FileDropdown.close();
         const chuckFileBlob = new Blob([code], {
             type: "text/plain",
         });
