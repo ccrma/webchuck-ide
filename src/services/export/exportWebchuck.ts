@@ -10,7 +10,10 @@ const exportDialog: HTMLDialogElement =
 const exportBtn: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-btn")!;
 
-export function initExport() {
+/**
+ * Export editor code to a webchuck index.html
+ */
+export function initExportWebChuck() {
     exportWebchuckButton.addEventListener("click", () => {
         exportWebchuck();
     });
@@ -69,7 +72,6 @@ export function initExport() {
 async function exportWebchuck() {
     exportDialog.showModal();
 }
-exportWebchuck();
 
 // Save form input values before closing the dialog
 exportDialog.addEventListener("close", () => {

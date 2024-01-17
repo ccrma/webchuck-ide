@@ -17,10 +17,11 @@ import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/projectSystem";
 
+import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
-import { initExport } from "@services/exportWebchuck/exportWebchuck";
-import { initChuck } from "@/host";
+import { initExportWebChuck } from "@/services/export/exportWebchuck";
+import { initExportChuck } from "@/services/export/exportChuck";
 
 class Main {
     public static navBar: NavBar;
@@ -66,7 +67,8 @@ class Main {
         // });
 
         // SERVICES
-        initExport();
+        initExportChuck();
+        initExportWebChuck();
 
         // Init WebChucK
         window.addEventListener("load", () => {

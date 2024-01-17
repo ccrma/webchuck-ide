@@ -66,29 +66,45 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <button id="fileBG" tabindex="-1" class="hidden fixed inset-0 h-full w-full cursor-default"></button>
-              <div id="fileDropdown" class="hidden dropdown w-48">
+              <div id="fileDropdown" class="hidden dropdown w-40">
                 <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="newFile" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                    <button id="newFile" type="button" class="dropdownItem">
                       New
                     </button>
                   </li>
                   <li>
                     <input id="fileUploader" type="file" multiple hidden />
-                    <button id="uploadFiles" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light disabled:opacity-50" disabled>
+                    <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" disabled>
                       Upload Files
                     </button>
                   </li>
                   <li>
-                    <button id="newProject" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                    <button id="newProject" type="button" class="dropdownItem">
                       New Project
                     </button>
                   </li>
-                  <li id="">
-                    <button id="exportWebchuck" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
-                      Export
+                  <li id="exportToContainer" class="group/item relative">
+                    <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton">
+                      Export to
+                      <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="" stroke-linejoin="round" stroke-width="1.5" d="m1 9 4-4-4-4"/>
+                      </svg>
                     </button>
+                    <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
+                      <ul class="py-2 text-base text-gray-700 dark:text-gray-200">
+                        <li>
+                          <button id="exportChuck" type="button" class="dropdownItem">
+                            ChucK
+                          </button>
+                        </li>
+                        <li>
+                          <button id="exportWebchuck" type="button" class="dropdownItem">
+                            WebChucK
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -101,10 +117,10 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="editDropdown" class="hidden dropdown w-48">
+              <div id="editDropdown" class="hidden dropdown w-40">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="vimToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                    <button id="vimToggle" type="button" class="dropdownItem">
                       Vim Mode: Off
                     </button>
                   </li>
@@ -119,15 +135,15 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                 </svg>
               </button>
-              <div id="viewDropdown" class="hidden dropdown w-48">
+              <div id="viewDropdown" class="hidden dropdown w-40">
                 <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                   <li>
-                    <button id="darkModeToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                    <button id="darkModeToggle" type="button" class="dropdownItem">
                       Dark Mode: Off
                     </button>
                   </li>
                   <li>
-                    <button id="chuckNowToggle" type="button" class="block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">
+                    <button id="chuckNowToggle" type="button" class="dropdownItem">
                       ChucK Time: Off
                     </button>
                   </li>

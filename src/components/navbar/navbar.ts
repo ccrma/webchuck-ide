@@ -7,6 +7,7 @@
 //-------------------------------------------------------
 
 import Dropdown from "@/components/navbar/dropdown";
+import NestedDropdown from "./nestedDropdown";
 
 /**
  * NavBar class to handle dropdowns
@@ -15,6 +16,7 @@ import Dropdown from "@/components/navbar/dropdown";
 export default class NavBar {
     constructor() {
         NavBar.buildDropdowns();
+        NavBar.buildNestedDropdowns();
     }
 
     /**
@@ -66,5 +68,18 @@ export default class NavBar {
         const helpDropdown =
             document.querySelector<HTMLDivElement>("#helpDropdown")!;
         new Dropdown(helpContainer, helpButton, helpDropdown);
+    }
+
+    /**
+     * Build all the nested dropdown components in the navbar
+     */
+    static buildNestedDropdowns() {
+        const exportToContainer =
+            document.querySelector<HTMLDivElement>("#exportToContainer")!;
+        const exportToButton =
+            document.querySelector<HTMLButtonElement>("#exportToButton")!;
+        const exportToDropdown =
+            document.querySelector<HTMLDivElement>("#exportToDropdown")!;
+        new NestedDropdown(exportToContainer, exportToButton, exportToDropdown);
     }
 }
