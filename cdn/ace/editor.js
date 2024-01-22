@@ -33,8 +33,7 @@ function newChuckEditor(divId, code = "", readonly = false) {
     editor.renderer.updateFontSize();
     editor.session.setUseWrapMode(true);
     editor.setReadOnly(readonly);
-    editor.setValue(code);
-    editor.selection.clearSelection();
+    editor.setValue(code, 1);
 
     return editor;
 }
