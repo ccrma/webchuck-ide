@@ -14,11 +14,6 @@ header {
 h1 {
     margin: 0;
     font-size: 2em;
-    font-weight: normal;
-}
-
-#description {
-    padding-bottom: 0.5rem;
 }
 
 button {
@@ -61,7 +56,7 @@ button {
   filter: invert(.7);
 }
 
-.container {
+.editor-container {
     max-width: 960px;
     width: 90vw;
     height: calc(100vh - 18rem);
@@ -71,7 +66,7 @@ button {
 }
 
 /* Sliders */
-#mixer {
+#webchuck-gui {
   align-items: center;
   background: var(--accent-color);
   display: none;
@@ -86,10 +81,10 @@ button {
   margin: 0 auto 1rem auto;
 }
 
-.slider-wrap {
-  align-items: center;
+.webchuck-slider {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 5em;
   font-size: small;

@@ -4,233 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" type="image/png">
-    <style>
-      :root {
-        --accent-color: bisque;
-      }
-
-      @media screen and (max-device-width: 768px) {
-        body, html {
-          font-size: 6pt;
-          grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh) !important;
-        }
-
-        main {
-          flex-direction: column;
-          gap: 0.5em;
-        }
-
-        section {
-          font-size: 8pt;
-        }
-
-        #mixer {
-          display: none;
-          flex-basis: 40% !important;
-        }
-      }
-
-      @media screen and (min-device-width: 1441px) {
-        section {
-          display: flex;
-          justify-content: center;
-
-          & > div {
-            max-width: 1200px;
-          }
-        }
-      }
-
-      body, html {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        height: 100%;
-        margin: 0;
-        width: 100%;
-      }
-
-      body {
-        background: #def;
-        display: grid;
-        gap: 2em;
-        grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh);
-      }
-
-      button {
-        align-items: center;
-        background: none;
-        border: 1px solid black;
-        border-radius: 5px;
-        color: black;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        margin: 0 1em;
-        transition: all 0.1s ease-in-out;
-      }
-
-      button:hover {
-        background: var(--accent-color);
-        color: black;
-      }
-
-      header {
-        align-items: center;
-        display: flex;
-        gap: 2em;
-        padding: 0 2em;
-      }
-
-      input[type=range] {
-        appearance: none;
-        background: transparent;
-        height: 10em;
-        transform: rotateZ(270deg);
-        width: 10em;
-      }
-
-      input[type=range]:focus {
-        outline: none;
-      }
-
-      input[type=range]::-ms-thumb {
-        appearance: none;
-        background: white;
-        cursor: grab;
-        height: 1em;
-        width: 1em;
-      }
-
-      input[type=range]::-ms-thumb:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-ms-thumb:hover {
-        background: #aaa;
-      }
-
-      input[type=range]::-ms-track {
-        background: transparent;
-        cursor: grab;
-        outline: 1px solid #ccc;
-        width: 100%;
-      }
-
-      input[type=range]::-ms-track:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-ms-track:hover {
-        background: #ccc;
-      }
-
-      input[type=range]::-moz-range-thumb {
-        appearance: none;
-        background: white;
-        cursor: grab;
-        height: 1em;
-        width: 1em;
-      }
-
-      input[type=range]::-moz-range-thumb:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-moz-range-thumb:hover {
-        background: #aaa;
-      }
-
-      input[type=range]::-moz-range-track {
-        cursor: grab;
-        outline: 1px solid #ccc;
-      }
-
-      input[type=range]::-moz-range-track:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-moz-range-track:hover {
-        background: #ccc;
-      }
-
-      input[type=range]::-webkit-slider-runnable-track {
-        cursor: grab;
-        outline: 1px solid #ccc;
-      }
-
-      input[type=range]::-webkit-slider-runnable-track:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-webkit-slider-runnable-track:hover {
-        background: #ccc;
-      }
-
-      input[type=range]::-webkit-slider-thumb {
-        appearance: none;
-        background: white;
-        cursor: grab;
-        height: 1em;
-        width: 1em;
-      }
-
-      input[type=range]::-webkit-slider-thumb:active {
-        cursor: grabbing;
-      }
-
-      input[type=range]::-webkit-slider-thumb:hover {
-        background: #aaa;
-      }
-
-      main {
-        display: flex;
-        overflow: hidden;
-      }
-
-      p {
-        margin-top: 0;
-      }
-
-      section {
-        padding: 0 4em;
-        overflow-y: scroll;
-      }
-
-      /* noinspection CssUnusedSymbol */
-      .slider-wrap {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 5em;
-      }
-
-      #editor {
-        height: 100%;
-        width: 100%;
-      }
-
-      #editor-container {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        gap: 1em;
-      }
-
-      #mixer {
-        align-items: center;
-        background: var(--accent-color);
-        display: none;
-        flex-basis: 20%;
-        flex-wrap: wrap;
-        gap: 1em;
-        justify-content: center;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        padding: 0.5em;
-      }
-    </style>
-    <!--- include the ACE editor and our webchuck stuff -->
-    <script src="https://chuck.stanford.edu/ide/js/ace-min-noconflict/ace.js"></script>
+    <!--- include the ACE editor and webchuck -->
+    <script src="./cdn/ace/ace.js"></script>
     <script src="./cdn/ace/editor.js"></script>
     <script type="module">
       let l, e, t = 'script', p = /(from\s+|import\s+)['"](#[\w\-]+)['"]/g, x = 'textContent', d = document, o;
@@ -242,7 +17,7 @@
       import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
       import chuck from '#chuck';
 
-
+      const editor = newChuckEditor(document.getElementById("editor"), chuck);
 
       const states = Object.freeze({
         playing: 0,
@@ -251,30 +26,31 @@
       let status = states.stopped;
 
       const action = document.querySelector('#action');
-      const mixer = document.querySelector('#mixer');
+      const mixer = document.querySelector('#webchuck-gui');
+      const openInIDE = document.querySelector('#openInIDE');
 
+      // Play button
       action.addEventListener('click', async () => {
         window.theChuck ??= await Chuck.init([]);
-
         switch (status) {
           case states.playing:
             status = states.stopped;
-
             theChuck.removeLastCode();
-
+            // Stop button
             action.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+              Play
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
                 <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
               </svg>
             `;
             break;
           case states.stopped:
             status = states.playing;
-
             theChuck.runCode(editor.getValue());
-
+            // Play button
             action.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-stop" viewBox="0 0 16 16">
+              Stop
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stop" viewBox="0 0 16 16">
                 <path d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z"/>
               </svg>
             `;
@@ -282,14 +58,21 @@
         }
       });
 
-      const sliders = [...chuck.matchAll(/^\s*(?!\/\/ +)global float (\w+)/gm)]
+      openInIDE.addEventListener('click', () => {
+        const currURL = window.location.href; // TODO: append the code to the URL
+        window.open("https://ccrma.stanford.edu/~tzfeng/webchuck-ide", '_blank');
+      });
+
+      // MIXER CODE for GUI (if there are global variables)
+      const sliders = [...chuck.matchAll(/\bglobal float\s+(\w+)\b/g)]
         .map(([, variable]) => variable);
 
       if (sliders.length > 0) mixer.style.display = 'flex';
 
       sliders.forEach(variable => {
+        console.log(variable);
         const div = document.createElement('div');
-        div.classList.add('slider-wrap');
+        div.classList.add('webchuck-slider');
 
         const p = document.createElement('p');
         p.textContent = variable;
@@ -304,39 +87,34 @@
         div.append(p, input);
         mixer.append(div);
 
-        setInterval(() => {
-          +input.value = theChuck?.getFloat(variable);
-        }, 100);
+        input.addEventListener('input', e => theChuck?.setFloat(variable, +e.target.value));
       });
     </script>
-    <link rel="stylesheet" type="text/css" href="../" />
-    <title>WebChucK Lite</title>
+    <link rel="stylesheet" type="text/css" href="./cdn/webchuck.css" />
+    <title>WebchucK</title>
   </head>
 
   <body>
     <header>
-      <img id="logo" src="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" alt="ChucK Logo" style="height: 2.5rem; width: 2.5rem;">
-      <h1 id="title">title</h1>
-      <h2 id="author">name</h2>
+      <h1><span id="title" style="font-weight: bold">Anachronisms</span></h1>
+      <div id="author" style="font-style: italic;">Terry Feng</div>
+      <p id="description" style="padding-bottom: 0.5rem;">a very cool description lorem ipsum</p>
+      <div id="webchuck-gui"></div>
+      <button id="action">
+        Play
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play"
+              viewBox="0 0 16 16">
+          <path
+            d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+        </svg>
+      </button>
+      <button id="openInIDE">=> to WebChucK IDE</button>
     </header>
 
-    <section>
-      <div id="description">a very cool description</div>
-    </section>
 
     <main>
-      <div id="mixer"></div>
-      <div id="editor-container">
-
-        <button id="action">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play"
-               viewBox="0 0 16 16">
-            <path
-              d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
-          </svg>
-        </button>
-
-        <div id="editor" class="ace_editor ace-chuck"></div>
+      <div class="editor-container">
+        <div id="editor" class="ace_editor ace-chuck" style="width: 100%; height: 100%;"></div>
       </div>
     </main>
 
