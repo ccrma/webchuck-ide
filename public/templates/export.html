@@ -209,16 +209,11 @@
         width: 100%;
       }
 
-      #editor-wrap {
+      #editor-container {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         gap: 1em;
-      }
-
-      #logo {
-        height: 2.5em;
-        width: 2.5em;
       }
 
       #mixer {
@@ -236,8 +231,7 @@
     </style>
     <!--- include the ACE editor and our webchuck stuff -->
     <script src="https://chuck.stanford.edu/ide/js/ace-min-noconflict/ace.js"></script>
-    <script src="https://chuck.stanford.edu/ide/js/ace-min-noconflict/theme-chuck.js"></script>
-    <script src="https://chuck.stanford.edu/ide/js/ace-min-noconflict/mode-chuck.js"></script>
+    <script src="./cdn/ace/editor.js"></script>
     <script type="module">
       let l, e, t = 'script', p = /(from\s+|import\s+)['"](#[\w\-]+)['"]/g, x = 'textContent', d = document, o;
       for (o of d.querySelectorAll(t + '[type=chuck]')) o[x] = 'export default `' + o[x] + '`', o.setAttribute('type', 'inline-module');
@@ -248,22 +242,7 @@
       import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
       import chuck from '#chuck';
 
-      const editor = ace.edit('editor');
-      editor.setTheme('ace/theme/chuck');
-      editor.session.setMode('ace/mode/chuck');
-      editor.setOptions({
-        fontSize: '14px',
-        fontFamily: 'Monaco, Menlo, Consolas, \'Courier New\', monospace',
-        cursorStyle: 'ace',
-        useSoftTabs: true,
-        showFoldWidgets: true,
-        foldStyle: 'markbeginend'
-      });
-      editor.container.style.lineHeight = 1.25;
-      editor.renderer.updateFontSize();
-      editor.session.setUseWrapMode(true);
 
-      editor.setValue(chuck, 1);
 
       const states = Object.freeze({
         playing: 0,
@@ -325,23 +304,30 @@
         div.append(p, input);
         mixer.append(div);
 
-        input.addEventListener('input', e => theChuck?.setFloat(variable, +e.target.value));
+        setInterval(() => {
+          +input.value = theChuck?.getFloat(variable);
+        }, 100);
       });
     </script>
+    <link rel="stylesheet" type="text/css" href="../" />
     <title>WebChucK Lite</title>
   </head>
+
   <body>
     <header>
-      <img id="logo" src="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" alt="ChucK Logo">
-      <h1 id="name"></h1>
-      <h2 id="author"></h2>
+      <img id="logo" src="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" alt="ChucK Logo" style="height: 2.5rem; width: 2.5rem;">
+      <h1 id="title">title</h1>
+      <h2 id="author">name</h2>
     </header>
+
     <section>
-      <div id="description"></div>
+      <div id="description">a very cool description</div>
     </section>
+
     <main>
       <div id="mixer"></div>
-      <div id="editor-wrap">
+      <div id="editor-container">
+
         <button id="action">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play"
                viewBox="0 0 16 16">
@@ -349,8 +335,11 @@
               d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
           </svg>
         </button>
+
         <div id="editor" class="ace_editor ace-chuck"></div>
       </div>
     </main>
+
   </body>
+
 </html>

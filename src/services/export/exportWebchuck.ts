@@ -2,7 +2,6 @@ import Editor from "@/components/monaco/editor";
 
 const exportWebchuckButton =
     document.querySelector<HTMLButtonElement>("#exportWebchuck")!;
-
 const exportWebchuckCancel: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-cancel-btn")!;
 const exportDialog: HTMLDialogElement =
@@ -15,13 +14,11 @@ const exportBtn: HTMLButtonElement =
  */
 export function initExportWebChuck() {
     exportWebchuckButton.addEventListener("click", () => {
-        exportWebchuck();
+        exportDialog.showModal();
     });
-
     exportWebchuckCancel.addEventListener("click", () => {
         exportDialog.close();
     });
-
     exportDialog.addEventListener(
         "mousedown",
         (e: MouseEvent): any =>
@@ -29,50 +26,71 @@ export function initExportWebChuck() {
     );
 
     exportBtn.addEventListener("click", async () => {
-        const template = await (await fetch("templates/export.html")).text();
-
-        const doc: Document = new DOMParser().parseFromString(
-            template,
-            "text/html"
-        );
-        doc.querySelector<HTMLScriptElement>("#chuck")!.textContent =
-            Editor.getEditorCode();
-        doc.querySelector<HTMLDivElement>("#description")!.textContent =
-            document.querySelector<HTMLTextAreaElement>(
-                "#export-description"
-            )!.value;
-        doc.querySelector<HTMLHeadingElement>("#name")!.textContent =
-            document.querySelector<HTMLInputElement>("#export-title")!.value;
-        doc.querySelector<HTMLHeadingElement>("#author")!.textContent =
-            document.querySelector<HTMLInputElement>("#export-author")!.value;
-
-        // Create blob
-        const webchuckFileBlob = new Blob([doc.documentElement.outerHTML], {
-            type: "text/html",
-        });
-        window.URL = window.URL || window.webkitURL;
-        const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
-        // Create invisible download link
-        const downloadLink = document.createElement("a");
-        downloadLink.href = webchuckFileURL;
-        downloadLink.download = "index.html";
-        downloadLink.click();
-
-        document.querySelector<HTMLTextAreaElement>(
+        const code = Editor.getEditorCode();
+        const exportTitle =
+            document.querySelector<HTMLInputElement>("#export-title")!;
+        const exportAuthor =
+            document.querySelector<HTMLInputElement>("#export-author")!;
+        const exportDesc = document.querySelector<HTMLTextAreaElement>(
             "#export-description"
-        )!.value = "";
-        document.querySelector<HTMLInputElement>("#export-title")!.value = "";
-        document.querySelector<HTMLInputElement>("#export-author")!.value = "";
+        )!;
+
+        exportWebchuck(
+            code,
+            exportTitle.value,
+            exportAuthor.value,
+            exportDesc.value
+        );
+
+        exportTitle.value = "";
+        exportAuthor.value = "";
+        exportDesc.value = "";
     });
 }
 
 /**
- * Opens the export dialog
+ * Export editor code to a webchuck index.html
+ * @param code code to export
+ * @param title code title
+ * @param author code author
+ * @param description webchuck description
  */
-async function exportWebchuck() {
-    exportDialog.showModal();
+async function exportWebchuck(
+    code: string,
+    title: string,
+    author: string,
+    description: string
+) {
+    const template = await (await fetch("templates/export.html")).text();
+    const doc: Document = new DOMParser().parseFromString(
+        template,
+        "text/html"
+    );
+
+    // Replace template values
+    doc.querySelector<HTMLHeadingElement>("#title")!.textContent = title;
+    doc.getElementsByTagName("title")[0].textContent = title;
+    doc.querySelector<HTMLHeadingElement>("#author")!.textContent = author;
+    doc.querySelector<HTMLScriptElement>("#chuck")!.textContent = code;
+    doc.querySelector<HTMLDivElement>("#description")!.textContent =
+        description;
+
+    // Download file
+    const webchuckFileBlob = new Blob([doc.documentElement.outerHTML], {
+        type: "text/html",
+    });
+    window.URL = window.URL || window.webkitURL;
+    const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
+    // Create invisible download link
+    const downloadLink = document.createElement("a");
+    downloadLink.href = webchuckFileURL;
+    downloadLink.download = "index.html";
+    downloadLink.click();
 }
 
+// --------------------------------------
+// EXPORT DIALOG FORM AUTOSAVE
+// --------------------------------------
 // Save form input values before closing the dialog
 exportDialog.addEventListener("close", () => {
     sessionStorage.setItem(

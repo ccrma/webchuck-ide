@@ -39,7 +39,11 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#fileButton")!;
         const fileDropdown =
             document.querySelector<HTMLDivElement>("#fileDropdown")!;
-        NavBar.FileDropdown = new Dropdown(fileContainer, fileButton, fileDropdown);
+        NavBar.FileDropdown = new Dropdown(
+            fileContainer,
+            fileButton,
+            fileDropdown
+        );
 
         // Edit
         const editContainer =
@@ -48,7 +52,11 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#editButton")!;
         const editDropdown =
             document.querySelector<HTMLDivElement>("#editDropdown")!;
-        NavBar.EditDropdown = new Dropdown(editContainer, editButton, editDropdown);
+        NavBar.EditDropdown = new Dropdown(
+            editContainer,
+            editButton,
+            editDropdown
+        );
 
         // View
         const viewContainer =
@@ -57,7 +65,11 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#viewButton")!;
         const viewDropdown =
             document.querySelector<HTMLDivElement>("#viewDropdown")!;
-        NavBar.ViewDropdown = new Dropdown(viewContainer, viewButton, viewDropdown);
+        NavBar.ViewDropdown = new Dropdown(
+            viewContainer,
+            viewButton,
+            viewDropdown
+        );
 
         // Examples
         const examplesContainer =
@@ -66,7 +78,11 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#examplesButton")!;
         const examplesDropdown =
             document.querySelector<HTMLDivElement>("#examplesDropdown")!;
-        NavBar.ExamplesDropdown = new Dropdown(examplesContainer, examplesButton, examplesDropdown);
+        NavBar.ExamplesDropdown = new Dropdown(
+            examplesContainer,
+            examplesButton,
+            examplesDropdown
+        );
 
         // Help
         const helpContainer =
@@ -75,7 +91,11 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#helpButton")!;
         const helpDropdown =
             document.querySelector<HTMLDivElement>("#helpDropdown")!;
-        NavBar.HelpDropdown = new Dropdown(helpContainer, helpButton, helpDropdown);
+        NavBar.HelpDropdown = new Dropdown(
+            helpContainer,
+            helpButton,
+            helpDropdown
+        );
     }
 
     /**
@@ -88,6 +108,10 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#exportToButton")!;
         const exportToDropdown =
             document.querySelector<HTMLDivElement>("#exportToDropdown")!;
-        NavBar.ExportToNestedDropdown = new NestedDropdown(exportToContainer, exportToButton, exportToDropdown);
+        NavBar.ExportToNestedDropdown = new NestedDropdown(
+            exportToContainer,
+            exportToButton,
+            exportToDropdown
+        );
     }
 }

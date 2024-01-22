@@ -179,7 +179,7 @@
     @apply flex items-center justify-between w-full;
 }
 .nestedDropdown {
-    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-red-900 dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
     animation: enter-transition 0.1s ease-in-out forwards;
     left: 100%;
     top: 0;
