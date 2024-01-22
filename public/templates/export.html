@@ -6,8 +6,7 @@
     <link rel="shortcut icon" href="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" type="image/png">
     <!--- include the ACE editor and webchuck -->
     <script src="https://cdn.jsdelivr.net/gh/terryzfeng/webchuck-ide@main/cdn/ace/ace.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/gh/terryzfeng/webchuck-ide@main/cdn/ace/editor.js"></script> -->
-    <script src="../../cdn/ace/editor.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/terryzfeng/webchuck-ide@main/cdn/ace/editor.js"></script>
     <script type="module">
       let l, e, t = 'script', p = /(from\s+|import\s+)['"](#[\w\-]+)['"]/g, x = 'textContent', d = document, o;
       for (o of d.querySelectorAll(t + '[type=chuck]')) o[x] = 'export default `' + o[x] + '`', o.setAttribute('type', 'inline-module');
