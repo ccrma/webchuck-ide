@@ -12,7 +12,7 @@
       for (o of d.querySelectorAll(t + '[type=chuck]')) o[x] = 'export default `' + o[x] + '`', o.setAttribute('type', 'inline-module');
       for (o of d.querySelectorAll(t + '[type=inline-module]')) l = d.createElement(t), o.id ? l.id = o.id : 0, l.type = 'module', l[x] = o[x].replace(p, (u, a, z) => (e = d.querySelector(t + z + '[type=module][src]')) ? a + `/* ${ z } */'${ e.src }'` : u), l.src = URL.createObjectURL(new Blob([l[x]], { type: 'application/java' + t })), o.replaceWith(l);//inline
     </script>
-    <script id="chuck" type="chuck"></script>
+    <script id="chuck" type="chuck">SinOsc osc => dac; 1::second => now;</script>
     <script type="inline-module">
       import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
       import chuck from '#chuck';

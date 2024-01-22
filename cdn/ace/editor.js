@@ -16,7 +16,6 @@ ace.define("ace/theme/chuck", ["require", "exports", "module", "ace/lib/dom"], f
     });
 })();
 
-
 function newChuckEditor(divId, code = "", readonly = false) {
     const editor = ace.edit('editor');
     editor.setTheme('ace/theme/chuck');
@@ -35,6 +34,7 @@ function newChuckEditor(divId, code = "", readonly = false) {
     editor.session.setUseWrapMode(true);
     editor.setReadOnly(readonly);
     editor.setValue(code);
+    editor.selection.clearSelection();
 
     return editor;
 }
