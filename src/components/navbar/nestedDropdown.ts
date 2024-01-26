@@ -1,5 +1,5 @@
 /**
- * Nested Dropdown Class 
+ * Nested Dropdown Class
  * @class Dropdown
  * @param {HTMLDivElement} container - The container div
  * @param {HTMLButtonElement} button - The button element

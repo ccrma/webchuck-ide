@@ -100,7 +100,6 @@ export default class Examples {
             otfNested
         );
 
-
         // GUI Nested Examples
         const guiNested = NestedDropdown.createNewNestedDropdown(
             this.examplesDropdownContainer,
