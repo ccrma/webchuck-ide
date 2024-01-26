@@ -128,6 +128,7 @@
 }
 .fileExplorerItem[type="ck"]::before {
     content: url(/img/ck-color.svg);
+    @apply dark:filter-none;
 }
 .fileExplorerItem[type="wav"]::before {
     content: url(/img/audio.svg);

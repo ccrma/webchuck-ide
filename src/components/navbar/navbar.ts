@@ -103,7 +103,7 @@ export default class NavBar {
      */
     static buildNestedDropdowns() {
         const exportToContainer =
-            document.querySelector<HTMLDivElement>("#exportToContainer")!;
+            document.querySelector<HTMLLIElement>("#exportToContainer")!;
         const exportToButton =
             document.querySelector<HTMLButtonElement>("#exportToButton")!;
         const exportToDropdown =
