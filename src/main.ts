@@ -71,8 +71,8 @@ class Main {
         initExportWebChuck();
 
         // Init WebChucK
-        window.addEventListener("load", () => {
-            initChuck();
+        window.addEventListener("load", async () => {
+            await initChuck();
         });
     }
 

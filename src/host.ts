@@ -41,6 +41,7 @@ let chuckNowCached: number = 0;
  */
 export async function initChuck() {
     audioContext = new AudioContext();
+    audioContext.suspend();
     sampleRate = audioContext.sampleRate;
     calculateDisplayDigits(sampleRate);
 
@@ -49,7 +50,6 @@ export async function initChuck() {
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
-    audioContext.suspend();
     onChuckReady();
 }
 
