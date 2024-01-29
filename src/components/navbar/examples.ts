@@ -9,10 +9,10 @@
 
 import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import DropdownElement from "./dropdownElement";
-import Editor from "@components/monaco/editor";
 import Console from "@/components/console";
 import { theChuck } from "@/host";
 import NestedDropdown from "./nestedDropdown";
+import ProjectSystem from "@components/projectSystem";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;
@@ -154,11 +154,10 @@ export default class Examples {
 export async function loadExample(url: string): Promise<void> {
     const example: File = await fetchTextFile(url);
     // TODO: create a new file in the file system
-    Editor.setEditorCode(example.data as string);
-    Editor.setFileName(example.name);
+    ProjectSystem.addNewFile(example.name, example.data as string);
     const type =
         example.name.split(".").pop() === "ck"
-            ? "chuck"
+            ? "ChucK"
             : example.name.split(".").pop();
     Console.print(`Loaded ${type} file: ${example.name}`);
 }
@@ -171,5 +170,6 @@ async function loadExampleDataFile(url: string): Promise<void> {
     const example: File = await fetchDataFile(url);
     // TODO: check for preloading/file system
     theChuck?.createFile("", example.name, example.data);
+    ProjectSystem.addNewFile(example.name, "");
     Console.print(`Loaded file: ${example.name}`);
 }

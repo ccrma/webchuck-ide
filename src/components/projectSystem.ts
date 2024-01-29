@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------
-// title: File System
-// desc:  Logic Handling for File System
+// title: Project System
+// desc:  Logic Handling for Project File System
 //
 //
 // author: terry feng
@@ -10,6 +10,8 @@
 import { theChuck } from "@/host";
 import Editor from "./monaco/editor";
 import Console from "./console";
+import ProjectFile from "./projectFile";
+import { isPlaintextFile } from "webchuck/dist/utils";
 
 export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
@@ -18,11 +20,15 @@ export default class ProjectSystem {
     private static fileUploader: HTMLInputElement;
     public static fileExplorer: HTMLDivElement;
 
+    public static activeFile: ProjectFile;
+
+    private static projectFiles: Map<string, ProjectFile>;
+
     constructor() {
         ProjectSystem.newFileButton =
             document.querySelector<HTMLButtonElement>("#newFile")!;
         ProjectSystem.newFileButton.addEventListener("click", () => {
-            ProjectSystem.newFile();
+            ProjectSystem.createNewFile();
         });
 
         ProjectSystem.fileUploader =
@@ -48,37 +54,105 @@ export default class ProjectSystem {
 
         ProjectSystem.fileExplorer =
             document.querySelector<HTMLDivElement>("#fileExplorer")!;
+
+        ProjectSystem.projectFiles = new Map();
     }
 
     /**
      * Create a new file and clear the editor
      */
-    static newFile() {
+    static createNewFile() {
         // Ask for new file name
         const filename = prompt("Enter new file name", "untitled.ck");
         if (filename === null) {
             return;
         }
-        Editor.setFileName(filename);
-        Editor.setEditorCode("");
-        ProjectSystem.addFileToExplorer(filename);
+        const newFile = new ProjectFile(filename, "");
+        if (isPlaintextFile(filename)) {
+            ProjectSystem.setActiveFile(newFile);
+        }
+        ProjectSystem.addFileToExplorer(newFile);
     }
 
     /**
-     * TODO: abstract this to a class
+     * Add new file to the file system
+     * @param filename name of the file
+     * @param data data of the file
+     */
+    static addNewFile(filename: string, data: string) {
+        const newFile = new ProjectFile(filename, data);
+        if (isPlaintextFile(filename)) {
+            ProjectSystem.setActiveFile(newFile);
+        }
+        ProjectSystem.addFileToExplorer(newFile);
+    }
+    /**
+     * Set a new file active in the editor
+     * @param projectFile file to set as active
+     */
+    static setActiveFile(projectFile: ProjectFile) {
+        if (projectFile.isPlaintextFile()) {
+            ProjectSystem.activeFile?.unloadFile();
+            ProjectSystem.activeFile = projectFile;
+            ProjectSystem.activeFile.loadFile();
+            this.updateFileExplorerUI();
+        }
+    }
+
+    /**
+     * TODO: abstract ProjectSystem to a class
      * UI update function to add a file to the file explorer
      * @param filename Add a file to the file explorer
      */
-    static addFileToExplorer(filename: string) {
-        const fileItem = document.createElement("div");
-        const fileExt = filename.split(".").pop()!;
-        fileItem.className = "fileExplorerItem";
-        fileItem.setAttribute("type", fileExt);
+    static addFileToExplorer(projectFile: ProjectFile) {
+        ProjectSystem.projectFiles.set(projectFile.getFilename(), projectFile);
 
-        fileItem.innerHTML += filename;
-        console.log(filename);
+        // sort files that end with .ck first
+        const sortedFiles = Array.from(ProjectSystem.projectFiles).sort(
+            (a, b) => {
+                if (a[0].endsWith(".ck") && !b[0].endsWith(".ck")) {
+                    return -1;
+                } else if (!a[0].endsWith(".ck") && b[0].endsWith(".ck")) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+        ProjectSystem.projectFiles = new Map(sortedFiles);
+        ProjectSystem.updateFileExplorerUI();
+    }
 
-        ProjectSystem.fileExplorer.appendChild(fileItem);
+    /**
+     * Remove a file from the file explorer
+     * @param filename file to remove
+     */
+    static removeFileFromExplorer(filename: string) {
+        ProjectSystem.projectFiles.delete(filename);
+        ProjectSystem.updateFileExplorerUI();
+    }
+
+    /**
+     * Update File Explorer UI with project files
+     */
+    static updateFileExplorerUI() {
+        ProjectSystem.fileExplorer.innerHTML = "";
+
+        ProjectSystem.projectFiles.forEach((projectFile) => {
+            const filename = projectFile.getFilename();
+            const fileItem = document.createElement("div");
+            const fileExt = filename.split(".").pop()!;
+            fileItem.className = "fileExplorerItem";
+            fileItem.setAttribute("type", fileExt);
+            fileItem.innerHTML += filename;
+            if (projectFile.isActive()) {
+                fileItem.classList.add("active");
+            }
+            fileItem.addEventListener("click", () => {
+                ProjectSystem.setActiveFile(projectFile);
+            });
+            ProjectSystem.fileExplorer.appendChild(fileItem);
+        });
     }
 
     /**
@@ -98,9 +172,11 @@ export default class ProjectSystem {
      * Clear the file system
      */
     static clearFileSystem() {
-        // Clear the file system
-        Editor.setEditorCode("");
-        Editor.setFileName("untitled.ck");
+        // delete all files
+        ProjectSystem.projectFiles.clear();
+        const newFile = new ProjectFile("untitled.ck", "");
+        ProjectSystem.setActiveFile(newFile);
+        ProjectSystem.addFileToExplorer(newFile);
     }
 
     /**
@@ -127,7 +203,7 @@ export default class ProjectSystem {
                     if (theChuck !== undefined) {
                         Console.print("Loaded ChucK file: " + file.name);
                         theChuck.createFile("", file.name, data);
-                        ProjectSystem.addFileToExplorer(file.name);
+                        ProjectSystem.addNewFile(file.name, data);
                     } else {
                         // TODO: If chuck is not running, add file to preUploadFiles
                     }
@@ -143,7 +219,7 @@ export default class ProjectSystem {
                     if (theChuck !== undefined) {
                         theChuck.createFile("", file.name, data);
                         Console.print("Loaded file: " + file.name);
-                        ProjectSystem.addFileToExplorer(file.name);
+                        ProjectSystem.addNewFile(file.name, "");
                     } else {
                         // TODO: If chuck is not running, add file to preUploadFiles
                     }

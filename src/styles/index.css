@@ -112,10 +112,13 @@
     @apply h-full w-full;
 }
 .fileExplorerItem {
-    @apply px-2 m-1 hover:bg-gray-200 dark:hover:bg-gray-700;
+    @apply px-2 m-1 hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
     display: flex;
     align-items: center;
     white-space: nowrap;
+}
+.fileExplorerItem.active {
+    @apply bg-orange-peach dark:bg-dark-8;
 }
 .fileExplorerItem::before {
     content: url(/img/file.svg);

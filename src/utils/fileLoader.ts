@@ -16,10 +16,10 @@ export interface File {
  * @param url
  */
 export async function fetchTextFile(url: string): Promise<File> {
-    const fileName = url.split("/").pop();
+    const filename = url.split("/").pop();
     const response = await fetch(url);
     const text = await response.text();
-    return { name: fileName!, data: text };
+    return { name: filename!, data: text };
 }
 
 /**

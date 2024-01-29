@@ -8,6 +8,15 @@
 <html lang="en">
 
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-97HQ523NZQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-97HQ523NZQ');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TITLE -->
@@ -179,12 +188,18 @@
                   <li>
                     <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
                   </li>
-                  <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
+
+                  <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
                   <li>
-                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">View Github</a>
+                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github Repo</a>
                   </li>
                   <li>
-                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">WebChucK</a>
+                    <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Report an Issue</a>
+                  </li>
+
+                  <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
+                  <li>
+                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Learn WebChucK</a>
                   </li>
                   <li>
                     <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join ChucK Discord</a>
@@ -197,12 +212,13 @@
 
         <!-- Right -->
         <!-- More Menu Button-->
-        <div class="">
-          <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
+        <div class="flex justify-right items-center text-blue-600 dark:text-blue-200">
+          <!-- <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
             <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
               <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
             </svg>
-          </button>
+          </button> -->
+          <b>(Beta) WebChucK IDE <em class="text-3xl">2</em></b>
         </div>
       </nav>
 
