@@ -181,7 +181,7 @@ export default class ProjectSystem {
             // File Options
             const fileOptions = document.createElement("div");
             const deleteButton = document.createElement("button");
-            fileOptions.className = "fileExplorerOptions opacity-0";
+            fileOptions.className = "fileExplorerOptions hide";
             deleteButton.innerHTML = `<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/> </svg>`;
             fileOptions.appendChild(deleteButton);
             fileOptions.addEventListener("click", (e) => {
@@ -199,10 +199,10 @@ export default class ProjectSystem {
                 ProjectSystem.setActiveFile(projectFile);
             });
             fileEntry.addEventListener("mouseover", () => {
-                fileOptions.classList.replace("opacity-0", "opacity-100");
+                fileOptions.classList.remove("hide");
             });
             fileEntry.addEventListener("mouseout", () => {
-                fileOptions.classList.replace("opacity-100", "opacity-0");
+                fileOptions.classList.add("hide");
             });
             ProjectSystem.fileExplorer.appendChild(fileEntry);
         });

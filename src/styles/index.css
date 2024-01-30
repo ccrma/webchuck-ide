@@ -112,7 +112,7 @@
     @apply h-full w-full;
 }
 .fileExplorerEntry {
-    @apply w-full hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
+    @apply w-full relative hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
     display: flex;
     align-items: center;
     white-space: nowrap;
@@ -149,7 +149,10 @@
     @apply dark:filter dark:invert;
 }
 .fileExplorerOptions {
-    @apply pr-2 flex items-center transition-all duration-200 text-red-600;
+    @apply px-1 mr-1 flex absolute right-0 items-center opacity-100 transition-all text-red-600 dark:text-red-200 bg-inherit;
+}
+.fileExplorerOptions.hide {
+    @apply opacity-0;
 }
 
 #editorPanel {
