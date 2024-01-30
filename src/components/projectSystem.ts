@@ -86,6 +86,7 @@ export default class ProjectSystem {
         }
         ProjectSystem.addFileToExplorer(newFile);
     }
+
     /**
      * Set a new file active in the editor
      * @param projectFile file to set as active
@@ -124,11 +125,39 @@ export default class ProjectSystem {
     }
 
     /**
+     * Number of chuck files in the project
+     * @returns the number of chuck files in the project
+     */
+    static numChuckFiles(): number {
+        let size = 0;
+        ProjectSystem.projectFiles.forEach((projectFile) => {
+            if (projectFile.isChuckFile()) size++;
+        });
+        return size;
+    }
+
+    /**
      * Remove a file from the file explorer
      * @param filename file to remove
      */
     static removeFileFromExplorer(filename: string) {
+        const wasActive = ProjectSystem.activeFile.isActive();
+
         ProjectSystem.projectFiles.delete(filename);
+
+        if (ProjectSystem.numChuckFiles() === 0) {
+            // must have at least one ck file
+            ProjectSystem.addNewFile("untitled.ck", "");
+        } else if (ProjectSystem.projectFiles.size === 0) {
+            ProjectSystem.clearFileSystem();
+            return;
+        } else {
+            if (wasActive) {
+                ProjectSystem.setActiveFile(
+                    ProjectSystem.projectFiles.values().next().value
+                );
+            }
+        }
         ProjectSystem.updateFileExplorerUI();
     }
 
@@ -139,19 +168,43 @@ export default class ProjectSystem {
         ProjectSystem.fileExplorer.innerHTML = "";
 
         ProjectSystem.projectFiles.forEach((projectFile) => {
-            const filename = projectFile.getFilename();
+            const fileEntry = document.createElement("div");
+            fileEntry.className = "fileExplorerEntry";
+
+            // File Info (icon + name)
             const fileItem = document.createElement("div");
+            const filename = projectFile.getFilename();
             const fileExt = filename.split(".").pop()!;
             fileItem.className = "fileExplorerItem";
             fileItem.setAttribute("type", fileExt);
             fileItem.innerHTML += filename;
+            // File Options
+            const fileOptions = document.createElement("div");
+            const deleteButton = document.createElement("button");
+            fileOptions.className = "fileExplorerOptions opacity-0";
+            deleteButton.innerHTML = `<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/> </svg>`;
+            fileOptions.appendChild(deleteButton);
+            fileOptions.addEventListener("click", (e) => {
+                e?.stopPropagation();
+                ProjectSystem.removeFileFromExplorer(filename);
+            });
+
+            // Arm File Entry
+            fileEntry.appendChild(fileItem);
+            fileEntry.appendChild(fileOptions);
             if (projectFile.isActive()) {
-                fileItem.classList.add("active");
+                fileEntry.classList.add("active");
             }
-            fileItem.addEventListener("click", () => {
+            fileEntry.addEventListener("click", () => {
                 ProjectSystem.setActiveFile(projectFile);
             });
-            ProjectSystem.fileExplorer.appendChild(fileItem);
+            fileEntry.addEventListener("mouseover", () => {
+                fileOptions.classList.replace("opacity-0", "opacity-100");
+            });
+            fileEntry.addEventListener("mouseout", () => {
+                fileOptions.classList.replace("opacity-100", "opacity-0");
+            });
+            ProjectSystem.fileExplorer.appendChild(fileEntry);
         });
     }
 

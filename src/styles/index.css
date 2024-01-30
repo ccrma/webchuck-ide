@@ -111,14 +111,17 @@
 #fileExplorer {
     @apply h-full w-full;
 }
-.fileExplorerItem {
-    @apply px-2 m-1 hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
+.fileExplorerEntry {
+    @apply w-full hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
     display: flex;
     align-items: center;
     white-space: nowrap;
 }
-.fileExplorerItem.active {
+.fileExplorerEntry.active {
     @apply bg-orange-peach dark:bg-dark-8;
+}
+.fileExplorerItem {
+    @apply px-2 m-1 flex items-center w-full overflow-clip;
 }
 .fileExplorerItem::before {
     content: url(/img/file.svg);
@@ -144,6 +147,9 @@
 .fileExplorerItem[type="csv"]::before {
     content: url(/img/csv.svg);
     @apply dark:filter dark:invert;
+}
+.fileExplorerOptions {
+    @apply pr-2 flex items-center transition-all duration-200 text-red-600;
 }
 
 #editorPanel {

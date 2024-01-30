@@ -12,6 +12,7 @@ import Editor from "@components/monaco/editor";
 export default class ProjectFile {
     private filename: string;
     private data: string;
+    private isCk: boolean;
     private isPlaintext: boolean;
     private active: boolean;
 
@@ -19,6 +20,7 @@ export default class ProjectFile {
         this.filename = filename;
         this.data = data;
         this.active = false;
+        this.isCk = filename.endsWith(".ck");
         this.isPlaintext = isPlaintextFile(filename);
     }
     loadFile() {
@@ -31,6 +33,7 @@ export default class ProjectFile {
     unloadFile() {
         if (this.active) {
             this.data = Editor.getEditorCode();
+            // TODO: save data to file system
             this.active = false;
         }
     }
@@ -52,6 +55,9 @@ export default class ProjectFile {
     }
     setActive(active: boolean) {
         this.active = active;
+    }
+    isChuckFile(): boolean {
+        return this.isCk;
     }
     isPlaintextFile(): boolean {
         return this.isPlaintext;
