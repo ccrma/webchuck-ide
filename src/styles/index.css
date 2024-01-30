@@ -112,7 +112,7 @@
     @apply h-full w-full;
 }
 .fileExplorerEntry {
-    @apply w-full relative hover:bg-opacity-40 hover:bg-orange-peach dark:hover:bg-opacity-50 dark:hover:bg-dark-8 hover:cursor-pointer;
+    @apply w-full relative hover:bg-[#ebeae8] dark:hover:bg-[#555555] hover:cursor-pointer;
     display: flex;
     align-items: center;
     white-space: nowrap;
@@ -149,8 +149,12 @@
     @apply dark:filter dark:invert;
 }
 .fileExplorerOptions {
-    @apply px-1 mr-1 flex absolute right-0 items-center opacity-100 transition-all text-red-600 dark:text-red-200 bg-inherit;
+    @apply px-1 py-1 mr-1 flex absolute right-0 items-center opacity-100 transition-all bg-inherit;
 }
+.fileExplorerOptions > .fileEntryDelete {
+    @apply text-red-600 dark:text-red-200;
+}
+
 .fileExplorerOptions.hide {
     @apply opacity-0;
 }
