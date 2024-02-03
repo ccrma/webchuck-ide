@@ -108,8 +108,15 @@
     overflow: none;
 }
 
-#fileExplorer {
+/* FILE EXPLORER */
+#fileExplorerContainer {
     @apply h-full w-full;
+}
+#fileExplorerUploadPrompt {
+    @apply absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 dark:bg-opacity-20 transition;
+    user-select: none;
+    /* prevent from clicking through */
+    pointer-events: none;
 }
 .fileExplorerEntry {
     @apply w-full relative hover:bg-[#ebeae8] dark:hover:bg-[#555555] hover:cursor-pointer;

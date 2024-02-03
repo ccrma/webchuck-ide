@@ -155,11 +155,7 @@ export async function loadExample(url: string): Promise<void> {
     const example: File = await fetchTextFile(url);
     // TODO: create a new file in the file system
     ProjectSystem.addNewFile(example.name, example.data as string);
-    const type =
-        example.name.split(".").pop() === "ck"
-            ? "ChucK"
-            : example.name.split(".").pop();
-    Console.print(`Loaded ${type} file: ${example.name}`);
+    Console.print(`Loaded ChucK file: ${example.name}`);
 }
 
 /**
@@ -168,8 +164,6 @@ export async function loadExample(url: string): Promise<void> {
  */
 async function loadExampleDataFile(url: string): Promise<void> {
     const example: File = await fetchDataFile(url);
-    // TODO: check for preloading/file system
-    theChuck?.createFile("", example.name, example.data);
-    ProjectSystem.addNewFile(example.name, "");
+    ProjectSystem.addNewFile(example.name, example.data as Uint8Array);
     Console.print(`Loaded file: ${example.name}`);
 }

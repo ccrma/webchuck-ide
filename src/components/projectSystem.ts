@@ -8,7 +8,6 @@
 //--------------------------------------------------------------------
 
 import { theChuck } from "@/host";
-import Editor from "./monaco/editor";
 import Console from "./console";
 import ProjectFile from "./projectFile";
 import { isPlaintextFile } from "webchuck/dist/utils";
@@ -18,7 +17,9 @@ export default class ProjectSystem {
     public static newProjectButton: HTMLButtonElement;
     public static uploadFilesButton: HTMLButtonElement;
     private static fileUploader: HTMLInputElement;
+    public static fileExplorerContainer: HTMLDivElement;
     public static fileExplorer: HTMLDivElement;
+    public static fileExplorerUploadPrompt: HTMLDivElement;
 
     public static activeFile: ProjectFile;
 
@@ -54,6 +55,30 @@ export default class ProjectSystem {
 
         ProjectSystem.fileExplorer =
             document.querySelector<HTMLDivElement>("#fileExplorer")!;
+        ProjectSystem.fileExplorerContainer = 
+            document.querySelector<HTMLDivElement>("#fileExplorerContainer")!;
+        ProjectSystem.fileExplorerUploadPrompt =
+            document.querySelector<HTMLDivElement>("#fileExplorerUploadPrompt")!;
+        // drag and drop upload support
+        ProjectSystem.fileExplorerContainer.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-0", "opacity-100");
+        });
+        // end drag
+        ProjectSystem.fileExplorerContainer.addEventListener("dragleave", (e) => {
+            e.preventDefault();
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
+        });
+        ProjectSystem.fileExplorerContainer.addEventListener("dragend", (e) => {
+            e.preventDefault();
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
+        });
+        // drop
+        ProjectSystem.fileExplorerContainer.addEventListener("drop", (e) => {
+            e.preventDefault();
+            ProjectSystem.dragUploadFiles(e);
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
+        });
 
         ProjectSystem.projectFiles = new Map();
     }
@@ -68,7 +93,7 @@ export default class ProjectSystem {
             return;
         }
         const newFile = new ProjectFile(filename, "");
-        if (isPlaintextFile(filename)) {
+        if (newFile.isChuckFile()) {
             ProjectSystem.setActiveFile(newFile);
         }
         ProjectSystem.addFileToExplorer(newFile);
@@ -79,8 +104,9 @@ export default class ProjectSystem {
      * @param filename name of the file
      * @param data data of the file
      */
-    static addNewFile(filename: string, data: string) {
+    static addNewFile(filename: string, data: string | Uint8Array) {
         const newFile = new ProjectFile(filename, data);
+        theChuck?.createFile("", filename, data);
         if (isPlaintextFile(filename)) {
             ProjectSystem.setActiveFile(newFile);
         }
@@ -247,16 +273,17 @@ export default class ProjectSystem {
         for (let i = 0; i < fileList.length; i++) {
             const file = fileList[i];
             const reader = new FileReader();
-            if (file.name.endsWith(".ck")) {
+            if (isPlaintextFile(file.name)) {
                 reader.onload = (e) => {
                     const data = e.target!.result as string;
-                    Editor.setFileName(file.name);
-                    Editor.setEditorCode(data);
 
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {
-                        Console.print("Loaded ChucK file: " + file.name);
-                        theChuck.createFile("", file.name, data);
+                        if (file.name.endsWith(".ck")) {
+                            Console.print("Loaded ChucK file: " + file.name);
+                        } else {
+                            Console.print("Loaded file: " + file.name);
+                        }
                         ProjectSystem.addNewFile(file.name, data);
                     } else {
                         // TODO: If chuck is not running, add file to preUploadFiles
@@ -271,12 +298,67 @@ export default class ProjectSystem {
 
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {
-                        theChuck.createFile("", file.name, data);
                         Console.print("Loaded file: " + file.name);
-                        ProjectSystem.addNewFile(file.name, "");
+                        ProjectSystem.addNewFile(file.name, data);
                     } else {
                         // TODO: If chuck is not running, add file to preUploadFiles
                     }
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        }
+    }
+
+    /**
+     * Upload files to the file system via drag and drop
+     * @param event file drag event
+     */
+    static dragUploadFiles(event: DragEvent) {
+        console.log("File(s) dropped");
+        if (event.dataTransfer == null) {
+            return;
+        }
+
+        let fileList: File[];
+
+        // Populate fileList with files from event
+        if (event.dataTransfer.items!) {
+            // event.dataTransfer.items only supported by Chrome
+            fileList = Array.from(event.dataTransfer.items)
+                .map((item) => {
+                    if (item.kind === "file") {
+                        const file = item.getAsFile();
+                        return file;
+                    }
+                    return null;
+                })
+                .filter((file): file is File => file !== null);
+        } else {
+            fileList = Array.from(event.dataTransfer.files);
+        }
+
+        // Loop through the FileList and load files into IDE/ChucK
+        for (let i = 0; i < fileList.length; i++) {
+            const file = fileList[i];
+            const reader = new FileReader();
+            if (isPlaintextFile(file.name)) {
+                reader.onload = (e) => {
+                    const data = e.target!.result as string;
+                    if (file.name.endsWith(".ck")) {
+                        Console.print("Loaded ChucK file: " + file.name);
+                    } else {
+                        Console.print("Loaded file: " + file.name);
+                    }
+                    ProjectSystem.addNewFile(file.name, data as string);
+                };
+                reader.readAsText(file);
+            } else {
+                reader.onload = function (e) {
+                    const data = new Uint8Array(
+                        e.target!.result as ArrayBuffer
+                    );
+                    Console.print("Loaded file: " + file.name);
+                    ProjectSystem.addNewFile(file.name, data as Uint8Array);
                 };
                 reader.readAsArrayBuffer(file);
             }

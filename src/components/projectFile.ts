@@ -11,12 +11,13 @@ import Editor from "@components/monaco/editor";
 
 export default class ProjectFile {
     private filename: string;
-    private data: string;
+    private data: string | Uint8Array;
     private isCk: boolean;
     private isPlaintext: boolean;
     private active: boolean;
+    // TODO: do we need file extension?
 
-    constructor(filename: string, data: string) {
+    constructor(filename: string, data: string | Uint8Array) {
         this.filename = filename;
         this.data = data;
         this.active = false;
@@ -26,7 +27,8 @@ export default class ProjectFile {
     loadFile() {
         if (!this.active && this.isPlaintext) {
             Editor.setFileName(this.filename);
-            Editor.setEditorCode(this.data);
+            // TODO: Set Editor Language
+            Editor.setEditorCode(this.data as string);
             this.active = true;
         }
     }

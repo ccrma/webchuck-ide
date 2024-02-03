@@ -269,7 +269,20 @@
             <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
               <div class="px-2">File Explorer</div>
             </div>
-            <div id="fileExplorer"></div>
+            <div id="fileExplorerContainer" class="relative">
+              <div id="fileExplorer"></div>
+              <div id="fileExplorerUploadPrompt" class="opacity-0">
+                <div class="flex flex-col items-center">
+                  <svg width="2rem" height="2rem" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                    <path d="M6 20L18 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12 16V4M12 4L15.5 7.5M12 4L8.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                  <div class="text-lg font-bold">Drop files here</div>
+                  <div class="text-sm">to upload</div>
+                </div>  
+              </div>
+            </div>
           </div>
         </div>
 
