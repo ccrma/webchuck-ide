@@ -115,14 +115,10 @@
 #fileExplorerUploadPrompt {
     @apply absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 dark:bg-opacity-20 transition;
     user-select: none;
-    /* prevent from clicking through */
     pointer-events: none;
 }
 .fileExplorerEntry {
-    @apply w-full relative hover:bg-[#ebeae8] dark:hover:bg-[#555555] hover:cursor-pointer;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
+    @apply flex items-center w-full relative hover:bg-[#ebeae8] dark:hover:bg-[#555555] hover:cursor-pointer whitespace-nowrap;
 }
 .fileExplorerEntry.active {
     @apply bg-orange-peach dark:bg-dark-8;
@@ -132,12 +128,7 @@
 }
 .fileExplorerItem::before {
     content: url(/img/file.svg);
-    @apply dark:filter dark:invert;
-    display: inline-block;
-    box-sizing: border-box;
-    padding-right: 2px;
-    height: 26px;
-    transform: scale(0.9);
+    @apply dark:filter dark:invert inline-block box-border pr-1 h-7;
 }
 .fileExplorerItem[type="ck"]::before {
     content: url(/img/ck-color.svg);
@@ -203,11 +194,8 @@
     @apply flex items-center justify-between w-full;
 }
 .nestedDropdown {
-    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
     animation: enter-transition 0.1s ease-in-out forwards;
-    left: 100%;
-    top: 0;
-    margin-top: -8px;
 }
 
 /* CHUCK BAR */
@@ -239,11 +227,6 @@ table thead tr th {
 table tbody tr td {
     @apply py-3 px-4 border-b border-sky-blue-700;
 }
-/*
-tr:nth-of-type(even) {
-    @apply bg-sky-blue-300 dark:bg-dark;
-}
-*/
 
 td:nth-child(3) {
     @apply min-w-fit;
@@ -295,9 +278,9 @@ dialog::backdrop {
     @apply bg-white bg-opacity-50;
 }
 .modal {
+    @apply px-8 py-6 rounded dark:bg-dark dark:text-white;
     max-height: 75vh;
     width: 640px;
-    @apply px-8 py-6 rounded dark:bg-dark dark:text-white;
 }
 .modal form input,
 .modal form textarea,
@@ -305,9 +288,7 @@ dialog::backdrop {
     @apply dark:bg-dark-4 dark:border-dark-a;
 }
 .form-label {
-    display: block;
-    line-height: 1.2rem;
-    padding: 0.3rem 0;
+    @apply block leading-5 py-1;
 }
 .modal-sm {
     max-width: 320px;
@@ -318,8 +299,7 @@ dialog::backdrop {
 
 .divider,
 .divider-vert {
-    display: block;
-    position: relative;
+    @apply block relative;
 }
 
 .divider[data-content]::after,
@@ -349,34 +329,22 @@ dialog::backdrop {
 }
 
 .resizer.hSplit {
+    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
     cursor: row-resize;
-    position: relative;
-    @apply hover:bg-orange hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
 }
 .hSplit::after {
-    display: block;
+    @apply block w-full h-2 -top-[4px] absolute z-30;
     content: "";
-    width: 100%;
-    position: absolute;
-    top: -4px;
-    height: 8px;
-    z-index: 20;
 }
 
 .resizer.vSplit {
+    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
     cursor: col-resize;
-    position: relative;
-    @apply hover:bg-orange hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
 }
 
 .vSplit::after {
-    display: block;
+    @apply block h-full w-2 -left-[4px] absolute z-30;
     content: "";
-    height: 100%;
-    position: absolute;
-    left: -4px;
-    width: 8px;
-    z-index: 30;
 }
 
 .vSplit.active,

@@ -1,52 +1,52 @@
-
-
-  @media screen and (max-device-width: 768px) {
-    body, html {
-      font-size: 6pt;
-      grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh) !important;
+@media screen and (max-device-width: 768px) {
+    body,
+    html {
+        font-size: 6pt;
+        grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh) !important;
     }
 
     main {
-      flex-direction: column;
-      gap: 0.5em;
+        flex-direction: column;
+        gap: 0.5em;
     }
 
     section {
-      font-size: 8pt;
+        font-size: 8pt;
     }
 
     #mixer {
-      display: none;
-      flex-basis: 40% !important;
+        display: none;
+        flex-basis: 40% !important;
     }
-  }
+}
 
-  @media screen and (min-device-width: 1441px) {
+@media screen and (min-device-width: 1441px) {
     section {
-      display: flex;
-      justify-content: center;
+        display: flex;
+        justify-content: center;
 
-      & > div {
-        max-width: 1200px;
-      }
+        & > div {
+            max-width: 1200px;
+        }
     }
-  }
+}
 
-  body, html {
+body,
+html {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     height: 100%;
     margin: 0;
     width: 100%;
-  }
+}
 
-  body {
+body {
     background: #def;
     display: grid;
     gap: 2em;
     grid-template-rows: 1fr fit-content(50vh) minmax(0, 90vh);
-  }
+}
 
-  button {
+button {
     align-items: center;
     background: none;
     border: 1px solid black;
@@ -57,157 +57,157 @@
     justify-content: center;
     margin: 0 1em;
     transition: all 0.1s ease-in-out;
-  }
+}
 
-  button:hover {
+button:hover {
     background: var(--accent-color);
     color: black;
-  }
+}
 
-  header {
+header {
     align-items: center;
     display: flex;
     gap: 2em;
     padding: 0 2em;
-  }
+}
 
-  input[type=range] {
+input[type="range"] {
     appearance: none;
     background: transparent;
     height: 10em;
     transform: rotateZ(270deg);
     width: 10em;
-  }
+}
 
-  input[type=range]:focus {
+input[type="range"]:focus {
     outline: none;
-  }
+}
 
-  input[type=range]::-ms-thumb {
+input[type="range"]::-ms-thumb {
     appearance: none;
     background: white;
     cursor: grab;
     height: 1em;
     width: 1em;
-  }
+}
 
-  input[type=range]::-ms-thumb:active {
+input[type="range"]::-ms-thumb:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-ms-thumb:hover {
+input[type="range"]::-ms-thumb:hover {
     background: #aaa;
-  }
+}
 
-  input[type=range]::-ms-track {
+input[type="range"]::-ms-track {
     background: transparent;
     cursor: grab;
     outline: 1px solid #ccc;
     width: 100%;
-  }
+}
 
-  input[type=range]::-ms-track:active {
+input[type="range"]::-ms-track:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-ms-track:hover {
+input[type="range"]::-ms-track:hover {
     background: #ccc;
-  }
+}
 
-  input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
     appearance: none;
     background: white;
     cursor: grab;
     height: 1em;
     width: 1em;
-  }
+}
 
-  input[type=range]::-moz-range-thumb:active {
+input[type="range"]::-moz-range-thumb:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-moz-range-thumb:hover {
+input[type="range"]::-moz-range-thumb:hover {
     background: #aaa;
-  }
+}
 
-  input[type=range]::-moz-range-track {
+input[type="range"]::-moz-range-track {
     cursor: grab;
     outline: 1px solid #ccc;
-  }
+}
 
-  input[type=range]::-moz-range-track:active {
+input[type="range"]::-moz-range-track:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-moz-range-track:hover {
+input[type="range"]::-moz-range-track:hover {
     background: #ccc;
-  }
+}
 
-  input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
     cursor: grab;
     outline: 1px solid #ccc;
-  }
+}
 
-  input[type=range]::-webkit-slider-runnable-track:active {
+input[type="range"]::-webkit-slider-runnable-track:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-webkit-slider-runnable-track:hover {
+input[type="range"]::-webkit-slider-runnable-track:hover {
     background: #ccc;
-  }
+}
 
-  input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     background: white;
     cursor: grab;
     height: 1em;
     width: 1em;
-  }
+}
 
-  input[type=range]::-webkit-slider-thumb:active {
+input[type="range"]::-webkit-slider-thumb:active {
     cursor: grabbing;
-  }
+}
 
-  input[type=range]::-webkit-slider-thumb:hover {
+input[type="range"]::-webkit-slider-thumb:hover {
     background: #aaa;
-  }
+}
 
-  main {
+main {
     display: flex;
     overflow: hidden;
-  }
+}
 
-  p {
+p {
     margin-top: 0;
-  }
+}
 
-  section {
+section {
     padding: 0 4em;
     overflow-y: scroll;
-  }
+}
 
-  /* noinspection CssUnusedSymbol */
-  .slider-wrap {
+/* noinspection CssUnusedSymbol */
+.slider-wrap {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 5em;
-  }
+}
 
-  #editor {
+#editor {
     height: 100%;
     width: 100%;
-  }
+}
 
-  #editor-container {
+#editor-container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     gap: 1em;
-  }
+}
 
-  #mixer {
+#mixer {
     align-items: center;
     background: var(--accent-color);
     display: none;
@@ -218,4 +218,4 @@
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 0.5em;
-  }
+}
