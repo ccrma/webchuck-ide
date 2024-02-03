@@ -46,7 +46,7 @@ export default class ProjectFile {
     setFilename(filename: string) {
         this.filename = filename;
     }
-    getData(): string {
+    getData(): string | Uint8Array {
         return this.data;
     }
     setData(data: string) {

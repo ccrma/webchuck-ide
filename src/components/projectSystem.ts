@@ -55,29 +55,49 @@ export default class ProjectSystem {
 
         ProjectSystem.fileExplorer =
             document.querySelector<HTMLDivElement>("#fileExplorer")!;
-        ProjectSystem.fileExplorerContainer = 
+        ProjectSystem.fileExplorerContainer =
             document.querySelector<HTMLDivElement>("#fileExplorerContainer")!;
         ProjectSystem.fileExplorerUploadPrompt =
-            document.querySelector<HTMLDivElement>("#fileExplorerUploadPrompt")!;
+            document.querySelector<HTMLDivElement>(
+                "#fileExplorerUploadPrompt"
+            )!;
         // drag and drop upload support
-        ProjectSystem.fileExplorerContainer.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-0", "opacity-100");
-        });
+        ProjectSystem.fileExplorerContainer.addEventListener(
+            "dragover",
+            (e) => {
+                e.preventDefault();
+                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                    "opacity-0",
+                    "opacity-100"
+                );
+            }
+        );
         // end drag
-        ProjectSystem.fileExplorerContainer.addEventListener("dragleave", (e) => {
-            e.preventDefault();
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
-        });
+        ProjectSystem.fileExplorerContainer.addEventListener(
+            "dragleave",
+            (e) => {
+                e.preventDefault();
+                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                    "opacity-100",
+                    "opacity-0"
+                );
+            }
+        );
         ProjectSystem.fileExplorerContainer.addEventListener("dragend", (e) => {
             e.preventDefault();
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                "opacity-100",
+                "opacity-0"
+            );
         });
         // drop
         ProjectSystem.fileExplorerContainer.addEventListener("drop", (e) => {
             e.preventDefault();
             ProjectSystem.dragUploadFiles(e);
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace("opacity-100", "opacity-0");
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                "opacity-100",
+                "opacity-0"
+            );
         });
 
         ProjectSystem.projectFiles = new Map();
