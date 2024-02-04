@@ -103,6 +103,10 @@ export default class ProjectSystem {
         ProjectSystem.projectFiles = new Map();
     }
 
+    static size(): number {
+        return ProjectSystem.projectFiles.size;
+    }
+
     /**
      * Create a new file and clear the editor
      */
