@@ -63,12 +63,13 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "hour",
         "day",
         "week",
+        "eon", 
         "dac",
         "adc",
         "blackhole",
     ],
 
-    typeKeywords: ["int", "float", "time", "dur", "void", "same"],
+    typeKeywords: ["int", "float", "time", "dur", "void", "vec3", "vec4", "complex", "polar"],
 
     operators: [
         "++",
@@ -102,6 +103,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "=>",
         "!=>",
         "=^",
+        "=v",
         "@=>",
         "+=>",
         "-=>",
@@ -203,6 +205,14 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             [/\/\*/, "comment", "@comment"],
             [/\/\/.*$/, "comment"],
         ],
+    },
+});
+
+// Register comment support for the new language
+monaco.languages.setLanguageConfiguration("chuck", {
+    comments: {
+        lineComment: "//",
+        blockComment: ["/*", "*/"],
     },
 });
 
