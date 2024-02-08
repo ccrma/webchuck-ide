@@ -7,7 +7,6 @@
 //-------------------------------------------------------------------
 
 import NavBar from "@/components/navbar/navbar";
-import Examples from "@/components/navbar/examples";
 import ChuckBar from "@components/chuckBar";
 import Editor from "@components/monaco/editor";
 import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
@@ -16,6 +15,8 @@ import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/projectSystem";
+import Examples from "@/components/navbar/examples/examples";
+import MoreExamples from "@/components/navbar/examples/moreExamples";
 
 import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
@@ -34,6 +35,7 @@ class Main {
     public static outputPanelHeader: OutputPanelHeader;
     public static console: Console;
     public static examples: Examples;
+    public static moreExamples: MoreExamples;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -53,6 +55,7 @@ class Main {
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
         Main.examples = new Examples();
+        Main.moreExamples = new MoreExamples();
     }
 
     init() {

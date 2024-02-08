@@ -11,7 +11,7 @@
     }
 }
 
-@keyframes leave-transition {
+@keyframes exit-transition {
     from {
         transform: scale(1);
         opacity: 1;
@@ -21,4 +21,12 @@
         transform: scale(0.95);
         opacity: 0;
     }
+}
+
+.enter-transition {
+    animation: enter-transition 0.1s ease-in-out forwards;
+}
+
+.exit-transition {
+    animation: leave-transition 0.1s ease-in-out forwards;
 }

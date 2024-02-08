@@ -8,6 +8,9 @@
  * @class DropdownElement
  */
 export default class DropdownElement {
+    public dropdownElement: HTMLLIElement;
+    public buttonElement: HTMLButtonElement;
+
     constructor(
         parent: HTMLUListElement,
         content: string,
@@ -26,8 +29,8 @@ export default class DropdownElement {
             "px-4",
             "py-2",
             "hover:bg-gray-50",
-            "dark:hover:bg-gray-600",
-            "dark:hover:text-light"
+            "dark:hover:bg-dark-5",
+            "disabled:opacity-50",
         );
         buttonElement.innerHTML = content;
 
@@ -37,5 +40,8 @@ export default class DropdownElement {
         });
 
         parent.appendChild(dropdownElement);
+
+        this.dropdownElement = dropdownElement;
+        this.buttonElement = buttonElement;
     }
 }

@@ -5,7 +5,7 @@ const exportWebchuckButton =
 const exportWebchuckCancel: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-cancel-btn")!;
 const exportDialog: HTMLDialogElement =
-    document.querySelector<HTMLDialogElement>("#export-modal")!;
+    document.querySelector<HTMLDialogElement>("#export-webchuck-modal")!;
 const exportBtn: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-btn")!;
 
