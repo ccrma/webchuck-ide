@@ -12,9 +12,8 @@
 import ProjectSystem from "@/components/projectSystem";
 import Examples from "./examples";
 import DropdownElement from "../dropdownElement";
-import * as JsSearch from 'js-search';
+import * as JsSearch from "js-search";
 import { fetchDataFile } from "@/utils/fileLoader";
-
 
 export default class MoreExamples {
     public static moreExamplesModal: HTMLDialogElement;
@@ -31,9 +30,12 @@ export default class MoreExamples {
 
     constructor() {
         // Create more examples button in examples navbar dropdown
-        const moreExamplesDropdownItem = Examples.newExample("More Examples...", () => {
-            MoreExamples.showMoreExamples();
-        });
+        const moreExamplesDropdownItem = Examples.newExample(
+            "More Examples...",
+            () => {
+                MoreExamples.showMoreExamples();
+            }
+        );
         moreExamplesDropdownItem.buttonElement.disabled = true;
 
         MoreExamples.moreExamplesModal =
@@ -41,17 +43,17 @@ export default class MoreExamples {
         MoreExamples.moreExamplesSearch =
             document.querySelector<HTMLInputElement>("#more-examples-search")!;
         MoreExamples.moreExamplesAutoComplete =
-            document.querySelector<HTMLInputElement>("#more-examples-autocomplete")!;
-        MoreExamples.moreExamplesAutoCompleteList
-            = document.querySelector<HTMLUListElement>("#autocomplete-list")!;
+            document.querySelector<HTMLInputElement>(
+                "#more-examples-autocomplete"
+            )!;
+        MoreExamples.moreExamplesAutoCompleteList =
+            document.querySelector<HTMLUListElement>("#autocomplete-list")!;
         MoreExamples.moreExamplesClose =
             document.querySelector<HTMLButtonElement>("#more-examples-close")!;
         MoreExamples.moreExamplesLoad =
             document.querySelector<HTMLButtonElement>("#more-examples-load")!;
 
         MoreExamples.initMoreExamples(moreExamplesDropdownItem);
-
-        MoreExamples.showMoreExamples();
     }
 
     /**
@@ -69,36 +71,52 @@ export default class MoreExamples {
                 moreExamplesDropdownItem.buttonElement.disabled = false;
                 // Process the data
                 MoreExamples.search = new JsSearch.Search("name");
-                MoreExamples.search.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
+                MoreExamples.search.indexStrategy =
+                    new JsSearch.AllSubstringsIndexStrategy();
                 MoreExamples.search.addIndex("name");
                 MoreExamples.search.addIndex("code");
                 // MoreExamples.search.addIndex("code");
-                MoreExamples.search.addDocuments(parseJSON(data));
+                MoreExamples.search.addDocuments(
+                    parseJSON(MoreExamples.moreExamplesJSON)
+                );
             });
 
         // More Examples Search
         MoreExamples.moreExamplesSearch.addEventListener("input", () => {
             MoreExamples.searchExamples(MoreExamples.moreExamplesSearch.value);
             if (!MoreExamples.autoCompleteVisible) {
-                MoreExamples.moreExamplesAutoComplete.classList.remove("hidden");
+                MoreExamples.moreExamplesAutoComplete.classList.remove(
+                    "hidden"
+                );
                 MoreExamples.autoCompleteVisible = true;
             }
         });
-        MoreExamples.moreExamplesSearch.addEventListener("click", (e: MouseEvent) => {
-            e.stopPropagation();
-            if (!MoreExamples.autoCompleteVisible) {
-                MoreExamples.moreExamplesAutoComplete.classList.remove("hidden");
-                MoreExamples.autoCompleteVisible = true;
+        MoreExamples.moreExamplesSearch.addEventListener(
+            "click",
+            (e: MouseEvent) => {
+                e.stopPropagation();
+                if (!MoreExamples.autoCompleteVisible) {
+                    MoreExamples.moreExamplesAutoComplete.classList.remove(
+                        "hidden"
+                    );
+                    MoreExamples.autoCompleteVisible = true;
+                }
             }
-        });
-        MoreExamples.moreExamplesModal.addEventListener("click", (e: MouseEvent) => {
-            e.stopPropagation();
-            if (MoreExamples.autoCompleteVisible) {
-                MoreExamples.moreExamplesAutoComplete.classList.add("hidden");
-                MoreExamples.autoCompleteVisible = false;
+        );
+        MoreExamples.moreExamplesModal.addEventListener(
+            "click",
+            (e: MouseEvent) => {
+                e.stopPropagation();
+                if (MoreExamples.autoCompleteVisible) {
+                    MoreExamples.moreExamplesAutoComplete.classList.add(
+                        "hidden"
+                    );
+                    MoreExamples.autoCompleteVisible = false;
+                }
+                e.target === MoreExamples.moreExamplesModal &&
+                    MoreExamples.hideMoreExamples();
             }
-            e.target === MoreExamples.moreExamplesModal && MoreExamples.hideMoreExamples();
-        });
+        );
 
         // Close Modal and Load Example Button
         MoreExamples.moreExamplesClose.addEventListener("click", () => {
@@ -131,8 +149,11 @@ export default class MoreExamples {
             const option = document.createElement("li");
             const name = document.createElement("b");
             const code = document.createElement("span");
-            name.innerHTML = highlightText(result.name, query); 
-            code.innerHTML = " - " + highlightText(focusCode(result.code, query), query) + "...";
+            name.innerHTML = highlightText(result.name, query);
+            code.innerHTML =
+                " - " +
+                highlightText(focusCode(result.code, query), query) +
+                "...";
             option.appendChild(name);
             option.appendChild(code);
             option.addEventListener("click", () => {
@@ -194,6 +215,12 @@ function focusCode(code: string, query: string): string {
     return code.slice(start, end);
 }
 
+/**
+ * Highlight text with query
+ * @param text text to find query in
+ * @param query query to highligh
+ * @returns highlighted text via span
+ */
 function highlightText(text: string, query: string): string {
-    return text.replace(query, `<span style="background-color: #FA3">${query}</span>`);
+    return text.replace(query, `<span class="highlight">${query}</span>`);
 }

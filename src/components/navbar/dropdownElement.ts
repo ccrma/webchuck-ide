@@ -30,7 +30,7 @@ export default class DropdownElement {
             "py-2",
             "hover:bg-gray-50",
             "dark:hover:bg-dark-5",
-            "disabled:opacity-50",
+            "disabled:opacity-50"
         );
         buttonElement.innerHTML = content;
 

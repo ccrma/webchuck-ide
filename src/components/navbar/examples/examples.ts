@@ -13,7 +13,6 @@ import ProjectSystem from "@components/projectSystem";
 import DropdownElement from "../dropdownElement";
 import NestedDropdown from "../nestedDropdown";
 
-
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;
     constructor() {

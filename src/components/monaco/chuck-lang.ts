@@ -63,13 +63,23 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "hour",
         "day",
         "week",
-        "eon", 
+        "eon",
         "dac",
         "adc",
         "blackhole",
     ],
 
-    typeKeywords: ["int", "float", "time", "dur", "void", "vec3", "vec4", "complex", "polar"],
+    typeKeywords: [
+        "int",
+        "float",
+        "time",
+        "dur",
+        "void",
+        "vec3",
+        "vec4",
+        "complex",
+        "polar",
+    ],
 
     operators: [
         "++",
