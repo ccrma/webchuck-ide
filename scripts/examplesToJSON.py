@@ -4,7 +4,7 @@ import json
 import re
 
 # TODO: Mini Audicle examples path here
-CHUCK_EXAMPLES_PATH= "CHANGE_ME_TO_YOUR_CHUCK_EXAMPLES_PATH"
+CHUCK_EXAMPLES_PATH= "/Users/terryfeng/Documents/research/chuck/chuck/examples"
 OUTPUT_JSON_FILE = "../public/examples/moreExamples.json"
 
 # Chuck examples Web URL
@@ -118,6 +118,7 @@ if __name__ == "__main__":
                             # read chuckExample again and convert file paths
                             examplesDict[parentDir].append({
                                 f: {
+                                    "name": f,
                                     "code": chuckExample,
                                     "data": data_urls
                                 }
@@ -125,6 +126,7 @@ if __name__ == "__main__":
                         else:
                             examplesDict[parentDir] = [{
                                 f: {
+                                    "name": f,
                                     "code": chuckExample,
                                     "data": data_urls
                                 }

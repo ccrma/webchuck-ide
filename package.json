@@ -11,6 +11,7 @@
         "format": "prettier --write src"
     },
     "devDependencies": {
+        "@types/js-search": "^1.4.4",
         "@typescript-eslint/eslint-plugin": "^6.19.0",
         "@typescript-eslint/parser": "^6.19.0",
         "autoprefixer": "^10.4.14",
@@ -22,6 +23,7 @@
         "vite": "^4.2.0"
     },
     "dependencies": {
+        "js-search": "^2.0.1",
         "monaco-editor": "^0.37.1",
         "monaco-vim": "^0.4.0",
         "webchuck": "github:ccrma/webchuck",
