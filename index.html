@@ -55,172 +55,174 @@
     text-base text-dark dark:text-light">
 
       <!-- NAVBAR -->
-      <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4">
+      <div id="navbarWrapper" class="w-full relative">
+        <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4 overflow-scroll">
 
-        <!-- Left -->
-        <div class="flex justify-left items-center">
-          <!-- ChucK Logo -->
-          <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank">
-            <img src="img/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
-          </a>
+          <!-- Left -->
+          <div class="flex justify-left items-center">
+            <!-- ChucK Logo -->
+            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank">
+              <img src="img/chuck-fat.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+            </a>
 
-          <!-- Nav Items -->
-          <div id="menuItems" class="text-dark dark:text-gray-300 w-full px-2 flex items-center">
+            <!-- Nav Items -->
+            <div id="menuItems" class="text-dark dark:text-gray-300 w-full px-2 flex items-center">
 
-            <!-- File -->
-            <div id="fileContainer" class="relative inline-block">
-              <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                File
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
-                </svg>
-              </button>
-              <div id="fileDropdown" class="hidden dropdown w-40">
-                <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <button id="newFile" type="button" class="dropdownItem">
-                      New
-                    </button>
-                  </li>
-                  <li>
-                    <input id="fileUploader" type="file" multiple hidden />
-                    <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" disabled>
-                      Upload Files
-                    </button>
-                  </li>
-                  <li>
-                    <button id="newProject" type="button" class="dropdownItem">
-                      New Project
-                    </button>
-                  </li>
-                  <li id="exportToContainer" class="relative">
-                    <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton">
-                      Export to
-                      <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="" stroke-linejoin="round" stroke-width="1.5" d="m1 9 4-4-4-4"/>
-                      </svg>
-                    </button>
-                    <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
-                      <ul class="py-2 text-base text-gray-700 dark:text-gray-200">
-                        <li>
-                          <button id="exportChuck" type="button" class="dropdownItem">
-                            ChucK
-                          </button>
-                        </li>
-                        <li>
-                          <button id="exportWebchuck" type="button" class="dropdownItem">
-                            WebChucK
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
+              <!-- File -->
+              <div id="fileContainer" class="inline-block">
+                <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  File
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="fileDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="newFile" type="button" class="dropdownItem">
+                        New
+                      </button>
+                    </li>
+                    <li>
+                      <input id="fileUploader" type="file" multiple hidden />
+                      <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" disabled>
+                        Upload Files
+                      </button>
+                    </li>
+                    <li>
+                      <button id="newProject" type="button" class="dropdownItem">
+                        New Project
+                      </button>
+                    </li>
+                    <li id="exportToContainer" class="relative">
+                      <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton">
+                        Export to
+                        <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                          <path stroke="currentColor" stroke-linecap="" stroke-linejoin="round" stroke-width="1.5" d="m1 9 4-4-4-4"/>
+                        </svg>
+                      </button>
+                      <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
+                        <ul class="py-2 text-base text-gray-700 dark:text-gray-200">
+                          <li>
+                            <button id="exportChuck" type="button" class="dropdownItem">
+                              ChucK
+                            </button>
+                          </li>
+                          <li>
+                            <button id="exportWebchuck" type="button" class="dropdownItem">
+                              WebChucK
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <!-- Edit -->
-            <div id="editContainer" class="relative inline-block">
-              <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Edit
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
-                </svg>
-              </button>
-              <div id="editDropdown" class="hidden dropdown w-40">
-                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <button id="vimToggle" type="button" class="dropdownItem">
-                      Vim Mode: Off
-                    </button>
-                  </li>
-                </ul>
+              <!-- Edit -->
+              <div id="editContainer" class="relative inline-block">
+                <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Edit
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="editDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="vimToggle" type="button" class="dropdownItem">
+                        Vim Mode: Off
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <!-- View  -->
-            <div id="viewContainer" class="relative inline-block">
-              <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                View
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
-                </svg>
-              </button>
-              <div id="viewDropdown" class="hidden dropdown w-40">
-                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <button id="darkModeToggle" type="button" class="dropdownItem">
-                      Dark Mode: Off
-                    </button>
-                  </li>
-                  <li>
-                    <button id="chuckNowToggle" type="button" class="dropdownItem">
-                      ChucK Time: Off
-                    </button>
-                  </li>
-                </ul>
+              <!-- View  -->
+              <div id="viewContainer" class="relative inline-block">
+                <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  View
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="viewDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="darkModeToggle" type="button" class="dropdownItem">
+                        Dark Mode: Off
+                      </button>
+                    </li>
+                    <li>
+                      <button id="chuckNowToggle" type="button" class="dropdownItem">
+                        ChucK Time: Off
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <!-- Examples -->
-            <div id="examplesContainer" class="relative inline-block">
-              <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Examples
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
-                </svg>
-              </button>
-              <div id="examplesDropdown" class="hidden dropdown w-48">
-                <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                </ul>
+              <!-- Examples -->
+              <div id="examplesContainer" class="relative inline-block">
+                <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Examples
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="examplesDropdown" class="hidden dropdown w-48">
+                  <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  </ul>
+                </div>
               </div>
-            </div>
-            <!-- Help -->
-            <div id="helpContainer" class="relative inline-block">
-              <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
-                Help
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
-                </svg>
-              </button>
-              <div id="helpDropdown" class="hidden dropdown w-48">
-                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">ChucK Reference</a>
-                  </li>
-                  <li>
-                    <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
-                  </li>
+              <!-- Help -->
+              <div id="helpContainer" class="relative inline-block">
+                <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Help
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="helpDropdown" class="hidden dropdown w-48">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">ChucK Reference</a>
+                    </li>
+                    <li>
+                      <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
+                    </li>
 
-                  <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
-                  <li>
-                    <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github Repo</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Report an Issue</a>
-                  </li>
+                    <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
+                    <li>
+                      <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github Repo</a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Report an Issue</a>
+                    </li>
 
-                  <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
-                  <li>
-                    <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Learn WebChucK</a>
-                  </li>
-                  <li>
-                    <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join ChucK Discord</a>
-                  </li>
-                </ul>
+                    <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
+                    <li>
+                      <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Learn WebChucK</a>
+                    </li>
+                    <li>
+                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Join ChucK Discord</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Right -->
-        <!-- More Menu Button-->
-        <div class="flex justify-right items-center text-blue-600 dark:text-blue-200">
-          <!-- <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
-            <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
-              <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
-            </svg>
-          </button> -->
-          <b>(Beta) WebChucK IDE <em class="text-3xl">2</em></b>
-        </div>
-      </nav>
+          <!-- Right -->
+          <!-- More Menu Button-->
+          <div class="flex justify-right items-center text-blue-600 dark:text-blue-200">
+            <!-- <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
+              <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
+                <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
+              </svg>
+            </button> -->
+            <b class="w-48">(Beta) WebChucK IDE <em class="text-3xl">2</em></b>
+          </div>
+        </nav>
+      </div>
 
 
       <!-- CHUCK BAR -->
