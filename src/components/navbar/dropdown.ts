@@ -28,8 +28,9 @@ export default class Dropdown {
         this.dropdown = dropdown;
 
         // Open and Close
-        this.button.addEventListener("click", (event: MouseEvent) => {
-            event?.stopPropagation();
+        this.button.addEventListener("click", (/* event: MouseEvent */) => {
+            // TODO: Fix this, shouldn't need to stop propagation
+            // event?.stopPropagation();
             if (currentDropdown && currentDropdown !== this) {
                 currentDropdown.close();
             }

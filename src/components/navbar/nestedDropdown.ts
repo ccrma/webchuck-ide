@@ -1,3 +1,5 @@
+let currentNestedDropdown: NestedDropdown | null = null;
+
 /**
  * Nested Dropdown Class
  * @class Dropdown
@@ -29,17 +31,26 @@ export default class NestedDropdown {
         this.button = button;
         this.dropdown = dropdown;
 
-        // // Click interactions for dropdown
+        // Click interactions for dropdown
         this.button.addEventListener("click", (event: MouseEvent) => {
             event?.stopPropagation();
+            if (currentNestedDropdown && currentNestedDropdown !== this) {
+                currentNestedDropdown.close();
+            }
             this.toggle();
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            currentNestedDropdown = this;
         });
 
-        // document.addEventListener("click", (event: MouseEvent) => {
-        //     if (!this.dropdown.contains(event.target as Node)) {
-        //         this.close();
-        //     }
-        // });
+        // If click outside of dropdown, close it
+        document.addEventListener("click", (event: MouseEvent) => {
+            if (
+                !this.button.contains(event.target as Node) &&
+                !this.container.contains(event.target as Node)
+            ) {
+                this.close();
+            }
+        });
 
         // Hover interactions for dropdown
         // if is touch device, don't add hover event
