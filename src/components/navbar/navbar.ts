@@ -21,8 +21,10 @@ export default class NavBar {
     public static HelpDropdown: Dropdown;
 
     public static ExportToNestedDropdown: NestedDropdown;
+    public static navbar: HTMLDivElement;
 
     constructor() {
+        NavBar.navbar = document.querySelector<HTMLDivElement>("#navbar")!;
         NavBar.buildDropdowns();
         NavBar.buildNestedDropdowns();
     }

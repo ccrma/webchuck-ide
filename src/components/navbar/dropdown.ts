@@ -1,3 +1,5 @@
+import NavBar from "./navbar";
+
 // Keep track of current open dropdown
 let currentDropdown: Dropdown | null = null;
 
@@ -25,11 +27,18 @@ export default class Dropdown {
         this.button = button;
         this.dropdown = dropdown;
 
+        // Open and Close
         this.button.addEventListener("click", (event: MouseEvent) => {
             event?.stopPropagation();
             if (currentDropdown && currentDropdown !== this) {
                 currentDropdown.close();
             }
+            // Get the position of the button
+            const pos = this.button.getBoundingClientRect();
+            // Set the position of the dropdown relative to the button
+            this.dropdown.style.left = `${pos.left}px`;
+            this.dropdown.style.top = `${pos.bottom}px`;
+
             this.toggle();
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             currentDropdown = this;
@@ -53,6 +62,13 @@ export default class Dropdown {
             ) {
                 this.close();
             }
+        });
+
+        // Move the dropdown when navbar scrolls
+        NavBar.navbar.addEventListener("scroll", () => {
+            const pos = this.button.getBoundingClientRect();
+            this.dropdown.style.left = `${pos.left}px`;
+            this.dropdown.style.top = `${pos.bottom}px`;
         });
     }
 

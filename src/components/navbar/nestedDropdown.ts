@@ -42,10 +42,14 @@ export default class NestedDropdown {
         // });
 
         // Hover interactions for dropdown
-        this.container.addEventListener("mouseenter", () => {
+        // if is touch device, don't add hover event
+        if ("ontouchstart" in window) return;
+        this.container.addEventListener("mouseenter", (event: MouseEvent) => {
+            event?.stopPropagation();
             this.toggle();
         });
-        this.container.addEventListener("mouseleave", () => {
+        this.container.addEventListener("mouseleave", (event: MouseEvent) => {
+            event?.stopPropagation();
             this.close();
         });
     }
