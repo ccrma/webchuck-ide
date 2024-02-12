@@ -353,7 +353,6 @@ export default class ProjectSystem {
      * @param event file drag event
      */
     static dragUploadFiles(event: DragEvent) {
-        console.log("File(s) dropped");
         if (event.dataTransfer == null) {
             return;
         }

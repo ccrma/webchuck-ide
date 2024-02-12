@@ -15,7 +15,6 @@ import DropdownElement from "../dropdownElement";
 import * as JsSearch from "js-search";
 import { fetchDataFile } from "@/utils/fileLoader";
 
-
 // JSON Structure
 interface MoreExamplesJSON {
     [key: string]: Array<string | Record<string, ChuckExample>>;
@@ -29,8 +28,6 @@ interface ChuckExample {
 // SVGS for breadcrumbs
 const HOME_SVG = `<svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"> <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/> </svg>`;
 const ARROW_SVG = `<svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"></path> </svg>`;
-
-
 
 export default class MoreExamples {
     public static moreExamplesModal: HTMLDialogElement;
@@ -74,14 +71,20 @@ export default class MoreExamples {
             document.querySelector<HTMLUListElement>("#autocomplete-list")!;
         // Explorer
         MoreExamples.moreExamplesBreadCrumbs =
-            document.querySelector<HTMLOListElement>("#more-examples-breadcrumbs")!;
+            document.querySelector<HTMLOListElement>(
+                "#more-examples-breadcrumbs"
+            )!;
         MoreExamples.moreExamplesExplorer =
             document.querySelector<HTMLDivElement>("#more-examples-explorer")!;
         // Preview
         MoreExamples.moreExamplesPreviewName =
-            document.querySelector<HTMLSpanElement>("#more-examples-preview-name")!;
+            document.querySelector<HTMLSpanElement>(
+                "#more-examples-preview-name"
+            )!;
         MoreExamples.moreExamplesPreviewCode =
-            document.querySelector<HTMLPreElement>("#more-examples-preview-code")!;
+            document.querySelector<HTMLPreElement>(
+                "#more-examples-preview-code"
+            )!;
 
         MoreExamples.moreExamplesClose =
             document.querySelector<HTMLButtonElement>("#more-examples-close")!;
@@ -196,7 +199,7 @@ export default class MoreExamples {
             option.appendChild(name);
             option.appendChild(code);
             option.addEventListener("click", (event: MouseEvent) => {
-                event.stopPropagation(); 
+                event.stopPropagation();
                 MoreExamples.setPreview(result);
             });
             autoComplete.appendChild(option);
@@ -213,14 +216,19 @@ export default class MoreExamples {
         // Update BreadCrumbs
         if (MoreExamples.breadCrumbPath.includes(folder)) {
             // if folder is in breadcrumbPath, remove all elements after folder
-            MoreExamples.breadCrumbPath = MoreExamples.breadCrumbPath.slice(0, MoreExamples.breadCrumbPath.indexOf(folder) + 1);
+            MoreExamples.breadCrumbPath = MoreExamples.breadCrumbPath.slice(
+                0,
+                MoreExamples.breadCrumbPath.indexOf(folder) + 1
+            );
         } else {
             MoreExamples.breadCrumbPath.push(folder); // push
         }
         MoreExamples.renderBreadCrumbs();
         // Update Explorer
         const folders = contents.folders.sort();
-        const files = contents.files.sort((a, b) => a.name.localeCompare(b.name));
+        const files = contents.files.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
         // Render the folders and files
         MoreExamples.moreExamplesExplorer.innerHTML = "";
         for (let i = 0; i < folders.length; i++) {
@@ -254,7 +262,7 @@ export default class MoreExamples {
                 });
                 item.appendChild(button);
             } else if (i < MoreExamples.breadCrumbPath.length - 1) {
-                // Middle items 
+                // Middle items
                 console.log(MoreExamples.breadCrumbPath[i]);
                 const div = document.createElement("div");
                 div.classList.add("flex", "items-center");
@@ -289,11 +297,13 @@ export default class MoreExamples {
     // FILE EXPLORER
     //-----------------------------------------------------------
     /**
-     * Use path list to retrieve list of files/folders from JSON object 
+     * Use path list to retrieve list of files/folders from JSON object
      * @returns {Object} Object with two lists, folders and files
      */
-    static retrieveFolderContents(folder: string): { "folders": string[], "files": ChuckExample[]}
-    {
+    static retrieveFolderContents(folder: string): {
+        folders: string[];
+        files: ChuckExample[];
+    } {
         const contents = MoreExamples.moreExamplesJSON[folder];
         const folders: string[] = [];
         const files: ChuckExample[] = [];
@@ -307,12 +317,12 @@ export default class MoreExamples {
             }
         }
 
-        return { "folders": folders, "files": files };
+        return { folders: folders, files: files };
     }
 
     /**
      * Create an item in the file explorer
-     * @param item item name 
+     * @param item item name
      * @param isFolder is a folder or .ck file
      */
     static createExplorerFolder(name: string) {
@@ -342,19 +352,21 @@ export default class MoreExamples {
      * Preview an example
      * @param example chuck example
      */
-    static setPreview(example: {"name": string, "code": string, "data": string[]}) {
+    static setPreview(example: { name: string; code: string; data: string[] }) {
         MoreExamples.previewExample = example;
         // Set the preview name and code
         MoreExamples.moreExamplesPreviewName.innerHTML = example.name;
         MoreExamples.moreExamplesPreviewCode.innerHTML = example.code;
     }
 
-
     /**
      * Load example from preview into editor
      */
     static loadExample() {
-        ProjectSystem.addNewFile(MoreExamples.previewExample.name, MoreExamples.previewExample.code);
+        ProjectSystem.addNewFile(
+            MoreExamples.previewExample.name,
+            MoreExamples.previewExample.code
+        );
         MoreExamples.previewExample.data.forEach(async (url: string) => {
             const file = await fetchDataFile(url);
             ProjectSystem.addNewFile(file.name, file.data);

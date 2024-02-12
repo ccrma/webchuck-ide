@@ -1,4 +1,3 @@
-import Editor from "@/components/monaco/editor";
 import NavBar from "@/components/navbar/navbar";
 import ProjectSystem from "@components/projectSystem";
 import JSZip from "jszip";
