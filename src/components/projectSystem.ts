@@ -151,8 +151,15 @@ export default class ProjectSystem {
     }
 
     /**
-     * TODO: abstract ProjectSystem to a class
-     * UI update function to add a file to the file explorer
+     * Update the active file in the editor
+     * @param data data to update the active file with
+     */
+    static updateActiveFile(data: string) {
+        ProjectSystem.activeFile.setData(data);
+    }
+
+    /**
+     * Add a file to the file explorer UI in the IDE
      * @param filename Add a file to the file explorer
      */
     static addFileToExplorer(projectFile: ProjectFile) {
@@ -331,6 +338,14 @@ export default class ProjectSystem {
                 reader.readAsArrayBuffer(file);
             }
         }
+    }
+
+    /**
+     * Get the project files
+     * @returns the project files
+     */
+    static getProjectFiles(): ProjectFile[] {
+        return Array.from(ProjectSystem.projectFiles.values());
     }
 
     /**

@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "js-search": "^2.0.1",
+        "jszip": "^3.10.1",
         "monaco-editor": "^0.37.1",
         "monaco-vim": "^0.4.0",
         "webchuck": "github:ccrma/webchuck",

@@ -27,7 +27,7 @@ export default class ProjectFile {
     loadFile() {
         if (!this.active && this.isPlaintext) {
             Editor.setFileName(this.filename);
-            // TODO: Set Editor Language
+            // TODO: Set Monaco Editor Language (js, html etc.)
             Editor.setEditorCode(this.data as string);
             this.active = true;
         }
@@ -35,7 +35,7 @@ export default class ProjectFile {
     unloadFile() {
         if (this.active) {
             this.data = Editor.getEditorCode();
-            // TODO: save data to file system
+            // TODO: save data to file system (future indexDB)
             this.active = false;
         }
     }

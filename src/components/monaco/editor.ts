@@ -46,7 +46,7 @@ export default class Editor {
             },
             model: editorConfig,
             theme: "miniAudicleLight",
-            // TODO: change this to false
+            // TODO: change automaticLayout to false
             // For some reason, monaco height can't be resized to smaller, doesn't respond
             // This trick temp fixes it but is really slow
             automaticLayout: true,
@@ -57,8 +57,9 @@ export default class Editor {
 
         // Editor autosave config
         Editor.loadAutoSave();
-        // When the editor is changed, save the code to local storage
+        // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
+            ProjectSystem.updateActiveFile(Editor.getEditorCode());
             Editor.saveCode();
         });
 

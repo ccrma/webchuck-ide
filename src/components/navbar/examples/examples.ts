@@ -152,7 +152,6 @@ export default class Examples {
  */
 export async function loadExample(url: string): Promise<void> {
     const example: File = await fetchTextFile(url);
-    // TODO: create a new file in the file system
     ProjectSystem.addNewFile(example.name, example.data as string);
     Console.print(`Loaded ChucK file: ${example.name}`);
 }
