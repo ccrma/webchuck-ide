@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 /* WEBCHUCK IDE LAYOUT */
-#navbar {
+#navbarWrapper {
     grid-area: nav;
     user-select: none;
     -webkit-touch-callout: none;
@@ -139,6 +139,19 @@
     @apply bg-orange-light;
 }
 
+.breadcrumb-item {
+    @apply inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400;
+}
+.breadcrumb-item.hover {
+    @apply hover:text-orange;
+}
+
+.explorer-item {
+    @apply px-3 py-2 cursor-pointer text-lg rounded-lg text-orange-dark dark:text-orange hover:bg-opacity-50 hover:bg-sky-blue-100 dark:hover:bg-dark-5;
+}
+.explorer-item.folder {
+    @apply font-semibold;
+}
 /* CHUCK BAR */
 #chuck-bar .chuck-button {
     @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 transition duration-300;
@@ -255,7 +268,7 @@ td:nth-child(4) {
     @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
 }
 .toggle-button.active {
-    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400 rounded transition-all disabled:opacity-50;
+    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
 }
 
 /* HID CONTAINER */
@@ -275,11 +288,11 @@ td:nth-child(4) {
 
 /* MISC. COMPONENTS */
 .button.primary {
-    @apply bg-orange hover:bg-orange-light px-2 py-1 text-white transition rounded;
+    @apply bg-orange hover:bg-orange-light px-3 py-1.5 text-white transition rounded-lg;
 }
 
 .button.secondary {
-    @apply hover:text-orange-light px-2 py-1 rounded text-orange transition;
+    @apply hover:text-orange-light px-3 py-1.5 rounded-lg text-orange transition;
 }
 
 dialog {
@@ -289,7 +302,7 @@ dialog::backdrop {
     @apply bg-white bg-opacity-50;
 }
 .modal {
-    @apply w-full px-8 py-6 rounded dark:bg-dark dark:text-white;
+    @apply w-full px-8 py-6 rounded-lg dark:bg-dark dark:text-white;
     max-height: 75vh;
     max-width: 640px;
     animation: enter-transition 0.1s ease-in-out forwards;
