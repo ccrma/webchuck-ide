@@ -65,14 +65,14 @@ export default class Visualizer {
     drawWaveform_(width: number, height: number) {
         this.analyserNode.getFloatTimeDomainData(this.waveformData);
         const size: number = this.waveformData.length;
-        // Draw twice the width of the canvas
+        // Draw twice the width to make the waveform more visible
         const increment: number = (width * 2.0) / size;
         this.context2D.beginPath();
         // Find the first zero-crossing where the next value is positive
         let i = 0;
         while (
             i < size - 1 &&
-            !(this.waveformData[i] >= 0 && this.waveformData[i + 1] < 0)
+            !(this.waveformData[i] < 0 && this.waveformData[i + 1] >= 0)
         ) {
             ++i;
         }
@@ -83,7 +83,7 @@ export default class Visualizer {
             const index = i % size;
             this.context2D.lineTo(
                 x,
-                (this.waveformData[index] * 0.5 + 0.5) * height
+                (-this.waveformData[index] * 0.5 + 0.5) * height
             );
         }
         this.context2D.strokeStyle = this.waveformColor;
