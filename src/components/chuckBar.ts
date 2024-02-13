@@ -18,6 +18,10 @@ import { theChuck, startChuck, connectMic } from "@/host";
 import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 
+// detect operating system
+const isWindows = navigator.platform.indexOf("Win") !== -1;
+const metaKey = isWindows ? "Ctrl" : "⌘";
+
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
     public static micButton: HTMLButtonElement;
@@ -39,6 +43,13 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
         ChuckBar.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
+
+        // Add tooltips
+        ChuckBar.webchuckButton.title = `Start ChucK VM [${metaKey} + .]`;
+        ChuckBar.micButton.title = `Connect Microphone`;
+        ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
+        ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
+        ChuckBar.removeButton.title = `Remove [${metaKey} + ⌫]`;
 
         // Add button event listeners
         ChuckBar.webchuckButton.addEventListener("click", async () => {
