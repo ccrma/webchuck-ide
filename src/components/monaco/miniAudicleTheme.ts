@@ -13,12 +13,16 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
             foreground: "0000FF",
         },
         {
+            token: "type",
+            foreground: "A200EC",
+        },
+        {
             token: "event",
             foreground: "800023",
         },
         {
             token: "library",
-            foreground: "A200EC",
+            foreground: "800023",
         },
         {
             token: "comment",
@@ -38,4 +42,40 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
     },
 };
 
-export { miniAudicleLight };
+const miniAudicleDark: monaco.editor.IStandaloneThemeData = {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+        // {
+        //     token: "keyword",
+        //     foreground: "9999ff",
+        // },
+        {
+            token: "type",
+            foreground: "d07ff5",
+        },
+        {
+            token: "event",
+            foreground: "800023",
+        },
+        {
+            token: "library",
+            foreground: "a64c65",
+        },
+        // {
+        //     token: "comment",
+        //     foreground: "609010",
+        // },
+        // {
+        //     token: "string",
+        //     foreground: "a0a0a0",
+        // },
+        {
+            token: "number",
+            foreground: "E49020",
+        },
+    ],
+    colors: {},
+};
+
+export { miniAudicleLight, miniAudicleDark };

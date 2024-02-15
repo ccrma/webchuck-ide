@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 
 import { monaco } from "./monacoLite";
-import chuck_modules from "./chuck-modules";
+import { chuck_modules, chuck_libraries }  from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
 
 // Documentation Type for ckdoc
@@ -79,6 +79,11 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "vec4",
         "complex",
         "polar",
+        "string"
+    ],
+
+    library: [
+        "Object", "Event", "Shred", "Math", "Machine", "Std"
     ],
 
     operators: [
@@ -131,6 +136,8 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "<-",
     ],
 
+    ugens: chuck_modules,
+
     // we include these common regular expressions
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
 
@@ -141,6 +148,17 @@ monaco.languages.setMonarchTokensProvider("chuck", {
     // The main tokenizer for our languages
     tokenizer: {
         root: [
+            // Libraries
+            [
+                new RegExp(`(?:${chuck_libraries.join("|")})`),
+                {
+                    cases: {
+                        "@library": "library",
+                    },
+                },
+            ],
+
+
             // identifiers and keywords
             [
                 /[a-z_$][\w$]*/,

@@ -12,7 +12,7 @@ import ChuckBar from "@components/chuckBar";
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
-import { miniAudicleLight } from "./miniAudicleTheme";
+import { miniAudicleLight, miniAudicleDark } from "./miniAudicleTheme";
 import EditorPanelHeader from "@components/panelHeader/editorPanelHeader";
 import Console from "@components/console";
 import ProjectSystem from "../projectSystem";
@@ -24,6 +24,7 @@ const VIM_STATUS_HEIGHT: string = "1.75rem";
 
 // Define editor themes
 monaco.editor.defineTheme("miniAudicleLight", miniAudicleLight);
+monaco.editor.defineTheme("miniAudicleDark", miniAudicleDark);
 
 export default class Editor {
     // Private variables
@@ -45,7 +46,7 @@ export default class Editor {
                 enabled: false,
             },
             model: editorConfig,
-            theme: "miniAudicleLight",
+            theme: localStorage.theme === "dark" ? "miniAudicleDark" : "miniAudicleLight",
             // TODO: change automaticLayout to false
             // For some reason, monaco height can't be resized to smaller, doesn't respond
             // This trick temp fixes it but is really slow
@@ -126,6 +127,15 @@ export default class Editor {
      */
     static resizeEditor() {
         Editor.editor?.layout();
+    }
+
+    /**
+     * Set the editor theme
+     */
+    static setTheme(dark: boolean) {
+        Editor.editor?.updateOptions({
+            theme: dark ? "miniAudicleDark" : "miniAudicleLight",
+        });
     }
 
     /**

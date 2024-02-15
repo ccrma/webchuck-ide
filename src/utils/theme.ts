@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------
 
 import Console from "@/components/console";
+import Editor from "@/components/monaco/editor";
 import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;
@@ -36,15 +37,19 @@ export function setColorScheme() {
         (!("theme" in localStorage) &&
             window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
+        // Dark theme
         document.documentElement.classList.add("dark");
         Console.setDarkTheme();
         visual?.theme(true);
+        Editor.setTheme(true);
         darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
+        // Light theme
         document.documentElement.classList.remove("dark");
         Console.setLightTheme();
         visual?.theme(false);
         darkModeToggle.innerHTML = "Dark Mode: Off";
+        Editor.setTheme(false);
     }
 }
 
