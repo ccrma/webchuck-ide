@@ -186,6 +186,8 @@ export default class Editor {
      * @param code code to replace in the editor
      */
     public static setEditorCode(code: string) {
+        Editor.editor.setScrollTop(0);
+        Editor.editor.setPosition({ lineNumber: 1, column: 1 });
         Editor.editor.setValue(code);
     }
 

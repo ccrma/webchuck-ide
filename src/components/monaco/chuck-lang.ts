@@ -193,7 +193,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             // Note: message are supressed during the first load -- change some lines to see them.
             [
                 /@\s*[a-zA-Z_\$][\w\$]*/,
-                { token: "annotation", log: "annotation token: $0" },
+                { token: "annotation" },
             ],
 
             // numbers

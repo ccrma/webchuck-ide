@@ -159,7 +159,7 @@
 
 /* FILE EXPLORER */
 #fileExplorerContainer {
-    @apply h-full w-full;
+    @apply relative h-full w-full;
 }
 #fileExplorerUploadPrompt {
     @apply absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 dark:bg-opacity-20 transition;
