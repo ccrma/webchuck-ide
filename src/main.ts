@@ -17,6 +17,7 @@ import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/projectSystem";
 import Examples from "@/components/navbar/examples/examples";
 import MoreExamples from "@/components/navbar/examples/moreExamples";
+import GUI from "@/components/gui/gui";
 
 import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
@@ -36,6 +37,7 @@ class Main {
     public static console: Console;
     public static examples: Examples;
     public static moreExamples: MoreExamples;
+    public static GUI: GUI;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -56,6 +58,7 @@ class Main {
         );
         Main.examples = new Examples();
         Main.moreExamples = new MoreExamples();
+        Main.GUI = new GUI();
     }
 
     init() {
@@ -108,6 +111,12 @@ class Main {
             if ((e.metaKey || e.ctrlKey) && e.key === "Backspace") {
                 e.preventDefault();
                 ChuckBar.removeCode();
+            }
+
+            // cmd + s or ctrl + s
+            if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+                e.preventDefault();
+                GUI.buildGUI();
             }
         });
     }

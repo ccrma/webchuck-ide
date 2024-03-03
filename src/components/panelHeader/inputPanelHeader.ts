@@ -1,4 +1,5 @@
 import InputHeaderToggle from "@components/toggle/inputHeaderToggle";
+import GUI from "@components/gui/gui";
 import { openInputPanel } from "@/utils/appLayout";
 
 export default class InputPanelHeader {
@@ -60,5 +61,8 @@ export default class InputPanelHeader {
             openInputPanel(true);
             InputPanelHeader.activeToggleIndex = newToggleIndex;
         }
+
+        // Resize GUI
+        GUI.onResize();
     }
 }

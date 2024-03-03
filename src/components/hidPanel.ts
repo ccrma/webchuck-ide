@@ -1,6 +1,9 @@
 import { HID } from "webchuck";
 import ButtonToggle from "@/components/toggle/buttonToggle";
 
+// Constants
+const MAX_ELEMENTS = 5;
+
 // Document elements
 const mouseButton =
     document.querySelector<HTMLButtonElement>("#mouseHIDButton")!;
@@ -110,8 +113,8 @@ function logEvent(message: string) {
 
     hidLog.appendChild(logEntry);
 
-    // Remove excess entries, keeping only the last 5
-    while (hidLog.children.length > 5) {
+    // Remove excess entries
+    while (hidLog.children.length > MAX_ELEMENTS) {
         hidLog.removeChild(hidLog.children[0]);
     }
 

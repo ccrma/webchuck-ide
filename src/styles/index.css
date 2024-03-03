@@ -271,6 +271,11 @@ td:nth-child(4) {
     @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
 }
 
+/* GUI PANEL */
+#GUIPanel {
+    cursor: pointer;
+}
+
 /* HID CONTAINER */
 #hidLog {
     @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-gray-300 rounded-lg bg-white dark:bg-dark dark:border-gray-700;
