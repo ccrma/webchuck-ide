@@ -7,11 +7,11 @@
 // date:   January 2024
 //---------------------------------------------------------
 import {
-    accentColorClass,
-    darkHoverColorClass,
-    darkTextColorClass,
-    hoverColorClass,
-    textColorClass,
+    ACCENT_COLOR_CLASS,
+    DARK_HOVER_COLOR_CLASS,
+    DARK_TEXT_HOVER_CLASS,
+    HOVER_COLOR_CLASS,
+    TEXT_COLOR_CLASS,
 } from "@/utils/theme";
 import HeaderToggle from "./headerToggle";
 import InputPanelHeader from "../panelHeader/inputPanelHeader";
@@ -40,22 +40,22 @@ export default class InputHeaderToggle extends HeaderToggle {
         if (open) {
             // active
             this.button.classList.add("underline");
-            this.button.classList.add(accentColorClass);
-            this.button.classList.remove(textColorClass);
-            this.button.classList.remove(hoverColorClass);
-            this.button.classList.remove(darkTextColorClass);
-            this.button.classList.remove(darkHoverColorClass);
+            this.button.classList.add(ACCENT_COLOR_CLASS);
+            this.button.classList.remove(TEXT_COLOR_CLASS);
+            this.button.classList.remove(HOVER_COLOR_CLASS);
+            this.button.classList.remove(DARK_TEXT_HOVER_CLASS);
+            this.button.classList.remove(DARK_HOVER_COLOR_CLASS);
             this.contentContainer.classList.remove("hidden");
 
             this.open = true;
         } else {
             // inactive
             this.button.classList.remove("underline");
-            this.button.classList.remove(accentColorClass);
-            this.button.classList.add(textColorClass);
-            this.button.classList.add(hoverColorClass);
-            this.button.classList.add(darkTextColorClass);
-            this.button.classList.add(darkHoverColorClass);
+            this.button.classList.remove(ACCENT_COLOR_CLASS);
+            this.button.classList.add(TEXT_COLOR_CLASS);
+            this.button.classList.add(HOVER_COLOR_CLASS);
+            this.button.classList.add(DARK_TEXT_HOVER_CLASS);
+            this.button.classList.add(DARK_HOVER_COLOR_CLASS);
             this.contentContainer.classList.add("hidden");
 
             this.open = false;

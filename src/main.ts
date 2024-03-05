@@ -78,6 +78,8 @@ class Main {
         // Init WebChucK
         window.addEventListener("load", async () => {
             await initChuck();
+            // TODO: Remove this line
+            document.getElementById("GUITab")?.click();
         });
     }
 
@@ -109,6 +111,15 @@ class Main {
                 e.preventDefault();
                 ChuckBar.removeCode();
             }
+<<<<<<< Updated upstream
+=======
+
+            // cmd + s or ctrl + s
+            if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+                e.preventDefault();
+                GUI.generateGUI();
+            }
+>>>>>>> Stashed changes
         });
     }
 }

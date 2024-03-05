@@ -83,7 +83,9 @@ export default class Editor {
 
         // VimMode.Vim.defineEx(name, shorthand, callback);
         VimMode.Vim.defineEx("write", "w", function () {
+            ProjectSystem.updateActiveFile(Editor.getEditorCode());
             Editor.saveCode();
+            GUI.generateGUI();
         });
         // Keybindings
         this.initMonacoKeyBindings();
@@ -170,6 +172,16 @@ export default class Editor {
                 if (ChuckBar.running) ChuckBar.removeCode();
             }
         );
+<<<<<<< Updated upstream
+=======
+
+        Editor.editor.addCommand(
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+            () => {
+                GUI.generateGUI();
+            }
+        );
+>>>>>>> Stashed changes
     }
 
     /**

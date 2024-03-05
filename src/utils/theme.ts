@@ -6,25 +6,26 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import Console from "@/components/console";
-import Editor from "@/components/monaco/editor";
+import Console from "@components/console";
+import GUI from "@components/gui/gui";
+import Editor from "@components/monaco/editor";
 import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;
 
 /* Header Theme */
-const accentColorClass: string = "text-orange";
-const textColorClass: string = "text-dark-5";
-const hoverColorClass: string = "hover:text-dark-8";
-const darkTextColorClass: string = "dark:text-dark-a";
-const darkHoverColorClass: string = "dark:hover:text-dark-c";
+const ACCENT_COLOR_CLASS: string = "text-orange";
+const TEXT_COLOR_CLASS: string = "text-dark-5";
+const HOVER_COLOR_CLASS: string = "hover:text-dark-8";
+const DARK_TEXT_HOVER_CLASS: string = "dark:text-dark-a";
+const DARK_HOVER_COLOR_CLASS: string = "dark:hover:text-dark-c";
 
 export {
-    accentColorClass,
-    textColorClass,
-    hoverColorClass,
-    darkTextColorClass,
-    darkHoverColorClass,
+    ACCENT_COLOR_CLASS,
+    TEXT_COLOR_CLASS,
+    HOVER_COLOR_CLASS,
+    DARK_TEXT_HOVER_CLASS,
+    DARK_HOVER_COLOR_CLASS,
 };
 
 /**
@@ -42,14 +43,16 @@ export function setColorScheme() {
         Console.setDarkTheme();
         visual?.theme(true);
         Editor.setTheme(true);
+        GUI.setTheme(true);
         darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
         // Light theme
         document.documentElement.classList.remove("dark");
         Console.setLightTheme();
         visual?.theme(false);
-        darkModeToggle.innerHTML = "Dark Mode: Off";
         Editor.setTheme(false);
+        GUI.setTheme(false);
+        darkModeToggle.innerHTML = "Dark Mode: Off";
     }
 }
 
