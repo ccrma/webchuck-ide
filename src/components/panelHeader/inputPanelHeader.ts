@@ -1,5 +1,6 @@
 import InputHeaderToggle from "@components/toggle/inputHeaderToggle";
 import { openInputPanel } from "@/utils/appLayout";
+import GUI from "@components/gui/gui";
 
 export default class InputPanelHeader {
     public static inputButtons: HTMLButtonElement[] = [];
@@ -60,5 +61,7 @@ export default class InputPanelHeader {
             openInputPanel(true);
             InputPanelHeader.activeToggleIndex = newToggleIndex;
         }
+
+        GUI.onResize();
     }
 }

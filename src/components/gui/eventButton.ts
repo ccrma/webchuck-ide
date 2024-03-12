@@ -6,12 +6,17 @@
 // date:   February 2024
 //------------------------------------------------------------
 
-const RADIUS = 12;
-const LINE_WIDTH = 8;
+import { theChuck } from "@/host";
+
+const RATIO = window.devicePixelRatio || 1;
+const RADIUS = 6 * RATIO;
+const LINE_WIDTH = 4 * RATIO;
+const PADDING = 5 * RATIO;
 const BUTTON_COLOR = "#eee";
 const BUTTON_HOVER_COLOR = "#ccc";
 const DARK_BUTTON_COLOR = "#333";
 const DARK_BUTTON_HOVER_COLOR = "#444";
+const FONT = .7 * RATIO + "rem Arial";
 
 export default class EventButton {
     public ctx: CanvasRenderingContext2D;
@@ -58,7 +63,38 @@ export default class EventButton {
 
         // Add the button text
         this.ctx.fillStyle = this.isDark ? "white" : "black";
-        this.ctx.font = "1.4rem Arial";
-        this.ctx.fillText(this.eventName.substring(0,12), this.x + 10, this.y + this.size - 10);
+        this.ctx.font = FONT;
+        this.ctx.fillText(this.eventName.substring(0,10), this.x + PADDING, this.y + this.size - PADDING);
+    }
+
+    /**
+     * Check if the button was pressed
+     * @param x position of mouse in canvas
+     * @param y position of mouse in canvas
+     * @returns if the button was pressed
+     */
+    checkPressed(x: number, y: number): boolean {
+        const dx = x - this.x;
+        const dy = y - this.y;
+        this.isPressed = dx > 0 && dx < this.size && dy > 0 && dy < this.size;
+        if (this.isPressed) {
+            theChuck.broadcastEvent(this.eventName);
+            console.log("button pressed:", this.eventName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the mouse is hovering over the button
+     * @param x position of mouse in canvas
+     * @param y postion of mouse in canvas
+     * @returns whether the mouse is hovering over the button
+     */
+    checkHover(x: number, y: number): boolean {
+        const dx = x - this.x;
+        const dy = y - this.y;
+        this.isHovered = dx > 0 && dx < this.size && dy > 0 && dy < this.size;
+        return this.isHovered;
     }
 }

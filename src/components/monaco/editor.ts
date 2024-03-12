@@ -13,10 +13,11 @@ import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight, miniAudicleDark } from "./miniAudicleTheme";
+import { File, fetchTextFile } from "@/utils/fileLoader";
 import EditorPanelHeader from "@components/panelHeader/editorPanelHeader";
 import Console from "@components/console";
 import ProjectSystem from "../projectSystem";
-import { File, fetchTextFile } from "@/utils/fileLoader";
+import GUI from "@components/gui/gui";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
@@ -172,8 +173,6 @@ export default class Editor {
                 if (ChuckBar.running) ChuckBar.removeCode();
             }
         );
-<<<<<<< Updated upstream
-=======
 
         Editor.editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
@@ -181,7 +180,6 @@ export default class Editor {
                 GUI.generateGUI();
             }
         );
->>>>>>> Stashed changes
     }
 
     /**
