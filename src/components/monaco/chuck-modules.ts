@@ -96,8 +96,6 @@ const chuck_modules = [
     "RollOff",
 ];
 
-const chuck_libraries = [
-    "Object", "Event", "Shred", "Math", "Machine", "Std"
-];
+const chuck_libraries = ["Object", "Event", "Shred", "Math", "Machine", "Std"];
 
 export { chuck_modules, chuck_libraries };

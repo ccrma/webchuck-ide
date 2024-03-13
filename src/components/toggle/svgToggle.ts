@@ -1,8 +1,8 @@
 import {
-    accentColorClass,
-    darkHoverColorClass,
-    hoverColorClass,
-    textColorClass,
+    ACCENT_COLOR_CLASS,
+    DARK_HOVER_COLOR_CLASS,
+    HOVER_COLOR_CLASS,
+    TEXT_COLOR_CLASS,
 } from "@/utils/theme";
 
 export default class SVGToggle {
@@ -27,7 +27,7 @@ export default class SVGToggle {
             this.toggle();
         }
 
-        this.button.classList.add(accentColorClass);
+        this.button.classList.add(ACCENT_COLOR_CLASS);
         this.button.classList.add("hover:scale-90");
     }
 
@@ -41,10 +41,10 @@ export default class SVGToggle {
         // toggle to true
         this.open = true;
         this.callback();
-        this.button.classList.remove(accentColorClass);
-        this.button.classList.add(textColorClass);
-        this.button.classList.add(hoverColorClass);
-        this.button.classList.add(darkHoverColorClass);
+        this.button.classList.remove(ACCENT_COLOR_CLASS);
+        this.button.classList.add(TEXT_COLOR_CLASS);
+        this.button.classList.add(HOVER_COLOR_CLASS);
+        this.button.classList.add(DARK_HOVER_COLOR_CLASS);
     }
 
     call() {
@@ -52,9 +52,9 @@ export default class SVGToggle {
         if (!this.open) return;
         this.open = false;
         this.callback();
-        this.button.classList.add(accentColorClass);
-        this.button.classList.remove(textColorClass);
-        this.button.classList.remove(hoverColorClass);
-        this.button.classList.remove(darkHoverColorClass);
+        this.button.classList.add(ACCENT_COLOR_CLASS);
+        this.button.classList.remove(TEXT_COLOR_CLASS);
+        this.button.classList.remove(HOVER_COLOR_CLASS);
+        this.button.classList.remove(DARK_HOVER_COLOR_CLASS);
     }
 }

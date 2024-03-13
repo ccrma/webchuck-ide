@@ -47,7 +47,10 @@ export default class Editor {
                 enabled: false,
             },
             model: editorConfig,
-            theme: localStorage.theme === "dark" ? "miniAudicleDark" : "miniAudicleLight",
+            theme:
+                localStorage.theme === "dark"
+                    ? "miniAudicleDark"
+                    : "miniAudicleLight",
             // TODO: change automaticLayout to false
             // For some reason, monaco height can't be resized to smaller, doesn't respond
             // This trick temp fixes it but is really slow
@@ -84,7 +87,9 @@ export default class Editor {
 
         // VimMode.Vim.defineEx(name, shorthand, callback);
         VimMode.Vim.defineEx("write", "w", function () {
+            ProjectSystem.updateActiveFile(Editor.getEditorCode());
             Editor.saveCode();
+            GUI.generateGUI();
         });
         // Keybindings
         this.initMonacoKeyBindings();
@@ -175,7 +180,7 @@ export default class Editor {
         Editor.editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
             () => {
-                GUI.buildGUI();
+                GUI.generateGUI();
             }
         );
     }

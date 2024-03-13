@@ -6,7 +6,7 @@ import {
 import Editor from "@components/monaco/editor";
 import Console from "@/components/console";
 import { visual } from "@/host";
-import GUI from "@components/gui/gui";
+import GUI from "./gui/gui";
 
 /**
  * Resizer class draggable splitters in App (the main section of the IDE)
@@ -157,7 +157,7 @@ export default class Resizer {
             GUI.onResize();
         }
 
-        // Resize the console
+        // Resize the console and visualizer
         if (
             topLeft.id === "outputPanel" ||
             bottomRight.id === "outputPanel" ||

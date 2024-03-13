@@ -1,5 +1,5 @@
 //-------------------------------------------------
-// title: ChucK Prepocess
+// title: ChucK Preprocess
 // desc:  Preprocess ChucK code string for specific globals
 //        and keywords
 //
@@ -14,7 +14,7 @@ export interface ChuckGlobals {
 
 /**
  * Clean comments from Code
- * @param code Chuck Code 
+ * @param code Chuck Code
  * @returns code with no comments
  */
 function cleanComments(code: string): string {
@@ -33,8 +33,14 @@ export function chuckPreprocess(code: string): ChuckGlobals {
     code = cleanComments(code);
 
     // Get variable names of global Events and floats
-    const events = (code.match(/global Event (\w+)/g) || []).map((e) => e.split(" ")[2]);
-    const floats = (code.match(/global float (\w+)/g) || []).map((e) => e.split(" ")[2]);
+    const events = (code.match(/global Event (\w+)/g) || []).map(
+        (e) => e.split(" ")[2]
+    );
+    const floats = (code.match(/global float (\w+)/g) || []).map(
+        (e) => e.split(" ")[2]
+    );
+    const uniqueEvents = [...new Set(events)];
+    const uniqueFloats = [...new Set(floats)];
 
-    return { Event: events, float: floats };
+    return { Event: uniqueEvents, float: uniqueFloats };
 }

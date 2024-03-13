@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 
 import { monaco } from "./monacoLite";
-import { chuck_modules, chuck_libraries }  from "./chuck-modules";
+import { chuck_modules, chuck_libraries } from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
 
 // Documentation Type for ckdoc
@@ -79,12 +79,10 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "vec4",
         "complex",
         "polar",
-        "string"
+        "string",
     ],
 
-    library: [
-        "Object", "Event", "Shred", "Math", "Machine", "Std"
-    ],
+    library: ["Object", "Event", "Shred", "Math", "Machine", "Std"],
 
     operators: [
         "++",
@@ -158,7 +156,6 @@ monaco.languages.setMonarchTokensProvider("chuck", {
                 },
             ],
 
-
             // identifiers and keywords
             [
                 /[a-z_$][\w$]*/,
@@ -191,10 +188,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             // @ annotations.
             // As an example, we emit a debugging log message on these tokens.
             // Note: message are supressed during the first load -- change some lines to see them.
-            [
-                /@\s*[a-zA-Z_\$][\w\$]*/,
-                { token: "annotation" },
-            ],
+            [/@\s*[a-zA-Z_\$][\w\$]*/, { token: "annotation" }],
 
             // numbers
             [/\d*\.\d+([eE][\-+]?\d+)?/, "number.float"],
