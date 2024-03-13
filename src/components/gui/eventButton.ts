@@ -6,6 +6,8 @@
 // date:   February 2024
 //------------------------------------------------------------
 
+/* eslint-disable indent */
+
 import { theChuck } from "@/host";
 
 const RATIO = window.devicePixelRatio || 1;
@@ -88,7 +90,11 @@ export default class EventButton {
         this.ctx.stroke();
 
         // Fill the button
-        this.ctx.fillStyle = this.isPressed ? this.pressedColor : this.isHovered ? this.hoverColor : this.color;
+        this.ctx.fillStyle = this.isPressed
+            ? this.pressedColor
+            : this.isHovered
+            ? this.hoverColor
+            : this.color;
         this.ctx.fill();
 
         // Add the button text
