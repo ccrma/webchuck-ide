@@ -105,8 +105,8 @@ export default class FloatSlider {
         ) {
             const currValue = (xPos - this.x) / this.width;
             if (currValue != this.value) {
-                theChuck.setFloat(this.floatName, this.value);
                 this.value = currValue;
+                theChuck.setFloat(this.floatName, this.value);
             }
         }
     }
