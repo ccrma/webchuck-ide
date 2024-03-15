@@ -13,7 +13,7 @@
 //       Learn about pulse width oscillator modulation:
 //       https://chuck.stanford.edu/doc/examples/basic/pulse.ck
 //
-// author: Terry Feng
+// author: terry feng
 //-----------------------------------------------------------------------------
 
 // HID input and a HID message

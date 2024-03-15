@@ -18,9 +18,10 @@ const GUIPanel = document.getElementById("GUIPanel") as HTMLDivElement;
 // Constants
 const RATIO = window.devicePixelRatio || 1;
 console.log("window scale ratio:", RATIO);
-const MARGIN = 10 * RATIO;
+const BUTTON_MARGIN = 10 * RATIO;
 const BUTTON_SIZE = 70 * RATIO;
-const SLIDER_HEIGHT = 80 * RATIO;
+const SLIDER_MARGIN = 15 * RATIO;
+const SLIDER_HEIGHT = 48 * RATIO;
 const SLIDERS_PER_ROW = 2;
 
 /**
@@ -82,17 +83,16 @@ export default class GUI {
         if (GUI.canvas.width == 0 || GUI.canvas.height == 0) return;
 
         const globals = chuckPreprocess(Editor.getEditorCode());
-        if (globals.Event.length == 0 && globals.float.length == 0) return;
 
         GUI.buttons = [];
         GUI.sliders = [];
 
         // create a canvas button for each event
         for (let i = 0; i < globals.Event.length; i++) {
-            const x = (i % GUI.buttonsPerRow) * (BUTTON_SIZE + MARGIN) + MARGIN;
+            const x = (i % GUI.buttonsPerRow) * (BUTTON_SIZE + BUTTON_MARGIN) + BUTTON_MARGIN;
             const y =
-                Math.floor(i / GUI.buttonsPerRow) * (BUTTON_SIZE + MARGIN) +
-                MARGIN;
+                Math.floor(i / GUI.buttonsPerRow) * (BUTTON_SIZE + BUTTON_MARGIN) +
+                BUTTON_MARGIN;
             const eventButton = new EventButton(
                 x,
                 y,
@@ -104,18 +104,16 @@ export default class GUI {
             GUI.buttons.push(eventButton);
         }
 
-        const sliderStartPos =
-            MARGIN +
-            Math.ceil(GUI.buttons.length / GUI.buttonsPerRow) *
-                (BUTTON_SIZE + MARGIN);
+        const sliderStartPos = Math.ceil(GUI.buttons.length / GUI.buttonsPerRow) *
+                (BUTTON_SIZE + BUTTON_MARGIN);
 
         // create a canvas slider for each float
         for (let i = 0; i < globals.float.length; i++) {
             const x =
-                (i % SLIDERS_PER_ROW) * (GUI.sliderWidth + MARGIN) + MARGIN;
+                (i % SLIDERS_PER_ROW) * (GUI.sliderWidth + SLIDER_MARGIN) + SLIDER_MARGIN;
             const y =
-                Math.floor(i / SLIDERS_PER_ROW) * (SLIDER_HEIGHT + MARGIN) +
-                MARGIN +
+                Math.floor(i / SLIDERS_PER_ROW) * (SLIDER_HEIGHT + BUTTON_MARGIN) +
+                BUTTON_MARGIN +
                 sliderStartPos;
             const floatSlider = new FloatSlider(
                 x,
@@ -225,10 +223,10 @@ export default class GUI {
         GUI.canvas.style.height = GUIPanel.clientHeight + "px";
         GUI.buttonsPerRow = Math.max(
             1,
-            Math.floor(width / (BUTTON_SIZE + MARGIN))
+            Math.floor(width / (BUTTON_SIZE + BUTTON_MARGIN))
         );
         GUI.sliderWidth = Math.floor(
-            (width - MARGIN) / SLIDERS_PER_ROW - MARGIN
+            (width - SLIDER_MARGIN) / SLIDERS_PER_ROW - SLIDER_MARGIN
         );
     }
 
