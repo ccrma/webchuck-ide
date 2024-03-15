@@ -10,11 +10,11 @@
 import { theChuck } from "@/host";
 
 const RATIO = window.devicePixelRatio || 1;
-const TOP_PADDING = 15 * RATIO;
-const RIGHT_PADDING = 10 * RATIO;
+const TOP_PADDING = 20 * RATIO;
+const RIGHT_PADDING = 11 * RATIO;
 const LINE_WIDTH = 3 * RATIO;
 const FONT = 0.7 * RATIO + "rem Arial";
-const RADIUS_FACTOR = 8;
+const RADIUS_FACTOR = 6;
 const LIGHT_COLOR = "#333";
 const DARK_COLOR = "#ccc";
 
@@ -53,22 +53,26 @@ export default class FloatSlider {
     }
 
     draw() {
-        this.ctx.font = FONT;
+        const slider_height = this.y + Math.floor(this.height * 3 / 4);
+        const label_height = this.y + TOP_PADDING;
+
         // Draw the slider name
+        this.ctx.font = FONT;
         this.ctx.fillStyle = this.color;
-        this.ctx.fillText(this.floatName, this.x, this.y + TOP_PADDING);
+        this.ctx.fillText(this.floatName, this.x, label_height);
+
 
         // Draw horizontal slider line (track)
         this.ctx.beginPath();
-        this.ctx.moveTo(this.x, this.y + this.height / 2);
-        this.ctx.lineTo(this.x + this.width, this.y + this.height / 2);
+        this.ctx.moveTo(this.x, slider_height);
+        this.ctx.lineTo(this.x + this.width, slider_height);
         this.ctx.strokeStyle = this.color;
         this.ctx.lineWidth = LINE_WIDTH;
         this.ctx.stroke();
 
         // Calculate the position of the handle
         const handleX = this.x + this.value * this.width;
-        const handleY = this.y + this.height / 2;
+        const handleY = slider_height;
 
         // Draw the handle
         this.ctx.beginPath();

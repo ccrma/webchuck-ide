@@ -110,6 +110,11 @@ export default class Examples {
             () => loadExample("examples/helloSineGUI.ck"),
             guiNested
         );
+        Examples.newExample(
+            "FM Synthesis GUI",
+            () => loadExample("examples/fmGUI.ck"),
+            guiNested
+        );
 
         // HID Nested Examples
         const hidNested = NestedDropdown.createNewNestedDropdown(

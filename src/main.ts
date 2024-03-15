@@ -81,8 +81,6 @@ class Main {
         // Init WebChucK
         window.addEventListener("load", async () => {
             await initChuck();
-            // TODO: Remove this line
-            document.getElementById("GUITab")?.click();
         });
     }
 
