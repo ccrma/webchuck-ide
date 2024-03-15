@@ -1,7 +1,8 @@
 //-----------------------------------------------------------------------------
 // name: GUI-Controlled FM Synthesis
 // desc: Play with FM synthesis through global variables in ChucK
-//       Global "Event" variables can be broadcast via GUI buttons
+//       Global `Event` variables can be broadcast via GUI buttons
+//       Global `float` variables update through sliders; 0-1
 //
 //       1. Open the GUI Panel below the editor and hit "Generate GUI"
 //       2. Run this code
