@@ -53,14 +53,13 @@ export default class FloatSlider {
     }
 
     draw() {
-        const slider_height = this.y + Math.floor(this.height * 3 / 4);
+        const slider_height = this.y + Math.floor((this.height * 3) / 4);
         const label_height = this.y + TOP_PADDING;
 
         // Draw the slider name
         this.ctx.font = FONT;
         this.ctx.fillStyle = this.color;
         this.ctx.fillText(this.floatName, this.x, label_height);
-
 
         // Draw horizontal slider line (track)
         this.ctx.beginPath();

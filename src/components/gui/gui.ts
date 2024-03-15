@@ -89,9 +89,12 @@ export default class GUI {
 
         // create a canvas button for each event
         for (let i = 0; i < globals.Event.length; i++) {
-            const x = (i % GUI.buttonsPerRow) * (BUTTON_SIZE + BUTTON_MARGIN) + BUTTON_MARGIN;
+            const x =
+                (i % GUI.buttonsPerRow) * (BUTTON_SIZE + BUTTON_MARGIN) +
+                BUTTON_MARGIN;
             const y =
-                Math.floor(i / GUI.buttonsPerRow) * (BUTTON_SIZE + BUTTON_MARGIN) +
+                Math.floor(i / GUI.buttonsPerRow) *
+                    (BUTTON_SIZE + BUTTON_MARGIN) +
                 BUTTON_MARGIN;
             const eventButton = new EventButton(
                 x,
@@ -104,15 +107,18 @@ export default class GUI {
             GUI.buttons.push(eventButton);
         }
 
-        const sliderStartPos = Math.ceil(GUI.buttons.length / GUI.buttonsPerRow) *
-                (BUTTON_SIZE + BUTTON_MARGIN);
+        const sliderStartPos =
+            Math.ceil(GUI.buttons.length / GUI.buttonsPerRow) *
+            (BUTTON_SIZE + BUTTON_MARGIN);
 
         // create a canvas slider for each float
         for (let i = 0; i < globals.float.length; i++) {
             const x =
-                (i % SLIDERS_PER_ROW) * (GUI.sliderWidth + SLIDER_MARGIN) + SLIDER_MARGIN;
+                (i % SLIDERS_PER_ROW) * (GUI.sliderWidth + SLIDER_MARGIN) +
+                SLIDER_MARGIN;
             const y =
-                Math.floor(i / SLIDERS_PER_ROW) * (SLIDER_HEIGHT + BUTTON_MARGIN) +
+                Math.floor(i / SLIDERS_PER_ROW) *
+                    (SLIDER_HEIGHT + BUTTON_MARGIN) +
                 BUTTON_MARGIN +
                 sliderStartPos;
             const floatSlider = new FloatSlider(
