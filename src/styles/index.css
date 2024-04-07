@@ -257,9 +257,7 @@
 /* VM Monitor */
 /* table header */
 table thead tr th {
-    /* TODO */
-    /* @apply px-4 bg-sky-blue-300 dark:bg-dark; */
-    @apply px-4 dark:bg-dark;
+    @apply px-4 bg-sky-blue-300 dark:bg-dark;
 }
 
 table tbody tr td {
