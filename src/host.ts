@@ -19,6 +19,12 @@ import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
 import ProjectSystem from "@/components/projectSystem";
 
+// WebChucK source
+const DEV_CHUCK_SRC = "https://ccrma.stanford.edu/~tzfeng/static/wc/src/"; // dev webchuck src
+const PROD_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/src/"; // prod webchuck src
+let whereIsChuck = localStorage.getItem("whereIsChuck") || PROD_CHUCK_SRC;
+localStorage.setItem("whereIsChuck", whereIsChuck);
+
 let theChuck: Chuck;
 let audioContext: AudioContext;
 let sampleRate: number = 0;
@@ -35,8 +41,15 @@ export { theChuck, audioContext, sampleRate, visual, hid };
 // Chuck Time
 let chuckNowCached: number = 0;
 
+export async function selectChuckSrcProduction(prod: boolean) {
+    whereIsChuck = prod ? PROD_CHUCK_SRC : DEV_CHUCK_SRC;
+    localStorage.setItem("whereIsChuck", whereIsChuck);
+}
+// TODO: remove, expose function to console
+(window as any).selectChuckSrcProduction = selectChuckSrcProduction;
+
 /**
- * Initialize theChuck and audio context
+ * Initialize theChuck and audio context on page load
  * Audio Context will be suspended until the user presses "Start WebChucK"
  */
 export async function initChuck() {
@@ -46,7 +59,7 @@ export async function initChuck() {
     calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    theChuck = await Chuck.init([], audioContext);
+    theChuck = await Chuck.init([], audioContext, undefined, whereIsChuck);
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
