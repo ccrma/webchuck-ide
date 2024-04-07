@@ -147,6 +147,7 @@ export default class GUI {
             "button",
             "secondary",
             "border",
+            "border-orange",
             "dark:border-white",
             "text-xs",
             "absolute",
