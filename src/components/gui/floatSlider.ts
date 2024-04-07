@@ -95,16 +95,28 @@ export default class FloatSlider {
     }
 
     /**
-     * Update slider value and position if mouse down is in bounds
+     * Returns true if the mouse position is within the slider bounds
      * @param xPos position of mouse in canvas
      * @param yPos position of mouse in canvas
+     * @returns true/false
      */
-    updateSliderPosition(xPos: number, yPos: number) {
-        if (
+    contains(xPos: number, yPos: number) {
+        return (
             xPos > this.x &&
             xPos < this.x + this.width &&
             yPos > this.y &&
             yPos < this.y + this.height
+        );
+    }
+
+    /**
+     * Update slider value and position if mouse down is in bounds
+     * @param xPos position of mouse in canvas
+     */
+    updateSliderPosition(xPos: number) {
+        if (
+            xPos > this.x &&
+            xPos < this.x + this.width
         ) {
             const currValue = (xPos - this.x) / this.width;
             if (currValue != this.value) {

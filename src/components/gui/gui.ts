@@ -37,6 +37,7 @@ export default class GUI {
     public static sliderWidth: number = 0;
     private static buttonsPerRow: number = 4;
     private static isDark: boolean;
+    private static activeSlider: FloatSlider | undefined;
 
     constructor() {
         GUI.canvas = document.createElement("canvas");
@@ -174,8 +175,11 @@ export default class GUI {
 
         GUI.buttons.forEach((button) => button.checkPressed(x, y));
 
-        GUI.sliders.forEach((slider) => slider.updateSliderPosition(x, y));
-        document.addEventListener("mousemove", GUI.handleMouseClickMove);
+        GUI.activeSlider = GUI.sliders.find((slider) => slider.contains(x, y));
+        if (GUI.activeSlider) {
+            GUI.activeSlider.updateSliderPosition(x);
+        }
+        document.addEventListener("mousemove", GUI.handleMouseDownMove);
         document.addEventListener("mouseup", GUI.handleMouseUp);
 
         GUI.draw();
@@ -183,17 +187,20 @@ export default class GUI {
 
     private static handleMouseUp() {
         GUI.buttons.forEach((button) => (button.isPressed = false));
-        document.removeEventListener("mousemove", GUI.handleMouseClickMove);
+        document.removeEventListener("mousemove", GUI.handleMouseDownMove);
         document.removeEventListener("mouseup", GUI.handleMouseUp);
+        GUI.activeSlider = undefined;
         GUI.draw();
     }
 
-    private static handleMouseClickMove(event: MouseEvent) {
+    private static handleMouseDownMove(event: MouseEvent) {
         const rect = GUI.canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) * RATIO;
-        const y = (event.clientY - rect.top) * RATIO;
+        // const y = (event.clientY - rect.top) * RATIO;
 
-        GUI.sliders.forEach((slider) => slider.updateSliderPosition(x, y));
+        if (GUI.activeSlider) {
+            GUI.activeSlider.updateSliderPosition(x);
+        }
         GUI.draw();
     }
 

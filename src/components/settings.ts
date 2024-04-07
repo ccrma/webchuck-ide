@@ -34,7 +34,7 @@ export default class Settings {
                 Settings.modal.close();
             }
         });
-        // apply button
+        // Apply button
         Settings.applyButton.addEventListener("click", () => {
             this.applySettings();
         });
