@@ -24,6 +24,8 @@ import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
+import { parseURLParams as initParseURLParams } from "./services/urlParamParser";
+import { initShareCode } from "./services/shareCode";
 
 class Main {
     public static navBar: NavBar;
@@ -77,6 +79,8 @@ class Main {
         // SERVICES
         initExportChuck();
         initExportWebChuck();
+        initShareCode();
+        initParseURLParams();
 
         // Init WebChucK
         window.addEventListener("load", async () => {
