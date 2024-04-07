@@ -1,12 +1,12 @@
 import NavBar from "@/components/navbar/navbar";
-import ProjectSystem from "@components/projectSystem";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import JSZip from "jszip";
 
 const exportChuckButton =
     document.querySelector<HTMLButtonElement>("#exportChuck")!;
 
 /**
- * Export Editor code to a .ck file
+ * Export Project Files for downlaod
  */
 export function initExportChuck() {
     exportChuckButton.addEventListener("click", async () => {
@@ -21,6 +21,9 @@ export function initExportChuck() {
     });
 }
 
+/**
+ * Export a single .ck file
+ */
 function exportSingleFile() {
     const projectFiles = ProjectSystem.getProjectFiles();
     const currentFile = projectFiles[0];
@@ -36,6 +39,9 @@ function exportSingleFile() {
     downloadLink.click();
 }
 
+/**
+ * Export all project files as a .zip
+ */
 function exportProjectFiles() {
     const projectFiles = ProjectSystem.getProjectFiles();
     const zip = new JSZip();

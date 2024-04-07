@@ -116,6 +116,11 @@
                         </ul>
                       </div>
                     </li>
+                    <li>
+                      <button id="openSettings" type="button" class="dropdownItem">
+                        Settings
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -412,6 +417,26 @@
         </div>
       </dialog>
 
+      <!-- Settings Modal -->
+      <dialog class="modal" id="settings-modal">
+        <h1 class="text-xl font-medium pb-2">Settings</h1>
+        <!-- Setting Options-->
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <label class="form-label">ChucK version</label>
+          <select id="chuck-version-select" class="border px-1 py-1 rounded-md focus:outline-none">
+            <option value="stable">Stable</option>
+            <option value="dev">Development</option>
+          </select>
+          <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+        </form>
+        <!-- Close Settings -->
+        <div class="flex gap-4 justify-end pt-4">
+          <button id="settings-close" class="button secondary">Cancel</button>
+          <button id="settings-apply" class="button primary">Reload</button>
+        </div>
+      </dialog>
+
+
       <!-- Export to WebChucK -->
       <dialog class="modal" id="export-webchuck-modal">
         <form class="flex flex-col gap-2 py-2" method="dialog">
@@ -445,8 +470,6 @@
           <button id="share-code-copy" class="button primary">Copy</button>
         </div>
       </dialog>
-
-
     </div>
 
     <script type="module" src="/src/main.ts"></script>

@@ -14,9 +14,10 @@ import InputPanelHeader from "@/components/panelHeader/inputPanelHeader";
 import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
 import Console from "@/components/console";
 import VmMonitor from "@/components/vmMonitor";
-import ProjectSystem from "@/components/projectSystem";
-import Examples from "@/components/navbar/examples/examples";
-import MoreExamples from "@/components/navbar/examples/moreExamples";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import Examples from "@/components/examples/examples";
+import MoreExamples from "@/components/examples/moreExamples";
+import Settings from "@/components/settings";
 import GUI from "@components/gui/gui";
 
 import { initChuck } from "@/host";
@@ -39,6 +40,7 @@ class Main {
     public static console: Console;
     public static examples: Examples;
     public static moreExamples: MoreExamples;
+    public static settings: Settings;
     public static GUI: GUI;
 
     constructor() {
@@ -60,6 +62,7 @@ class Main {
         );
         Main.examples = new Examples();
         Main.moreExamples = new MoreExamples();
+        Main.settings = new Settings();
         Main.GUI = new GUI();
     }
 
