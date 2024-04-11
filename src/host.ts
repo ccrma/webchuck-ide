@@ -56,7 +56,7 @@ export async function initChuck() {
     calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    theChuck = await Chuck.init([], audioContext, undefined, whereIsChuck);
+    theChuck = await Chuck.init([], audioContext, audioContext.destination.maxChannelCount, whereIsChuck);
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 

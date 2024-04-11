@@ -1,4 +1,4 @@
-import { selectChuckSrc } from "@/host";
+import { audioContext, selectChuckSrc } from "@/host";
 
 const versionString = Object.freeze({
     stable: "stable",
@@ -46,6 +46,10 @@ export default class Settings {
         this.selectChucKVersion(localStorage.getItem("chuckVersion") || versionString.stable);
     }
 
+    /**
+     * Select ChucK version
+     * @param version stable or dev version of ChucK
+     */
     selectChucKVersion(version: string) {
         if (version === versionString.stable) {
             Settings.versionDescription.innerHTML = "Latest stable version of ChucK.";
@@ -55,13 +59,21 @@ export default class Settings {
         Settings.versionSelect.value = version;
     }
 
-    // Apply settings
+    static setAudioContextSink(index: number) {
+        // TODO: Set the audio context sink
+        // audioContext.setSinkId(index.toString());
+        console.log("Setting audio context sink to", index);
+    }
+
+    /**
+     * Apply settings and refresh the page
+     */
     applySettings() {
         const version = Settings.versionSelect.value === versionString.stable;
         selectChuckSrc(version);
         localStorage.setItem("chuckVersion", version ? versionString.stable : versionString.dev);
 
-        // TODO: Reload for now but should be able to apply without reload
+        // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
         location.reload();
     }
 }
