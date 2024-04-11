@@ -57,6 +57,7 @@ export async function initChuck() {
 
     // Create theChuck
     theChuck = await Chuck.init([], audioContext, audioContext.destination.maxChannelCount, whereIsChuck);
+    console.log("num channels:", audioContext.destination.maxChannelCount);
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
