@@ -1,302 +1,480 @@
 <!--
-    WebChucK IDE, by Terry Feng
-    Special thanks to Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
+  WebChucK IDE, written by Terry Feng
+
+  Date: Spring 2023
+  Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C31LKZFZ45"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-C31LKZFZ45');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TITLE -->
     <title>WebChucK IDE</title>
     <meta property="og:description"
-        content="A web-based integrated development environment (IDE) for ChucK, a programming language for real-time sound synthesis and music creation! It's fun and easy to learn, and offers composers, researchers, and performers a powerful and accessible programming tool for building, experimenting, and sharing complex audio synthesis/analysis programs and real-time interactive music.">
+      content="A web-based integrated development environment (IDE) for ChucK, a programming language for real-time sound synthesis and music creation! It's fun and easy to learn, and offers composers, researchers, and performers a powerful and accessible programming tool for building, experimenting, and sharing complex audio synthesis/analysis programs and real-time interactive music.">
     <meta property="og:title" content="WebChucK IDE" />
     <meta property="og:url" content="https://chuck.stanford.edu/ide/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://chuck.stanford.edu/ide/assets/chuck_logo.png" />
+    <meta property="og:image" content="https://ccrma.stanford.edu/~tzfeng/webchuck-ide/img/webchuck-ide.jpg" />
     <meta property="fb:app_id" content="966242223397117" /> <!--default app id-->
     <meta name="keywords"
-        content="ChucK, WebChucK, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
+      content="ChucK, WebChucK, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
     <!-- FAVICON -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="./favicon_io/site.webmanifest">
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/webchuck.css">
-    <!-- PRE SCRIPTS -->
-    <script src="./js/ace-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
-    <script src="./js/GuiHelper.js"></script>
-    <!-- DEPENDENCY ADDED FOR PRECOMPILERS -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js"></script>
-</head>
+    <link rel="stylesheet" href="./src/styles/index.css" />
 
-<body>
+    <script>
+      // Set color theme
+      if (localStorage.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
 
-    <!-- IDE -->
-    <div class="container ide zero-pad" id="ide">
-
-        <!-- NAV BAR -->
-        <header class="navbar">
-            <section class="navbar-section">
-                <!-- WebChucK Logo -->
-                <div class="logo">
-                    <img src="assets/chuck_logo.png" alt="chuck-logo" height="50px" width="50px">
-                </div>
+  <body class="h-full w-full">
 
 
-                <!-- File -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0" id="File">
-                        File<i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <input id="fileUploader" type="file" multiple hidden />
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="newFileButton">New</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="fileUploadButton">Upload Files</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="exportChuckButton">Export as ChucK file</button>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Edit -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0" id="Edit">
-                        Edit<i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <li class="menu-item"><button class="btn btn-link" id="vimModeButton">Vim Mode: Off</button></li>
-                        <li class="menu-item"><button class="btn btn-link" id="generateGUI" onclick="UI()">Generate GUI</button></li>
-                    </ul>
-                </div>
-                <!-- View -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0" id="View">
-                        View<i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <li class="menu-item"><button class="btn btn-link" id="darkModeButton">Dark Mode: Off</button></li>
-                        <li class="menu-item"><button class="btn btn-link" id="chuckNowButton">ChucK Time: Off</button></li>
-                        <li class="menu-item"><button class="btn btn-link" onclick="drawing(0)">GUI</button></li>
-                        <li class="menu-item"><button class="btn btn-link" onclick="drawing(1)">Visualizer</button></li>
-                        <li class="menu-item"><button class="btn btn-link" onclick="drawing(2)">Console</button></li>
-                    </ul>
-                </div>
-                <!-- Examples -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0" id="Examples">
-                        Examples<i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="Default"
-                                onclick="loadServerFile('./template/untitled.ck')">Hello Sine</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="HelloSineGUI"
-                                onclick="loadServerFile('./examples/HelloSineGUI.ck')">Hello Sine GUI</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="loadHarmonicSeriesArp"
-                                onclick="loadServerFile('./examples/harmonicSeriesArp.ck')">Harmonic Series
-                                Arpeggiator</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="keyboardOrganHID"
-                                onclick="loadServerFile('./examples/keyboardOrganHID.ck');">Keyboard Organ HID</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="mouse"
-                                onclick="loadServerFile(`./examples/mouseHID.ck`);">Mouse PWM HID</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="loadSlammin"
-                                onclick="loadServerFile('./examples/slammin/slammin.ck'); loadServerFile('./examples/slammin/were_slammin.wav');">Play
-                                Lofi Beats</button>
-                        </li>
-                        <li class="menu-item">
-                            <button class="btn btn-link" id="moreExamplesButton">More Examples <i class="icon icon-arrow-right"></i></button>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Precompilers -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
-                        Experimental <i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <li>
-                            <button class="btn btn-link" id="chuckAsUsual" onclick="SetPrecompilerMode(0)" target="_blank">ChucK (standard) <i class="icon icon-check"></i></button>
-                        </li>
-                        <li class="divider" data-content="Feature Prototypes"></li>
-                        <li>
-                            <button class="btn btn-link" id="iterTildaButton" onclick="SetPrecompilerMode(1)" target="_blank">iter~</button>
-                        </li> 
-                    </ul>
-                </div>
-                <!-- Help -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
-                        Help<i class="icon icon-caret"></i>
-                    </a>
-                    <ul class="menu">
-                        <a href="https://chuck.stanford.edu/doc/reference" class="btn btn-link" target="_blank">Class Library Reference</a> 
-                        <a href="https://chuck.stanford.edu/doc" class="btn btn-link" target="_blank">Documentation</a> 
-                        <li class="divider"></li>
-                        <a href="https://chuck.stanford.edu" class="btn btn-link" target="_blank">ChucK Website</a> 
-                        <a href="https://chuck.stanford.edu/webchuck" class="btn btn-link" target="_blank">WebChucK</a> 
-                        <a href="https://chuck.stanford.edu/community" class="btn btn-link" target="_blank">Community</a> 
-                    </ul>
-                </div>
-                <!-- BETA -->
-                <div style="width: 100%; text-align: right; padding-right: 8px;">
-                    <a href="https://ccrma.stanford.edu/~tzfeng/webchuck-ide"  target="_blank" style="color: #2563eb"><b>Try the new WebChucK IDE!</b></a>
-                </div>
-            </section>
-        </header>
+    <!-- WEBCHUCK IDE -->
+    <div id="webchuck-ide" class="grid w-full h-screen bg-sky-blue dark:bg-dark
+    text-base text-dark dark:text-light">
 
-        <!-- CHUCK BAR -->
-        <div class="container chuck-nav" id="chuck-nav">
-            <div class="columns col-gapless">
-                <div class="column col-2 col-sm-5 chuck-vm">
-                    <button class="btn btn-primary vm-button" id="startChuck" disabled>Start WebChucK</button>
-                    <input class="chuckButton" id="micButton" type="image" src="./assets/icons/mic.png" disabled
-                        alt="microphone" />
+      <!-- NAVBAR -->
+      <div id="navbarWrapper" class="w-full relative">
+        <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4 overflow-x-auto">
+
+          <!-- Left -->
+          <div class="flex justify-left items-center">
+            <!-- ChucK Logo -->
+            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank">
+              <img src="img/ChonK.svg" class="h-10 md:h-8" alt="ChucK Logo" />
+            </a>
+
+            <!-- Nav Items -->
+            <div id="menuItems" class="text-dark dark:text-gray-300 w-full px-2 flex items-center">
+
+              <!-- File -->
+              <div id="fileContainer" class="inline-block">
+                <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  File
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="fileDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="newFile" type="button" class="dropdownItem">
+                        New
+                      </button>
+                    </li>
+                    <li>
+                      <input id="fileUploader" type="file" multiple hidden />
+                      <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" disabled>
+                        Upload Files
+                      </button>
+                    </li>
+                    <li>
+                      <button id="newProject" type="button" class="dropdownItem">
+                        New Project
+                      </button>
+                    </li>
+                    <li id="exportToContainer" class="relative">
+                      <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton">
+                        Export to
+                        <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                          <path stroke="currentColor" stroke-linecap="" stroke-linejoin="round" stroke-width="1.5" d="m1 9 4-4-4-4"/>
+                        </svg>
+                      </button>
+                      <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
+                        <ul class="py-2 text-base text-gray-700 dark:text-gray-200">
+                          <li>
+                            <button id="exportChuck" type="button" class="dropdownItem">
+                              ChucK
+                            </button>
+                          </li>
+                          <li>
+                            <button id="exportWebchuck" type="button" class="dropdownItem">
+                              WebChucK
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                      <button id="openSettings" type="button" class="dropdownItem">
+                        Settings
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-                <div class="column col-6 col-sm-7">
-                    <input class="chuckButton" id="compileButton" type="image" src="./assets/icons/play.png" disabled
-                        alt="compile and play" /> 
-                    <input class="chuckButton" id="replaceButton" type="image" src="./assets/icons/replace.png" disabled
-                        alt="replace shread" />
-                    <input class="chuckButton" id="removeButton" type="image" src="./assets/icons/remove.png" disabled
-                        alt="remove shred" />
+              </div>
+              <!-- Edit -->
+              <div id="editContainer" class="inline-block">
+                <button id="editButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Edit
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="editDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="vimToggle" type="button" class="dropdownItem">
+                        Vim Mode: Off
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-                <div class="column col-4 hide-sm" style="display:flex;align-items:center;" id="chuck-now">
-                    <span style="padding-left: 0.4rem; color: #5755D9"><b>now</b></span>:
-                    <span id="chuck-now-time" style="padding-left: 0.4rem">00:00:00</span>
+              </div>
+              <!-- View  -->
+              <div id="viewContainer" class="inline-block">
+                <button id="viewButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  View
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="viewDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="darkModeToggle" type="button" class="dropdownItem">
+                        Dark Mode: Off
+                      </button>
+                    </li>
+                    <li>
+                      <button id="chuckNowToggle" type="button" class="dropdownItem">
+                        ChucK Time: Off
+                      </button>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+              <!-- Examples -->
+              <div id="examplesContainer" class="inline-block">
+                <button id="examplesButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Examples
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="examplesDropdown" class="hidden dropdown w-48">
+                  <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  </ul>
+                </div>
+              </div>
+              <!-- Help -->
+              <div id="helpContainer" class="inline-block">
+                <button id="helpButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Help
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="helpDropdown" class="hidden dropdown w-48">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">ChucK Reference</a>
+                    </li>
+                    <li>
+                      <a href="https://chuck.stanford.edu/doc" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Documentation</a>
+                    </li>
+
+                    <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
+                    <li>
+                      <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Github Repo</a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Report an Issue</a>
+                    </li>
+
+                    <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
+                    <li>
+                      <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Learn WebChucK</a>
+                    </li>
+                    <li>
+                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="block px-4 py-2 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-light">Discord Community</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <!-- Right -->
+          <!-- More Menu Button-->
+          <div class="flex justify-right items-center text-blue-600 dark:text-blue-200 overflow-none">
+            <!-- <button id="moreMenu" type="button" class="block text-dark hover:white focus:text-light focus:outline-none">
+              <svg class="h-7 w-7 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32">
+                <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
+              </svg>
+            </button> -->
+            <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-lg font-medium mr-4">Share</button>
+            <b class="w-[122px] text-md">WebChucK IDE </b><b><em class="text-3xl">2</em></b>
+          </div>
+        </nav>
+      </div>
+
+
+      <!-- CHUCK BAR -->
+      <div id="chuck-bar" class="bg-orange-peach dark:bg-dark-4">
+        <div class="w-full h-full flex justify-between items-center px-2 py-1">
+          <!-- left side -->
+          <div id="chuckBarLeft" class="flex justify-left items-center">
+
+            <!-- WebChucK Button-->
+            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded-md enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
+            <!-- Chuck Buttons -->
+            <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem); min-width: 13rem;">
+              <button id="micButton"      type="button" class="chuck-button" title="Enable Microphone" disabled>
+                <img src="img/mic.svg" alt="Microphone" class="h-11" draggable="false">
+              </button>
+              <button id="playButton"     type="button" class="chuck-button" disabled>
+                <img src="img/play.svg" alt="Play" class="h-11" draggable="false">
+              </button>
+              <button id="replaceButton"  type="button" class="chuck-button" disabled>
+                <img src="img/replace.svg" alt="Replace" class="h-11" draggable="false">
+              </button>
+              <button id="removeButton"   type="button" class="chuck-button" disabled>
+                <img src="img/remove.svg" alt="Remove" class="h-11" draggable="false">
+              </button>
+            </div>
+
+          </div>
+
+          <!-- right side -->
+          <div id="chuckBarRight" class="flex justify-right items-center">
+            <div id="chuckNowStatus" class="pr-2">
+              <span class="text-orange"><b>now:</b></span>
+              <span id="chuckNowTime" class="font-mono text-dark-4 dark:text-light text-sm">00:00:00.00000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- APP -->
+      <div id="app">
+
+        <!-- Left -->
+        <div id="app-left">
+          <div id="fileExplorerPanel" class="h-full flex flex-col justify-start">
+            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
+              <div class="px-2">File Explorer</div>
+            </div>
+            <div id="fileExplorerContainer">
+              <div id="fileExplorer" class="absolute w-full h-full overflow-y-auto overflow-x-hidden"></div>
+              <div id="fileExplorerUploadPrompt" class="opacity-0">
+                <div class="flex flex-col items-center">
+                  <svg width="2rem" height="2rem" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                    <path d="M6 20L18 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12 16V4M12 4L15.5 7.5M12 4L8.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                  <div class="text-lg font-bold">Drop files here</div>
+                  <div class="text-sm">to upload</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- WEBCHUCK EDITOR -->
-        <div class="container main-editor">
-            <div class="columns col-gapless webchuckPanels" >
-                <!-- File Explorer -->
-                <div class="column col-2 hide-sm main-panel" id="filePanel">
-                    <div class="panel">
-                        <div class="panel-header" style="padding: 0 0.8rem;">
-                            <div class="panel-title" id="file-explorer-title">File Explorer</div>
-                        </div>
-                        <div class="panel-body">
-                            <div id="file-explorer"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Ace Editor -->
-                <div class="column col-6 col-sm-12 main-panel" id="editorPanel">
-                    <div class="panel">
-                        <div class="panel-body zero-pad">
-                            <div id="editor">/* Loading ChucK File */</div>
-                        </div>
-                    </div>
-                </div>
+        <div id="splitV1" class="resizer vSplit"></div>
 
-                <!-- Shreds + Console -->
-                <div class="column col-4 col-sm-12 main-panel" id="consolePanel">
-                    <div class="panel">
-                        <div class="panel-body" id="shreds">
-                            <table class="table" id="shredsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Shred</th>
-                                        <th>Code</th>
-                                        <th>Time</th>
-                                        <th style="width:10%">Remove</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="panel" style="max-height: 42vh; position:sticky; top:58vh;">
-                        <div class="panel-body zero-pad" style="overflow:hidden" id="panel">
-                            <canvas class="canvas" id="canvas" style="width:650px; height:600px; display:none;"></canvas>
-                            <textarea class="console" id="console" readonly></textarea>
-                        </div>
-                    </div>
-                </div>
+        <!-- Middle -->
+        <div id="app-middle">
+          <!-- Editor Panel -->
+          <div id="editorPanel" class="h-full flex flex-col justify-start">
+            <!-- Monaco -->
+            <div id="editorPanelHeader" class="header h-8 justify-start flex-none">
+              <button id="fileToggle" type="button" class="header-item icon px-1 mr-1">
+                <svg class="w-6 h-5" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke="currentColor" d="M3 0C1.35862 0 0 1.35862 0 3V21C0 22.6414 1.35862 24 3 24H27C28.6414 24 30 22.6414 30 21V6C30 4.35862 28.6414 3 27 3H15L12 0H3ZM3 3H10.7578L13.7578 6H27V21H3V3Z" fill="currentColor"/>
+                </svg>
+              </button>
+              <div id="filename" class="header-item">untitled.ck</div>
             </div>
+            <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
+            <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 px-0.5 text-sm items-center flex-none hidden"></div>
+          </div>
+          <div id="splitH1" class="resizer hSplit"></div>
+          <!-- Input Panel -->
+          <div id="inputPanel" class="flex flex-col dark:bg-dark">
+            <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
+              <button id="GUITab" type="button" class="header-item">GUI</button>
+              <button id="HIDTab" type="button" class="header-item">HID</button>
+            </div>
+            <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full">
+              <div id="GUIPanel" class="w-full h-full relative">
+              </div>
+            </div>
+            <div id="HIDContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
+              <div id="HIDPanel" class="absolute w-full h-full">
+                <button id="mouseHIDButton" class="toggle-button w-32" disabled>Mouse: Off</button>
+                <button id="keyboardHIDButton" class="toggle-button w-32" disabled>Keyboard: Off</button>
+                <div id="hidLog" class="opacity-50 text-sm"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- MODALS (overlay)-->
-        <!-- More Examples Modal -->
-        <div class="modal" id="more-examples">
-            <a href="#" class="modal-overlay" aria-label="Close"></a>
-            <div class="modal-container" id="examples-container">
-                <div class="modal-header">
-                    <a href="#" class="btn btn-clear float-right" aria-label="Close"></a>
-                    <div class="modal-title h5">ChucK Examples</div>
-                </div>
+        <div id="splitV2" class="resizer vSplit"></div>
 
-                <div class="modal-body">
-                    <div class="content">
-                        <!-- Example Browser -->
-                        <div class="panel" id="example-browser">
-                            <div class="panel-nav" id="example-breadcrumb">
-                                <ul class="breadcrumb" id="examples-breadcrumb">
-                                    <!-- Populate dynamic breadcrumbs here
-                                    <li class="breadcrumb-item"><button onClick="console.log('hi')">Hi</button></li>
-                                    -->
-                                </ul>
-                            </div>
-                            <div class="panel-body" id="example-folder">
-                                <!-- Populate dynamic files/folders here 
-                                <a class="btn btn-link" id="alarm.ck">alarm.ck</a>
-                                -->
-                            </div>
-                        </div>
-                        <!-- Example Preview -->
-                        <div class="panel" id="example-preview">
-                            <div class="panel-header">
-                                <div class="panel-title">Example Preview</div>
-                            </div>
-                            <div class="panel-body">
-                                <!-- populate dynamic code preview -->
-                                <pre><code id="example-code"></code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <a class="btn btn-link" href="#">Cancel</a>
-                    <button class="btn btn-primary" id="loadPreviewButton">Load</button>
-                </div>
+        <!-- Right -->
+        <div id="app-right">
+          <!-- VM Monitor -->
+          <div id="vmMonitor" class="relative">
+            <table id="shredTable" class="w-full table-auto absolute text-left overflow-auto">
+              <thead class="h-8 align-middle font-medium border-b border-dark-d drop-shadow-sm">
+                <tr>
+                  <th scope="col">Shred</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Time</th>
+                  <th scope="col" style="width: 10%;">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div id="splitH2" class="resizer hSplit"></div>
+          <!-- Output Panel -->
+          <div id="outputPanel" class="flex flex-col dark:bg-dark">
+            <div id="outputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
+              <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
+              <button id="visualizerTab" type="button" class="header-item text-dark-5">VISUALIZER</button>
             </div>
+            <div id="consoleContainer" style="height: calc(100% - 1.75rem)">
+              <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>
+            </div>
+            <div id="visualizerContainer" class="flex-1 bg-white dark:bg-dark-2 hidden">
+              <canvas id="visualizer" class="w-full h-full"></canvas>
+            </div>
+          </div>
         </div>
+
+      </div>
+
+      <!-- MODALS -->
+      <!-- More Examples Modal -->
+      <dialog class="modal modal-lg" id="more-examples-modal">
+        <h1 class="text-xl font-medium pb-2">ChucK Example Library</h1>
+        <div class="w-full p-2 border border-gray-200 bg-gray-50 rounded-t-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col-reverse md:flex-row">
+          <!-- Breadcrumbs -->
+          <nav class="flex justify-left w-1/2 pl-2 pt-2 md:pt-0">
+            <ol id="more-examples-breadcrumbs" class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            </ol>
+          </nav>
+          <!-- Search -->
+          <div class="justify-right w-full h-10 md:w-1/2 relative">
+            <input id="more-examples-search" type="text" class="w-full h-full py-2 pl-11 pr-3 border border-gray-300 rounded-md dark:bg-dark-4" placeholder="Search...">
+            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            <div id="more-examples-autocomplete" class="absolute w-full mt-1 border border-gray-300 rounded-md z-10 hidden bg-white dark:bg-dark">
+              <ul id="autocomplete-list" class="">
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- File Explorer -->
+        <div id="more-examples-explorer" class="border-l border-r border-gray-200 dark:border-gray-600 flex flex-col flex-wrap overflow-auto" style="height:30vh">
+        </div>
+        <!-- File Preview -->
+        <div class="border-l border-r border-t border-gray-200 bg-gray-50 dark:text-light dark:border-gray-600 dark:bg-dark-4 flex">
+          <ul class="flex text-sm font-medium text-center text-dark dark:text-gray-400">
+            <li>
+              <span class="inline-block w-full p-2 px-3 bg-gray-100 border-r border-gray-200 dark:bg-dark dark:border-gray-600">Preview</span>
+            </li>
+            <li>
+              <span id="more-examples-preview-name" class="inline-block p-2 px-3"></span>
+            </li>
+          </ul>
+        </div>
+        <pre id="more-examples-preview-code" class="text-sm font-mono p-1 border border-gray-200 dark:border-gray-600 rounded-b-lg overflow-auto" style="height:16vh">
+        </pre>
+        <!-- Load More Examples -->
+        <div class="flex gap-4 justify-end pt-4">
+          <button id="more-examples-close" type="button" class="button secondary">Close</button>
+          <button id="more-examples-load" type="submit" class="button primary">Load Example</button>
+        </div>
+      </dialog>
+
+      <!-- Settings Modal -->
+      <dialog class="modal" id="settings-modal">
+        <h1 class="text-xl font-medium pb-2">Settings</h1>
+        <!-- Setting Options-->
+        <form class="flex flex-col gap-2 py-2 pr-7" method="dialog">
+          <label class="form-label">ChucK version</label>
+          <select id="chuck-version-select" class="border px-1 py-1 rounded-md focus:outline-none">
+            <option value="stable">Stable</option>
+            <option value="dev">Development</option>
+          </select>
+          <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+        </form>
+        <!-- Close Settings -->
+        <div class="flex gap-4 justify-end pt-4">
+          <button id="settings-close" class="button secondary">Cancel</button>
+          <button id="settings-apply" class="button primary">Reload</button>
+        </div>
+      </dialog>
+
+
+      <!-- Export to WebChucK Modal -->
+      <dialog class="modal" id="export-webchuck-modal">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
+          <label class="form-label">Title</label>
+          <input id="export-title" class="border px-2 py-1 rounded-md" type="text" placeholder="Hello Sine">
+          <label class="form-label">
+            Author
+          </label>
+          <input id="export-author" class="border px-2 py-1 rounded-md" type="text" placeholder="Terry Feng">
+          <label class="flex flex-col">
+            Description
+          </label>
+          <textarea id="export-description" class="border px-2 py-1 h-20 rounded-md" placeholder="A very cool sine wave!"></textarea>
+          <div class="flex gap-4 justify-end pt-4">
+            <button id="export-cancel-btn" type="button" class="button secondary">Cancel</button>
+            <button id="export-btn" type="submit" class="button primary">Export</button>
+          </div>
+        </form>
+      </dialog>
+
+      <!-- Share Code Modal -->
+      <dialog class="modal modal-sm" id="share-code-modal">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <!-- display url to copy -->
+          <label class="form-label">Shareable URL</label>
+          <input type="text" id="share-code-url" class="border px-2 py-1 rounded-md" readonly>
+        </form>
+        <div class="flex gap-4 justify-end pt-4">
+          <button id="share-code-close" class="button secondary">Close</button>
+          <button id="share-code-copy" class="button primary">Copy</button>
+        </div>
+      </dialog>
     </div>
-    
-    <!-- POST SCRIPTS -->
-    <script type="text/javascript" src="./precompilers/precompilerEntry.js"></script><!-- helper for precompilers -->
-    <script type="text/javascript" src="./precompilers/iterTilda.js"></script><!-- iter~ for testing -->
 
-    <!-- POST SCRIPTS -->
-    <script> var whereIsChuck = "https://chuck.stanford.edu/webchuck/src"; </script> <!-- Specify where ChucK is -->
-    <!-- Connect Web Audio API, Connect webchuck.js and webchuck.wasm -->
-    <script type="text/javascript" src="./src/webchuck_host.js"></script> <!-- WebChucK IDE modules -->
-    <script type="text/javascript" src="./js/Visualizer.js"></script> <!-- WebChucK to WebAudioAPI -->
-    <script type="text/javascript" src="./js/editor.js"></script> <!-- Load our editor config -->
-    <script type="text/javascript" src="./js/host.js"></script> <!-- Hook up our IDE to WebChucK -->
-    <script type="module" src="./js/Hid.js"></script> <!-- HID -->
-    <script type="text/javascript" src="./js/gui.js"></script> <!-- Set up the gui generator -->
-    <script type="text/javascript" src="./js/examples.js"></script> <!-- For loading more examples -->
-</body>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+
+
 
 </html>

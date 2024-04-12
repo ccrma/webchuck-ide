@@ -1,0 +1,405 @@
+@import "animation.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* WEBCHUCK IDE LAYOUT */
+#navbarWrapper {
+    grid-area: nav;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#chuck-bar {
+    grid-area: chuck-bar;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#webchuck-ide {
+    display: grid;
+    grid-template-rows: 3rem 3.5rem auto;
+    grid-template-columns: 100%;
+    grid-template-areas:
+        "nav"
+        "chuck-bar"
+        "app";
+    overflow: hidden;
+}
+
+#app {
+    grid-area: app;
+    display: grid;
+    height: 100%;
+    grid-template-areas: "app-left splitV1 app-middle splitV2 app-right";
+    grid-template-columns: 2fr 2px 6fr 2px 4fr; /* app column widths */
+    grid-template-rows: 100%;
+}
+
+/* Mobile Layout */
+@media (max-width: 640px) {
+    #webchuck-ide {
+        height: 160vh;
+    }
+    #app {
+        @apply px-2 pb-2;
+        grid-template-areas:
+            "app-middle"
+            "splitH2"
+            "app-right";
+        grid-template-rows: 5fr 2px 5fr;
+        grid-template-columns: 100%;
+    }
+    #chuckBarLeft {
+        width: 100%;
+    }
+    #chuckBarRight {
+        display: none;
+    }
+    #fileToggle {
+        pointer-events: none;
+    }
+}
+
+/* APP LAYOUT */
+#splitV1 {
+    grid-area: splitV1;
+}
+#splitV2 {
+    grid-area: splitV2;
+}
+#splitH1 {
+    grid-area: splitH1;
+}
+#splitH2 {
+    grid-area: splitH2;
+}
+
+#app-left {
+    grid-area: app-left;
+    min-width: 1rem;
+    height: 100%;
+    width: 100%;
+}
+#app-middle {
+    grid-area: app-middle;
+    min-width: 4rem;
+    display: grid;
+    grid-template-areas:
+        "editorPanel"
+        "splitH1"
+        "inputPanel";
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 2px 28px;
+}
+#app-right {
+    grid-area: app-right;
+    min-width: 1rem;
+    display: grid;
+    grid-template-areas:
+        "vm-monitor"
+        "splitH2"
+        "outputPanel";
+    grid-template-columns: 100%;
+    grid-template-rows: calc(50% - 2px) 2px 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* NAVBAR */
+.dropdownButton {
+    @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 transition focus:outline-none;
+}
+.dropdownItem {
+    @apply block w-full text-left font-medium px-4 py-2 hover:bg-gray-50 dark:hover:bg-dark-5 dark:hover:text-light;
+}
+
+.dropdown {
+    @apply absolute z-40 bg-white divide-y divide-gray-100 max-h-96 rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    animation: enter-transition 0.1s ease-in-out forwards;
+}
+.nestedDropdownButton {
+    @apply flex items-center justify-between w-full;
+}
+.nestedDropdown {
+    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
+    animation: enter-transition 0.1s ease-in-out forwards;
+}
+
+/* EXAMPLES */
+#autocomplete-list li {
+    @apply px-3 py-2 cursor-pointer hover:bg-opacity-50 hover:bg-sky-blue-100 dark:hover:bg-dark-5;
+}
+#autocomplete-list pre {
+    @apply text-sm font-mono;
+}
+.highlight {
+    @apply bg-orange-light;
+}
+
+.breadcrumb-item {
+    @apply inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400;
+}
+.breadcrumb-item.hover {
+    @apply hover:text-orange;
+}
+
+.explorer-item {
+    @apply px-3 py-2 cursor-pointer text-lg rounded-lg text-orange hover:bg-opacity-50 hover:bg-sky-blue-100 dark:hover:bg-dark-5;
+}
+.explorer-item.folder {
+    @apply font-semibold;
+}
+/* CHUCK BAR */
+#chuck-bar .chuck-button {
+    @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 transition duration-300;
+}
+
+/* FILE EXPLORER */
+#fileExplorerContainer {
+    @apply relative h-full w-full;
+}
+#fileExplorerUploadPrompt {
+    @apply absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 dark:bg-opacity-20 transition;
+    user-select: none;
+    pointer-events: none;
+}
+.fileExplorerEntry {
+    @apply flex items-center w-full relative hover:bg-[#ebeae8] dark:hover:bg-dark-5 hover:cursor-pointer whitespace-nowrap;
+}
+.fileExplorerEntry.active {
+    @apply bg-orange-peach dark:bg-dark-8;
+}
+.fileExplorerItem {
+    @apply px-2 m-1 flex items-center w-full overflow-clip;
+}
+.fileExplorerItem::before {
+    content: url(/img/file.svg);
+    @apply dark:filter dark:invert inline-block box-border pr-1 h-7;
+}
+.fileExplorerItem[type="ck"]::before {
+    content: url(/img/ck-color.svg);
+    @apply dark:filter-none;
+}
+.fileExplorerItem[type="wav"]::before {
+    content: url(/img/audio.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="txt"]::before {
+    content: url(/img/txt.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerItem[type="csv"]::before {
+    content: url(/img/csv.svg);
+    @apply dark:filter dark:invert;
+}
+.fileExplorerOptions {
+    @apply px-1 py-1 mr-1 flex absolute right-0 items-center opacity-100 transition-all bg-inherit;
+}
+.fileExplorerOptions > .fileEntryDelete {
+    @apply text-red-600 dark:text-red-200;
+}
+
+.fileExplorerOptions.hide {
+    @apply opacity-0;
+}
+
+#editorPanel {
+    grid-area: editorPanel;
+    overflow: hidden;
+}
+
+#inputPanel {
+    grid-area: inputPanel;
+    user-select: none;
+}
+
+#vmMonitor {
+    grid-area: vm-monitor;
+    overflow: auto;
+    user-select: none;
+}
+
+#outputPanel {
+    grid-area: outputPanel;
+    user-select: none;
+}
+
+/* EDITOR */
+#monacoEditor {
+    /* position: absolute !important; */
+    height: 100%;
+}
+
+#vimStatus {
+    min-width: 64px;
+    overflow: hidden;
+}
+
+#vimStatus > span > span > input {
+    @apply outline-none bg-transparent border-none;
+}
+
+#GUIPanel {
+    cursor: pointer;
+}
+
+/* VM Monitor */
+/* table header */
+table thead tr th {
+    @apply px-4 bg-sky-blue-300 dark:bg-dark;
+}
+
+table tbody tr td {
+    @apply py-3 px-4 border-b border-sky-blue-700;
+}
+
+td:nth-child(3) {
+    @apply min-w-fit;
+}
+td:nth-child(4) {
+    @apply block text-center align-middle;
+}
+
+.removeButton {
+    @apply h-7 px-2 m-auto block focus:outline-none hover:filter hover:invert-20 transition duration-300;
+}
+
+/* INPUT PANEL */
+.toggle-button {
+    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
+}
+.toggle-button.active {
+    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
+}
+
+/* GUI PANEL */
+#GUIPanel {
+    cursor: pointer;
+}
+
+/* HID CONTAINER */
+#hidLog {
+    @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-gray-300 rounded-lg bg-white dark:bg-dark dark:border-gray-700;
+    width: 280px;
+    height: 120px;
+}
+.logEvent {
+    margin-bottom: 5px;
+    opacity: 1;
+    transition: opacity 1s;
+}
+.fade-out {
+    opacity: 0;
+}
+
+/* MISC. COMPONENTS */
+.button.primary {
+    @apply bg-orange hover:bg-orange-light px-3 py-1.5 text-white transition rounded-lg;
+}
+
+.button.secondary {
+    @apply hover:text-orange-light px-3 py-1.5 rounded-lg text-orange transition;
+}
+
+dialog {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 7px 10px rgba(0, 0, 0, 0.05);
+}
+dialog::backdrop {
+    @apply bg-white bg-opacity-50;
+}
+.modal {
+    @apply w-full px-8 py-6 rounded-lg dark:bg-dark dark:text-white;
+    max-height: 75vh;
+    max-width: 640px;
+    animation: enter-transition 0.1s ease-in-out forwards;
+}
+.modal form input,
+.modal form textarea,
+.modal form select {
+    @apply dark:bg-dark-4;
+}
+.form-label {
+    @apply block leading-5 py-1;
+}
+.modal.modal-sm {
+    max-width: 320px;
+}
+.modal.modal-lg {
+    max-width: 960px;
+}
+
+.divider,
+.divider-vert {
+    @apply block relative;
+}
+
+.divider[data-content]::after,
+.divider-vert[data-content]::after {
+    background: #fff;
+    color: #bcc3ce;
+    content: attr(data-content);
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: 0 0.6rem 0 1rem;
+    transform: translateY(-0.85rem);
+}
+
+.dark .divider[data-content]::after {
+    background: #333;
+}
+
+.divider {
+    border-top: 0.06rem solid #e1e3e5;
+    height: 0.05rem;
+    margin: 0.4rem 0.2rem 0.4rem 0;
+}
+
+.divider[data-content] {
+    margin: 0.8rem 0.8rem 0.8rem 0;
+}
+
+.resizer.hSplit {
+    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
+    cursor: row-resize;
+}
+.hSplit::after {
+    @apply block w-full h-2 -top-[4px] absolute z-30;
+    content: "";
+}
+
+.resizer.vSplit {
+    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
+    cursor: col-resize;
+}
+
+.vSplit::after {
+    @apply block h-full w-2 -left-[4px] absolute z-30;
+    content: "";
+}
+
+.vSplit.active,
+.hSplit.active {
+    @apply bg-orange;
+}
+
+.resizer {
+    @apply opacity-10 z-10 bg-sky-blue-900 dark:bg-gray-200;
+    user-select: none;
+}
+
+@media (max-width: 640px) {
+    .resizer {
+        pointer-events: none;
+    }
+}
+
+.header {
+    @apply w-full flex items-center px-1;
+}
+
+.header-item {
+    @apply text-sm px-2 transition duration-300;
+    user-select: none;
+}
