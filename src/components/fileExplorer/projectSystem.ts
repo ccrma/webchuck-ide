@@ -295,12 +295,12 @@ export default class ProjectSystem {
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
         const fileList: FileList | null = (event.target as HTMLInputElement).files;
-        if (fileList.length === 0) {
+        if (fileList?.length === 0 || fileList === null) {
             return;
         }
 
-        for (let i = 0; i < fileList.length; i++) {
-            const file = fileList[i];
+        for (let i = 0; i < fileList!.length; i++) {
+            const file = fileList![i];
             const reader = new FileReader();
             if (isPlaintextFile(file.name)) {
                 reader.onload = (e) => {
@@ -369,7 +369,7 @@ export default class ProjectSystem {
                 })
                 .filter((file): file is File => file !== null);
         } else {
-            fileList = Array.from(event.dataTransfer?.files);
+            fileList = Array.from(event.dataTransfer!.files);
         }
 
         // Loop through the FileList and load files into IDE/ChucK
