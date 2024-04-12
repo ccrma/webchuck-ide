@@ -9,7 +9,7 @@ Try it here: [https://chuck.stanford.edu/ide/](https://chuck.stanford.edu/ide/)
 ## What is WebChucK IDE?
 
 Write and run ChucK code in the browser, learn ChucK with interactive examples, and prototype projects with WebChucK IDE! 
-WebChucK IDE runs the latest version of ChucK through [WebChucK](https://chuck.stanford.edu/webchuck), WebAsembly running via the Web Audio API. Try ChucK online and share your projects on the web!
+WebChucK IDE uses [WebChucK](https://chuck.stanford.edu/webchuck) to bring the latest version of ChucK to the web, runnning via WebAssembly and the Web Audio API. Try ChucK online and share  projects on the web!
 
 Learn more about WebChucK here:
 
@@ -26,11 +26,11 @@ Learn more about WebChucK here:
 
 - Auto-generated GUI
 
+- HID monitoring for keyboard and mouse events
+
 - ChucK's [Example Library](https://chuck.stanford.edu/doc/examples/)
 
 - Export to WebChucK web app
-
-- *Coming soon: Ability to load and share your code via Github Gists*
 
 ## Usage
 
