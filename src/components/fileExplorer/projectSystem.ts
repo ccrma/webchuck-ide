@@ -111,8 +111,8 @@ export default class ProjectSystem {
      */
     static createNewFile() {
         // Ask for new file name
-        let filename: string = prompt("Enter new file name", "untitled.ck");
-        if (filename === "") {
+        let filename: string | null = prompt("Enter new file name", "untitled.ck");
+        if (filename === "" || !filename) {
             return;
         }
         filename = filename.endsWith(".ck") ? filename : filename + ".ck";
@@ -294,7 +294,7 @@ export default class ProjectSystem {
      */
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
-        const fileList: FileList = (event.target as HTMLInputElement).files;
+        const fileList: FileList | null = (event.target as HTMLInputElement).files;
         if (fileList.length === 0) {
             return;
         }
@@ -351,16 +351,16 @@ export default class ProjectSystem {
      * @param event file drag event
      */
     static dragUploadFiles(event: DragEvent) {
-        if (event.dataTransfer.files.length === 0) {
+        if (event.dataTransfer?.files.length === 0) {
             return;
         }
 
         let fileList: File[];
 
         // Populate fileList with files from event
-        if (event.dataTransfer.items!) {
+        if (event.dataTransfer?.items!) {
             // event.dataTransfer.items only supported by Chrome
-            fileList = Array.from(event.dataTransfer.items)
+            fileList = Array.from(event.dataTransfer?.items)
                 .map((item) => {
                     if (item.kind === "file") {
                         return item.getAsFile();
@@ -369,7 +369,7 @@ export default class ProjectSystem {
                 })
                 .filter((file): file is File => file !== null);
         } else {
-            fileList = Array.from(event.dataTransfer.files);
+            fileList = Array.from(event.dataTransfer?.files);
         }
 
         // Loop through the FileList and load files into IDE/ChucK
