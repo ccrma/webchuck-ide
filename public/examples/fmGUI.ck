@@ -27,6 +27,8 @@ global Event START;
 // Wait for START event to continue execution
 START => now;
 
+<<< "START FM synthesis" >>>;
+
 // FM Synthesis
 // carrier
 SinOsc c => dac;

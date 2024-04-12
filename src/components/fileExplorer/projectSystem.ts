@@ -8,22 +8,21 @@
 //--------------------------------------------------------------------
 
 import { theChuck } from "@/host";
-import Console from "./console";
-import ProjectFile from "./projectFile";
 import { isPlaintextFile } from "webchuck/dist/utils";
+import Console from "../console";
+import ProjectFile from "./projectFile";
 
 export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
     public static newProjectButton: HTMLButtonElement;
     public static uploadFilesButton: HTMLButtonElement;
-    private static fileUploader: HTMLInputElement;
     public static fileExplorerContainer: HTMLDivElement;
     public static fileExplorer: HTMLDivElement;
     public static fileExplorerUploadPrompt: HTMLDivElement;
-
     public static activeFile: ProjectFile;
 
     private static projectFiles: Map<string, ProjectFile>;
+    private static fileUploader: HTMLInputElement;
 
     constructor() {
         ProjectSystem.newFileButton =

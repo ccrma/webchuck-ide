@@ -1,5 +1,5 @@
-import { loadExample } from "@/components/navbar/examples/examples";
-import ProjectSystem from "@/components/projectSystem";
+import { loadExample } from "@/components/examples/examples";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
 
 /**
  * Parse URL parameters:

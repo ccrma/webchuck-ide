@@ -9,9 +9,9 @@
 
 import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import Console from "@/components/console";
-import ProjectSystem from "@components/projectSystem";
-import DropdownElement from "../dropdownElement";
-import NestedDropdown from "../nestedDropdown";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import DropdownElement from "../navbar/dropdownElement";
+import NestedDropdown from "../navbar/nestedDropdown";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;

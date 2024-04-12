@@ -9,9 +9,9 @@
 // author: terry feng
 // date:   Janurary 2024
 //-----------------------------------------------
-import ProjectSystem from "@/components/projectSystem";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Examples from "./examples";
-import DropdownElement from "../dropdownElement";
+import DropdownElement from "../navbar/dropdownElement";
 import * as JsSearch from "js-search";
 import { fetchDataFile } from "@/utils/fileLoader";
 

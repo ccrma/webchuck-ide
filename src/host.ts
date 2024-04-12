@@ -17,13 +17,12 @@ import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
-import ProjectSystem from "@/components/projectSystem";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
 
 // WebChucK source
 const DEV_CHUCK_SRC = "https://ccrma.stanford.edu/~tzfeng/static/wc/src/"; // dev webchuck src
 const PROD_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/src/"; // prod webchuck src
-let whereIsChuck = localStorage.getItem("whereIsChuck") || PROD_CHUCK_SRC;
-localStorage.setItem("whereIsChuck", whereIsChuck);
+let whereIsChuck: string = localStorage.getItem("chuckVersion") === "dev" ? DEV_CHUCK_SRC : PROD_CHUCK_SRC;
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -41,12 +40,10 @@ export { theChuck, audioContext, sampleRate, visual, hid };
 // Chuck Time
 let chuckNowCached: number = 0;
 
-export async function selectChuckSrcProduction(prod: boolean) {
-    whereIsChuck = prod ? PROD_CHUCK_SRC : DEV_CHUCK_SRC;
-    localStorage.setItem("whereIsChuck", whereIsChuck);
+export async function selectChuckSrc(production: boolean) {
+    // TODO: this doesn't really do much now
+    whereIsChuck = production ? PROD_CHUCK_SRC : DEV_CHUCK_SRC;
 }
-// TODO: remove, expose function to console
-(window as any).selectChuckSrcProduction = selectChuckSrcProduction;
 
 /**
  * Initialize theChuck and audio context on page load
@@ -59,7 +56,7 @@ export async function initChuck() {
     calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    theChuck = await Chuck.init([], audioContext, undefined, whereIsChuck);
+    theChuck = await Chuck.init([], audioContext, audioContext.destination.maxChannelCount, whereIsChuck);
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
@@ -96,6 +93,9 @@ export async function startChuck() {
         Console.print("system version: " + value);
     });
     // .finally(() => Console.print("WebChucK is running!"));
+    Console.print("Number of channels: " + audioContext.destination.maxChannelCount);
+
+
 
     setInterval(updateChuckNow, 50);
 

@@ -16,7 +16,7 @@ import { miniAudicleLight, miniAudicleDark } from "./miniAudicleTheme";
 import { File, fetchTextFile } from "@/utils/fileLoader";
 import EditorPanelHeader from "@components/panelHeader/editorPanelHeader";
 import Console from "@components/console";
-import ProjectSystem from "../projectSystem";
+import ProjectSystem from "../fileExplorer/projectSystem";
 import GUI from "@components/gui/gui";
 
 // Constants
