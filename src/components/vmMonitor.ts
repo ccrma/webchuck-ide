@@ -16,7 +16,6 @@ import Editor from "@components/monaco/editor";
  */
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
-    public static vmTime: HTMLDivElement;
     public static shredTableBody: HTMLTableSectionElement;
 
     private static shredsToRows: { [key: number]: HTMLTableRowElement } = {};

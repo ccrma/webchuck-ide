@@ -10,10 +10,10 @@ import { isPlaintextFile } from "webchuck/dist/utils";
 import Editor from "@components/monaco/editor";
 
 export default class ProjectFile {
-    private filename: string;
+    private readonly filename: string;
     private data: string | Uint8Array;
-    private isCk: boolean;
-    private isPlaintext: boolean;
+    private readonly isCk: boolean;
+    private readonly isPlaintext: boolean;
     private active: boolean;
     // TODO: do we need file extension?
 
@@ -42,9 +42,6 @@ export default class ProjectFile {
     // Getters and Setters
     getFilename(): string {
         return this.filename;
-    }
-    setFilename(filename: string) {
-        this.filename = filename;
     }
     getData(): string | Uint8Array {
         return this.data;

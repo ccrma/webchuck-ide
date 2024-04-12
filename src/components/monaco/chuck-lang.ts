@@ -67,6 +67,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "dac",
         "adc",
         "blackhole",
+        "bunghole"
     ],
 
     typeKeywords: [
@@ -137,7 +138,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
     ugens: chuck_modules,
 
     // we include these common regular expressions
-    symbols: /[=><!~?:&|+\-*\/\^%]+/,
+    symbols: /[=><!~?:&|+\-*\/^%]+/,
 
     // C# style strings
     escapes:
@@ -167,7 +168,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
                     },
                 },
             ],
-            [/[A-Z][\w\$]*/, "type.identifier"], // to show class names nicely
+            [/[A-Z][\w$]*/, "type.identifier"], // to show class names nicely
 
             // whitespace
             { include: "@whitespace" },
@@ -188,7 +189,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             // @ annotations.
             // As an example, we emit a debugging log message on these tokens.
             // Note: message are supressed during the first load -- change some lines to see them.
-            [/@\s*[a-zA-Z_\$][\w\$]*/, { token: "annotation" }],
+            [/@\s*[a-zA-Z_$][\w$]*/, { token: "annotation" }],
 
             // numbers
             [/\d*\.\d+([eE][\-+]?\d+)?/, "number.float"],
@@ -241,12 +242,12 @@ monaco.languages.setLanguageConfiguration("chuck", {
 // Register a completion item provider for the new language
 monaco.languages.registerCompletionItemProvider("chuck", {
     provideCompletionItems: (model, position) => {
-        var word = model.getWordUntilPosition(position);
-        var range = {
+        const word = model.getWordUntilPosition(position);
+        const range = {
             startLineNumber: position.lineNumber,
             endLineNumber: position.lineNumber,
             startColumn: word.startColumn,
-            endColumn: word.endColumn,
+            endColumn: word.endColumn
         };
 
         const chuck_module_suggestions = chuck_modules.map((module: any) => {

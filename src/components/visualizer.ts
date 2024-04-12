@@ -34,8 +34,8 @@ export default class Visualizer {
     public canvas: HTMLCanvasElement;
 
     private context2D: CanvasRenderingContext2D;
-    private waveformData: Float32Array;
-    private frequencyData: Float32Array;
+    private readonly waveformData: Float32Array;
+    private readonly frequencyData: Float32Array;
     private running: boolean = false;
 
     private waveformColor: string = waveformColorLight;

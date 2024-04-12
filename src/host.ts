@@ -151,7 +151,6 @@ export async function connectMic() {
 
 /**
  * Start the audio visualizer for time/frequency domain
- *
  */
 function startVisualizer() {
     const cnv: HTMLCanvasElement = document.getElementById(

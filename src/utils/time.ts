@@ -72,20 +72,3 @@ export function samplesToTimeHMSS(samples: number, sampleRate: number): string {
 
     return timeStr;
 }
-
-/**
- * Convert current time in samples to MM:SS
- * @param samples current samples to convert
- * @param sampleRate sample rate
- * @returns time string
- */
-export function sampelsToTimeMS(samples: number, sampleRate: number): string {
-    // minutes
-    const totalSeconds = samples / sampleRate;
-    const minutesDisplay = Math.floor(totalSeconds / 60);
-    const secondsDisplay = Math.floor(totalSeconds % 60);
-
-    return `${displayFormatTime(minutesDisplay)}:
-            ${displayFormatTime(secondsDisplay)}
-    `;
-}

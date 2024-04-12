@@ -17,13 +17,13 @@ import GUI from "./gui/gui";
  */
 export default class Resizer {
     // Members
-    private isHorizDrag: boolean;
+    private readonly isHorizDrag: boolean;
     private split: HTMLElement;
-    private splitContainer: HTMLElement;
+    private readonly splitContainer: HTMLElement;
 
     // Function References
-    private onDragHandler: (event: MouseEvent) => void;
-    private onEndDragHandler: (event: MouseEvent) => void;
+    private readonly onDragHandler: (event: MouseEvent) => void;
+    private readonly onEndDragHandler: (event: MouseEvent) => void;
 
     constructor(split: HTMLElement, isHorizDrag: boolean) {
         this.split = split;

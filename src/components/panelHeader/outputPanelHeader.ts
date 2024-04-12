@@ -37,12 +37,11 @@ export default class OutputPanelHeader {
     /**
      * Update the CSS for the Output Panel based on the number of tabs that are toggled
      * @param tabsActive number of tabs active
-     * @param totalTabs total tabs
      * @returns
      */
     static updateOutputPanel(tabsActive: number) {
         // Open output panel if more than 0 tab is open
-        if (tabsActive == 0) {
+        if (tabsActive === 0) {
             openOutputPanel(false);
             return;
         }

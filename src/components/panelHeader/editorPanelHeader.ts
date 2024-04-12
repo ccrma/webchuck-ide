@@ -26,16 +26,6 @@ export default class EditorPanelHeader {
         );
     }
 
-    /**
-     * Build the functionality for the file toggle button
-     * @param fileToggle fileToggle button icon
-     */
-    static buildFileToggle() {
-        EditorPanelHeader.fileToggle.addEventListener("click", () => {
-            toggleLeft();
-        });
-    }
-
     static updateFileName(filename: string) {
         EditorPanelHeader.filenameElement.innerText = filename;
     }

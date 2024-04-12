@@ -81,7 +81,7 @@ export default class GUI {
      * Initialize buttons and sliders from global variables
      */
     static generateGUI(sliderValues?: number[]) {
-        if (GUI.canvas.width == 0 || GUI.canvas.height == 0) return;
+        if (GUI.canvas.width === 0 || GUI.canvas.height === 0) return;
 
         const globals = chuckPreprocess(Editor.getEditorCode());
 
@@ -157,7 +157,7 @@ export default class GUI {
         );
         // detect operating system
         // TODO: factor this out for clean util
-        const isWindows = navigator.platform.indexOf("Win") !== -1;
+        const isWindows = navigator.userAgent.includes('Windows');
         const metaKey = isWindows ? "Ctrl" : "⌘";
         guiButton.title = `Save and Generate GUI [${metaKey} + S]`;
 

@@ -19,7 +19,7 @@ import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 
 // detect operating system
-const isWindows = navigator.platform.indexOf("Win") !== -1;
+const isWindows = navigator.userAgent.includes('Windows');
 const metaKey = isWindows ? "Ctrl" : "⌘";
 
 export default class ChuckBar {

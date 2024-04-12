@@ -29,9 +29,9 @@ export default class EventButton {
     public isPressed: boolean;
     public isHovered: boolean;
     public isDark: boolean;
-    private color: string;
-    private hoverColor: string;
-    private pressedColor: string;
+    private readonly color: string;
+    private readonly hoverColor: string;
+    private readonly pressedColor: string;
 
     constructor(
         x: number,

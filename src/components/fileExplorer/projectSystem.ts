@@ -7,10 +7,10 @@
 // date:   January 2024
 //--------------------------------------------------------------------
 
-import { theChuck } from "@/host";
-import { isPlaintextFile } from "webchuck/dist/utils";
-import Console from "../console";
-import ProjectFile from "./projectFile";
+import { theChuck } from '@/host';
+import { isPlaintextFile } from 'webchuck/dist/utils';
+import Console from '../console';
+import ProjectFile from './projectFile';
 
 export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
@@ -111,10 +111,11 @@ export default class ProjectSystem {
      */
     static createNewFile() {
         // Ask for new file name
-        const filename = prompt("Enter new file name", "untitled.ck");
-        if (filename === null) {
+        let filename: string = prompt("Enter new file name", "untitled.ck");
+        if (filename === "") {
             return;
         }
+        filename = filename.endsWith(".ck") ? filename : filename + ".ck";
         const newFile = new ProjectFile(filename, "");
         if (newFile.isChuckFile()) {
             ProjectSystem.setActiveFile(newFile);
@@ -159,7 +160,7 @@ export default class ProjectSystem {
 
     /**
      * Add a file to the file explorer UI in the IDE
-     * @param filename Add a file to the file explorer
+     * @param projectFile
      */
     static addFileToExplorer(projectFile: ProjectFile) {
         ProjectSystem.projectFiles.set(projectFile.getFilename(), projectFile);
@@ -185,11 +186,7 @@ export default class ProjectSystem {
      * @returns the number of chuck files in the project
      */
     static numChuckFiles(): number {
-        let size = 0;
-        ProjectSystem.projectFiles.forEach((projectFile) => {
-            if (projectFile.isChuckFile()) size++;
-        });
-        return size;
+        return Object.values(ProjectSystem.projectFiles).reduce((a, v) => v.isChuckFile() ? a + 1 : a, 0);
     }
 
     /**
@@ -294,9 +291,9 @@ export default class ProjectSystem {
      */
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
-        const fileList: FileList | null = (event.target as HTMLInputElement)
+        const fileList: FileList = (event.target as HTMLInputElement)
             .files;
-        if (fileList === null) {
+        if (fileList.length === 0) {
             return;
         }
 
@@ -352,7 +349,7 @@ export default class ProjectSystem {
      * @param event file drag event
      */
     static dragUploadFiles(event: DragEvent) {
-        if (event.dataTransfer == null) {
+        if (event.dataTransfer.files.length === 0) {
             return;
         }
 
@@ -364,8 +361,7 @@ export default class ProjectSystem {
             fileList = Array.from(event.dataTransfer.items)
                 .map((item) => {
                     if (item.kind === "file") {
-                        const file = item.getAsFile();
-                        return file;
+                        return item.getAsFile();
                     }
                     return null;
                 })

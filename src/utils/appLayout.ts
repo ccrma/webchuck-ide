@@ -66,16 +66,16 @@ const splitters: Resizer[] = [];
 
 // Export Constants
 export const AppLayoutConstants = {
-    SPLITTER_THICKNESS: SPLITTER_THICKNESS,
-    MIN_SIZE_H: MIN_SIZE_H,
-    MIN_SIZE_V: MIN_SIZE_V,
-    LEFT_WIDTH: LEFT_WIDTH,
-    MIDDLE_WIDTH: MIDDLE_WIDTH,
-    RIGHT_WIDTH: RIGHT_WIDTH,
-    EDITOR_PANEL_HEIGHT: EDITOR_PANEL_HEIGHT,
-    VM_MONITOR_HEIGHT: VM_MONITOR_HEIGHT,
-    INPUT_PANEL_HEIGHT: INPUT_PANEL_HEIGHT,
-    OUTPUT_PANEL_HEIGHT: OUTPUT_PANEL_HEIGHT,
+    SPLITTER_THICKNESS,
+    MIN_SIZE_H,
+    MIN_SIZE_V,
+    LEFT_WIDTH,
+    MIDDLE_WIDTH,
+    RIGHT_WIDTH,
+    EDITOR_PANEL_HEIGHT,
+    VM_MONITOR_HEIGHT,
+    INPUT_PANEL_HEIGHT,
+    OUTPUT_PANEL_HEIGHT,
 };
 
 // Initialize the app splitters
@@ -92,7 +92,7 @@ export function getAppColumnWidths(): [number, number, number] {
 
 /**
  * Three widths in percents for the left, middle, and right
- * @param colWidths
+ * @param colPercents
  */
 export function setAppColumnWidths(colPercents: number[]) {
     left_width = colPercents[0];

@@ -28,7 +28,7 @@ export default class FloatSlider {
     public value: number;
     public isPressed: boolean;
     public isDark: boolean;
-    private color: string;
+    private readonly color: string;
 
     constructor(
         x: number,

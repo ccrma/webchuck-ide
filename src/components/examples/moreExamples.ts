@@ -182,6 +182,7 @@ export default class MoreExamples {
 
     /**
      * Populate the autocomplete with search results
+     * @param query
      * @param results search results
      */
     static populateAutoComplete(query: string, results: any[]) {
@@ -322,8 +323,7 @@ export default class MoreExamples {
 
     /**
      * Create an item in the file explorer
-     * @param item item name
-     * @param isFolder is a folder or .ck file
+     * @param name
      */
     static createExplorerFolder(name: string) {
         const item = document.createElement("button");

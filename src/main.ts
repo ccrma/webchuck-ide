@@ -100,7 +100,7 @@ class Main {
                 ChuckBar.startWebchuck();
             }
 
-            if (ChuckBar.running == false) return;
+            if (!ChuckBar.running) return;
 
             // cmd + enter or ctrl + enter
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {

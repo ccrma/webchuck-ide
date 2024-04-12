@@ -138,6 +138,7 @@ export default class Examples {
      * Create a new example in the examples dropdown
      * @param name name of examples
      * @param callback code to execute when example is clicked
+     * @param nestedParent
      */
     static newExample(
         name: string,

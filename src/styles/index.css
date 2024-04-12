@@ -92,7 +92,6 @@
         "inputPanel";
     grid-template-columns: 100%;
     grid-template-rows: 1fr 2px 28px;
-    min-width: 64px;
 }
 #app-right {
     grid-area: app-right;
@@ -105,7 +104,7 @@
     grid-template-columns: 100%;
     grid-template-rows: calc(50% - 2px) 2px 50%;
     height: 100%;
-    overflow: none;
+    overflow: hidden;
 }
 
 /* NAVBAR */
@@ -354,8 +353,7 @@ dialog::backdrop {
 .divider {
     border-top: 0.06rem solid #e1e3e5;
     height: 0.05rem;
-    margin: 0.4rem 0;
-    margin-right: 0.2rem;
+    margin: 0.4rem 0.2rem 0.4rem 0;
 }
 
 .divider[data-content] {

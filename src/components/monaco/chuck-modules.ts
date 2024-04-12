@@ -1,7 +1,4 @@
 const chuck_modules = [
-    "dac",
-    "adc",
-    "blackhole",
     "Gain",
     "Noise",
     "Impulse",
