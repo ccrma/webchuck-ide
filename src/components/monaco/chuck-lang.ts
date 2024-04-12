@@ -67,7 +67,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "dac",
         "adc",
         "blackhole",
-        "bunghole"
+        "bunghole",
     ],
 
     typeKeywords: [
@@ -247,7 +247,7 @@ monaco.languages.registerCompletionItemProvider("chuck", {
             startLineNumber: position.lineNumber,
             endLineNumber: position.lineNumber,
             startColumn: word.startColumn,
-            endColumn: word.endColumn
+            endColumn: word.endColumn,
         };
 
         const chuck_module_suggestions = chuck_modules.map((module: any) => {

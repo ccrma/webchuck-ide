@@ -157,7 +157,7 @@ export default class GUI {
         );
         // detect operating system
         // TODO: factor this out for clean util
-        const isWindows = navigator.userAgent.includes('Windows');
+        const isWindows = navigator.userAgent.includes("Windows");
         const metaKey = isWindows ? "Ctrl" : "⌘";
         guiButton.title = `Save and Generate GUI [${metaKey} + S]`;
 

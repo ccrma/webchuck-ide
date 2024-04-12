@@ -7,10 +7,10 @@
 // date:   January 2024
 //--------------------------------------------------------------------
 
-import { theChuck } from '@/host';
-import { isPlaintextFile } from 'webchuck/dist/utils';
-import Console from '../console';
-import ProjectFile from './projectFile';
+import { theChuck } from "@/host";
+import { isPlaintextFile } from "webchuck/dist/utils";
+import Console from "../console";
+import ProjectFile from "./projectFile";
 
 export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
@@ -186,7 +186,10 @@ export default class ProjectSystem {
      * @returns the number of chuck files in the project
      */
     static numChuckFiles(): number {
-        return Object.values(ProjectSystem.projectFiles).reduce((a, v) => v.isChuckFile() ? a + 1 : a, 0);
+        return Object.values(ProjectSystem.projectFiles).reduce(
+            (a, v) => (v.isChuckFile() ? a + 1 : a),
+            0
+        );
     }
 
     /**
@@ -291,8 +294,7 @@ export default class ProjectSystem {
      */
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
-        const fileList: FileList = (event.target as HTMLInputElement)
-            .files;
+        const fileList: FileList = (event.target as HTMLInputElement).files;
         if (fileList.length === 0) {
             return;
         }
