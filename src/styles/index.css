@@ -242,14 +242,6 @@
     @apply outline-none bg-transparent border-none;
 }
 
-/* INPUT PANEL */
-.toggle-button {
-    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
-}
-.toggle-button.active {
-    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
-}
-
 #GUIPanel {
     cursor: pointer;
 }

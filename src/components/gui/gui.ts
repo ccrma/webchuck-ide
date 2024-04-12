@@ -150,7 +150,7 @@ export default class GUI {
             "border",
             "border-orange",
             "dark:border-white",
-            "text-xs",
+            "text-sm",
             "absolute",
             "bottom-2",
             "right-2"

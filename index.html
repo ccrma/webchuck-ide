@@ -1,7 +1,7 @@
 <!--
   WebChucK IDE, written by Terry Feng
-  Spring 2023
 
+  Date: Spring 2023
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
@@ -224,8 +224,8 @@
                 <path d="M 16 6 C 14.894531 6 14 6.894531 14 8 C 14 9.105469 14.894531 10 16 10 C 17.105469 10 18 9.105469 18 8 C 18 6.894531 17.105469 6 16 6 Z M 16 14 C 14.894531 14 14 14.894531 14 16 C 14 17.105469 14.894531 18 16 18 C 17.105469 18 18 17.105469 18 16 C 18 14.894531 17.105469 14 16 14 Z M 16 22 C 14.894531 22 14 22.894531 14 24 C 14 25.105469 14.894531 26 16 26 C 17.105469 26 18 25.105469 18 24 C 18 22.894531 17.105469 22 16 22 Z"></path>
               </svg>
             </button> -->
-            <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-2 py-1 rounded-lg font-medium mr-4">Share</button>
-            <b class="w-[174px]">(Beta) WebChucK IDE </b><b><em class="text-3xl">2</em></b>
+            <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-lg font-medium mr-4">Share</button>
+            <b class="w-[122px] text-md">WebChucK IDE </b><b><em class="text-3xl">2</em></b>
           </div>
         </nav>
       </div>
@@ -238,7 +238,7 @@
           <div id="chuckBarLeft" class="flex justify-left items-center">
 
             <!-- WebChucK Button-->
-            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
+            <button id="webchuckButton" type="button" class="font-semibold bg-orange text-white mr-2 py-2 px-1 max-h-full w-40 md:w-56 2xl:w-64 rounded-md enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
             <!-- Chuck Buttons -->
             <div class="flex h-full justify-start items-center" style="width: calc(100% - 6rem); min-width: 13rem;">
               <button id="micButton"      type="button" class="chuck-button" title="Enable Microphone" disabled>
@@ -371,7 +371,7 @@
       </div>
 
       <!-- MODALS -->
-      <!-- More Examples -->
+      <!-- More Examples Modal -->
       <dialog class="modal modal-lg" id="more-examples-modal">
         <h1 class="text-xl font-medium pb-2">ChucK Example Library</h1>
         <div class="w-full p-2 border border-gray-200 bg-gray-50 rounded-t-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col-reverse md:flex-row">
@@ -421,7 +421,7 @@
       <dialog class="modal" id="settings-modal">
         <h1 class="text-xl font-medium pb-2">Settings</h1>
         <!-- Setting Options-->
-        <form class="flex flex-col gap-2 py-2" method="dialog">
+        <form class="flex flex-col gap-2 py-2 pr-7" method="dialog">
           <label class="form-label">ChucK version</label>
           <select id="chuck-version-select" class="border px-1 py-1 rounded-md focus:outline-none">
             <option value="stable">Stable</option>
@@ -437,7 +437,7 @@
       </dialog>
 
 
-      <!-- Export to WebChucK -->
+      <!-- Export to WebChucK Modal -->
       <dialog class="modal" id="export-webchuck-modal">
         <form class="flex flex-col gap-2 py-2" method="dialog">
           <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
@@ -458,10 +458,10 @@
         </form>
       </dialog>
 
-      <!-- Share Code -->
-      <!-- display url to copy -->
+      <!-- Share Code Modal -->
       <dialog class="modal modal-sm" id="share-code-modal">
         <form class="flex flex-col gap-2 py-2" method="dialog">
+          <!-- display url to copy -->
           <label class="form-label">Shareable URL</label>
           <input type="text" id="share-code-url" class="border px-2 py-1 rounded-md" readonly>
         </form>
