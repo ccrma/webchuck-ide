@@ -313,9 +313,9 @@ export default class ProjectSystem {
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {
                         if (file.name.endsWith(".ck")) {
-                            Console.print("Loaded ChucK file: " + file.name);
+                            Console.print("loaded ChucK file: " + file.name);
                         } else {
-                            Console.print("Loaded file: " + file.name);
+                            Console.print("loaded file: " + file.name);
                         }
                         ProjectSystem.addNewFile(file.name, data);
                     } else {
@@ -331,7 +331,7 @@ export default class ProjectSystem {
 
                     // If chuck is already running, create file
                     if (theChuck !== undefined) {
-                        Console.print("Loaded file: " + file.name);
+                        Console.print("loaded file: " + file.name);
                         ProjectSystem.addNewFile(file.name, data);
                     } else {
                         // TODO: If chuck is not running, add file to preUploadFiles
@@ -384,9 +384,9 @@ export default class ProjectSystem {
                 reader.onload = (e) => {
                     const data = e.target!.result as string;
                     if (file.name.endsWith(".ck")) {
-                        Console.print("Loaded ChucK file: " + file.name);
+                        Console.print("loaded ChucK file: " + file.name);
                     } else {
-                        Console.print("Loaded file: " + file.name);
+                        Console.print("loaded file: " + file.name);
                     }
                     ProjectSystem.addNewFile(file.name, data as string);
                 };
@@ -396,7 +396,7 @@ export default class ProjectSystem {
                     const data = new Uint8Array(
                         e.target!.result as ArrayBuffer
                     );
-                    Console.print("Loaded file: " + file.name);
+                    Console.print("loaded file: " + file.name);
                     ProjectSystem.addNewFile(file.name, data as Uint8Array);
                 };
                 reader.readAsArrayBuffer(file);

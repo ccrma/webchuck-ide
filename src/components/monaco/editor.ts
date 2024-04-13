@@ -108,7 +108,7 @@ export default class Editor {
         }
         ProjectSystem.addNewFile(filename, code);
         Console.print(
-            `Loaded autosave: \x1b[38;2;34;178;254m${
+            `loaded autosave: \x1b[38;2;34;178;254m${
                 Editor.filename
             }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
         );

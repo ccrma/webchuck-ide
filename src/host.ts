@@ -102,7 +102,7 @@ export async function startChuck() {
     });
     // .finally(() => Console.print("WebChucK is running!"));
     Console.print(
-        "Number of channels: " + audioContext.destination.maxChannelCount
+        "number of channels: " + audioContext.destination.maxChannelCount
     );
 
     setInterval(updateChuckNow, 50);

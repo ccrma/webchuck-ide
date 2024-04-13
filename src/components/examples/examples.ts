@@ -159,7 +159,7 @@ export default class Examples {
 export async function loadExample(url: string): Promise<void> {
     const example: File = await fetchTextFile(url);
     ProjectSystem.addNewFile(example.name, example.data as string);
-    Console.print(`Loaded ChucK file: ${example.name}`);
+    Console.print(`loaded ChucK file: ${example.name}`);
 }
 
 /**
@@ -169,5 +169,5 @@ export async function loadExample(url: string): Promise<void> {
 async function loadExampleDataFile(url: string): Promise<void> {
     const example: File = await fetchDataFile(url);
     ProjectSystem.addNewFile(example.name, example.data as Uint8Array);
-    Console.print(`Loaded file: ${example.name}`);
+    Console.print(`loaded file: ${example.name}`);
 }
