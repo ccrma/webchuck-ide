@@ -22,29 +22,31 @@ jobs:
         cache: 'npm'
         
     - run: npm ci
-    - run: npm run build --if-present
+    - run: npm run lint
+    - run: npm run build 
+      
+    # Commenting out auto deployment until 2FA is solved
+    # - name: Deploy dist to production (Stanford)
+    #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    #   uses: burnett01/rsync-deployments@6.0.0
+    #   with:
+    #     switches: -avzr --delete
+    #     path: dist/
+    #     remote_path: ${{ secrets.PROD_IDE_LOCATION_STANFORD }}
+    #     remote_host: ${{ secrets.PROD_HOST_STANFORD }}
+    #     remote_user: ${{ secrets.PROD_SSH_USER_STANFORD }}
+    #     remote_key: ${{ secrets.PROD_IDE_DEPLOY_KEY_STANFORD }}
 
-    - name: Deploy dist to production (Stanford)
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: burnett01/rsync-deployments@6.0.0
-      with:
-        switches: -avzr --delete
-        path: dist/
-        remote_path: ${{ secrets.PROD_IDE_LOCATION_STANFORD }}
-        remote_host: ${{ secrets.PROD_HOST_STANFORD }}
-        remote_user: ${{ secrets.PROD_SSH_USER_STANFORD }}
-        remote_key: ${{ secrets.PROD_IDE_DEPLOY_KEY_STANFORD }}
-
-    - name: Deploy dist to production (Princeton)
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: burnett01/rsync-deployments@6.0.0
-      with:
-        switches: -avzr --delete
-        path: dist/
-        remote_path: ${{ secrets.PROD_IDE_LOCATION_PRINCETON}}
-        remote_host: ${{ secrets.PROD_HOST_PRINCETON}}
-        remote_user: ${{ secrets.PROD_SSH_USER_PRINCETON}}
-        remote_key: ${{ secrets.PROD_IDE_DEPLOY_KEY_PRINCETON}}
+    # - name: Deploy dist to production (Princeton)
+    #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    #   uses: burnett01/rsync-deployments@6.0.0
+    #   with:
+    #     switches: -avzr --delete
+    #     path: dist/
+    #     remote_path: ${{ secrets.PROD_IDE_LOCATION_PRINCETON}}
+    #     remote_host: ${{ secrets.PROD_HOST_PRINCETON}}
+    #     remote_user: ${{ secrets.PROD_SSH_USER_PRINCETON}}
+    #     remote_key: ${{ secrets.PROD_IDE_DEPLOY_KEY_PRINCETON}}
 
     - name: Deploy dist to dev
       if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
