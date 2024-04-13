@@ -295,12 +295,12 @@ export default class ProjectSystem {
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
         const fileList: FileList | null = (event.target as HTMLInputElement).files;
-        if (fileList?.length === 0 || fileList === null) {
+        if (fileList === null || fileList.length === 0) {
             return;
         }
 
-        for (let i = 0; i < fileList!.length; i++) {
-            const file = fileList![i];
+        for (let i = 0; i < fileList.length; i++) {
+            const file = fileList[i];
             const reader = new FileReader();
             if (isPlaintextFile(file.name)) {
                 reader.onload = (e) => {
