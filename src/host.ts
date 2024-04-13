@@ -22,7 +22,10 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 // WebChucK source
 const DEV_CHUCK_SRC = "https://ccrma.stanford.edu/~tzfeng/static/wc/src/"; // dev webchuck src
 const PROD_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/src/"; // prod webchuck src
-let whereIsChuck: string = localStorage.getItem("chuckVersion") === "dev" ? DEV_CHUCK_SRC : PROD_CHUCK_SRC;
+let whereIsChuck: string =
+    localStorage.getItem("chuckVersion") === "dev"
+        ? DEV_CHUCK_SRC
+        : PROD_CHUCK_SRC;
 
 let theChuck: Chuck;
 let audioContext: AudioContext;
@@ -56,7 +59,12 @@ export async function initChuck() {
     calculateDisplayDigits(sampleRate);
 
     // Create theChuck
-    theChuck = await Chuck.init([], audioContext, audioContext.destination.maxChannelCount, whereIsChuck);
+    theChuck = await Chuck.init(
+        [],
+        audioContext,
+        audioContext.destination.maxChannelCount,
+        whereIsChuck
+    );
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
@@ -93,9 +101,9 @@ export async function startChuck() {
         Console.print("system version: " + value);
     });
     // .finally(() => Console.print("WebChucK is running!"));
-    Console.print("Number of channels: " + audioContext.destination.maxChannelCount);
-
-
+    Console.print(
+        "Number of channels: " + audioContext.destination.maxChannelCount
+    );
 
     setInterval(updateChuckNow, 50);
 

@@ -2,7 +2,7 @@ import { selectChuckSrc } from "@/host";
 
 const versionString = Object.freeze({
     stable: "stable",
-    dev: "dev"
+    dev: "dev",
 });
 
 export default class Settings {
@@ -14,12 +14,21 @@ export default class Settings {
     public static versionDescription: HTMLParagraphElement;
 
     constructor() {
-        Settings.openButton = document.querySelector<HTMLButtonElement>("#openSettings")!; 
-        Settings.modal = document.querySelector<HTMLDialogElement>("#settings-modal")!;
-        Settings.closeButton = document.querySelector<HTMLButtonElement>("#settings-close")!;
-        Settings.applyButton = document.querySelector<HTMLButtonElement>("#settings-apply")!;
-        Settings.versionSelect = document.querySelector<HTMLSelectElement>("#chuck-version-select")!;
-        Settings.versionDescription = document.querySelector<HTMLParagraphElement>("#chuck-version-desc")!;
+        Settings.openButton =
+            document.querySelector<HTMLButtonElement>("#openSettings")!;
+        Settings.modal =
+            document.querySelector<HTMLDialogElement>("#settings-modal")!;
+        Settings.closeButton =
+            document.querySelector<HTMLButtonElement>("#settings-close")!;
+        Settings.applyButton =
+            document.querySelector<HTMLButtonElement>("#settings-apply")!;
+        Settings.versionSelect = document.querySelector<HTMLSelectElement>(
+            "#chuck-version-select"
+        )!;
+        Settings.versionDescription =
+            document.querySelector<HTMLParagraphElement>(
+                "#chuck-version-desc"
+            )!;
 
         // Open settings
         Settings.openButton.addEventListener("click", () => {
@@ -43,7 +52,9 @@ export default class Settings {
         Settings.versionSelect.addEventListener("change", () => {
             this.selectChucKVersion(Settings.versionSelect.value);
         });
-        this.selectChucKVersion(localStorage.getItem("chuckVersion") || versionString.stable);
+        this.selectChucKVersion(
+            localStorage.getItem("chuckVersion") || versionString.stable
+        );
     }
 
     /**
@@ -52,9 +63,11 @@ export default class Settings {
      */
     selectChucKVersion(version: string) {
         if (version === versionString.stable) {
-            Settings.versionDescription.innerHTML = "Latest stable version of ChucK.";
+            Settings.versionDescription.innerHTML =
+                "Latest stable version of ChucK.";
         } else {
-            Settings.versionDescription.innerHTML = "Bleeding edge version of ChucK. Built from the tip of <a href='https://github.com/ccrma/chuck' target='_blank' class='text-orange-light underline'>main</a>";
+            Settings.versionDescription.innerHTML =
+                "Bleeding edge version of ChucK. Built from the tip of <a href='https://github.com/ccrma/chuck' target='_blank' class='text-orange-light underline'>main</a>";
         }
         Settings.versionSelect.value = version;
     }
@@ -71,7 +84,10 @@ export default class Settings {
     applySettings() {
         const version = Settings.versionSelect.value === versionString.stable;
         selectChuckSrc(version);
-        localStorage.setItem("chuckVersion", version ? versionString.stable : versionString.dev);
+        localStorage.setItem(
+            "chuckVersion",
+            version ? versionString.stable : versionString.dev
+        );
 
         // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
         location.reload();
