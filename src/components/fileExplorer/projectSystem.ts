@@ -111,7 +111,10 @@ export default class ProjectSystem {
      */
     static createNewFile() {
         // Ask for new file name
-        let filename: string | null = prompt("Enter new file name", "untitled.ck");
+        let filename: string | null = prompt(
+            "Enter new file name",
+            "untitled.ck"
+        );
         if (filename === "" || !filename) {
             return;
         }
@@ -294,7 +297,8 @@ export default class ProjectSystem {
      */
     static uploadFiles(event: Event) {
         // Handle multiple files uploaded
-        const fileList: FileList | null = (event.target as HTMLInputElement).files;
+        const fileList: FileList | null = (event.target as HTMLInputElement)
+            .files;
         if (fileList === null || fileList.length === 0) {
             return;
         }
@@ -358,7 +362,7 @@ export default class ProjectSystem {
         let fileList: File[];
 
         // Populate fileList with files from event
-        if (event.dataTransfer?.items!) {
+        if (event.dataTransfer?.items) {
             // event.dataTransfer.items only supported by Chrome
             fileList = Array.from(event.dataTransfer?.items)
                 .map((item) => {
