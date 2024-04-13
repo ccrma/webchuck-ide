@@ -186,7 +186,7 @@ export default class ProjectSystem {
      * @returns the number of chuck files in the project
      */
     static numChuckFiles(): number {
-        return Object.values(ProjectSystem.projectFiles).reduce(
+        return Array.from(ProjectSystem.projectFiles.values()).reduce(
             (a, v) => (v.isChuckFile() ? a + 1 : a),
             0
         );
