@@ -116,6 +116,36 @@ export async function startChuck() {
 
     // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;
+
+    // TODO: EZScore HACKS @terryfeng @alexhan
+    await theChuck
+        .loadFile(
+            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
+        )
+        .then(() => { 
+            theChuck.runFile("ezchord.ck");
+        });
+    await theChuck
+        .loadFile(
+            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
+        )
+        .then(() => { 
+            theChuck.runFile("ezscore.ck");
+        });
+    await theChuck
+        .loadFile(
+            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
+        )
+        .then(() => { 
+            theChuck.runFile("ezscale.ck");
+        });
+    await theChuck
+        .loadFile(
+            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
+        )
+        .then(() => { 
+            theChuck.runFile("scoreplayer.ck");
+        });
 }
 
 /**
