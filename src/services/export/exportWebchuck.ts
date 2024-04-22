@@ -1,6 +1,8 @@
+import JSZip from "jszip";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Editor from "@/components/monaco/editor";
-import JSZip from "jszip";
+import { getGlobalVariables } from "@/utils/chuckPreprocess";
+import { MIXER_JS } from "./exportSnippets";
 
 const exportWebchuckButton =
     document.querySelector<HTMLButtonElement>("#exportWebchuck")!;
@@ -69,13 +71,22 @@ async function exportWebchuck(
         "text/html"
     );
 
-    // Replace template values
+    // Insert form values into template html
     wc_html.querySelector<HTMLHeadingElement>("#title")!.textContent = title;
     wc_html.getElementsByTagName("title")[0].textContent = title;
     wc_html.querySelector<HTMLHeadingElement>("#author")!.textContent = author;
     wc_html.querySelector<HTMLScriptElement>("#chuck")!.textContent = code;
     wc_html.querySelector<HTMLDivElement>("#description")!.textContent =
         description;
+
+    // Check code for global variables to build mixer
+    const globals = getGlobalVariables(code);
+    const mixer_code = globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
+    wc_html = docFindReplace(wc_html, "{{{ MIXER_CODE }}}", mixer_code);
+    if (globals.float.length == 0) {
+        wc_html.getElementById("webchuck-gui")?.remove();
+    }
+
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
     const currentFile = ProjectSystem.activeFile;
@@ -83,8 +94,7 @@ async function exportWebchuck(
     const preloadFileString = projectFilesToPreload.map(file => {
         return { "serverFilename": `./${file.getFilename()}`, "virtualFilename": file.getFilename() }
     });
-    const wc_html_preload_string = wc_html.documentElement.outerHTML.replace("PRELOAD_FILES", JSON.stringify(preloadFileString));
-    wc_html = new DOMParser().parseFromString(wc_html_preload_string, "text/html");
+    wc_html = docFindReplace(wc_html, "{{{ PRELOAD_FILES }}}", JSON.stringify(preloadFileString));
 
     // If exporting a single HTML or a HTML with auxillary files
     if (projectFilesToPreload.length === 0) {
@@ -97,6 +107,7 @@ async function exportWebchuck(
 
 /**
  * Export a single index.html file
+ * @param wc_html webchuck html document
  */
 function exportSingleWCFile(wc_html: Document) {
     // Download a single HTML file
@@ -114,6 +125,7 @@ function exportSingleWCFile(wc_html: Document) {
 
 /**
  * Export all project files as a .zip
+ * @param wc_html webchuck html document
  */
 function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
     const zip = new JSZip();
@@ -130,6 +142,15 @@ function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
         downloadLink.download = "project.zip";
         downloadLink.click();
     });
+}
+
+/**
+ * Helper function to find and replace in a HTML Document file 
+ * 
+ */
+function docFindReplace(doc: Document, find: string, replace: string): Document {
+    doc.documentElement.innerHTML = doc.documentElement.outerHTML.replace(find, replace);
+    return new DOMParser().parseFromString(doc.documentElement.outerHTML, "text/html");
 }
 
 // --------------------------------------

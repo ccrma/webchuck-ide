@@ -11,7 +11,7 @@ import Editor from "@components/monaco/editor";
 import EventButton from "./eventButton";
 import FloatSlider from "./floatSlider";
 import { getColorScheme } from "@/utils/theme";
-import { chuckPreprocess } from "@/utils/chuckPreprocess";
+import { getGlobalVariables } from "@/utils/chuckPreprocess";
 
 const GUIPanel = document.getElementById("GUIPanel") as HTMLDivElement;
 
@@ -83,7 +83,7 @@ export default class GUI {
     static generateGUI(sliderValues?: number[]) {
         if (GUI.canvas.width === 0 || GUI.canvas.height === 0) return;
 
-        const globals = chuckPreprocess(Editor.getEditorCode());
+        const globals = getGlobalVariables(Editor.getEditorCode());
 
         GUI.buttons = [];
         GUI.sliders = [];

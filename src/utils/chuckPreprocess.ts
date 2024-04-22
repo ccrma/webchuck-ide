@@ -29,7 +29,7 @@ function cleanComments(code: string): string {
  * @param code Chuck Code to preprocess
  * @returns json of Event and float variable names
  */
-export function chuckPreprocess(code: string): ChuckGlobals {
+export function getGlobalVariables(code: string): ChuckGlobals {
     code = cleanComments(code);
 
     // Get variable names of global Events and floats
