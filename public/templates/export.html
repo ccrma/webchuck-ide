@@ -31,7 +31,7 @@
 
       // Play button
       action.addEventListener('click', async () => {
-        window.theChuck ??= await Chuck.init([]);
+        window.theChuck ??= await Chuck.init( PRELOAD_FILES );
         switch (status) {
           case states.playing:
             status = states.stopped;

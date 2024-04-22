@@ -72,12 +72,13 @@ class Main {
         Main.keyboardShortcuts();
 
         // Prevent accidental page refresh/close
-        window.addEventListener("beforeunload", (e) => {
-            if (ProjectSystem.size() > 1) {
-                e.preventDefault();
-                e.returnValue = "";
-            }
-        });
+        // TODO remove
+        // window.addEventListener("beforeunload", (e) => {
+        //     if (ProjectSystem.size() > 1) {
+        //         e.preventDefault();
+        //         e.returnValue = "";
+        //     }
+        // });
 
         // SERVICES
         initExportChuck();
