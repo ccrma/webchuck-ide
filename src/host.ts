@@ -122,28 +122,28 @@ export async function startChuck() {
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezchord.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezscore.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezscale.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("scoreplayer.ck");
         });
 }

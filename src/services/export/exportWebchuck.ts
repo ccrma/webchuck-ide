@@ -90,11 +90,20 @@ async function exportWebchuck(
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
     const currentFile = ProjectSystem.activeFile;
-    const projectFilesToPreload = ProjectSystem.getProjectFiles().filter(file => file !== currentFile);
-    const preloadFileString = projectFilesToPreload.map(file => {
-        return { "serverFilename": `./${file.getFilename()}`, "virtualFilename": file.getFilename() }
+    const projectFilesToPreload = ProjectSystem.getProjectFiles().filter(
+        (file) => file !== currentFile
+    );
+    const preloadFileString = projectFilesToPreload.map((file) => {
+        return {
+            serverFilename: `./${file.getFilename()}`,
+            virtualFilename: file.getFilename(),
+        };
     });
-    wc_html = docFindReplace(wc_html, "{{{ PRELOAD_FILES }}}", JSON.stringify(preloadFileString));
+    wc_html = docFindReplace(
+        wc_html,
+        "{{{ PRELOAD_FILES }}}",
+        JSON.stringify(preloadFileString)
+    );
 
     // If exporting a single HTML or a HTML with auxillary files
     if (projectFilesToPreload.length === 0) {
@@ -102,7 +111,6 @@ async function exportWebchuck(
     } else {
         exportProjectWCFiles(wc_html, projectFilesToPreload);
     }
-
 }
 
 /**
@@ -145,12 +153,22 @@ function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
 }
 
 /**
- * Helper function to find and replace in a HTML Document file 
- * 
+ * Helper function to find and replace in a HTML Document file
+ *
  */
-function docFindReplace(doc: Document, find: string, replace: string): Document {
-    doc.documentElement.innerHTML = doc.documentElement.outerHTML.replace(find, replace);
-    return new DOMParser().parseFromString(doc.documentElement.outerHTML, "text/html");
+function docFindReplace(
+    doc: Document,
+    find: string,
+    replace: string
+): Document {
+    doc.documentElement.innerHTML = doc.documentElement.outerHTML.replace(
+        find,
+        replace
+    );
+    return new DOMParser().parseFromString(
+        doc.documentElement.outerHTML,
+        "text/html"
+    );
 }
 
 // --------------------------------------
