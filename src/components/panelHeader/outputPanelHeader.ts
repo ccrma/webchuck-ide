@@ -30,7 +30,10 @@ export default class OutputPanelHeader {
         );
         new OutputHeaderToggle(
             visualizerButton,
-            OutputPanelHeader.visualizerContainer
+            OutputPanelHeader.visualizerContainer,
+            false,
+            () => visual?.start(),
+            () => visual?.stop()
         );
     }
 
