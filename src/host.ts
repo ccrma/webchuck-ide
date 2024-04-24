@@ -20,7 +20,7 @@ import ChuckBar from "@/components/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 
 // WebChucK source
-const DEV_CHUCK_SRC = "https://ccrma.stanford.edu/~tzfeng/static/wc/src/"; // dev webchuck src
+const DEV_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/dev/"; // dev webchuck src
 const PROD_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/src/"; // prod webchuck src
 let whereIsChuck: string =
     localStorage.getItem("chuckVersion") === "dev"

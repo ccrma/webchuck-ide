@@ -9,7 +9,11 @@
 
 import { theChuck } from "@/host";
 import { isPlaintextFile } from "webchuck/dist/utils";
-import { File as FileData, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
+import {
+    File as FileData,
+    fetchDataFile,
+    fetchTextFile,
+} from "@/utils/fileLoader";
 import Console from "../console";
 import ProjectFile from "./projectFile";
 

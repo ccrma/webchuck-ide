@@ -1,4 +1,6 @@
-import ProjectSystem, { loadChuckFile } from "@/components/fileExplorer/projectSystem";
+import ProjectSystem, {
+    loadChuckFile,
+} from "@/components/fileExplorer/projectSystem";
 import pako from "pako";
 
 /**
@@ -19,7 +21,9 @@ export function parseURLParams() {
         try {
             // Try decode base64 compressed code (long files)
             const decoded = atob(code);
-            const uncompressed = pako.inflate(new Uint8Array([...decoded].map((c) => c.charCodeAt(0))));
+            const uncompressed = pako.inflate(
+                new Uint8Array([...decoded].map((c) => c.charCodeAt(0)))
+            );
             const decoded_code = String.fromCharCode(...uncompressed);
             ProjectSystem.addNewFile("code.ck", decoded_code);
         } catch (e) {

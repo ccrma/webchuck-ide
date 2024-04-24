@@ -9,7 +9,10 @@
 
 import DropdownElement from "@/components/navbar/dropdownElement";
 import NestedDropdown from "@/components/navbar/nestedDropdown";
-import { loadChuckFile, loadDataFile } from "@components/fileExplorer/projectSystem";
+import {
+    loadChuckFile,
+    loadDataFile,
+} from "@components/fileExplorer/projectSystem";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;
