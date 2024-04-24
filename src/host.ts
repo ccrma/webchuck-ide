@@ -201,6 +201,5 @@ function startVisualizer() {
     // connect chuck output to analyser
     theChuck.connect(analyser);
     // start visualizer
-    visual.drawVisualization_();
     visual.start();
 }

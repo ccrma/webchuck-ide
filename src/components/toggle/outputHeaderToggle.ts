@@ -23,14 +23,18 @@ export default class OutputHeaderToggle extends HeaderToggle {
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,
-        initialOpen: boolean = false
+        initialOpen: boolean = false,
+        openCallback: () => void = () => {},
+        closeCallback: () => void = () => {}
     ) {
         OutputHeaderToggle.numToggles++;
         // If initialOpen, increment active
         if (initialOpen) {
             OutputHeaderToggle.numActive++;
         }
-        super(button, contentContainer, initialOpen);
+        super(button, contentContainer, initialOpen, openCallback, closeCallback);
+        // this.openCallback = openCallback;
+        // this.closeCallback = closeCallback;
     }
 
     toggle() {
@@ -54,6 +58,7 @@ export default class OutputHeaderToggle extends HeaderToggle {
             this.button.classList.remove(DARK_HOVER_COLOR_CLASS);
             this.contentContainer.classList.remove("hidden");
 
+            this.openCallback();
             this.open = true;
         } else {
             // inactive
@@ -65,6 +70,7 @@ export default class OutputHeaderToggle extends HeaderToggle {
             this.button.classList.add(DARK_HOVER_COLOR_CLASS);
             this.contentContainer.classList.add("hidden");
 
+            this.closeCallback();
             this.open = false;
         }
 
