@@ -7,11 +7,9 @@
 // date:   August 2023
 //----------------------------------------------------------------------
 
-import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
-import Console from "@/components/console";
-import ProjectSystem from "@/components/fileExplorer/projectSystem";
-import DropdownElement from "../navbar/dropdownElement";
-import NestedDropdown from "../navbar/nestedDropdown";
+import DropdownElement from "@/components/navbar/dropdownElement";
+import NestedDropdown from "@/components/navbar/nestedDropdown";
+import { loadChuckFile, loadDataFile } from "@components/fileExplorer/projectSystem";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;
@@ -28,14 +26,14 @@ export default class Examples {
      */
     static buildBasicExamples() {
         Examples.newExample("Hello Sine", () =>
-            loadExample("examples/helloSine.ck")
+            loadChuckFile("examples/helloSine.ck")
         );
         Examples.newExample("Harmonic Series Arp", () =>
-            loadExample("examples/harmonicSeriesArp.ck")
+            loadChuckFile("examples/harmonicSeriesArp.ck")
         );
         Examples.newExample("Play Lofi Beats", () => {
-            loadExample("examples/slammin/slammin.ck");
-            loadExampleDataFile("examples/slammin/were_slammin.wav");
+            loadChuckFile("examples/slammin/slammin.ck");
+            loadDataFile("examples/slammin/were_slammin.wav");
         });
 
         // OTF Nested Examples
@@ -47,54 +45,54 @@ export default class Examples {
         Examples.newExample(
             "otf_01.ck",
             () => {
-                loadExample("examples/otf/otf_01.ck");
-                loadExampleDataFile("examples/otf/data/kick.wav");
+                loadChuckFile("examples/otf/otf_01.ck");
+                loadDataFile("examples/otf/data/kick.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_02.ck",
             () => {
-                loadExample("examples/otf/otf_02.ck");
-                loadExampleDataFile("examples/otf/data/hihat.wav");
+                loadChuckFile("examples/otf/otf_02.ck");
+                loadDataFile("examples/otf/data/hihat.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_03.ck",
             () => {
-                loadExample("examples/otf/otf_03.ck");
-                loadExampleDataFile("examples/otf/data/hihat-open.wav");
+                loadChuckFile("examples/otf/otf_03.ck");
+                loadDataFile("examples/otf/data/hihat-open.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_04.ck",
             () => {
-                loadExample("examples/otf/otf_04.ck");
-                loadExampleDataFile("examples/otf/data/snare-hop.wav");
+                loadChuckFile("examples/otf/otf_04.ck");
+                loadDataFile("examples/otf/data/snare-hop.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_05.ck",
             () => {
-                loadExample("examples/otf/otf_05.ck");
+                loadChuckFile("examples/otf/otf_05.ck");
             },
             otfNested
         );
         Examples.newExample(
             "otf_06.ck",
             () => {
-                loadExample("examples/otf/otf_06.ck");
+                loadChuckFile("examples/otf/otf_06.ck");
             },
             otfNested
         );
         Examples.newExample(
             "otf_07.ck",
             () => {
-                loadExample("examples/otf/otf_07.ck");
-                loadExampleDataFile("examples/otf/data/snare.wav");
+                loadChuckFile("examples/otf/otf_07.ck");
+                loadDataFile("examples/otf/data/snare.wav");
             },
             otfNested
         );
@@ -107,12 +105,12 @@ export default class Examples {
         );
         Examples.newExample(
             "Hello Sine GUI",
-            () => loadExample("examples/helloSineGUI.ck"),
+            () => loadChuckFile("examples/helloSineGUI.ck"),
             guiNested
         );
         Examples.newExample(
             "FM Synthesis GUI",
-            () => loadExample("examples/fmGUI.ck"),
+            () => loadChuckFile("examples/fmGUI.ck"),
             guiNested
         );
 
@@ -124,12 +122,12 @@ export default class Examples {
         );
         Examples.newExample(
             "Mouse PWM HID",
-            () => loadExample("examples/mouseHID.ck"),
+            () => loadChuckFile("examples/mouseHID.ck"),
             hidNested
         );
         Examples.newExample(
             "Keyboard Organ HID",
-            () => loadExample("examples/keyboardHID.ck"),
+            () => loadChuckFile("examples/keyboardHID.ck"),
             hidNested
         );
     }
@@ -147,27 +145,4 @@ export default class Examples {
     ) {
         return new DropdownElement(nestedParent, name, callback);
     }
-}
-
-//----------------------------------------
-// Helper Functions
-//----------------------------------------
-/**
- * Load a chuck example from a url
- * @param url url to fetch example from
- */
-export async function loadExample(url: string): Promise<void> {
-    const example: File = await fetchTextFile(url);
-    ProjectSystem.addNewFile(example.name, example.data as string);
-    Console.print(`loaded ChucK file: ${example.name}`);
-}
-
-/**
- * Load a data file from a url
- * @param url url to data file
- */
-async function loadExampleDataFile(url: string): Promise<void> {
-    const example: File = await fetchDataFile(url);
-    ProjectSystem.addNewFile(example.name, example.data as Uint8Array);
-    Console.print(`loaded file: ${example.name}`);
 }

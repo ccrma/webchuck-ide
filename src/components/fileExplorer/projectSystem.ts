@@ -9,6 +9,7 @@
 
 import { theChuck } from "@/host";
 import { isPlaintextFile } from "webchuck/dist/utils";
+import { File as FileData, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 import Console from "../console";
 import ProjectFile from "./projectFile";
 
@@ -403,4 +404,27 @@ export default class ProjectSystem {
             }
         }
     }
+}
+
+//----------------------------------------
+// Helper Functions
+//----------------------------------------
+/**
+ * Load a chuck file from a url
+ * @param url url to fetch example from
+ */
+export async function loadChuckFile(url: string) {
+    const chuckFile: FileData = await fetchTextFile(url);
+    ProjectSystem.addNewFile(chuckFile.name, chuckFile.data as string);
+    Console.print(`loaded ChucK file: ${chuckFile.name}`);
+}
+
+/**
+ * Load a data file from a url
+ * @param url url to data file
+ */
+export async function loadDataFile(url: string) {
+    const dataFile: FileData = await fetchDataFile(url);
+    ProjectSystem.addNewFile(dataFile.name, dataFile.data as Uint8Array);
+    Console.print(`loaded file: ${dataFile.name}`);
 }
