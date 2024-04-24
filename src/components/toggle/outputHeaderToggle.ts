@@ -32,7 +32,13 @@ export default class OutputHeaderToggle extends HeaderToggle {
         if (initialOpen) {
             OutputHeaderToggle.numActive++;
         }
-        super(button, contentContainer, initialOpen, openCallback, closeCallback);
+        super(
+            button,
+            contentContainer,
+            initialOpen,
+            openCallback,
+            closeCallback
+        );
         // this.openCallback = openCallback;
         // this.closeCallback = closeCallback;
     }
