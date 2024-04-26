@@ -1,3 +1,15 @@
+//--------------------------------------------------------
+// title: Recorder
+// desc:  Recording audio from ChucK VM with a simple button
+//        - when no shreds, arm recorder waiting for addShred (play)
+//        - when shreds, start recording
+//        - when recording and no shreds, stop recording
+//        adapted from celeste betancur 220a recorder
+//
+// author: terry feng (tzfeng@ccrma.stanford.edu)
+// date: April 2024
+//--------------------------------------------------------
+
 import Console from "./console";
 import ProjectSystem from "./fileExplorer/projectSystem";
 import VmMonitor from "./vmMonitor";
