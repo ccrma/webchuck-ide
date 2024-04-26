@@ -17,6 +17,7 @@ import Editor from "@components/monaco/editor";
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;
     public static shredTableBody: HTMLTableSectionElement;
+    private static numShreds: number = 0;
 
     private static shredsToRows: { [key: number]: HTMLTableRowElement } = {};
 
@@ -113,6 +114,8 @@ export default class VmMonitor {
                 () => {}
             );
         });
+
+        this.numShreds++;
     }
 
     /**
@@ -125,7 +128,12 @@ export default class VmMonitor {
                 VmMonitor.shredsToRows[theShred]
             );
             delete VmMonitor.shredsToRows[theShred];
+            this.numShreds--;
         }
+    }
+
+    static getNumShreds(): number {
+        return this.numShreds;
     }
 }
 
