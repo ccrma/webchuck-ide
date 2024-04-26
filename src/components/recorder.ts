@@ -65,6 +65,7 @@ export default class Recorder {
         };
 
         Recorder.recorder.onstop = async () => {
+            // Convert buffer to wav blob
             const blob = new Blob(Recorder.buffer, {
                 type: Recorder.recorder.mimeType,
             });
@@ -72,7 +73,7 @@ export default class Recorder {
             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
             const wavBlob = await convertAudioBufferToWavBlob(audioBuffer);
 
-            // Get current file and date:time (local)
+            // Get current filename and local date_time
             const filename = ProjectSystem.activeFile
                 .getFilename()
                 .slice(0, -3);
@@ -84,6 +85,7 @@ export default class Recorder {
                 .replace(/\s/g, "");
             const dateTime = `${date}_${time}`;
 
+            // Save file
             const blobLink = getBlobLink(
                 wavBlob,
                 filename + "_" + dateTime + ".wav"
@@ -99,7 +101,7 @@ export default class Recorder {
     static recordPressed() {
         const numActiveShreds = VmMonitor.getNumShreds();
 
-        // Record FSM
+        // Record button FSM
         switch (Recorder.state) {
             case RecordState.stopped:
                 if (numActiveShreds === 0) {

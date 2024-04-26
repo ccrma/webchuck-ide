@@ -51,7 +51,7 @@ export default class Console {
 
         // Blob Links
         Console.terminal.registerLinkProvider(
-            new LinkProvider(Console.terminal, blobRegex, (e, uri) => {
+            new LinkProvider(Console.terminal, blobRegex, (_e, uri) => {
                 window.open(uri, "_blank");
             })
         );
