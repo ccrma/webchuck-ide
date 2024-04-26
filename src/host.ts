@@ -18,6 +18,7 @@ import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import Recorder from "@/components/recorder";
 
 // WebChucK source
 const DEV_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/dev/"; // dev webchuck src
@@ -34,6 +35,9 @@ let sampleRate: number = 0;
 // Audio Visualizer
 let analyser: AnalyserNode;
 let visual: Visualizer;
+
+// Recorder
+let recordGain: GainNode;
 
 // HID
 let hid: HID;
@@ -109,6 +113,12 @@ export async function startChuck() {
 
     // Start audio visualizer
     startVisualizer();
+
+    // Configure Recorder
+    recordGain = audioContext.createGain();
+    recordGain.gain.value = .96; // so it doesn't clip
+    theChuck.connect(recordGain); 
+    Recorder.configureRecorder(audioContext, recordGain);
 
     // Start HID, mouse and keyboard on
     hid = await HID.init(theChuck);

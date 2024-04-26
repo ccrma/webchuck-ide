@@ -17,6 +17,7 @@
 import { theChuck, startChuck, connectMic } from "@/host";
 import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
+import Recorder from "@/components/recorder";
 
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
@@ -28,6 +29,7 @@ export default class ChuckBar {
     public static playButton: HTMLButtonElement;
     public static replaceButton: HTMLButtonElement;
     public static removeButton: HTMLButtonElement;
+    public static recordButton: HTMLButtonElement;
 
     public static running: boolean = false;
 
@@ -43,6 +45,8 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
         ChuckBar.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
+        ChuckBar.recordButton =
+            document.querySelector<HTMLButtonElement>("#recordButton")!;
 
         // Add tooltips
         ChuckBar.webchuckButton.title = `Start ChucK VM [${metaKey} + .]`;
@@ -50,6 +54,7 @@ export default class ChuckBar {
         ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
         ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
         ChuckBar.removeButton.title = `Remove [${metaKey} + ⌫]`;
+        ChuckBar.recordButton.title = `Record`;
 
         // Add button event listeners
         ChuckBar.webchuckButton.addEventListener("click", async () => {
@@ -68,6 +73,9 @@ export default class ChuckBar {
         ChuckBar.removeButton.addEventListener("click", async () => {
             ChuckBar.removeCode();
         });
+
+        // Configure the recorder button
+        new Recorder(ChuckBar.recordButton);
     }
 
     static runEditorCode() {
@@ -112,6 +120,7 @@ export default class ChuckBar {
         ChuckBar.playButton.disabled = false;
         ChuckBar.replaceButton.disabled = false;
         ChuckBar.removeButton.disabled = false;
+        ChuckBar.recordButton.disabled = false;
 
         ChuckBar.running = true;
     }
