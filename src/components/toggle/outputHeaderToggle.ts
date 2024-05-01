@@ -39,8 +39,6 @@ export default class OutputHeaderToggle extends HeaderToggle {
             openCallback,
             closeCallback
         );
-        // this.openCallback = openCallback;
-        // this.closeCallback = closeCallback;
     }
 
     toggle() {
