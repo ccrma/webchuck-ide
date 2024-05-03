@@ -10,8 +10,8 @@
 import DropdownElement from "@/components/navbar/dropdownElement";
 import NestedDropdown from "@/components/navbar/nestedDropdown";
 import {
-    loadChuckFile,
-    loadDataFile,
+    loadChuckFileFromURL,
+    loadDataFileFromURL,
 } from "@components/fileExplorer/projectSystem";
 
 export default class Examples {
@@ -29,14 +29,14 @@ export default class Examples {
      */
     static buildBasicExamples() {
         Examples.newExample("Hello Sine", () =>
-            loadChuckFile("examples/helloSine.ck")
+            loadChuckFileFromURL("examples/helloSine.ck")
         );
         Examples.newExample("Harmonic Series Arp", () =>
-            loadChuckFile("examples/harmonicSeriesArp.ck")
+            loadChuckFileFromURL("examples/harmonicSeriesArp.ck")
         );
         Examples.newExample("Play Lofi Beats", () => {
-            loadChuckFile("examples/slammin/slammin.ck");
-            loadDataFile("examples/slammin/were_slammin.wav");
+            loadChuckFileFromURL("examples/slammin/slammin.ck");
+            loadDataFileFromURL("examples/slammin/were_slammin.wav");
         });
 
         // OTF Nested Examples
@@ -48,54 +48,54 @@ export default class Examples {
         Examples.newExample(
             "otf_01.ck",
             () => {
-                loadChuckFile("examples/otf/otf_01.ck");
-                loadDataFile("examples/otf/data/kick.wav");
+                loadChuckFileFromURL("examples/otf/otf_01.ck");
+                loadDataFileFromURL("examples/otf/data/kick.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_02.ck",
             () => {
-                loadChuckFile("examples/otf/otf_02.ck");
-                loadDataFile("examples/otf/data/hihat.wav");
+                loadChuckFileFromURL("examples/otf/otf_02.ck");
+                loadDataFileFromURL("examples/otf/data/hihat.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_03.ck",
             () => {
-                loadChuckFile("examples/otf/otf_03.ck");
-                loadDataFile("examples/otf/data/hihat-open.wav");
+                loadChuckFileFromURL("examples/otf/otf_03.ck");
+                loadDataFileFromURL("examples/otf/data/hihat-open.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_04.ck",
             () => {
-                loadChuckFile("examples/otf/otf_04.ck");
-                loadDataFile("examples/otf/data/snare-hop.wav");
+                loadChuckFileFromURL("examples/otf/otf_04.ck");
+                loadDataFileFromURL("examples/otf/data/snare-hop.wav");
             },
             otfNested
         );
         Examples.newExample(
             "otf_05.ck",
             () => {
-                loadChuckFile("examples/otf/otf_05.ck");
+                loadChuckFileFromURL("examples/otf/otf_05.ck");
             },
             otfNested
         );
         Examples.newExample(
             "otf_06.ck",
             () => {
-                loadChuckFile("examples/otf/otf_06.ck");
+                loadChuckFileFromURL("examples/otf/otf_06.ck");
             },
             otfNested
         );
         Examples.newExample(
             "otf_07.ck",
             () => {
-                loadChuckFile("examples/otf/otf_07.ck");
-                loadDataFile("examples/otf/data/snare.wav");
+                loadChuckFileFromURL("examples/otf/otf_07.ck");
+                loadDataFileFromURL("examples/otf/data/snare.wav");
             },
             otfNested
         );
@@ -108,12 +108,12 @@ export default class Examples {
         );
         Examples.newExample(
             "Hello Sine GUI",
-            () => loadChuckFile("examples/helloSineGUI.ck"),
+            () => loadChuckFileFromURL("examples/helloSineGUI.ck"),
             guiNested
         );
         Examples.newExample(
             "FM Synthesis GUI",
-            () => loadChuckFile("examples/fmGUI.ck"),
+            () => loadChuckFileFromURL("examples/fmGUI.ck"),
             guiNested
         );
 
@@ -125,12 +125,12 @@ export default class Examples {
         );
         Examples.newExample(
             "Mouse PWM HID",
-            () => loadChuckFile("examples/mouseHID.ck"),
+            () => loadChuckFileFromURL("examples/mouseHID.ck"),
             hidNested
         );
         Examples.newExample(
             "Keyboard Organ HID",
-            () => loadChuckFile("examples/keyboardHID.ck"),
+            () => loadChuckFileFromURL("examples/keyboardHID.ck"),
             hidNested
         );
     }

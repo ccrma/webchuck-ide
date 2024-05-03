@@ -1,5 +1,5 @@
 import ProjectSystem, {
-    loadChuckFile,
+    loadChuckFileFromURL,
 } from "@/components/fileExplorer/projectSystem";
 import pako from "pako";
 
@@ -16,7 +16,7 @@ export function parseURLParams() {
     // Process params
     if (url) {
         // Load the chuck file
-        loadChuckFile(url);
+        loadChuckFileFromURL(url);
     } else if (code) {
         try {
             // Try decode base64 compressed code (long files)

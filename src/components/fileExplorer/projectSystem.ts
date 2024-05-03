@@ -417,7 +417,7 @@ export default class ProjectSystem {
  * Load a chuck file from a url
  * @param url url to fetch example from
  */
-export async function loadChuckFile(url: string) {
+export async function loadChuckFileFromURL(url: string) {
     const chuckFile: FileData = await fetchTextFile(url);
     ProjectSystem.addNewFile(chuckFile.name, chuckFile.data as string);
     Console.print(`loaded ChucK file: ${chuckFile.name}`);
@@ -427,7 +427,7 @@ export async function loadChuckFile(url: string) {
  * Load a data file from a url
  * @param url url to data file
  */
-export async function loadDataFile(url: string) {
+export async function loadDataFileFromURL(url: string) {
     const dataFile: FileData = await fetchDataFile(url);
     ProjectSystem.addNewFile(dataFile.name, dataFile.data as Uint8Array);
     Console.print(`loaded file: ${dataFile.name}`);
