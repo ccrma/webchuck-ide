@@ -116,8 +116,8 @@ export async function startChuck() {
 
     // Configure Recorder
     recordGain = audioContext.createGain();
-    recordGain.gain.value = .96; // so it doesn't clip
-    theChuck.connect(recordGain); 
+    recordGain.gain.value = 0.96; // so it doesn't clip
+    theChuck.connect(recordGain);
     Recorder.configureRecorder(audioContext, recordGain);
 
     // Start HID, mouse and keyboard on
