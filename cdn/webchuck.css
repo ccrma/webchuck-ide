@@ -11,6 +11,12 @@ header {
     position: relative;
 }
 
+@media (max-width: 640px){
+  header {
+    padding-top: 3.5rem;
+  }
+}
+
 h1 {
     margin: 0;
     font-size: 2em;
