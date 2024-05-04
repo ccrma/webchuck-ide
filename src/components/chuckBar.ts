@@ -17,7 +17,7 @@
 import { theChuck, startChuck, connectMic } from "@/host";
 import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
-import Recorder from "@/components/recorder";
+import Recorder, { RecordState } from "@/components/recorder";
 
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
@@ -100,7 +100,16 @@ export default class ChuckBar {
     static removeCode() {
         theChuck?.removeLastCode().then(
             // Success
-            (shredID: number) => VmMonitor.removeShredRow(shredID),
+            (shredID: number) => {
+                VmMonitor.removeShredRow(shredID);
+                // Also stop recording if no shreds
+                if (
+                    Recorder.state === RecordState.recording &&
+                    VmMonitor.getNumShreds() === 0
+                ) {
+                    Recorder.stopRecording();
+                }
+            },
             () => {} // Failure, do nothing
         );
     }

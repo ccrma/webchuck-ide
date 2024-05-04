@@ -104,7 +104,6 @@ export async function startChuck() {
     theChuck.getParamString("VERSION").then((value: string) => {
         Console.print("system version: " + value);
     });
-    // .finally(() => Console.print("WebChucK is running!"));
     Console.print(
         "number of channels: " + audioContext.destination.maxChannelCount
     );
@@ -116,7 +115,7 @@ export async function startChuck() {
 
     // Configure Recorder
     recordGain = audioContext.createGain();
-    recordGain.gain.value = 0.96; // so it doesn't clip
+    recordGain.gain.value = 0.98; // Prevents weird clipping artifacts
     theChuck.connect(recordGain);
     Recorder.configureRecorder(audioContext, recordGain);
 

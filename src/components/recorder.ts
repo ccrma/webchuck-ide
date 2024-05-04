@@ -14,20 +14,20 @@ import Console from "./console";
 import ProjectSystem from "./fileExplorer/projectSystem";
 import VmMonitor from "./vmMonitor";
 
-enum RecordState {
+export enum RecordState {
     stopped = 0,
     recording = 1,
     armed = 2,
 }
 
 enum RecordButtonImage {
-    record = "img/record-button.svg",
     stop = "img/stop-button.svg",
+    record = "img/record-button.svg",
     armed = "img/armed-button.svg",
 }
 
 export default class Recorder {
-    private static state: RecordState = RecordState.stopped;
+    public static state: RecordState = RecordState.stopped;
     public static recordButton: HTMLButtonElement;
     public static recordImage: HTMLImageElement;
     public static playButton: HTMLButtonElement;
@@ -54,15 +54,6 @@ export default class Recorder {
         Recorder.removeButton = document.getElementById(
             "removeButton"
         )! as HTMLButtonElement;
-        // Add special event listener to automatically stop recording when only 1 shred is left
-        Recorder.removeButton.addEventListener("click", () => {
-            if (
-                Recorder.state === RecordState.recording &&
-                VmMonitor.getNumShreds() === 1
-            ) {
-                Recorder.stopRecording();
-            }
-        });
     }
 
     static configureRecorder(audioContext: AudioContext, gainNode: GainNode) {
@@ -72,10 +63,12 @@ export default class Recorder {
         gainNode.connect(Recorder.stream);
         Recorder.buffer = [];
 
+        // Write record data to buffer
         Recorder.recorder.ondataavailable = (e) => {
             Recorder.buffer.push(e.data);
         };
 
+        // When stop recording, convert buffer to wav blob
         Recorder.recorder.onstop = async () => {
             // Convert buffer to wav blob
             const blob = new Blob(Recorder.buffer, {
@@ -177,7 +170,7 @@ export default class Recorder {
  * @param audioBuffer audio buffer to convert
  * @returns Promise that resolves to a Blob
  */
-export async function convertAudioBufferToWavBlob(
+async function convertAudioBufferToWavBlob(
     audioBuffer: AudioBuffer
 ): Promise<Blob> {
     return new Promise<Blob>((resolve) => {
@@ -207,7 +200,7 @@ export async function convertAudioBufferToWavBlob(
  * @param name name of blob
  * @returns url to the blob
  */
-export function getBlobLink(blob: Blob, name: string): string {
+function getBlobLink(blob: Blob, name: string): string {
     const blobUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = blobUrl;
