@@ -69,7 +69,11 @@ export function initTheme() {
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
-    setColorScheme();
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        darkModeOn();
+    } else {
+        darkModeOff();
+    };
 }
 
 /**
