@@ -54,7 +54,7 @@ export function setColorScheme() {
 
 /**
  * Return the current color scheme
- * @returns {string} "dark", "light"
+ * @returns {string} "dark" or "light"
  */
 export function getColorScheme(): string {
     return localStorage.theme;
