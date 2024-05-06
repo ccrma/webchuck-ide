@@ -22,10 +22,10 @@ const DARK_HOVER_COLOR_CLASS: string = "dark:hover:text-dark-c";
 
 export {
     ACCENT_COLOR_CLASS,
-    TEXT_COLOR_CLASS,
-    HOVER_COLOR_CLASS,
-    DARK_TEXT_HOVER_CLASS,
     DARK_HOVER_COLOR_CLASS,
+    DARK_TEXT_HOVER_CLASS,
+    HOVER_COLOR_CLASS,
+    TEXT_COLOR_CLASS,
 };
 
 /**
@@ -33,22 +33,22 @@ export {
  */
 export function setColorScheme() {
     switch (localStorage.getItem("colorPreference")) {
-        case null:
-            localStorage.colorPreference = "system";
-        case "system":
-            setThemeFromPreference();
-            darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
-            break;
-        case "dark":
-            localStorage.theme = "dark";
-            darkModeOn();
-            darkModeToggle.innerHTML = "Dark Mode: Dark";
-            break;
-        case "light":
-            localStorage.theme = "light";
-            darkModeOff();
-            darkModeToggle.innerHTML = "Dark Mode: Light";
-            break;
+    case null:
+    case "system":
+        localStorage.colorPreference = "system";
+        setThemeFromPreference();
+        darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
+        break;
+    case "dark":
+        localStorage.theme = "dark";
+        darkModeOn();
+        darkModeToggle.innerHTML = "Dark Mode: Dark";
+        break;
+    case "light":
+        localStorage.theme = "light";
+        darkModeOff();
+        darkModeToggle.innerHTML = "Dark Mode: Light";
+        break;
     }
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === "dark") {
@@ -144,17 +144,17 @@ function darkModeOn() {
  */
 function toggleDarkMode() {
     switch (localStorage.colorPreference) {
-        case "system":
-            localStorage.colorPreference = "dark";
-            prefersColorSchemeOff();
-            break;
-        case "dark":
-            localStorage.colorPreference = "light";
-            break;
-        case "light":
-            localStorage.colorPreference = "system";
-            prefersColorSchemeOn();
-            break;
+    case "system":
+        localStorage.colorPreference = "dark";
+        prefersColorSchemeOff();
+        break;
+    case "dark":
+        localStorage.colorPreference = "light";
+        break;
+    case "light":
+        localStorage.colorPreference = "system";
+        prefersColorSchemeOn();
+        break;
     }
 
     setColorScheme();
