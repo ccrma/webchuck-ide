@@ -28,33 +28,41 @@ export {
     DARK_HOVER_COLOR_CLASS,
 };
 
+const colorPreference: readonly string[] = ["system", "dark", "light"];
+
 /**
  * Set the color scheme of the page
  */
 export function setColorScheme() {
+  switch (localStorage.getItem("colorPreference")) {
+    case null:
+        localStorage.colorPreference = "system";
+    case "system":
+        setThemeFromPreference();
+        darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
+        break;
+    case "dark":
+        localStorage.theme = "dark";
+        darkModeOn();
+        darkModeToggle.innerHTML = "Dark Mode: Dark";
+        break;
+    case "light":
+        localStorage.theme = "light";
+      darkModeOff();
+        darkModeToggle.innerHTML = "Dark Mode: Light";
+        break;
+  }
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === "dark") {
         // Dark theme
-        document.documentElement.classList.add("dark");
-        Console.setDarkTheme();
-        visual?.theme(true);
-        Editor.setTheme(true);
-        GUI.setTheme(true);
-        darkModeToggle.innerHTML = "Dark Mode: On";
     } else {
         // Light theme
-        document.documentElement.classList.remove("dark");
-        Console.setLightTheme();
-        visual?.theme(false);
-        Editor.setTheme(false);
-        GUI.setTheme(false);
-        darkModeToggle.innerHTML = "Dark Mode: Off";
     }
 }
 
 /**
  * Return the current color scheme
- * @returns {string} "dark" or "light"
+ * @returns {string} "dark", "light"
  */
 export function getColorScheme(): string {
     return localStorage.theme;
@@ -69,16 +77,13 @@ export function initTheme() {
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-            if (event.matches) {
-                darkModeOn();
-            } else {
-                darkModeOff();
-            }
-        });
-    if (
+
+    setColorScheme();
+    if (localStorage.colorPreference === "system") { prefersColorSchemeOn(); }
+}
+
+function setThemeFromPreference() {
+   if (
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
@@ -88,13 +93,37 @@ export function initTheme() {
     }
 }
 
+function setDarkTheme(event) {
+  if (event.matches) {
+                darkModeOn();
+  } else {
+                darkModeOff();
+  }
+}
+
+function prefersColorSchemeOn() {
+  window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", setDarkTheme);
+}
+
+function prefersColorSchemeOff() {
+  window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .removeEventListener("change", setDarkTheme);
+}
+
 /**
  * Disable WebChucK IDE dark mode
  */
 function darkModeOff() {
     // turn off dark mode
-    localStorage.theme = "light";
-    setColorScheme();
+        localStorage.theme = "light";
+        document.documentElement.classList.remove("dark");
+        Console.setLightTheme();
+        visual?.theme(false);
+        Editor.setTheme(false);
+        GUI.setTheme(false);
 }
 
 /**
@@ -102,17 +131,31 @@ function darkModeOff() {
  */
 function darkModeOn() {
     // turn on dark mode
-    localStorage.theme = "dark";
-    setColorScheme();
+        localStorage.theme = "dark";
+        document.documentElement.classList.add("dark");
+        Console.setDarkTheme();
+        visual?.theme(true);
+        Editor.setTheme(true);
+        GUI.setTheme(true);
 }
 
 /**
  * Switch between dark mode and light mode
  */
 function toggleDarkMode() {
-    if (localStorage.theme === "dark") {
-        darkModeOff();
-    } else {
-        darkModeOn();
-    }
+    switch (localStorage.colorPreference) {
+      case "system":
+        localStorage.colorPreference = "dark";
+        prefersColorSchemeOff();
+        break;
+      case "dark":
+        localStorage.colorPreference = "light";
+        break;
+      case "light":
+        localStorage.colorPreference = "system";
+        prefersColorSchemeOn();
+        break;
+  }
+
+  setColorScheme();
 }
