@@ -250,15 +250,14 @@ monaco.languages.registerCompletionItemProvider("chuck", {
             endColumn: word.endColumn,
         };
 
-        const chuck_module_suggestions = chuck_modules.map((module: any) => {
-            return {
-                label: module,
-                kind: monaco.languages.CompletionItemKind.Text,
-                insertText: module,
-                range: range,
-            };
+        const textUntilPosition = model.getValueInRange({
+            startLineNumber: 1,
+            startColumn: 1,
+            endLineNumber: position.lineNumber,
+            endColumn: position.column,
         });
-        const chuck_statement_suggestions = [
+
+        const statement_suggestions = [
             {
                 label: "random",
                 kind: monaco.languages.CompletionItemKind.Keyword,
@@ -288,7 +287,7 @@ monaco.languages.registerCompletionItemProvider("chuck", {
                 label: "for",
                 kind: monaco.languages.CompletionItemKind.Snippet,
                 insertText: [
-                    "for (0 => int i; i < ${1:condition}; i++)",
+                    "for (0 => int i; i < ${1:condition}; ++i)",
                     "{",
                     "\t$0",
                     "}",
@@ -313,9 +312,22 @@ monaco.languages.registerCompletionItemProvider("chuck", {
             },
         ];
 
-        var suggestions = chuck_module_suggestions.concat(
-            chuck_statement_suggestions
-        );
+        const words = textUntilPosition
+            .split(/\W+/)
+            .concat(chuck_modules)
+            .filter(
+                (word) =>
+                    !statement_suggestions.map((s) => s.label).includes(word)
+            );
+        const uniqueWords = Array.from(new Set(words));
+        const word_suggestions = uniqueWords.map((word) => ({
+            label: word,
+            kind: monaco.languages.CompletionItemKind.Text,
+            insertText: word,
+            range: range,
+        }));
+
+        var suggestions = word_suggestions.concat(statement_suggestions);
         return { suggestions: suggestions };
     },
 });

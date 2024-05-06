@@ -9,9 +9,14 @@
 
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
+// import { WebLinksAddon } from "@xterm/addon-web-links";
 import "@styles/xterm.css";
 
 import { theChuck } from "@/host";
+import { LinkProvider } from "xterm-link-provider";
+
+// Define a custom regular expression that matches blob URIs
+const blobRegex = /(blob:https?:\/\/\S+)/;
 
 export default class Console {
     public static terminal: Terminal;
@@ -43,6 +48,14 @@ export default class Console {
         Console.terminal.loadAddon(Console.fitAddon);
         Console.terminal.open(Console.terminalElement);
         Console.fit();
+
+        // Blob Links
+        Console.terminal.registerLinkProvider(
+            new LinkProvider(Console.terminal, blobRegex, (_e, uri) => {
+                window.open(uri, "_blank");
+            })
+        );
+        // Console.terminal.loadAddon(new WebLinksAddon());
 
         // Resize listener
         window.addEventListener("resize", () => {

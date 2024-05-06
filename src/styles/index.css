@@ -51,8 +51,16 @@
         grid-template-rows: 5fr 2px 5fr;
         grid-template-columns: 100%;
     }
-    #chuckBarLeft {
+    #chuck-bar {
         width: 100%;
+    }
+    #chuckBarLeft {
+        /* 
+            @tzfeng
+            weird hack to make mobile look good
+            cut off the record button on mobile
+        */
+        width: calc(100% + 4rem);
     }
     #chuckBarRight {
         display: none;
@@ -154,6 +162,7 @@
 /* CHUCK BAR */
 #chuck-bar .chuck-button {
     @apply px-1 mr-2 disabled:opacity-50 focus:outline-none enabled:hover:filter enabled:hover:invert-20 transition duration-300;
+    min-width: 2.75rem; /* same height as chuck button */
 }
 
 /* FILE EXPLORER */

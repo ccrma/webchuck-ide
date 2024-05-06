@@ -12,7 +12,7 @@ export interface File {
 }
 
 /**
- * Load a text file, can be a .ck file or a generic text file
+ * Load a text file, can be a .ck file or a generic plaintext file
  * @param url
  */
 export async function fetchTextFile(url: string): Promise<File> {

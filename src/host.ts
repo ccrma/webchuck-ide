@@ -18,9 +18,10 @@ import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import Recorder from "@/components/recorder";
 
 // WebChucK source
-const DEV_CHUCK_SRC = "https://ccrma.stanford.edu/~tzfeng/static/wc/src/"; // dev webchuck src
+const DEV_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/dev/"; // dev webchuck src
 const PROD_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/src/"; // prod webchuck src
 let whereIsChuck: string =
     localStorage.getItem("chuckVersion") === "dev"
@@ -34,6 +35,9 @@ let sampleRate: number = 0;
 // Audio Visualizer
 let analyser: AnalyserNode;
 let visual: Visualizer;
+
+// Recorder
+let recordGain: GainNode;
 
 // HID
 let hid: HID;
@@ -100,7 +104,6 @@ export async function startChuck() {
     theChuck.getParamString("VERSION").then((value: string) => {
         Console.print("system version: " + value);
     });
-    // .finally(() => Console.print("WebChucK is running!"));
     Console.print(
         "number of channels: " + audioContext.destination.maxChannelCount
     );
@@ -109,6 +112,12 @@ export async function startChuck() {
 
     // Start audio visualizer
     startVisualizer();
+
+    // Configure Recorder
+    recordGain = audioContext.createGain();
+    recordGain.gain.value = 0.98; // Prevents weird clipping artifacts
+    theChuck.connect(recordGain);
+    Recorder.configureRecorder(audioContext, recordGain);
 
     // Start HID, mouse and keyboard on
     hid = await HID.init(theChuck);
@@ -122,28 +131,28 @@ export async function startChuck() {
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezchord.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezscore.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("ezscale.ck");
         });
     await theChuck
         .loadFile(
             "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
         )
-        .then(() => { 
+        .then(() => {
             theChuck.runFile("scoreplayer.ck");
         });
 }

@@ -164,7 +164,7 @@ export default class MoreExamples {
             MoreExamples.hideModal();
         });
         MoreExamples.moreExamplesLoad.addEventListener("click", () => {
-            MoreExamples.loadExample();
+            MoreExamples.loadChuckFile();
             MoreExamples.hideModal();
         });
     }
@@ -362,7 +362,7 @@ export default class MoreExamples {
     /**
      * Load example from preview into editor
      */
-    static loadExample() {
+    static loadChuckFile() {
         ProjectSystem.addNewFile(
             MoreExamples.previewExample.name,
             MoreExamples.previewExample.code

@@ -11,13 +11,13 @@ import Editor from "@components/monaco/editor";
 import EventButton from "./eventButton";
 import FloatSlider from "./floatSlider";
 import { getColorScheme } from "@/utils/theme";
-import { chuckPreprocess } from "@/utils/chuckPreprocess";
+import { getGlobalVariables } from "@/utils/chuckPreprocess";
 
 const GUIPanel = document.getElementById("GUIPanel") as HTMLDivElement;
 
 // Constants
 const RATIO = window.devicePixelRatio || 1;
-console.log("window scale ratio:", RATIO);
+// console.log("window scale ratio:", RATIO);
 const BUTTON_MARGIN = 10 * RATIO;
 const BUTTON_SIZE = 70 * RATIO;
 const SLIDER_MARGIN = 15 * RATIO;
@@ -83,7 +83,7 @@ export default class GUI {
     static generateGUI(sliderValues?: number[]) {
         if (GUI.canvas.width === 0 || GUI.canvas.height === 0) return;
 
-        const globals = chuckPreprocess(Editor.getEditorCode());
+        const globals = getGlobalVariables(Editor.getEditorCode());
 
         GUI.buttons = [];
         GUI.sliders = [];
@@ -130,7 +130,7 @@ export default class GUI {
                 globals.float[i],
                 GUI.ctx,
                 GUI.isDark,
-                sliderValues ? sliderValues[i] : 0
+                sliderValues != undefined ? sliderValues[i] : 0
             );
             GUI.sliders.push(floatSlider);
         }
@@ -253,7 +253,6 @@ export default class GUI {
         GUI.resizeDimensions();
         GUI.generateGUI(sliderValues);
 
-        GUI.sliders.forEach((slider, i) => (slider.value = sliderValues[i]));
         GUI.draw();
     }
 

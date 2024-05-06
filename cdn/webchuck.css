@@ -11,6 +11,12 @@ header {
     position: relative;
 }
 
+@media (max-width: 640px){
+  header {
+    padding-top: 3.5rem;
+  }
+}
+
 h1 {
     margin: 0;
     font-size: 2em;
@@ -86,7 +92,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 5em;
+  width: 8em;
   font-size: small;
   font-family: monospace;
 }
@@ -94,9 +100,9 @@ button {
 input[type=range] {
   appearance: none;
   background: transparent;
-  height: 10em;
+  height: 8em;
   transform: rotateZ(270deg);
-  width: 10em;
+  width: 8em;
 }
 
 input[type=range]:hover {

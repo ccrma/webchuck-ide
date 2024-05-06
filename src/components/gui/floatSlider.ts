@@ -114,12 +114,11 @@ export default class FloatSlider {
      * @param xPos position of mouse in canvas
      */
     updateSliderPosition(xPos: number) {
-        if (xPos > this.x && xPos < this.x + this.width) {
-            const currValue = (xPos - this.x) / this.width;
-            if (currValue != this.value) {
-                this.value = currValue;
-                theChuck.setFloat(this.floatName, this.value);
-            }
+        xPos = Math.max(this.x, Math.min(this.x + this.width, xPos));
+        const currValue = (xPos - this.x) / this.width;
+        if (currValue != this.value) {
+            this.value = currValue;
+            theChuck.setFloat(this.floatName, this.value);
         }
     }
 }
