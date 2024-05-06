@@ -50,12 +50,6 @@ export function setColorScheme() {
         darkModeToggle.innerHTML = "Dark Mode: Light";
         break;
     }
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (localStorage.theme === "dark") {
-        // Dark theme
-    } else {
-        // Light theme
-    }
 }
 
 /**
@@ -76,10 +70,10 @@ export function initTheme() {
         toggleDarkMode();
     });
 
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", setDarkTheme);
     setColorScheme();
-    if (localStorage.colorPreference === "system") {
-        prefersColorSchemeOn();
-    }
 }
 
 function setThemeFromPreference() {
@@ -94,23 +88,14 @@ function setThemeFromPreference() {
 }
 
 function setDarkTheme(event) {
+    if (localStorage.colorPreference !== "system") {
+        return;
+    }
     if (event.matches) {
         darkModeOn();
     } else {
         darkModeOff();
     }
-}
-
-function prefersColorSchemeOn() {
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", setDarkTheme);
-}
-
-function prefersColorSchemeOff() {
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .removeEventListener("change", setDarkTheme);
 }
 
 /**
@@ -146,14 +131,12 @@ function toggleDarkMode() {
     switch (localStorage.colorPreference) {
     case "system":
         localStorage.colorPreference = "dark";
-        prefersColorSchemeOff();
         break;
     case "dark":
         localStorage.colorPreference = "light";
         break;
     case "light":
         localStorage.colorPreference = "system";
-        prefersColorSchemeOn();
         break;
     }
 
