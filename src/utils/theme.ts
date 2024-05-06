@@ -33,22 +33,22 @@ export {
  */
 export function setColorScheme() {
     switch (localStorage.getItem("colorPreference")) {
-    case null:
-    case "system":
-        localStorage.colorPreference = "system";
-        setThemeFromPreference();
-        darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
-        break;
-    case "dark":
-        localStorage.theme = "dark";
-        darkModeOn();
-        darkModeToggle.innerHTML = "Dark Mode: Dark";
-        break;
-    case "light":
-        localStorage.theme = "light";
-        darkModeOff();
-        darkModeToggle.innerHTML = "Dark Mode: Light";
-        break;
+        case null:
+        case "system":
+            localStorage.colorPreference = "system";
+            setThemeFromPreference();
+            darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
+            break;
+        case "dark":
+            localStorage.theme = "dark";
+            darkModeOn();
+            darkModeToggle.innerHTML = "Dark Mode: Dark";
+            break;
+        case "light":
+            localStorage.theme = "light";
+            darkModeOff();
+            darkModeToggle.innerHTML = "Dark Mode: Light";
+            break;
     }
 }
 
@@ -129,15 +129,15 @@ function darkModeOn() {
  */
 function toggleDarkMode() {
     switch (localStorage.colorPreference) {
-    case "system":
-        localStorage.colorPreference = "dark";
-        break;
-    case "dark":
-        localStorage.colorPreference = "light";
-        break;
-    case "light":
-        localStorage.colorPreference = "system";
-        break;
+        case "system":
+            localStorage.colorPreference = "dark";
+            break;
+        case "dark":
+            localStorage.colorPreference = "light";
+            break;
+        case "light":
+            localStorage.colorPreference = "system";
+            break;
     }
 
     setColorScheme();
