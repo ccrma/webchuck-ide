@@ -69,18 +69,23 @@ export function initTheme() {
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-        if (event.matches) {
-            darkModeOn();
-        } else {
-            darkModeOff();
-        };
-    });
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+            if (event.matches) {
+                darkModeOn();
+            } else {
+                darkModeOff();
+            }
+        });
+    if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
         darkModeOn();
     } else {
         darkModeOff();
-    };
+    }
 }
 
 /**
