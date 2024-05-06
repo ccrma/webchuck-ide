@@ -28,8 +28,6 @@ export {
     DARK_HOVER_COLOR_CLASS,
 };
 
-const colorPreference: readonly string[] = ["system", "dark", "light"];
-
 /**
  * Set the color scheme of the page
  */
