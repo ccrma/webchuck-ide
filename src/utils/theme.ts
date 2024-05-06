@@ -34,24 +34,24 @@ const colorPreference: readonly string[] = ["system", "dark", "light"];
  * Set the color scheme of the page
  */
 export function setColorScheme() {
-  switch (localStorage.getItem("colorPreference")) {
-    case null:
-        localStorage.colorPreference = "system";
-    case "system":
-        setThemeFromPreference();
-        darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
-        break;
-    case "dark":
-        localStorage.theme = "dark";
-        darkModeOn();
-        darkModeToggle.innerHTML = "Dark Mode: Dark";
-        break;
-    case "light":
-        localStorage.theme = "light";
-      darkModeOff();
-        darkModeToggle.innerHTML = "Dark Mode: Light";
-        break;
-  }
+    switch (localStorage.getItem("colorPreference")) {
+        case null:
+            localStorage.colorPreference = "system";
+        case "system":
+            setThemeFromPreference();
+            darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
+            break;
+        case "dark":
+            localStorage.theme = "dark";
+            darkModeOn();
+            darkModeToggle.innerHTML = "Dark Mode: Dark";
+            break;
+        case "light":
+            localStorage.theme = "light";
+            darkModeOff();
+            darkModeToggle.innerHTML = "Dark Mode: Light";
+            break;
+    }
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === "dark") {
         // Dark theme
@@ -79,11 +79,13 @@ export function initTheme() {
     });
 
     setColorScheme();
-    if (localStorage.colorPreference === "system") { prefersColorSchemeOn(); }
+    if (localStorage.colorPreference === "system") {
+        prefersColorSchemeOn();
+    }
 }
 
 function setThemeFromPreference() {
-   if (
+    if (
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
@@ -94,21 +96,21 @@ function setThemeFromPreference() {
 }
 
 function setDarkTheme(event) {
-  if (event.matches) {
-                darkModeOn();
-  } else {
-                darkModeOff();
-  }
+    if (event.matches) {
+        darkModeOn();
+    } else {
+        darkModeOff();
+    }
 }
 
 function prefersColorSchemeOn() {
-  window
+    window
         .matchMedia("(prefers-color-scheme: dark)")
         .addEventListener("change", setDarkTheme);
 }
 
 function prefersColorSchemeOff() {
-  window
+    window
         .matchMedia("(prefers-color-scheme: dark)")
         .removeEventListener("change", setDarkTheme);
 }
@@ -118,12 +120,12 @@ function prefersColorSchemeOff() {
  */
 function darkModeOff() {
     // turn off dark mode
-        localStorage.theme = "light";
-        document.documentElement.classList.remove("dark");
-        Console.setLightTheme();
-        visual?.theme(false);
-        Editor.setTheme(false);
-        GUI.setTheme(false);
+    localStorage.theme = "light";
+    document.documentElement.classList.remove("dark");
+    Console.setLightTheme();
+    visual?.theme(false);
+    Editor.setTheme(false);
+    GUI.setTheme(false);
 }
 
 /**
@@ -131,12 +133,12 @@ function darkModeOff() {
  */
 function darkModeOn() {
     // turn on dark mode
-        localStorage.theme = "dark";
-        document.documentElement.classList.add("dark");
-        Console.setDarkTheme();
-        visual?.theme(true);
-        Editor.setTheme(true);
-        GUI.setTheme(true);
+    localStorage.theme = "dark";
+    document.documentElement.classList.add("dark");
+    Console.setDarkTheme();
+    visual?.theme(true);
+    Editor.setTheme(true);
+    GUI.setTheme(true);
 }
 
 /**
@@ -144,18 +146,18 @@ function darkModeOn() {
  */
 function toggleDarkMode() {
     switch (localStorage.colorPreference) {
-      case "system":
-        localStorage.colorPreference = "dark";
-        prefersColorSchemeOff();
-        break;
-      case "dark":
-        localStorage.colorPreference = "light";
-        break;
-      case "light":
-        localStorage.colorPreference = "system";
-        prefersColorSchemeOn();
-        break;
-  }
+        case "system":
+            localStorage.colorPreference = "dark";
+            prefersColorSchemeOff();
+            break;
+        case "dark":
+            localStorage.colorPreference = "light";
+            break;
+        case "light":
+            localStorage.colorPreference = "system";
+            prefersColorSchemeOn();
+            break;
+    }
 
-  setColorScheme();
+    setColorScheme();
 }
