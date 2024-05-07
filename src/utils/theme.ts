@@ -37,7 +37,7 @@ export function setColorScheme() {
         case "system":
             localStorage.colorPreference = "system";
             setThemeFromPreference();
-            darkModeToggle.innerHTML = "Dark Mode: Browser Preference";
+            darkModeToggle.innerHTML = "Dark Mode: System";
             break;
         case "dark":
             localStorage.theme = "dark";
