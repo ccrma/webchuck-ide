@@ -12,6 +12,7 @@ import Editor from "@components/monaco/editor";
 import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;
+let colorPreferenceToggle: HTMLButtonElement;
 
 /* Header Theme */
 const ACCENT_COLOR_CLASS: string = "text-orange";
@@ -32,23 +33,22 @@ export {
  * Set the color scheme of the page
  */
 export function setColorScheme() {
-    switch (localStorage.getItem("colorPreference")) {
-        case null:
-        case "system":
-            localStorage.colorPreference = "system";
-            setThemeFromPreference();
-            darkModeToggle.innerHTML = "Dark Mode: System";
-            break;
-        case "dark":
-            localStorage.theme = "dark";
-            darkModeOn();
-            darkModeToggle.innerHTML = "Dark Mode: Dark";
-            break;
-        case "light":
-            localStorage.theme = "light";
-            darkModeOff();
-            darkModeToggle.innerHTML = "Dark Mode: Light";
-            break;
+    if (localStorage.colorPreference === "true") {
+        setThemeFromPreference();
+        colorPreferenceToggle.innerHTML = "System: On";
+        darkModeToggle.innerHTML = "Disabled";
+    } else {
+        colorPreferenceToggle.innerHTML = "System: Off";
+        switch (localStorage.theme) {
+            case "dark":
+                darkModeOn();
+                darkModeToggle.innerHTML = "Mode: Dark";
+                break;
+            case "light":
+                darkModeOff();
+                darkModeToggle.innerHTML = "Mode: Light";
+                break;
+        }
     }
 }
 
@@ -64,6 +64,16 @@ export function getColorScheme(): string {
  * Initialize the dark mode toggle button
  */
 export function initTheme() {
+    colorPreferenceToggle = document.querySelector<HTMLButtonElement>(
+        "#colorPreferenceToggle"
+    )!;
+    colorPreferenceToggle.addEventListener("click", () => {
+        toggleColorPreference();
+    });
+
+    if (localStorage.getItem("colorPreference") == null)
+        localStorage.colorPreference = "true";
+
     darkModeToggle =
         document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
@@ -88,7 +98,7 @@ function setThemeFromPreference() {
 }
 
 function setDarkTheme(event) {
-    if (localStorage.colorPreference !== "system") {
+    if (localStorage.colorPreference === "false") {
         return;
     }
     if (event.matches) {
@@ -127,16 +137,29 @@ function darkModeOn() {
 /**
  * Switch between dark mode and light mode
  */
-function toggleDarkMode() {
+function toggleColorPreference() {
     switch (localStorage.colorPreference) {
-        case "system":
-            localStorage.colorPreference = "dark";
+        case "true":
+            localStorage.colorPreference = "false";
+            break;
+        case "false":
+            localStorage.colorPreference = "true";
+            break;
+    }
+
+    setColorScheme();
+}
+
+/**
+ * Switch between dark mode and light mode
+ */
+function toggleDarkMode() {
+    switch (localStorage.theme) {
+        case "light":
+            localStorage.theme = "dark";
             break;
         case "dark":
-            localStorage.colorPreference = "light";
-            break;
-        case "light":
-            localStorage.colorPreference = "system";
+            localStorage.theme = "light";
             break;
     }
 
