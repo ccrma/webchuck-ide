@@ -40,7 +40,7 @@ Clone this repository
 git clone https://github.com/ccrma/webchuck-ide
 ```
 
-Install [Node](https://nodejs.org/en/download) dependencies
+Install [Node](https://nodejs.org/en/download) and dependencies
 
 ```
 npm install
@@ -57,3 +57,9 @@ npm run dev
 ```
 npm run build
 ```
+
+## Contributing
+
+Contributions are welcome! Please report issues and open PRs to the `dev` branch.
+
+*Note: You will need to run `npm run lint` and `npm run format` to pass build checks.*
