@@ -111,7 +111,7 @@ function setDarkTheme(event) {
 function darkModeOff() {
     // turn off dark mode
     localStorage.theme = "light";
-                darkModeToggle.innerHTML = "Mode: Light";
+    darkModeToggle.innerHTML = "Mode: Light";
     document.documentElement.classList.remove("dark");
     Console.setLightTheme();
     visual?.theme(false);
@@ -125,7 +125,7 @@ function darkModeOff() {
 function darkModeOn() {
     // turn on dark mode
     localStorage.theme = "dark";
-                darkModeToggle.innerHTML = "Mode: Dark";
+    darkModeToggle.innerHTML = "Mode: Dark";
     document.documentElement.classList.add("dark");
     Console.setDarkTheme();
     visual?.theme(true);
