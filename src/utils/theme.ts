@@ -79,7 +79,16 @@ export function initTheme() {
 
     window
         .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", setDarkTheme);
+        .addEventListener("change", (event) => {
+            if (localStorage.colorPreference === "false") {
+                return;
+            }
+            if (event.matches) {
+                darkModeOn();
+            } else {
+                darkModeOff();
+            }
+        });
     setColorScheme();
 }
 
@@ -88,17 +97,6 @@ function setThemeFromPreference() {
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
-        darkModeOn();
-    } else {
-        darkModeOff();
-    }
-}
-
-function setDarkTheme(event) {
-    if (localStorage.colorPreference === "false") {
-        return;
-    }
-    if (event.matches) {
         darkModeOn();
     } else {
         darkModeOff();
