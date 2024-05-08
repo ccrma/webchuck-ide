@@ -36,17 +36,14 @@ export function setColorScheme() {
     if (localStorage.colorPreference === "true") {
         setThemeFromPreference();
         colorPreferenceToggle.innerHTML = "System: On";
-        darkModeToggle.innerHTML = "Disabled";
     } else {
         colorPreferenceToggle.innerHTML = "System: Off";
         switch (localStorage.theme) {
             case "dark":
                 darkModeOn();
-                darkModeToggle.innerHTML = "Mode: Dark";
                 break;
             case "light":
                 darkModeOff();
-                darkModeToggle.innerHTML = "Mode: Light";
                 break;
         }
     }
@@ -114,6 +111,7 @@ function setDarkTheme(event) {
 function darkModeOff() {
     // turn off dark mode
     localStorage.theme = "light";
+                darkModeToggle.innerHTML = "Mode: Light";
     document.documentElement.classList.remove("dark");
     Console.setLightTheme();
     visual?.theme(false);
@@ -127,6 +125,7 @@ function darkModeOff() {
 function darkModeOn() {
     // turn on dark mode
     localStorage.theme = "dark";
+                darkModeToggle.innerHTML = "Mode: Dark";
     document.documentElement.classList.add("dark");
     Console.setDarkTheme();
     visual?.theme(true);
