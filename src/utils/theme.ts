@@ -36,10 +36,10 @@ export function setColorScheme() {
     if (localStorage.colorPreference === "true") {
         setThemeFromPreference();
         colorPreferenceToggle.innerHTML = "System: On";
-        darkModeToggle.style.display = "none";
+        darkModeToggle.disabled = true;
     } else {
         colorPreferenceToggle.innerHTML = "System: Off";
-        darkModeToggle.style.display = "block";
+        darkModeToggle.disabled = false;
         switch (localStorage.theme) {
             case "dark":
                 darkModeOn();
