@@ -150,16 +150,22 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                   </svg>
                 </button>
-                <div id="viewDropdown" class="hidden dropdown w-40">
+                <div id="viewDropdown" class="hidden dropdown w-50">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                      <button id="darkModeToggle" type="button" class="dropdownItem">
-                        Dark Mode: Off
-                      </button>
-                    </li>
                     <li>
                       <button id="chuckNowToggle" type="button" class="dropdownItem">
                         ChucK Time: Off
+                      </button>
+                    </li>
+                    <li class="divider dark:border-t-gray-400" data-content="THEME"></li>
+                    <li>
+                      <button id="colorPreferenceToggle" type="button" class="dropdownItem">
+                        System: On
+                      </button>
+                    </li>
+                    <li>
+                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50">
+                        Mode: Light
                       </button>
                     </li>
                   </ul>

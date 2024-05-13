@@ -12,6 +12,7 @@ import Editor from "@components/monaco/editor";
 import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;
+let colorPreferenceToggle: HTMLButtonElement;
 
 /* Header Theme */
 const ACCENT_COLOR_CLASS: string = "text-orange";
@@ -22,33 +23,31 @@ const DARK_HOVER_COLOR_CLASS: string = "dark:hover:text-dark-c";
 
 export {
     ACCENT_COLOR_CLASS,
-    TEXT_COLOR_CLASS,
-    HOVER_COLOR_CLASS,
-    DARK_TEXT_HOVER_CLASS,
     DARK_HOVER_COLOR_CLASS,
+    DARK_TEXT_HOVER_CLASS,
+    HOVER_COLOR_CLASS,
+    TEXT_COLOR_CLASS,
 };
 
 /**
  * Set the color scheme of the page
  */
 export function setColorScheme() {
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (localStorage.theme === "dark") {
-        // Dark theme
-        document.documentElement.classList.add("dark");
-        Console.setDarkTheme();
-        visual?.theme(true);
-        Editor.setTheme(true);
-        GUI.setTheme(true);
-        darkModeToggle.innerHTML = "Dark Mode: On";
+    if (localStorage.colorPreference === "true") {
+        setThemeFromPreference();
+        colorPreferenceToggle.innerHTML = "System: On";
+        darkModeToggle.disabled = true;
     } else {
-        // Light theme
-        document.documentElement.classList.remove("dark");
-        Console.setLightTheme();
-        visual?.theme(false);
-        Editor.setTheme(false);
-        GUI.setTheme(false);
-        darkModeToggle.innerHTML = "Dark Mode: Off";
+        colorPreferenceToggle.innerHTML = "System: Off";
+        darkModeToggle.disabled = false;
+        switch (localStorage.theme) {
+            case "dark":
+                darkModeOn();
+                break;
+            case "light":
+                darkModeOff();
+                break;
+        }
     }
 }
 
@@ -64,12 +63,46 @@ export function getColorScheme(): string {
  * Initialize the dark mode toggle button
  */
 export function initTheme() {
+    colorPreferenceToggle = document.querySelector<HTMLButtonElement>(
+        "#colorPreferenceToggle"
+    )!;
+    colorPreferenceToggle.addEventListener("click", () => {
+        toggleColorPreference();
+    });
+
+    if (localStorage.getItem("colorPreference") == null)
+        localStorage.colorPreference = "true";
+
     darkModeToggle =
         document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
+
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+            if (localStorage.colorPreference === "false") {
+                return;
+            }
+            if (event.matches) {
+                darkModeOn();
+            } else {
+                darkModeOff();
+            }
+        });
     setColorScheme();
+}
+
+function setThemeFromPreference() {
+    if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+        darkModeOn();
+    } else {
+        darkModeOff();
+    }
 }
 
 /**
@@ -78,7 +111,12 @@ export function initTheme() {
 function darkModeOff() {
     // turn off dark mode
     localStorage.theme = "light";
-    setColorScheme();
+    darkModeToggle.innerHTML = "Mode: Light";
+    document.documentElement.classList.remove("dark");
+    Console.setLightTheme();
+    visual?.theme(false);
+    Editor.setTheme(false);
+    GUI.setTheme(false);
 }
 
 /**
@@ -87,6 +125,27 @@ function darkModeOff() {
 function darkModeOn() {
     // turn on dark mode
     localStorage.theme = "dark";
+    darkModeToggle.innerHTML = "Mode: Dark";
+    document.documentElement.classList.add("dark");
+    Console.setDarkTheme();
+    visual?.theme(true);
+    Editor.setTheme(true);
+    GUI.setTheme(true);
+}
+
+/**
+ * Switch between dark mode and light mode
+ */
+function toggleColorPreference() {
+    switch (localStorage.colorPreference) {
+        case "true":
+            localStorage.colorPreference = "false";
+            break;
+        case "false":
+            localStorage.colorPreference = "true";
+            break;
+    }
+
     setColorScheme();
 }
 
@@ -94,9 +153,14 @@ function darkModeOn() {
  * Switch between dark mode and light mode
  */
 function toggleDarkMode() {
-    if (localStorage.theme === "dark") {
-        darkModeOff();
-    } else {
-        darkModeOn();
+    switch (localStorage.theme) {
+        case "light":
+            localStorage.theme = "dark";
+            break;
+        case "dark":
+            localStorage.theme = "light";
+            break;
     }
+
+    setColorScheme();
 }
