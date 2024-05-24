@@ -70,11 +70,9 @@ export function initTheme() {
         toggleColorPreference();
     });
 
-    if (localStorage.getItem("colorPreference") == null)
-        localStorage.colorPreference = "true";
+    localStorage.colorPreference = localStorage.colorPreference || "true";
 
-    darkModeToggle =
-        document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
+    darkModeToggle = document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
