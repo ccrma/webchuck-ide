@@ -1930,33 +1930,21 @@
         "example": []
     },
     "Blit": {
+        "title": "STK Band Limited Impulse Train",
         "description": [
-            "STK band-limited impulse train.",
-            "    This class generates a band-limited impulse train using a",
-            "    closed-form algorithm reported by Stilson and Smith in ",
-            "    \"Alias-Free Digital Synthesis of Classic Analog Waveforms\", ",
-            "    1996. The user can specify both the fundamental frequency ",
-            "    of the impulse train and the number of harmonics contained",
-            "    in the resulting signal.",
-            "",
-            "    The signal is normalized so that the peak value is +/-1.0.",
-            "",
-            "    If nHarmonics is 0, then the signal will contain all ",
-            "    harmonics up to half the sample rate. Note, however, ",
-            "    that this setting may produce aliasing in the signal ",
-            "    when the frequency is changing (no automatic modification ",
-            "    of the number of harmonics is performed by the ",
-            "    setFrequency() function).",
-            "",
-            "    Original code by Robin Davies, 2005.",
-            "    Revisions by Gary Scavone for STK, 2005."
+            "**Description:**",
+            "This class generates a band-limited impulse train with a user-specified fundamental frequency and number of harmonics. The signal is normalized to a peak value of +/-1.0. If nHarmonics is 0, all harmonics up to half the sample rate are included, which may cause aliasing when the frequency changes. No automatic modification of the number of harmonics is performed by the setFrequency() function."
         ],
         "method": [
-            ".freq - ( float , READ/WRITE ) - base frequency (hz)",
-            ".harmonics - ( int , READ/WRITE ) - number of harmonics in pass band",
-            ".phase - ( float , READ/WRITE ) - phase of the the signal"
+            "**Methods:**",
+            "`.freq` - ( float , READ/WRITE ) - base frequency (hz)",
+            "`.harmonics` - ( int , READ/WRITE ) - number of harmonics in pass band",
+            "`.phase` - ( float , READ/WRITE ) - phase of the the signal"
         ],
-        "example": []
+        "example": [
+            "Examples: \t [blit.ck](https://chuck.stanford.edu/doc/examples/basic/blit.ck), [blit2.ck](https://chuck.stanford.edu/doc/examples/basic/blit2.ck)"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-stk.html#Blit)"
     },
     "BlitSaw": {
         "description": [

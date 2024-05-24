@@ -6,9 +6,11 @@ import ckdocJSON from "./ckdoc.json";
 
 // Documentation Type for ckdoc
 interface docType {
+    title: string;
     description: string[];
     method: string[];
     example: string[];
+    link: string;
 }
 const ckdoc: { [key: string]: docType } = ckdocJSON;
 
@@ -354,6 +356,9 @@ monaco.languages.registerHoverProvider("chuck", {
                 // Hover contents
                 contents: [
                     {
+                        value: word_doc.title,
+                    },
+                    {
                         value: word_doc.description.join("\n\n"),
                     },
                     {
@@ -361,6 +366,9 @@ monaco.languages.registerHoverProvider("chuck", {
                     },
                     {
                         value: word_doc.example.join("\n\n"),
+                    },
+                    {
+                        value: word_doc.link,
                     },
                 ],
             };
