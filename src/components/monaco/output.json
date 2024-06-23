@@ -416,7 +416,7 @@
             "**Methods:**",
             "float **<span style='color:#006AB1;'>compute</span>**(float[] input) Manually computes the centroid from a float array."
         ],
-        "title": "**Spectral Centroid Analysis**",
+        "title": "**Spectral Centroid Analyzer**",
         "link": "[More...](https://chuck.stanford.edu/doc/reference/uanae.html#Centroid)"
     },
     "Chorus": {
@@ -1390,7 +1390,7 @@
             "Examples: \t [kurtosis.ck](https://chuck.stanford.edu/doc/examples/ai/features/kurtosis.ck)"
         ],
         "description": "A unit analyzer that computes the kurtosis of a given input array, and outputs a single number.",
-        "title": "**Kurtosis Analysis**",
+        "title": "**Kurtosis Analyzer**",
         "link": "[More...](https://chuck.stanford.edu/doc/reference/uanae.html#Kurtosis)"
     },
     "LPF": {
