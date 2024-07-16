@@ -119,10 +119,12 @@ export default class ChuckBar {
             return;
         }
 
+        ChuckBar.webchuckButton.disabled = true;
+
         // Start WebChuck Host
         await startChuck();
         ChuckBar.webchuckButton.innerText = "WebChucK running...";
-        ChuckBar.webchuckButton.disabled = true;
+        ChuckBar.running = true;
 
         // Enable the ChuckBar buttons
         ChuckBar.micButton.disabled = false;
@@ -130,7 +132,5 @@ export default class ChuckBar {
         ChuckBar.replaceButton.disabled = false;
         ChuckBar.removeButton.disabled = false;
         ChuckBar.recordButton.disabled = false;
-
-        ChuckBar.running = true;
     }
 }
