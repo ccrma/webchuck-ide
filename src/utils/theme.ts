@@ -72,7 +72,8 @@ export function initTheme() {
 
     localStorage.colorPreference = localStorage.colorPreference || "true";
 
-    darkModeToggle = document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
+    darkModeToggle =
+        document.querySelector<HTMLButtonElement>("#darkModeToggle")!;
     darkModeToggle.addEventListener("click", () => {
         toggleDarkMode();
     });
