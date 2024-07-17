@@ -13,6 +13,7 @@
 import { Chuck, HID } from "webchuck";
 import { calculateDisplayDigits } from "@utils/time";
 import { ChuckNow } from "@/components/vmMonitor";
+import { loadWebChugins } from "@/utils/webChugins";
 import Console from "@/components/console";
 import Visualizer from "@/components/visualizer";
 import HidPanel from "@/components/hidPanel";
@@ -61,6 +62,10 @@ export async function initChuck() {
     audioContext.suspend();
     sampleRate = audioContext.sampleRate;
     calculateDisplayDigits(sampleRate);
+
+    // TODO: Hack for WebChugins 7/16/2024
+    const chugins: string[] = loadWebChugins();
+    chugins.forEach((chuginPath) => Chuck.loadChugin(chuginPath))
 
     // Create theChuck
     theChuck = await Chuck.init(

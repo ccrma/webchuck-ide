@@ -4,7 +4,7 @@ import json
 import re
 
 # TODO: Mini Audicle examples path here
-CHUCK_EXAMPLES_PATH= "/Users/terryfeng/Documents/research/chuck/chuck/examples"
+CHUCK_EXAMPLES_PATH= "YOUR/PATH/HERE"
 OUTPUT_JSON_FILE = "../public/examples/moreExamples.json"
 
 # Chuck examples Web URL
@@ -16,14 +16,21 @@ excludeDirs = ["book", "kbhit", "word2vec"]
 # IMPORTANT: Exclude examples containing the words, features not compatible with WebChucK
 excludeFileWords = ["OscIn", "OscOut", "Hid", "HidMsg", "MidiIn", "MidiOut", "MidiMsg", "MidiFileIn", "ConsoleInput", "WvOut"]
 # Exclude Chugins
-chugins_list = [ "ABSaturator", "Bitcrusher", "Elliptic", "Faust", "FIR", "FoldbackSaturator", "GVerb", "KasFilter", "MagicSine", "Pan4", "Pan8", "Pan16", "PitchTrack", "Mesh2D", "MIAP", "PowerADSR", "Spectacle", "WarpBuf", "WinFuncEnv" ]
-excludeFileWords += chugins_list
+#chugins_list = [ "ABSaturator", "Bitcrusher", "Elliptic", "Faust", "FIR", "FoldbackSaturator", "GVerb", "KasFilter", "MagicSine", "Pan4", "Pan8", "Pan16", "PitchTrack", "Mesh2D", "MIAP", "PowerADSR", "Spectacle", "WarpBuf", "WinFuncEnv" ]
+#excludeFileWords += chugins_list
 # add a space to the end of each word to match Object classes
 excludeFileWords = [word + " " for word in excludeFileWords]
-excludeFileWords += ["SerialIO", "Serial", "gtzan", "otf_0"]
+# add words that aren't UGens
+excludeFileWords += ["SerialIO", "Serial", "gtzan"]
 
 # Exclude files
-excludeFilenames = ["feature-extract.ck", "write.ck", "Dyno-limit.ck", "Dyno-duck.ck"]
+excludeFilenames = ["feature-extract.ck", "write.ck", "otf_01.ck", "otf_02.ck", 
+                    "otf_03.ck", "otf_04.ck", "otf_05.ck", "otf_06.ck", "otf_07.ck"]
+
+# NOTE: some files need by hand corrections (terry)
+#       - dyno-limit.ck - adjust snd buf path
+#       - dyno-duck.ck - adjust snd buf path
+#       - Sigmund.ck - lower npeak from 4096 to 1024
 
 # Examples Dictionary
 examplesDict = {}
@@ -37,7 +44,6 @@ def filterChuckExample(f, fileText):
     for word in excludeFileWords:
         if word in fileText:
             return False
-
     return True
 
 # regex to find "*.wav" or "*.txt" strings in chuckExample
