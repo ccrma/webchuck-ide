@@ -4,7 +4,7 @@ import json
 import re
 
 # TODO: Mini Audicle examples path here
-CHUCK_EXAMPLES_PATH= "YOUR/PATH/HERE"
+CHUCK_EXAMPLES_PATH = "YOUR/PATH/HERE"
 OUTPUT_JSON_FILE = "../public/examples/moreExamples.json"
 
 # Chuck examples Web URL

@@ -65,7 +65,7 @@ export async function initChuck() {
 
     // TODO: Hack for WebChugins 7/16/2024
     const chugins: string[] = loadWebChugins();
-    chugins.forEach((chuginPath) => Chuck.loadChugin(chuginPath))
+    chugins.forEach((chuginPath) => Chuck.loadChugin(chuginPath));
 
     // Create theChuck
     theChuck = await Chuck.init(

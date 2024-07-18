@@ -2,12 +2,13 @@
 
 import { monaco } from "./monacoLite";
 import { chuck_modules, chuck_libraries } from "./chuck-modules";
-import ckdocJSON from "./output.json";
+import ckdocJSON from "./ckdoc.json";
 
 // Documentation Type for ckdoc
 interface docType {
     title: string;
     description: string;
+    constructors: string[];
     functions: string[];
     examples: string[];
     link: string;
@@ -363,7 +364,9 @@ monaco.languages.registerHoverProvider("chuck", {
                         value: word_doc.description,
                     },
                     {
-                        supportHtml: true,
+                        value: word_doc.constructors.join("\n\n"),
+                    },
+                    {
                         value: word_doc.functions.join("\n\n"),
                     },
                     {
