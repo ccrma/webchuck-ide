@@ -33,7 +33,10 @@
     "ABSaturator": {
         "title": "**Abel/Berners' Saturator**",
         "description": "Soft clip saturating distortion, based on examples from Abel/Berners' Music 424 course at Stanford.",
-        "constructors": ["**Constructors:**", "```chuck\nABSaturator()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nABSaturator()\n```\n"
+        ],
         "examples": [
             "Examples: \t [ABSaturator.ck](https://chuck.stanford.edu/doc/examples/effects/ABSaturator.ck)"
         ],
@@ -91,7 +94,10 @@
     "AmbPan3": {
         "title": "**3D Ambisonic Panner**",
         "description": "Third-order ambisonics panner (https://en.wikipedia.org/wiki/Ambisonics)",
-        "constructors": ["**Constructors:**", "```chuck\nAmbPan3()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nAmbPan3()\n```\n"
+        ],
         "examples": [
             "Examples: \t [AmbPan3-CCRMA.ck](https://chuck.stanford.edu/doc/examples/spatial/AmbPan3-CCRMA.ck)"
         ],
@@ -270,7 +276,10 @@
     "Bitcrusher": {
         "title": "**Bitcrusher Effect**",
         "description": "Applies aliased downsampling and sample-width reduction to create a variety of distortion effects.",
-        "constructors": ["**Constructors:**", "```chuck\nBitcrusher()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nBitcrusher()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Bitcrusher.ck](https://chuck.stanford.edu/doc/examples/effects/Bitcrusher.ck)"
         ],
@@ -468,13 +477,14 @@
         "description": "A noise generator with multiple noise synthesis modes.",
         "constructors": [
             "**Constructors:**",
-            "```chuck\nCNoise()\n```\nDefault constructor for CNoise."
+            "```chuck\nCNoise()\n```\nDefault constructor for CNoise.",
+            "```chuck\nCNoise(string mode)\n```\nConstruct a CNoise with synthesis mode. Supported modes are \"white\", \"pink\", \"flip\", and \"xor\"."
         ],
         "examples": [],
         "functions": [
             "**Methods:**",
             "```chuck\nfloat fprob(float fprob)\n```\nProbability [0-1] used for calculating XOR noise.",
-            "```chuck\nstring mode(string mode)\n```\nNoise synthesis mode. Supported modes are &quot;white&quot;, &quot;pink&quot;, &quot;flip&quot;, and &quot;xor&quot;."
+            "```chuck\nstring mode(string mode)\n```\nNoise synthesis mode. Supported modes are \"white\", \"pink\", \"flip\", and \"xor\"."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#CNoise)"
     },
@@ -658,7 +668,9 @@
         "description": "A non-interpolating digital delay-line. A fixed maximum length of 4095 and a delay of zero is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. A non-interpolating delay line is typically used in fixed delay-length applications, such as for reverberation. by Perry R. Cook and Gary P. Scavone, 1995 - 2002.",
         "constructors": [
             "**Constructors:**",
-            "```chuck\nDelay()\n```\nDefault constructor for Delay."
+            "```chuck\nDelay()\n```\nDefault constructor for Delay.",
+            "```chuck\nDelay(dur delay)\n```\nConstruct a Delay with delay length and, implicitly, delay max.",
+            "```chuck\nDelay(dur delay, dur max)\n```\nConstruct a Delay with delay length and delay max."
         ],
         "examples": [
             "Examples: \t [comb.ck](https://chuck.stanford.edu/doc/examples/basic/comb.ck), [plu.ck](https://chuck.stanford.edu/doc/examples/deep/plu.ck)"
@@ -669,7 +681,8 @@
             "```chuck\ndur delay(dur value)\n```\nSet length of delay.",
             "```chuck\ndur delay()\n```\nGet length of delay.",
             "```chuck\ndur max(dur value)\n```\nSet max delay (buffer size).",
-            "```chuck\ndur max()\n```\nGet max delay (buffer size)."
+            "```chuck\ndur max()\n```\nGet max delay (buffer size).",
+            "```chuck\nvoid set(dur delay, dur max)\n```\nSet delay length and delay max; delay should be <= max."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#Delay)"
     },
@@ -678,7 +691,9 @@
         "description": "A fractional-length digital delay-line using a first-order allpass filter. A fixed maximum length of 4095 and a delay of 0.5 is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. An allpass filter has unity magnitude gain but variable phase delay properties, making it useful in achieving fractional delays without affecting a signal's frequency magnitude response. In order to achieve a maximally flat phase delay response, the minimum delay possible in this implementation is limited to a value of 0.5. by Perry R. Cook and Gary P. Scavone, 1995 - 2002.",
         "constructors": [
             "**Constructors:**",
-            "```chuck\nDelayA()\n```\nDefault constructor for DelayA."
+            "```chuck\nDelayA()\n```\nDefault constructor for DelayA.",
+            "```chuck\nDelayA(dur delay)\n```\nConstruct a DelayA with delay length and, implicitly, delay max.",
+            "```chuck\nDelayA(dur delay, dur max)\n```\nConstruct a DelayA with delay length and delay max."
         ],
         "examples": [
             "Examples: \t [ks-chord.ck](https://chuck.stanford.edu/doc/examples/deep/ks-chord.ck)"
@@ -689,7 +704,8 @@
             "```chuck\ndur delay(dur value)\n```\nSet length of delay.",
             "```chuck\ndur delay()\n```\nGet length of delay.",
             "```chuck\ndur max(dur value)\n```\nSet max delay (buffer size).",
-            "```chuck\ndur max()\n```\nGet max delay (buffer size)."
+            "```chuck\ndur max()\n```\nGet max delay (buffer size).",
+            "```chuck\nvoid set(dur delay, dur max)\n```\nSet delay length and delay max; delay should be <= max."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#DelayA)"
     },
@@ -698,10 +714,12 @@
         "description": "A fractional-length digital delay-line using first-order linear interpolation. A fixed maximum length of 4095 and a delay of zero is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. Linear interpolation is an efficient technique for achieving fractional delay lengths, though it does introduce high-frequency signal attenuation to varying degrees depending on the fractional delay setting. The use of higher order Lagrange interpolators can typically improve (minimize) this attenuation characteristic. by Perry R. Cook and Gary P. Scavone, 1995 - 2002.",
         "constructors": [
             "**Constructors:**",
-            "```chuck\nDelayL()\n```\nDefault constructor for DelayL."
+            "```chuck\nDelayL()\n```\nDefault constructor for DelayL.",
+            "```chuck\nDelayL(dur delay)\n```\nConstruct a DelayL with delay length and, implicitly, delay max.",
+            "```chuck\nDelayL(dur delay, dur max)\n```\nConstruct a DelayL with delay length and delay max."
         ],
         "examples": [
-            "Examples: \t [delay.ck](https://chuck.stanford.edu/doc/examples/basic/delay.ck), [i-robot.ck](https://chuck.stanford.edu/doc/examples/basic/i-robot.ck), [we-robot.ck](https://chuck.stanford.edu/doc/examples/multi/we-robot.ck), [xcorr.ck](https://chuck.stanford.edu/doc/examples/analysis/xcorr.ck), [poem-i-feel.ck](https://chuck.stanford.edu/doc/examples/ai/word2vec/poem-i-feel.ck)"
+            "Examples: \t [delay.ck](https://chuck.stanford.edu/doc/examples/basic/delay.ck), [delay2.ck](https://chuck.stanford.edu/doc/examples/basic/delay2.ck), [i-robot.ck](https://chuck.stanford.edu/doc/examples/basic/i-robot.ck), [we-robot.ck](https://chuck.stanford.edu/doc/examples/multi/we-robot.ck), [xcorr.ck](https://chuck.stanford.edu/doc/examples/analysis/xcorr.ck), [poem-i-feel.ck](https://chuck.stanford.edu/doc/examples/ai/word2vec/poem-i-feel.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -709,7 +727,8 @@
             "```chuck\ndur delay(dur value)\n```\nSet length of delay.",
             "```chuck\ndur delay()\n```\nGet length of delay.",
             "```chuck\ndur max(dur value)\n```\nSet max delay (buffer size).",
-            "```chuck\ndur max()\n```\nGet max delay (buffer size)."
+            "```chuck\ndur max()\n```\nGet max delay (buffer size).",
+            "```chuck\nvoid set(dur delay, dur max)\n```\nSet delay length and delay max; delay should be <= max."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#DelayL)"
     },
@@ -754,7 +773,9 @@
         "description": "An echo effect. by Perry R. Cook and Gary P. Scavone, 1995 - 2002.",
         "constructors": [
             "**Constructors:**",
-            "```chuck\nEcho()\n```\nDefault constructor for Echo."
+            "```chuck\nEcho()\n```\nDefault constructor for Echo.",
+            "```chuck\nEcho(dur delay)\n```\nConstruct an Echo with delay length and, implicitly, delay max.",
+            "```chuck\nEcho(dur delay, dur max)\n```\nConstruct an Echo with delay length and delay max."
         ],
         "examples": [
             "Examples: \t [echo.ck](https://chuck.stanford.edu/doc/examples/basic/echo.ck), [rhodey.ck](https://chuck.stanford.edu/doc/examples/stk/rhodey.ck), [wurley2.ck](https://chuck.stanford.edu/doc/examples/stk/wurley2.ck)"
@@ -766,14 +787,18 @@
             "```chuck\ndur max(dur value)\n```\nSet max delay (buffer size).",
             "```chuck\ndur max()\n```\nGet max delay (buffer size).",
             "```chuck\nfloat mix(float value)\n```\nSet mix level (wet/dry).",
-            "```chuck\nfloat mix()\n```\nGet mix level (wet/dry)."
+            "```chuck\nfloat mix()\n```\nGet mix level (wet/dry).",
+            "```chuck\nvoid set(dur delay, dur max)\n```\nSet delay length and delay max; delay should be <= max."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#Echo)"
     },
     "Elliptic": {
         "title": "**Elliptic Filter**",
         "description": "Elliptic implements cascaded IIR filters and a built-in elliptical filter design. It is capable of low-pass, high-pass, or bandpass filtering with very steep slopes. The atten determines how much of the signal is attenuated outside the passband. Elliptic filters come with a trade-off for their steep slopes: they have a certain amount of ripple outside the passbands. A very small ripple (0.1 or 0.2 dB) produces very little ringing, whereas a large ripple (eg. 20 dB) produces a very strong harmonic ring. The filter design algorithm sometimes can't fulfill the design criteria -- a particular combination of cutoff frequencies, ripple, and attenuation. If that happens, the user is warned that the filter is not initialized, and the filter is bypassed. This may happen, for instance, if you ask for a very steep attenuation with very low ripple.",
-        "constructors": ["**Constructors:**", "```chuck\nElliptic()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nElliptic()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Elliptic-help.ck](https://chuck.stanford.edu/doc/examples/filter/Elliptic-help.ck)"
         ],
@@ -848,7 +873,10 @@
     "ExpDelay": {
         "title": "**Exponential Delay**",
         "description": "Feedback delay at exponentially changing delay times.",
-        "constructors": ["**Constructors:**", "```chuck\nExpDelay()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nExpDelay()\n```\n"
+        ],
         "examples": [
             "Examples: \t [ExpDelay.ck](https://chuck.stanford.edu/doc/examples/effects/ExpDelay.ck)"
         ],
@@ -872,7 +900,10 @@
     "ExpEnv": {
         "title": "**Exponential Envelope**",
         "description": "ChucK Simple Decaying Exponential Envelope UGen Simple single time constant exponential decay, applied to any signal passed through it. Obeys: value, T60, radius, and keyOn Especially useful for Modal synthesis. One of these for each mode: SinOsc s => ExpEnv e => dac; Also useful for noise excitation pulse, using it like: Noise n => ExpEnv e => dac;.",
-        "constructors": ["**Constructors:**", "```chuck\nExpEnv()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nExpEnv()\n```\n"
+        ],
         "examples": [
             "Examples: \t [ExpEnv.ck](https://chuck.stanford.edu/doc/examples/effects/ExpEnv.ck), [ExpEnv-modes.ck](https://chuck.stanford.edu/doc/examples/effects/ExpEnv-modes.ck)"
         ],
@@ -912,7 +943,10 @@
     "FIR": {
         "title": "**Finite Impulse Response Filter**",
         "description": "Yo! This here is a ChugIn for ChucK. It's a general-purpose FIR filter. You make a new one: FIR myFilter; Then specify order: N => myFilter.order;.",
-        "constructors": ["**Constructors:**", "```chuck\nFIR()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nFIR()\n```\n"
+        ],
         "examples": [
             "Examples: \t [FIR-convolve-homer.ck](https://chuck.stanford.edu/doc/examples/filter/FIR-convolve-homer.ck), [FIR-greyhole-down-up-decimate.ck](https://chuck.stanford.edu/doc/examples/filter/FIR-greyhole-down-up-decimate.ck), [FIR-sinc-explicit.ck](https://chuck.stanford.edu/doc/examples/filter/FIR-sinc-explicit.ck)"
         ],
@@ -1190,7 +1224,10 @@
     "GVerb": {
         "title": "**GVerb Reverb**",
         "description": "GVerb is a very smooth reverberator with the ability to produce very long reverb times. GVERB is based on the original \"gverb/gigaverb\" by Juhana Sadeharju (kouhia at nic.funet.fi). The code for this version was adapted from RTcmix (http:rtcmix.org), which in turn adapted it from the Max/MSP version by Olaf Mtthes (olaf.matthes at gmx.de).",
-        "constructors": ["**Constructors:**", "```chuck\nGVerb()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGVerb()\n```\n"
+        ],
         "examples": [
             "Examples: \t [GVerb.ck](https://chuck.stanford.edu/doc/examples/effects/GVerb.ck)"
         ],
@@ -1639,7 +1676,10 @@
     "KasFilter": {
         "title": "**Kassel Filter**",
         "description": "Under-sampling-based resonant lowpass filter, based on two sample & holds with a cosine crossfading between them. Each S&H samples at the moment it's faded out. The frequency of the crossfading and sampling of the input sets the cutoff. This leads to a infinitely steep cutoff, at the price of aliasing. Negative feedback is used for resonance at the cutoff frequency, a technique that I believe is new here. In addition to the traditional modulation options waveshaping of the crossfading signal is provided. This leads to distortion at the cutoff frequency. At extreme values (and assuming no feedback is used) that makes the effect closer to traditional under-sampling. Linear interpolation is used on the input signal to avoid the S&Hs being quantised to ChucK's sample rate; This technique causes quite a few interesting artifacts that result from the ratio between the frequency of the input and the cutoff frequency. To emphasise those it makes sense to try to minimise artifacts induced by the digital environment itself. Thanks to Rob Hordijk for sharing his insights there.",
-        "constructors": ["**Constructors:**", "```chuck\nKasFilter()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nKasFilter()\n```\n"
+        ],
         "examples": [
             "Examples: \t [KasFilter.ck](https://chuck.stanford.edu/doc/examples/filter/KasFilter.ck)"
         ],
@@ -2256,7 +2296,10 @@
     "MagicSine": {
         "title": "**Magic Sine Oscillator**",
         "description": "Fast, recursive sine wave generator using the so-called &quot;magic circle&quot; algorithm (see <a href=\"https://ccrma.stanford.edu/~jos/pasp/Digital_Sinusoid_Generators.html\">https://ccrma.stanford.edu/~jos/pasp/Digital_Sinusoid_Generators.html</a>). Can be 30-40% faster than regular SinOsc. Frequency modulation will negate this performance benefit; most useful when pure sine tones are desired or for additive synthesis.",
-        "constructors": ["**Constructors:**", "```chuck\nMagicSine()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nMagicSine()\n```\n"
+        ],
         "examples": [],
         "functions": [
             "**Methods:**",
@@ -2374,7 +2417,10 @@
     "Mesh2D": {
         "title": "**2D Digital Waveguide Mesh**",
         "description": "This class implements a rectilinear, two-dimensional digital waveguide mesh structure. For details, see Van Duyne and Smith, &quot;Physical Modeling with the 2-D Digital Waveguide Mesh,&quot; <i>Proceedings of the 1993 International Computer Music Conference</i>. <br/><br/>This is a digital waveguide model, making its use possibly subject to patents held by Stanford University, Yamaha, and others.",
-        "constructors": ["**Constructors:**", "```chuck\nMesh2D()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nMesh2D()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Mesh2D.ck](https://chuck.stanford.edu/doc/examples/special/Mesh2D.ck)"
         ],
@@ -2403,7 +2449,7 @@
             "```chuck\nMidiFileIn()\n```\nDefault constructor for MidiFileIn."
         ],
         "examples": [
-            "Examples: \t [midiplay-play.ck](https://chuck.stanford.edu/doc/examples/midi/midiplay-play.ck), [bwv772.mid](https://chuck.stanford.edu/doc/examples/midi/bwv772.mid)"
+            "Examples: \t [midifile-play.ck](https://chuck.stanford.edu/doc/examples/midi/midifile-play.ck), [bwv772.mid](https://chuck.stanford.edu/doc/examples/midi/bwv772.mid)"
         ],
         "functions": [
             "**Methods:**",
@@ -2597,7 +2643,10 @@
     "Multicomb": {
         "title": "**Multi-Comb Filter**",
         "description": "Multiple simultaneous comb filters randomly chosen within a specified frequency range and spread across the stereo field.",
-        "constructors": ["**Constructors:**", "```chuck\nMulticomb()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nMulticomb()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Multicomb.ck](https://chuck.stanford.edu/doc/examples/filter/Multicomb.ck)"
         ],
@@ -2727,9 +2776,12 @@
     "OscIn": {
         "title": "**OSC Input**",
         "description": "Class for receiving Open Sound Control (OSC) messages. See examples for usage.",
-        "constructors": ["**Constructors:**", "```chuck\nOscIn()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nOscIn()\n```\n"
+        ],
         "examples": [
-            "Examples: \t [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck), [r-multi-msg.ck](https://chuck.stanford.edu/doc/examples/osc/multi-msg/r-multi-msg.ck)"
+            "Examples: \t [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [r2.ck](https://chuck.stanford.edu/doc/examples/osc/r2.ck), [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck), [r-multi-msg.ck](https://chuck.stanford.edu/doc/examples/osc/multi-msg/r-multi-msg.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -2766,9 +2818,12 @@
     "OscMsg": {
         "title": "**OSC Message**",
         "description": "Helper class for receiving the contents of an OSC message.",
-        "constructors": ["**Constructors:**", "```chuck\nOscMsg()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nOscMsg()\n```\n"
+        ],
         "examples": [
-            "Examples: \t [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck), [r-multi-msg.ck](https://chuck.stanford.edu/doc/examples/osc/multi-msg/r-multi-msg.ck)"
+            "Examples: \t [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [r2.ck](https://chuck.stanford.edu/doc/examples/osc/r2.ck), [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck), [r-multi-msg.ck](https://chuck.stanford.edu/doc/examples/osc/multi-msg/r-multi-msg.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -2802,9 +2857,12 @@
     "OscOut": {
         "title": "**OSC Output**",
         "description": "Class for sending Open Sound Control (OSC) messages. See examples for usage.",
-        "constructors": ["**Constructors:**", "```chuck\nOscOut()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nOscOut()\n```\n"
+        ],
         "examples": [
-            "Examples: \t [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck)"
+            "Examples: \t [s.ck](https://chuck.stanford.edu/doc/examples/osc/s.ck), [r.ck](https://chuck.stanford.edu/doc/examples/osc/r.ck), [r2.ck](https://chuck.stanford.edu/doc/examples/osc/r2.ck), [osc-dump.ck](https://chuck.stanford.edu/doc/examples/osc/osc-dump.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -2874,7 +2932,10 @@
     "Pan16": {
         "title": "**16-Channel Panner**",
         "description": "Sixteen-channel equal-power panner.",
-        "constructors": ["**Constructors:**", "```chuck\nPan16()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPan16()\n```\n"
+        ],
         "examples": [],
         "functions": [
             "**Methods:**",
@@ -2899,7 +2960,10 @@
     "Pan4": {
         "title": "**4-Channel Panner**",
         "description": "Four-channel equal-power panner.",
-        "constructors": ["**Constructors:**", "```chuck\nPan4()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPan4()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Pan4.ck](https://chuck.stanford.edu/doc/examples/spatial/Pan4.ck)"
         ],
@@ -2913,7 +2977,10 @@
     "Pan8": {
         "title": "**8-Channel Panner**",
         "description": "Eight-channel equal-power panner.",
-        "constructors": ["**Constructors:**", "```chuck\nPan8()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPan8()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Pan8.ck](https://chuck.stanford.edu/doc/examples/spatial/Pan8.ck)"
         ],
@@ -2976,7 +3043,10 @@
     "PitchTrack": {
         "title": "**Pitch Tracker**",
         "description": "PitchTrack is a monophonic autocorrelation pitch tracker with a fast response and extremely high accuracy, even at low frequencies. It is adapted from [helmholtz~] for Pd by Katja, documented at http://www.katjaas.nl/helmholtz/helmholtz.html.",
-        "constructors": ["**Constructors:**", "```chuck\nPitchTrack()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPitchTrack()\n```\n"
+        ],
         "examples": [
             "Examples: \t [autotune.ck](https://chuck.stanford.edu/doc/examples/effects/autotune.ck), [PitchTrack.ck](https://chuck.stanford.edu/doc/examples/analysis/PitchTrack.ck)"
         ],
@@ -3024,7 +3094,10 @@
     "PowerADSR": {
         "title": "**Power ADSR Envelope**",
         "description": "ADSR envelope that uses a power function to create curved envelope phases. In general, curves under 1.0 are sharp, while curves over 1.0 are soft.",
-        "constructors": ["**Constructors:**", "```chuck\nPowerADSR()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPowerADSR()\n```\n"
+        ],
         "examples": [
             "Examples: \t [PowerADSR-feedback-beatings.ck](https://chuck.stanford.edu/doc/examples/effects/PowerADSR-feedback-beatings.ck), [PowerADSR.ck](https://chuck.stanford.edu/doc/examples/effects/PowerADSR.ck)"
         ],
@@ -3386,7 +3459,10 @@
     "Sigmund": {
         "title": "**Sigmund**",
         "description": "Sinusoidal analysis & pitch tracking. Adapted from Miller Puckette’s sigmund~ Max object.",
-        "constructors": ["**Constructors:**", "```chuck\nSigmund()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nSigmund()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Sigmund.ck](https://chuck.stanford.edu/doc/examples/analysis/Sigmund.ck)"
         ],
@@ -3551,7 +3627,10 @@
     "Spectacle": {
         "title": "**Spectral Delay and EQ**",
         "description": "FFT-based spectral delay and EQ by John Gibson. Inspired by the totally awesome Spektral Delay plug-in by Native Instruments.",
-        "constructors": ["**Constructors:**", "```chuck\nSpectacle()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nSpectacle()\n```\n"
+        ],
         "examples": [
             "Examples: \t [Spectacle.ck](https://chuck.stanford.edu/doc/examples/effects/Spectacle.ck)"
         ],
@@ -4082,7 +4161,10 @@
     "WPKorg35": {
         "title": "**WPD Korg 35 Filter**",
         "description": "Virtual analog low pass filter based on Will Pirkle's Korg35 application notes.",
-        "constructors": ["**Constructors:**", "```chuck\nWPKorg35()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nWPKorg35()\n```\n"
+        ],
         "examples": [
             "Examples: \t [WPKorg35.ck](https://chuck.stanford.edu/doc/examples/filter/WPKorg35.ck)"
         ],
@@ -4207,7 +4289,10 @@
     "WinFuncEnv": {
         "title": "**Window Function Envelope**",
         "description": "WinFunEnv is an Attack/Release envelope built around window functions!",
-        "constructors": ["**Constructors:**", "```chuck\nWinFuncEnv()\n```\n"],
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nWinFuncEnv()\n```\n"
+        ],
         "examples": [
             "Examples: \t [WinFuncEnv.ck](https://chuck.stanford.edu/doc/examples/effects/WinFuncEnv.ck)"
         ],

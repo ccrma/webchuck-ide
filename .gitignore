@@ -7,3 +7,4 @@ node_modules
 .idx
 yarn.lock
 dist
+scripts/json
