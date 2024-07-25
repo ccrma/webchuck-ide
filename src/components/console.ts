@@ -7,13 +7,12 @@
 // date:   September 2023
 //----------------------------------------------------------------
 
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
-// import { WebLinksAddon } from "@xterm/addon-web-links";
+import { Terminal } from "@xterm/xterm";
+import { FitAddon } from "@xterm/addon-fit";
+import { LinkProvider } from "xterm-link-provider";
 import "@styles/xterm.css";
 
 import { theChuck } from "@/host";
-import { LinkProvider } from "xterm-link-provider";
 
 // Define a custom regular expression that matches blob URIs
 const blobRegex = /(blob:https?:\/\/\S+)/;
@@ -51,11 +50,13 @@ export default class Console {
 
         // Blob Links
         Console.terminal.registerLinkProvider(
+            // @ts-expect-error Link Provider relies on a deprecated version of
+            // xterm. Either wait for it to be updated, or write a custom
+            // Link Provider class - terry 7/16/2024
             new LinkProvider(Console.terminal, blobRegex, (_e, uri) => {
                 window.open(uri, "_blank");
             })
         );
-        // Console.terminal.loadAddon(new WebLinksAddon());
 
         // Resize listener
         window.addEventListener("resize", () => {

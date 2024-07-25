@@ -6,9 +6,12 @@ import ckdocJSON from "./ckdoc.json";
 
 // Documentation Type for ckdoc
 interface docType {
-    description: string[];
-    method: string[];
-    example: string[];
+    title: string;
+    description: string;
+    constructors: string[];
+    functions: string[];
+    examples: string[];
+    link: string;
 }
 const ckdoc: { [key: string]: docType } = ckdocJSON;
 
@@ -341,7 +344,8 @@ monaco.languages.registerHoverProvider("chuck", {
         const token: string = word?.word;
 
         // If we have a hover for that word
-        if (chuck_modules.includes(token)) {
+        // if (chuck_modules.includes(token)) {
+        if (ckdoc[token]) {
             const word_doc: docType = ckdoc[token];
             return {
                 // Where to show the hover
@@ -354,13 +358,22 @@ monaco.languages.registerHoverProvider("chuck", {
                 // Hover contents
                 contents: [
                     {
-                        value: word_doc.description.join("\n\n"),
+                        value: word_doc.title,
                     },
                     {
-                        value: word_doc.method.join("\n\n"),
+                        value: word_doc.description,
                     },
                     {
-                        value: word_doc.example.join("\n\n"),
+                        value: word_doc.constructors.join("\n\n"),
+                    },
+                    {
+                        value: word_doc.functions.join("\n\n"),
+                    },
+                    {
+                        value: word_doc.examples.join("\n\n"),
+                    },
+                    {
+                        value: word_doc.link,
                     },
                 ],
             };

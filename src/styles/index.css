@@ -241,6 +241,20 @@
     height: 100%;
 }
 
+.rendered-markdown > p > strong > span {
+    margin-bottom: 0 !important;
+}
+
+/* for hover documentation syntax highlighting */
+.monaco-hover code,
+span > .monaco-tokenized-source {
+    font-size: 0.95em !important;
+    font-family: "Consolas", monospace;
+}
+.monaco-tokenized-source > span.mtk1 {
+    @apply text-dark dark:text-light;
+}
+
 #vimStatus {
     min-width: 64px;
     overflow: hidden;
