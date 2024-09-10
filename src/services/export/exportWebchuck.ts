@@ -109,7 +109,7 @@ async function exportWebchuck(
     if (projectFilesToPreload.length === 0) {
         exportSingleWCFile(wc_html);
     } else {
-        exportProjectWCFiles(wc_html, projectFilesToPreload);
+        exportProjectWCFiles(title, wc_html, projectFilesToPreload);
     }
 }
 
@@ -135,9 +135,10 @@ function exportSingleWCFile(wc_html: Document) {
  * Export all project files as a .zip
  * @param wc_html webchuck html document
  */
-function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
+function exportProjectWCFiles(title: string, wc_html: Document, projectFiles: any) {
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
+    console.log(projectFiles);
     projectFiles.forEach((file: any) => {
         zip.file(file.getFilename(), file.getData());
     });
@@ -147,8 +148,8 @@ function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
         // Create invisible download link
         const downloadLink = document.createElement("a");
         downloadLink.href = zipURL;
-        downloadLink.download = "project.zip";
-        downloadLink.click();
+        downloadLink.download = `${title} Project.zip`;
+        // downloadLink.click();
     });
 }
 
