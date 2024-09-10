@@ -31,7 +31,13 @@
 
       // Play button
       action.addEventListener('click', async () => {
-        window.theChuck ??= await Chuck.init( {{{ PRELOAD_FILES }}} );
+        // Initial load
+        if (!window.theChuck) {
+          action.disabled = true;
+          window.theChuck = await Chuck.init( {{{ PRELOAD_FILES }}} );
+          action.disabled = false;
+        }
+
         switch (status) {
           case states.playing:
             status = states.stopped;
@@ -60,12 +66,12 @@
 
       openInIDE.addEventListener('click', () => {
         const currURL = window.location.href; // TODO: append the code to the URL
-        window.open("https://ccrma.stanford.edu/~tzfeng/webchuck-ide", '_blank');
+        window.open("https://chuck.stanford.edu/ide", '_blank');
       });
 
       {{{ MIXER_CODE }}}
     </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/terryzfeng/webchuck-ide@main/cdn/webchuck.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ccrma/webchuck-ide@main/cdn/webchuck.css" />
     <title>WebchucK</title>
   </head>
 

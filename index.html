@@ -450,16 +450,29 @@
       <dialog class="modal" id="export-webchuck-modal">
         <form class="flex flex-col gap-2 py-2" method="dialog">
           <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
-          <label class="form-label">Title</label>
-          <input id="export-title" class="border px-2 py-1 rounded-md" type="text" placeholder="Hello Sine">
-          <label class="form-label">
-            Author
-          </label>
-          <input id="export-author" class="border px-2 py-1 rounded-md" type="text" placeholder="Terry Feng">
-          <label class="flex flex-col">
-            Description
-          </label>
-          <textarea id="export-description" class="border px-2 py-1 h-20 rounded-md" placeholder="A very cool sine wave!"></textarea>
+
+          <div>
+            <label class="form-label">Title</label>
+            <input id="export-title" class="form-input" type="text" placeholder="Hello Sine">
+          </div>
+
+          <div>
+            <label class="form-label">Author</label>
+            <input id="export-author" class="form-input" type="text" placeholder="Terry Feng">
+          </div>
+
+          <div>
+            <label class="form-label">Description</label>
+            <textarea id="export-description" class="form-input" placeholder="A very cool sine wave!"></textarea>
+          </div>
+
+          <div class="">
+            <label class="form-label pr-2">Main File</label>
+            <select id="export-wc-file-select" class="border px-1 py-1 rounded-md focus:outline-none disabled:opacity-50">
+            </select>
+            <p id="chuck-version-desc" class="pl-2 text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+          </div>
+
           <div class="flex gap-4 justify-end pt-4">
             <button id="export-cancel-btn" type="button" class="button secondary">Cancel</button>
             <button id="export-btn" type="submit" class="button primary">Export</button>

@@ -12,12 +12,28 @@ const exportDialog: HTMLDialogElement =
     document.querySelector<HTMLDialogElement>("#export-webchuck-modal")!;
 const exportBtn: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-btn")!;
+const exportWebchuckCkFileSelect = document.querySelector<HTMLSelectElement>("#export-wc-file-select")!;
 
 /**
  * Export Project Files to a WebChucK Web App
  */
 export function initExportWebChuck() {
     exportWebchuckButton.addEventListener("click", () => {
+        // WebChucK Modal Main File Select
+        const allCkfiles = ProjectSystem.getProjectFiles().filter((file) => file.isChuckFile());
+        exportWebchuckCkFileSelect.innerHTML = "";
+        allCkfiles.forEach((file) => {
+            const option = document.createElement("option");
+            option.value = file.getFilename();
+            option.textContent = file.getFilename();
+            exportWebchuckCkFileSelect.appendChild(option);
+        });
+        exportWebchuckCkFileSelect.disabled = allCkfiles.length == 1;
+        const activeFile = ProjectSystem.activeFile;
+        if (activeFile.isChuckFile()) {
+            exportWebchuckCkFileSelect.value = activeFile.getFilename();
+        }
+
         exportDialog.showModal();
     });
     exportWebchuckCancel.addEventListener("click", () => {
@@ -89,10 +105,9 @@ async function exportWebchuck(
 
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
-    const currentFile = ProjectSystem.activeFile;
-    const projectFilesToPreload = ProjectSystem.getProjectFiles().filter(
-        (file) => file !== currentFile
-    );
+    const selectedMainChucKFile = exportWebchuckCkFileSelect.value;
+    const projectFilesToPreload = ProjectSystem.getProjectFiles()
+        .filter((file) => file.getFilename() !== selectedMainChucKFile);
     const preloadFileString = projectFilesToPreload.map((file) => {
         return {
             serverFilename: `./${file.getFilename()}`,
@@ -149,7 +164,7 @@ function exportProjectWCFiles(title: string, wc_html: Document, projectFiles: an
         const downloadLink = document.createElement("a");
         downloadLink.href = zipURL;
         downloadLink.download = `${title} Project.zip`;
-        // downloadLink.click();
+        downloadLink.click();
     });
 }
 

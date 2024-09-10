@@ -344,7 +344,10 @@ dialog::backdrop {
     @apply dark:bg-dark-4;
 }
 .form-label {
-    @apply block leading-5 py-1;
+    @apply block leading-5 py-2;
+}
+.form-input {
+    @apply w-full border px-2 py-1 rounded-md;
 }
 .modal.modal-sm {
     max-width: 320px;
