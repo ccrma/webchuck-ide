@@ -12,7 +12,9 @@ const exportDialog: HTMLDialogElement =
     document.querySelector<HTMLDialogElement>("#export-webchuck-modal")!;
 const exportBtn: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-btn")!;
-const exportWebchuckCkFileSelect = document.querySelector<HTMLSelectElement>("#export-wc-file-select")!;
+const exportWebchuckCkFileSelect = document.querySelector<HTMLSelectElement>(
+    "#export-wc-file-select"
+)!;
 
 /**
  * Export Project Files to a WebChucK Web App
@@ -20,7 +22,9 @@ const exportWebchuckCkFileSelect = document.querySelector<HTMLSelectElement>("#e
 export function initExportWebChuck() {
     exportWebchuckButton.addEventListener("click", () => {
         // WebChucK Modal Main File Select
-        const allCkfiles = ProjectSystem.getProjectFiles().filter((file) => file.isChuckFile());
+        const allCkfiles = ProjectSystem.getProjectFiles().filter((file) =>
+            file.isChuckFile()
+        );
         exportWebchuckCkFileSelect.innerHTML = "";
         allCkfiles.forEach((file) => {
             const option = document.createElement("option");
@@ -106,8 +110,9 @@ async function exportWebchuck(
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
     const selectedMainChucKFile = exportWebchuckCkFileSelect.value;
-    const projectFilesToPreload = ProjectSystem.getProjectFiles()
-        .filter((file) => file.getFilename() !== selectedMainChucKFile);
+    const projectFilesToPreload = ProjectSystem.getProjectFiles().filter(
+        (file) => file.getFilename() !== selectedMainChucKFile
+    );
     const preloadFileString = projectFilesToPreload.map((file) => {
         return {
             serverFilename: `./${file.getFilename()}`,
@@ -150,7 +155,11 @@ function exportSingleWCFile(wc_html: Document) {
  * Export all project files as a .zip
  * @param wc_html webchuck html document
  */
-function exportProjectWCFiles(title: string, wc_html: Document, projectFiles: any) {
+function exportProjectWCFiles(
+    title: string,
+    wc_html: Document,
+    projectFiles: any
+) {
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
     console.log(projectFiles);

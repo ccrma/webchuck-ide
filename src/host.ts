@@ -87,6 +87,7 @@ export async function onChuckReady() {
     ChuckBar.webchuckButton.disabled = false;
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
     ProjectSystem.uploadFilesButton.disabled = false;
+    ProjectSystem.initDragUpload();
 }
 
 /**

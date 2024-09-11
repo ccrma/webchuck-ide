@@ -45,8 +45,8 @@ export default class ProjectSystem {
         });
         ProjectSystem.fileUploader.addEventListener(
             "change",
-            (event) => {
-                ProjectSystem.uploadFiles(event);
+            () => {
+                ProjectSystem.uploadFiles(ProjectSystem.fileUploader.files);
             },
             false
         );
@@ -65,44 +65,6 @@ export default class ProjectSystem {
             document.querySelector<HTMLDivElement>(
                 "#fileExplorerUploadPrompt"
             )!;
-        // drag and drop upload support
-        ProjectSystem.fileExplorerContainer.addEventListener(
-            "dragover",
-            (e) => {
-                e.preventDefault();
-                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
-                    "opacity-0",
-                    "opacity-100"
-                );
-            }
-        );
-        // end drag
-        ProjectSystem.fileExplorerContainer.addEventListener(
-            "dragleave",
-            (e) => {
-                e.preventDefault();
-                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
-                    "opacity-100",
-                    "opacity-0"
-                );
-            }
-        );
-        ProjectSystem.fileExplorerContainer.addEventListener("dragend", (e) => {
-            e.preventDefault();
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
-                "opacity-100",
-                "opacity-0"
-            );
-        });
-        // drop
-        ProjectSystem.fileExplorerContainer.addEventListener("drop", (e) => {
-            e.preventDefault();
-            ProjectSystem.dragUploadFiles(e);
-            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
-                "opacity-100",
-                "opacity-0"
-            );
-        });
 
         ProjectSystem.projectFiles = new Map();
     }
@@ -292,6 +254,7 @@ export default class ProjectSystem {
     static clearFileSystem() {
         // delete all files
         ProjectSystem.projectFiles.clear();
+        ProjectSystem.fileUploader.value = "";
         const newFile = new ProjectFile("untitled.ck", "");
         ProjectSystem.setActiveFile(newFile);
         ProjectSystem.addFileToExplorer(newFile);
@@ -300,10 +263,9 @@ export default class ProjectSystem {
     /**
      * Upload files to the file system
      */
-    static uploadFiles(event: Event) {
+    static uploadFiles(files: FileList | null) {
         // Handle multiple files uploaded
-        const fileList: FileList | null = (event.target as HTMLInputElement)
-            .files;
+        const fileList: FileList | null = files;
         if (fileList === null || fileList.length === 0) {
             return;
         }
@@ -323,8 +285,6 @@ export default class ProjectSystem {
                             Console.print("loaded file: " + file.name);
                         }
                         ProjectSystem.addNewFile(file.name, data);
-                    } else {
-                        // TODO: If chuck is not running, add file to preUploadFiles
                     }
                 };
                 reader.readAsText(file);
@@ -338,8 +298,6 @@ export default class ProjectSystem {
                     if (theChuck !== undefined) {
                         Console.print("loaded file: " + file.name);
                         ProjectSystem.addNewFile(file.name, data);
-                    } else {
-                        // TODO: If chuck is not running, add file to preUploadFiles
                     }
                 };
                 reader.readAsArrayBuffer(file);
@@ -353,6 +311,49 @@ export default class ProjectSystem {
      */
     static getProjectFiles(): ProjectFile[] {
         return Array.from(ProjectSystem.projectFiles.values());
+    }
+
+    /**
+     * Initialize drag and drop upload support
+     */
+    static initDragUpload() {
+        ProjectSystem.fileExplorerContainer.addEventListener(
+            "dragover",
+            (e) => {
+                e.preventDefault();
+                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                    "opacity-0",
+                    "opacity-100"
+                );
+            }
+        );
+        // end drag
+        ProjectSystem.fileExplorerContainer.addEventListener(
+            "dragleave",
+            (e) => {
+                e.preventDefault();
+                ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                    "opacity-100",
+                    "opacity-0"
+                );
+            }
+        );
+        ProjectSystem.fileExplorerContainer.addEventListener("dragend", (e) => {
+            e.preventDefault();
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                "opacity-100",
+                "opacity-0"
+            );
+        });
+        // drop
+        ProjectSystem.fileExplorerContainer.addEventListener("drop", (e) => {
+            e.preventDefault();
+            ProjectSystem.dragUploadFiles(e);
+            ProjectSystem.fileExplorerUploadPrompt.classList.replace(
+                "opacity-100",
+                "opacity-0"
+            );
+        });
     }
 
     /**
