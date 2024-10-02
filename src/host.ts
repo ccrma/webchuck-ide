@@ -133,34 +133,32 @@ export async function startChuck() {
     (window as any).theChuck = theChuck;
 
     // TODO: EZScore HACKS @terryfeng @alexhan
-    await theChuck
-        .loadFile(
-            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
-        )
-        .then(() => {
-            theChuck.runFile("ezchord.ck");
-        });
-    await theChuck
-        .loadFile(
-            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
-        )
-        .then(() => {
-            theChuck.runFile("ezscore.ck");
-        });
-    await theChuck
-        .loadFile(
-            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
-        )
-        .then(() => {
-            theChuck.runFile("ezscale.ck");
-        });
-    await theChuck
-        .loadFile(
-            "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
-        )
-        .then(() => {
-            theChuck.runFile("scoreplayer.ck");
-        });
+    try {
+        await Promise.all([
+            theChuck
+                .loadFile(
+                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
+                )
+                .then(() => theChuck.runFile("ezchord.ck")),
+            theChuck
+                .loadFile(
+                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
+                )
+                .then(() => theChuck.runFile("ezscore.ck")),
+            theChuck
+                .loadFile(
+                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
+                )
+                .then(() => theChuck.runFile("ezscale.ck")),
+            theChuck
+                .loadFile(
+                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
+                )
+                .then(() => theChuck.runFile("scoreplayer.ck")),
+        ]);
+    } catch (error) {
+        // Failed to load EZScore
+    }
 }
 
 /**
