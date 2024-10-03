@@ -22,7 +22,7 @@ const BUTTON_MARGIN = 10 * RATIO;
 const BUTTON_SIZE = 70 * RATIO;
 const SLIDER_MARGIN = 15 * RATIO;
 const SLIDER_HEIGHT = 48 * RATIO;
-const TITLE_SIZE = 15 * RATIO;
+const TITLE_SIZE = 16 * RATIO;
 const SLIDERS_PER_ROW = 2;
 
 /**

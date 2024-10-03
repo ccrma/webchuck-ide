@@ -43,6 +43,8 @@ export default class Visualizer {
     private spectrumFill: string = spectrumFillLight;
 
     constructor(canvas: HTMLCanvasElement, analyserNode: AnalyserNode) {
+        document.getElementById("visualizer-help")?.remove(); 
+
         const visualizerDefaultOptions = {
             frameSize: 2048,
             drawWaveform: true,
@@ -57,8 +59,6 @@ export default class Visualizer {
         this.frequencyData = new Float32Array(
             visualizerDefaultOptions.frameSize / 2
         );
-
-        // Set theme
         this.theme(getColorScheme() === "dark");
     }
 

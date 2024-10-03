@@ -157,7 +157,7 @@ export async function startChuck() {
                 .then(() => theChuck.runFile("scoreplayer.ck")),
         ]);
     } catch (error) {
-        // Failed to load EZScore
+        console.error("Failed to load EZScore", error);
     }
 }
 
