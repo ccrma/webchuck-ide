@@ -22,6 +22,7 @@ const BUTTON_MARGIN = 10 * RATIO;
 const BUTTON_SIZE = 70 * RATIO;
 const SLIDER_MARGIN = 15 * RATIO;
 const SLIDER_HEIGHT = 48 * RATIO;
+const TITLE_SIZE = 15 * RATIO;
 const SLIDERS_PER_ROW = 2;
 
 /**
@@ -68,6 +69,10 @@ export default class GUI {
      */
     static draw() {
         GUI.ctx.clearRect(0, 0, GUI.canvas.width, GUI.canvas.height);
+        if (GUI.buttons.length === 0 && GUI.sliders.length == 0) {
+            GUI.showHelp();
+            return;
+        }
         GUI.buttons.forEach((button) => {
             button.draw();
         });
@@ -163,6 +168,21 @@ export default class GUI {
 
         guiButton.addEventListener("click", () => GUI.generateGUI());
         parent.appendChild(guiButton);
+    }
+
+    /**
+     * Show help prompt when no buttons or sliders to display
+     */
+    private static showHelp() {
+        GUI.ctx.clearRect(0, 0, GUI.canvas.width, GUI.canvas.height);
+        GUI.ctx.font = `bold ${TITLE_SIZE}px Arial`;
+        GUI.ctx.fillStyle = GUI.isDark ? "#bbb" : "#666";
+        GUI.ctx.textAlign = "center";
+        GUI.ctx.fillText(
+            "Create a global float or Event to get started",
+            GUI.canvas.width / 2,
+            GUI.canvas.height / 2
+        );
     }
 
     //------------------------------------------
