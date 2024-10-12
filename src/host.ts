@@ -20,6 +20,7 @@ import HidPanel from "@/components/hidPanel";
 import ChuckBar from "@/components/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Recorder from "@/components/recorder";
+import NavBar from "./components/navbar/navbar";
 
 // WebChucK source
 const DEV_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/dev/"; // dev webchuck src
@@ -30,6 +31,7 @@ let whereIsChuck: string =
         : PROD_CHUCK_SRC;
 
 let theChuck: Chuck;
+let chuckVersion: string = "1.5.X.X";
 let audioContext: AudioContext;
 let sampleRate: number = 0;
 
@@ -43,7 +45,7 @@ let recordGain: GainNode;
 // HID
 let hid: HID;
 
-export { theChuck, audioContext, sampleRate, visual, hid };
+export { theChuck, chuckVersion, audioContext, sampleRate, visual, hid };
 
 // Chuck Time
 let chuckNowCached: number = 0;
@@ -88,6 +90,10 @@ export async function onChuckReady() {
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
     ProjectSystem.uploadFilesButton.disabled = false;
     ProjectSystem.initDragUpload();
+    theChuck.getParamString("VERSION").then((value: string) => {
+        chuckVersion = value;
+    });
+    NavBar.aboutButton.disabled = false;
 }
 
 /**
@@ -102,13 +108,15 @@ export async function startChuck() {
     theChuck.chuckPrint = Console.print;
     theChuck.setParamInt("TTY_COLOR", 1);
     theChuck.setParamInt("TTY_WIDTH_HINT", Console.getWidth());
+    Console.print("starting virtual machine...");
 
     // Print audio info
     theChuck.getParamInt("SAMPLE_RATE").then((value: number) => {
         Console.print("sample rate: " + value);
     });
     theChuck.getParamString("VERSION").then((value: string) => {
-        Console.print("system version: " + value);
+        chuckVersion = value;
+        Console.print("chuck version: " + value);
     });
     Console.print(
         "number of channels: " + audioContext.destination.maxChannelCount

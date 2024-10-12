@@ -43,7 +43,7 @@ export default class Visualizer {
     private spectrumFill: string = spectrumFillLight;
 
     constructor(canvas: HTMLCanvasElement, analyserNode: AnalyserNode) {
-        document.getElementById("visualizer-help")?.remove(); 
+        document.getElementById("visualizer-help")?.remove();
 
         const visualizerDefaultOptions = {
             frameSize: 2048,
