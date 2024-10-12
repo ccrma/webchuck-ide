@@ -54,7 +54,9 @@ function exportProjectFiles() {
         // Create invisible download link
         const downloadLink = document.createElement("a");
         downloadLink.href = zipURL;
-        downloadLink.download = "project.zip";
+        downloadLink.download = `${
+            ProjectSystem.activeFile.getFilename().split(".")[0]
+        } Project.zip`;
         downloadLink.click();
     });
 }

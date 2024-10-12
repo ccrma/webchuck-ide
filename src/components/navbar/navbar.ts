@@ -8,6 +8,9 @@
 
 import Dropdown from "@/components/navbar/dropdown";
 import NestedDropdown from "./nestedDropdown";
+import Console from "@/components/console";
+import { version } from "@/../package.json";
+import { chuckVersion } from "@/host";
 
 /**
  * NavBar class to handle dropdowns
@@ -21,7 +24,9 @@ export default class NavBar {
     public static HelpDropdown: Dropdown;
 
     public static ExportToNestedDropdown: NestedDropdown;
+
     public static navbar: HTMLDivElement;
+    public static aboutButton: HTMLButtonElement;
 
     constructor() {
         NavBar.navbar = document.querySelector<HTMLDivElement>("#navbar")!;
@@ -98,6 +103,25 @@ export default class NavBar {
             helpButton,
             helpDropdown
         );
+
+        // Help > About
+        NavBar.aboutButton =
+            document.querySelector<HTMLButtonElement>("#about-ide")!;
+        NavBar.aboutButton.addEventListener("click", () => {
+            Console.print("|========================================|");
+            Console.print(`|             WebChucK IDE 2             |`);
+            Console.print("|========================================|");
+            Console.print("| authors: terry feng & chuck team       |");
+            Console.print("| date: 2023 - present                   |");
+            Console.print(`| ide version: ${version.padEnd(21)}     |`);
+            Console.print(`| chuck version: ${chuckVersion.padEnd(23)} |`);
+            Console.print("| source:                                |");
+            Console.print(
+                "| \x1b[38;2;34;178;254mhttps://github.com/ccrma/webchuck-ide\x1b[0m  |"
+            );
+            Console.print("|========================================|");
+            NavBar.HelpDropdown.close();
+        });
     }
 
     /**
