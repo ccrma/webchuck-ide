@@ -18,6 +18,8 @@ import { theChuck, startChuck, connectMic } from "@/host";
 import Editor from "@/components/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "@/components/recorder";
+import Console from "@/components/console";
+
 
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
@@ -81,7 +83,10 @@ export default class ChuckBar {
     static runEditorCode() {
         theChuck?.runCode(Editor.getEditorCode()).then(
             // Success
-            (shredID: number) => VmMonitor.addShredRow(shredID),
+            (shredID: number) => { 
+                VmMonitor.addShredRow(shredID);
+                Console.print("[chuck]: \x1b[32m" + `(VM) sporking incoming shred: ${shredID} (compiled.code)...\x1b[0m`)
+            },
             () => {} // Failure, do nothing
         );
     }
