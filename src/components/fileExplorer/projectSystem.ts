@@ -14,7 +14,7 @@ import {
     fetchDataFile,
     fetchTextFile,
 } from "@/utils/fileLoader";
-import Console from "../console";
+import Console from "../outputPanel/console";
 import ProjectFile from "./projectFile";
 
 export default class ProjectSystem {

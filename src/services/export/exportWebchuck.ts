@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
-import Editor from "@/components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 import { getGlobalVariables } from "@/utils/chuckPreprocess";
 import { MIXER_JS } from "./exportSnippets";
 

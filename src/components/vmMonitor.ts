@@ -9,10 +9,10 @@
 
 import { getChuckNow, sampleRate, theChuck } from "@/host";
 import { displayFormatTime, samplesToTimeHMSS } from "@/utils/time";
-import Editor from "@components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 
 /**
- * VmMonitor Class for handling VM time and shred table
+ * Vm Monitor Class for handling VM time and shred table
  */
 export default class VmMonitor {
     public static vmContainer: HTMLDivElement;

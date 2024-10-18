@@ -1,4 +1,4 @@
-import Console from "@/components/console";
+import Console from "@/components/outputPanel/console";
 import OutputHeaderToggle from "@components/toggle/outputHeaderToggle";
 import { visual } from "@/host";
 import { openOutputPanel } from "@/utils/appLayout";

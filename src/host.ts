@@ -14,12 +14,12 @@ import { Chuck, HID } from "webchuck";
 import { calculateDisplayDigits } from "@utils/time";
 import { ChuckNow } from "@/components/vmMonitor";
 import { loadWebChugins } from "@/utils/webChugins";
-import Console from "@/components/console";
-import Visualizer from "@/components/visualizer";
-import HidPanel from "@/components/hidPanel";
-import ChuckBar from "@/components/chuckBar";
+import Console from "@/components/outputPanel/console";
+import Visualizer from "@/components/outputPanel/visualizer";
+import HidPanel from "@/components/inputPanel/hidPanel";
+import ChuckBar from "@/components/chuckBar/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
-import Recorder from "@/components/recorder";
+import Recorder from "@/components/chuckBar/recorder";
 import NavBar from "./components/navbar/navbar";
 
 // WebChucK source
@@ -142,28 +142,34 @@ export async function startChuck() {
 
     // TODO: EZScore HACKS @terryfeng @alexhan
     try {
-        await Promise.all([
-            theChuck
-                .loadFile(
-                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
-                )
-                .then(() => theChuck.runFile("ezchord.ck")),
-            theChuck
-                .loadFile(
-                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
-                )
-                .then(() => theChuck.runFile("ezscore.ck")),
-            theChuck
-                .loadFile(
-                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
-                )
-                .then(() => theChuck.runFile("ezscale.ck")),
-            theChuck
-                .loadFile(
-                    "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
-                )
-                .then(() => theChuck.runFile("scoreplayer.ck")),
-        ]);
+        await theChuck
+            .loadFile(
+                "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezchord.ck"
+            )
+            .then(() => {
+                theChuck.runFile("ezchord.ck");
+            });
+        await theChuck
+            .loadFile(
+                "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscore.ck"
+            )
+            .then(() => {
+                theChuck.runFile("ezscore.ck");
+            });
+        await theChuck
+            .loadFile(
+                "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/ezscale.ck"
+            )
+            .then(() => {
+                theChuck.runFile("ezscale.ck");
+            });
+        await theChuck
+            .loadFile(
+                "https://raw.githubusercontent.com/tae1han/ChucKTonal/main/src/scoreplayer.ck"
+            )
+            .then(() => {
+                theChuck.runFile("scoreplayer.ck");
+            });
     } catch (error) {
         console.error("Failed to load EZScore", error);
     }

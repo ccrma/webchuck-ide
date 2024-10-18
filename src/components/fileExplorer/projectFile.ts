@@ -7,7 +7,7 @@
 //------------------------------------------------------------------
 
 import { isPlaintextFile } from "webchuck/dist/utils";
-import Editor from "@components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 
 export default class ProjectFile {
     private readonly filename: string;

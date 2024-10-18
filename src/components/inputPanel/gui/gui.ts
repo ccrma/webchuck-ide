@@ -7,7 +7,7 @@
 // date:   March 2024
 //---------------------------------------------------------
 
-import Editor from "@components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 import EventButton from "./eventButton";
 import FloatSlider from "./floatSlider";
 import { getColorScheme } from "@/utils/theme";

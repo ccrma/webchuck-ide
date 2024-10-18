@@ -8,7 +8,7 @@
 
 import Dropdown from "@/components/navbar/dropdown";
 import NestedDropdown from "./nestedDropdown";
-import Console from "@/components/console";
+import Console from "@/components/outputPanel/console";
 import { version } from "@/../package.json";
 import { chuckVersion } from "@/host";
 

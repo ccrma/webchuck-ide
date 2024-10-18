@@ -7,18 +7,18 @@
 //-------------------------------------------------------------------
 
 import NavBar from "@/components/navbar/navbar";
-import ChuckBar from "@components/chuckBar";
-import Editor from "@components/monaco/editor";
-import EditorPanelHeader from "@/components/panelHeader/editorPanelHeader";
-import InputPanelHeader from "@/components/panelHeader/inputPanelHeader";
-import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
-import Console from "@/components/console";
+import ChuckBar from "@/components/chuckBar/chuckBar";
+import Editor from "@/components/editor/monaco/editor";
+import EditorPanelHeader from "@/components/editor/editorPanelHeader";
+import InputPanelHeader from "@/components/inputPanel/inputPanelHeader";
+import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
+import Console from "@/components/outputPanel/console";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Examples from "@/components/examples/examples";
 import MoreExamples from "@/components/examples/moreExamples";
 import Settings from "@/components/settings";
-import GUI from "@components/gui/gui";
+import GUI from "@/components/inputPanel/gui/gui";
 
 import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
