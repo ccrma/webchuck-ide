@@ -6,9 +6,9 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import Console from "@components/console";
-import GUI from "@components/gui/gui";
-import Editor from "@components/monaco/editor";
+import Console from "@/components/outputPanel/console";
+import GUI from "@/components/inputPanel/gui/gui";
+import Editor from "@/components/editor/monaco/editor";
 import { visual } from "@/host";
 
 let darkModeToggle: HTMLButtonElement;

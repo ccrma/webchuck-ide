@@ -3,10 +3,10 @@ import {
     setAppColumnWidths,
     setContainerRowHeights,
 } from "@utils/appLayout";
-import Editor from "@components/monaco/editor";
-import Console from "@/components/console";
+import Editor from "@/components/editor/monaco/editor";
+import Console from "@/components/outputPanel/console";
 import { visual } from "@/host";
-import GUI from "./gui/gui";
+import GUI from "./inputPanel/gui/gui";
 
 /**
  * Resizer class draggable splitters in App (the main section of the IDE)

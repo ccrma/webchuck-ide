@@ -1,5 +1,5 @@
 import InputHeaderToggle from "@components/toggle/inputHeaderToggle";
-import GUI from "@components/gui/gui";
+import GUI from "@/components/inputPanel/gui/gui";
 import { openInputPanel } from "@/utils/appLayout";
 
 export default class InputPanelHeader {

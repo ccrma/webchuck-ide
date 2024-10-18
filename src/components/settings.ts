@@ -1,3 +1,11 @@
+//---------------------------------------------------
+// title: Settings
+// desc:  IDE settings modal for ChucK versions
+//
+// author: terry feng
+// date:   April 2024
+//---------------------------------------------------
+
 import { selectChuckSrc } from "@/host";
 
 const versionString = Object.freeze({

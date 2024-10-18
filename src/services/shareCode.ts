@@ -1,4 +1,4 @@
-import Editor from "@/components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 import pako from "pako";
 
 const shareCodeButton =

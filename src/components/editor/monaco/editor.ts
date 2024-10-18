@@ -7,17 +7,17 @@
 // date:   May 2023
 //------------------------------------------------------------------
 
-import ChuckBar from "@components/chuckBar";
+import ChuckBar from "@/components/chuckBar/chuckBar";
 
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight, miniAudicleDark } from "./miniAudicleTheme";
 import { File, fetchTextFile } from "@/utils/fileLoader";
-import EditorPanelHeader from "@components/panelHeader/editorPanelHeader";
-import Console from "@components/console";
-import ProjectSystem from "../fileExplorer/projectSystem";
-import GUI from "@components/gui/gui";
+import EditorPanelHeader from "@/components/editor/editorPanelHeader";
+import Console from "@/components/outputPanel/console";
+import ProjectSystem from "../../fileExplorer/projectSystem";
+import GUI from "@/components/inputPanel/gui/gui";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
