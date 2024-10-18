@@ -152,9 +152,6 @@ export default class GUI {
         guiButton.classList.add(
             "button",
             "secondary",
-            "border",
-            "border-orange",
-            "dark:border-white",
             "text-sm",
             "absolute",
             "bottom-2",
@@ -164,7 +161,7 @@ export default class GUI {
         // TODO: factor this out for clean util
         const isWindows = navigator.userAgent.includes("Windows");
         const metaKey = isWindows ? "Ctrl" : "⌘";
-        guiButton.title = `Save and Generate GUI [${metaKey} + S]`;
+        guiButton.title = `Generate GUI [${metaKey} + S]`;
 
         guiButton.addEventListener("click", () => GUI.generateGUI());
         parent.appendChild(guiButton);

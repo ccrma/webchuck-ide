@@ -192,13 +192,16 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                   </svg>
                 </button>
-                <div id="helpDropdown" class="hidden dropdown w-48">
+                <div id="helpDropdown" class="hidden dropdown w-52">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                     <li>
-                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="dropdownItem">ChucK Reference</a>
+                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="dropdownItem">ChucK API Reference</a>
                     </li>
                     <li>
-                      <a href="https://chuck.stanford.edu/doc" target="_blank" class="dropdownItem">Documentation</a>
+                      <a href="https://chuck.stanford.edu/webchuck/docs/" target="_blank" class="dropdownItem">WebChucK Docs</a>
+                    </li>
+                    <li>
+                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="dropdownItem">Discord Community</a>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
@@ -209,12 +212,9 @@
                       <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="dropdownItem">Report an Issue</a>
                     </li>
 
-                    <li class="divider dark:border-t-gray-400" data-content="MORE"></li>
+                    <li class="divider dark:border-t-gray-400" data-content="ABOUT"></li>
                     <li>
                       <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="dropdownItem">Learn WebChucK</a>
-                    </li>
-                    <li>
-                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="dropdownItem">Discord Community</a>
                     </li>
                     <li>
                       <button id="about-ide" class="dropdownItem">About IDE</button>
@@ -287,7 +287,7 @@
         <!-- Left -->
         <div id="app-left">
           <div id="fileExplorerPanel" class="h-full flex flex-col justify-start">
-            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
+            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d dark:border-dark-a drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
               <div class="px-2">File Explorer</div>
             </div>
             <div id="fileExplorerContainer">
@@ -353,7 +353,7 @@
           <!-- VM Monitor -->
           <div id="vmMonitor" class="relative">
             <table id="shredTable" class="w-full table-auto absolute text-left overflow-auto">
-              <thead class="h-8 align-middle font-medium border-b border-dark-d drop-shadow-sm">
+              <thead class="h-8 align-middle font-medium border-b border-dark-d dark:border-dark-a drop-shadow-sm">
                 <tr>
                   <th scope="col">Shred</th>
                   <th scope="col">Code</th>
@@ -372,7 +372,7 @@
               <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
               <button id="visualizerTab" type="button" class="header-item text-dark-5">VISUALIZER</button>
             </div>
-            <div id="consoleContainer" style="height: calc(100% - 1.75rem)" class="border-b border-sky-blue">
+            <div id="consoleContainer" style="height: calc(100% - 1.75rem)" class="border-b border-sky-blue dark:border-dark-4">
               <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>
             </div>
             <div id="visualizerContainer" class="flex-1 bg-white dark:bg-dark-2 hidden">

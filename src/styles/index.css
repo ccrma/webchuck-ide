@@ -275,7 +275,7 @@ table thead tr th {
 }
 
 table tbody tr td {
-    @apply py-3 px-4 border-b border-sky-blue-700;
+    @apply py-3 px-4 border-b border-sky-blue-700 dark:border-dark-5;
 }
 
 td:nth-child(3) {
@@ -304,7 +304,7 @@ td:nth-child(4) {
 
 /* HID CONTAINER */
 #hidLog {
-    @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-gray-300 rounded-lg bg-white dark:bg-dark dark:border-gray-700;
+    @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-dark-d rounded-lg bg-white dark:bg-dark dark:border-dark-4;
     width: 280px;
     height: 120px;
 }
@@ -323,7 +323,7 @@ td:nth-child(4) {
 }
 
 .button.secondary {
-    @apply hover:text-orange-light px-3 py-1.5 rounded-lg text-orange transition;
+    @apply text-orange hover:text-orange-light border border-orange hover:border-orange-light px-3 py-1.5 rounded-lg transition;
 }
 
 dialog {

@@ -109,7 +109,7 @@ export default class NavBar {
             document.querySelector<HTMLButtonElement>("#about-ide")!;
         NavBar.aboutButton.addEventListener("click", () => {
             Console.print("|========================================|");
-            Console.print(`|             WebChucK IDE 2             |`);
+            Console.print(`|          WebChucK IDE v${version}           |`);
             Console.print("|========================================|");
             Console.print("| authors: terry feng & chuck team       |");
             Console.print("| date: 2023 - present                   |");
