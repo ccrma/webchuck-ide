@@ -308,7 +308,7 @@ td:nth-child(4) {
     width: 280px;
     height: 120px;
 }
-.logEvent {
+.logMsg {
     margin-bottom: 5px;
     opacity: 1;
     transition: opacity 1s;

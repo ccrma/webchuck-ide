@@ -1,5 +1,6 @@
 import { HID } from "webchuck";
 import ButtonToggle from "@/components/toggle/buttonToggle";
+import InputMonitor from "./inputMonitor";
 
 // Constants
 const MAX_ELEMENTS = 5;
@@ -12,6 +13,7 @@ const keyboardButton =
 const hidLog = document.querySelector<HTMLDivElement>("#hidLog")!;
 
 export default class HidPanel {
+    public static hidMonitor: InputMonitor;
     constructor(hid: HID) {
         new ButtonToggle(
             mouseButton,
@@ -54,6 +56,8 @@ export default class HidPanel {
         mouseButton.disabled = false;
         keyboardButton.disabled = false;
 
+        // Setup Hid Log
+        HidPanel.hidMonitor = new InputMonitor(hidLog, MAX_ELEMENTS);
         hidLog.style.opacity = "100";
     }
 }
@@ -68,23 +72,27 @@ function clamp(value: number, min: number, max: number) {
 function logKeyEvent(event: KeyboardEvent) {
     if (!event.repeat) {
         if (event.type === "keyup") {
-            logEvent(`keyup:   ${event.key} (${event.which})`);
+            HidPanel.hidMonitor.logEvent(
+                `keyup:   ${event.key} (${event.which})`
+            );
         } else {
-            logEvent(`${event.type}: ${event.key} (${event.which})`);
+            HidPanel.hidMonitor.logEvent(
+                `${event.type}: ${event.key} (${event.which})`
+            );
         }
     }
 }
 
 function logMouseClick(event: MouseEvent) {
     if (event.type === "mouseup") {
-        logEvent(`mouseup:   button=${event.which}`);
+        HidPanel.hidMonitor.logEvent(`mouseup:   button=${event.which}`);
     } else {
-        logEvent(`${event.type}: button=${event.which}`);
+        HidPanel.hidMonitor.logEvent(`${event.type}: button=${event.which}`);
     }
 }
 
 function logMouseMoveEvent(event: MouseEvent) {
-    logEvent(
+    HidPanel.hidMonitor.logEvent(
         `${event.type}: X=${(
             event.clientX / document.documentElement.clientWidth
         ).toFixed(3)}, Y=${(
@@ -95,34 +103,13 @@ function logMouseMoveEvent(event: MouseEvent) {
 
 function logWheelEvent(event: WheelEvent) {
     if (event.deltaX !== 0) {
-        logEvent(`${event.type}: deltaX=${clamp(event.deltaX, -1, 1)}`);
+        HidPanel.hidMonitor.logEvent(
+            `${event.type}: deltaX=${clamp(event.deltaX, -1, 1)}`
+        );
     }
     if (event.deltaY !== 0) {
-        logEvent(`${event.type}: deltaY=${clamp(event.deltaY, -1, 1)}`);
+        HidPanel.hidMonitor.logEvent(
+            `${event.type}: deltaY=${clamp(event.deltaY, -1, 1)}`
+        );
     }
-}
-
-/**
- * Log HID events to IDE
- * @param message HID event message to log
- */
-function logEvent(message: string) {
-    const logEntry = document.createElement("pre");
-    logEntry.className = "logEvent";
-    logEntry.textContent = message;
-
-    hidLog.appendChild(logEntry);
-
-    // Remove excess entries
-    while (hidLog.children.length > MAX_ELEMENTS) {
-        hidLog.removeChild(hidLog.children[0]);
-    }
-
-    // Trigger a reflow to enable CSS transition
-    logEntry.offsetWidth;
-
-    // Add fade-out class after a short delay
-    setTimeout(() => {
-        logEntry.classList.add("fade-out");
-    }, 1500);
 }

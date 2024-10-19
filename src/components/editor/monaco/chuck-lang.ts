@@ -219,7 +219,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             [/\/\*/, "comment", "@push"], // nested comment
             ["\\*/", "comment", "@pop"],
             // eslint-disable-next-line
-            [/[\/*]/, "comment"],  
+            [/[\/*]/, "comment"],
         ],
 
         string: [
