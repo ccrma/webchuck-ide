@@ -36,8 +36,7 @@ button {
     justify-content: space-around;
     align-items: center;
     background-color: bisque;
-    /* padding: 0.5rem .6rem 0.5rem 1rem; */
-    padding: 0.5rem;
+    height: 2.5rem;
     width: 5rem;
 }
 

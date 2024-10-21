@@ -101,7 +101,8 @@ async function exportWebchuck(
 
     // Check code for global variables to build mixer
     const globals = getGlobalVariables(code);
-    const mixer_code = globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
+    let mixer_code = `const mixer = document.querySelector('#webchuck-gui');\n`;
+    mixer_code += globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
     wc_html = docFindReplace(wc_html, "{{{ MIXER_CODE }}}", mixer_code);
     if (globals.float.length == 0) {
         wc_html.getElementById("webchuck-gui")?.remove();
@@ -129,7 +130,12 @@ async function exportWebchuck(
     if (projectFilesToPreload.length === 0) {
         exportSingleWCFile(wc_html);
     } else {
-        exportProjectWCFiles(title, wc_html, projectFilesToPreload);
+        exportProjectWCFiles(
+            title,
+            selectedMainChucKFile,
+            wc_html,
+            projectFilesToPreload
+        );
     }
 }
 
@@ -157,12 +163,15 @@ function exportSingleWCFile(wc_html: Document) {
  */
 function exportProjectWCFiles(
     title: string,
+    mainChuckFile: string,
     wc_html: Document,
     projectFiles: any
 ) {
+    if (title === "") {
+        title = mainChuckFile.split(".")[0];
+    }
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
-    console.log(projectFiles);
     projectFiles.forEach((file: any) => {
         zip.file(file.getFilename(), file.getData());
     });

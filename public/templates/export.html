@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="https://chuck.stanford.edu/doc/images/chuck-logo2023w.png" type="image/png">
-    <!--- include the ACE editor and webchuck -->
+    <!-- include ACE editor and webchuck basic styles -->
     <script src="https://cdn.jsdelivr.net/gh/ccrma/webchuck-ide@main/cdn/ace/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ccrma/webchuck-ide@main/cdn/ace/editor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ccrma/webchuck-ide@main/cdn/webchuck.css" />
+    <!-- define script type="chuck" -->
     <script type="module">
       let l, e, t = 'script', p = /(from\s+|import\s+)['"](#[\w\-]+)['"]/g, x = 'textContent', d = document, o;
       for (o of d.querySelectorAll(t + '[type=chuck]')) o[x] = 'export default `' + o[x] + '`', o.setAttribute('type', 'inline-module');
       for (o of d.querySelectorAll(t + '[type=inline-module]')) l = d.createElement(t), o.id ? l.id = o.id : 0, l.type = 'module', l[x] = o[x].replace(p, (u, a, z) => (e = d.querySelector(t + z + '[type=module][src]')) ? a + `/* ${ z } */'${ e.src }'` : u), l.src = URL.createObjectURL(new Blob([l[x]], { type: 'application/java' + t })), o.replaceWith(l);//inline
     </script>
+    <!-- chuck code script -->
     <script id="chuck" type="chuck">SinOsc osc => dac; 1::second => now;</script>
+    <!-- main javascript code -->
     <script type="inline-module">
       import { Chuck } from 'https://cdn.jsdelivr.net/npm/webchuck/+esm';
-      import chuck from '#chuck';
+      import chuckCode from '#chuck';
 
-      const editor = newChuckEditor(document.getElementById("editor"), chuck);
+      const editor = newChuckEditor(document.getElementById("editor"), chuckCode);
 
       const states = Object.freeze({
         playing: 0,
@@ -26,15 +30,17 @@
       let status = states.stopped;
 
       const action = document.querySelector('#action');
-      const mixer = document.querySelector('#webchuck-gui');
       const openInIDE = document.querySelector('#openInIDE');
+
+      let theChuck; // global variable
 
       // Play button
       action.addEventListener('click', async () => {
         // Initial load
-        if (!window.theChuck) {
+        if (theChuck === undefined) {
           action.disabled = true;
-          window.theChuck = await Chuck.init( {{{ PRELOAD_FILES }}} );
+          action.innerHTML = "Loading...";
+          theChuck = await Chuck.init( {{{ PRELOAD_FILES }}} );
           action.disabled = false;
         }
 
@@ -65,14 +71,12 @@
       });
 
       openInIDE.addEventListener('click', () => {
-        const currURL = window.location.href; // TODO: append the code to the URL
         window.open("https://chuck.stanford.edu/ide", '_blank');
       });
 
       {{{ MIXER_CODE }}}
     </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ccrma/webchuck-ide@main/cdn/webchuck.css" />
-    <title>WebchucK</title>
+    <title>WebChucK</title>
   </head>
 
   <body>
