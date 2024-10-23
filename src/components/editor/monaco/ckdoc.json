@@ -1504,7 +1504,7 @@
             "```chuck\nHnkyTonk()\n```\nDefault constructor for HnkyTonk."
         ],
         "examples": [
-            "Examples: \t [honkeytonk-algo1.ck](https://chuck.stanford.edu/doc/examples/stk/honkeytonk-algo1.ck), [honkeytonk-algo3.ck](https://chuck.stanford.edu/doc/examples/stk/honkeytonk-algo3.ck)"
+            "Examples: \t [honkeytonk-algo1.ck](https://chuck.stanford.edu/doc/examples/stk/honkeytonk-algo1.ck), [nylon-guitar-algo1.ck](https://chuck.stanford.edu/doc/examples/stk/nylon-guitar-algo1.ck), [jacobass-algo1.ck](https://chuck.stanford.edu/doc/examples/stk/jacobass-algo1.ck)"
         ],
         "functions": [],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-stk.html#HnkyTonk)"
@@ -1731,7 +1731,7 @@
             "```chuck\nLPF()\n```\nDefault constructor for LPF."
         ],
         "examples": [
-            "Examples: \t [lpf.ck](https://chuck.stanford.edu/doc/examples/filter/lpf.ck), [rlpf.ck](https://chuck.stanford.edu/doc/examples/filter/rlpf.ck)"
+            "Examples: \t [lpf.ck](https://chuck.stanford.edu/doc/examples/filter/lpf.ck), [rlpf.ck](https://chuck.stanford.edu/doc/examples/filter/rlpf.ck), [smb.ck](https://chuck.stanford.edu/doc/examples/deep/smb.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -2453,13 +2453,17 @@
         ],
         "functions": [
             "**Methods:**",
+            "```chuck\nfloat beatsPerMinute()\n```\nGet the beats per minute (BPM) value from the MIDI file header.",
+            "```chuck\nfloat bpm()\n```\nSame as beatsPerMinute().",
             "```chuck\nvoid close()\n```\nClose the MIDI file.",
             "```chuck\nint numTracks()\n```\nGet the number of tracks in the open MIDI file.",
             "```chuck\nint open(string path)\n```\nOpen a MIDI file.",
             "```chuck\nint read(MidiMsg msg)\n```\nRead next MIDI Event (on default track 0); return contents in 'msg'.",
             "```chuck\nint read(MidiMsg msg, int track)\n```\nRead next MIDI Event on track 'track'; return contents in 'msg'.",
             "```chuck\nvoid rewind()\n```\nRewind MIDI reader to beginning of default track 0.",
-            "```chuck\nvoid rewind(int track)\n```\nRewind MIDI reader to beginning of track 'track'."
+            "```chuck\nvoid rewind(int track)\n```\nRewind MIDI reader to beginning of track 'track'.",
+            "```chuck\nint ticksPerQuarter()\n```\nGet the ticks per quarter (TPQ) value from the MIDI file header.",
+            "```chuck\nint tpq()\n```\nSame as ticksPerQuarter()."
         ],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/io.html#MidiFileIn)"
     },
@@ -2686,7 +2690,7 @@
         "description": "A white noise generator.",
         "constructors": [],
         "examples": [
-            "Examples: \t [wind.ck](https://chuck.stanford.edu/doc/examples/basic/wind.ck), [powerup.ck](https://chuck.stanford.edu/doc/examples/shred/powerup.ck)"
+            "Examples: \t [wind.ck](https://chuck.stanford.edu/doc/examples/basic/wind.ck), [smb.ck](https://chuck.stanford.edu/doc/examples/deep/smb.ck), [powerup.ck](https://chuck.stanford.edu/doc/examples/shred/powerup.ck)"
         ],
         "functions": [],
         "link": "[More...](https://chuck.stanford.edu/doc/reference/ugens-basic.html#Noise)"
@@ -3675,7 +3679,7 @@
             "```chuck\nSqrOsc(float freq, float phase)\n```\nConstruct SqrOsc at specified frequency and phase."
         ],
         "examples": [
-            "Examples: \t [oscillatronx.ck](https://chuck.stanford.edu/doc/examples/basic/oscillatronx.ck), [brf.ck](https://chuck.stanford.edu/doc/examples/filter/brf.ck), [rlpf.ck](https://chuck.stanford.edu/doc/examples/filter/rlpf.ck), [rhpf.ck](https://chuck.stanford.edu/doc/examples/filter/rhpf.ck)"
+            "Examples: \t [oscillatronx.ck](https://chuck.stanford.edu/doc/examples/basic/oscillatronx.ck), [smb.ck](https://chuck.stanford.edu/doc/examples/deep/smb.ck), [brf.ck](https://chuck.stanford.edu/doc/examples/filter/brf.ck), [rlpf.ck](https://chuck.stanford.edu/doc/examples/filter/rlpf.ck), [rhpf.ck](https://chuck.stanford.edu/doc/examples/filter/rhpf.ck)"
         ],
         "functions": [
             "**Methods:**",
@@ -3855,7 +3859,7 @@
             "```chuck\nTriOsc(float freq, float phase)\n```\nConstruct TriOsc at specified frequency and phase."
         ],
         "examples": [
-            "Examples: \t [oscillatronx.ck](https://chuck.stanford.edu/doc/examples/basic/oscillatronx.ck), [shepard.ck](https://chuck.stanford.edu/doc/examples/deep/shepard.ck)"
+            "Examples: \t [oscillatronx.ck](https://chuck.stanford.edu/doc/examples/basic/oscillatronx.ck), [shepard.ck](https://chuck.stanford.edu/doc/examples/deep/shepard.ck), [smb.ck](https://chuck.stanford.edu/doc/examples/deep/smb.ck)"
         ],
         "functions": [
             "**Methods:**",
