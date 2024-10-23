@@ -369,7 +369,9 @@ export default class MoreExamples {
         );
         MoreExamples.previewExample.data.forEach(async (url: string) => {
             const file = await fetchDataFile(url);
-            ProjectSystem.addNewFile(file.name, file.data);
+            if (file !== null) {
+                ProjectSystem.addNewFile(file.name, file.data);
+            }
         });
         MoreExamples.hideModal();
     }

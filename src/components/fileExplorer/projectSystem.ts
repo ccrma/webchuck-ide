@@ -429,7 +429,9 @@ export async function loadChuckFileFromURL(url: string) {
  * @param url url to data file
  */
 export async function loadDataFileFromURL(url: string) {
-    const dataFile: FileData = await fetchDataFile(url);
-    ProjectSystem.addNewFile(dataFile.name, dataFile.data as Uint8Array);
-    Console.print(`loaded file: ${dataFile.name}`);
+    const dataFile: FileData | null = await fetchDataFile(url);
+    if (dataFile !== null) {
+        ProjectSystem.addNewFile(dataFile.name, dataFile.data as Uint8Array);
+        Console.print(`loaded file: ${dataFile.name}`);
+    }
 }
