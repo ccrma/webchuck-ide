@@ -9,10 +9,12 @@
 export default class InputMonitor {
     public monitor: HTMLDivElement;
     public max_elements: number;
+    public active: boolean;
 
-    constructor(div: HTMLDivElement, max_elements: number = 5) {
+    constructor(div: HTMLDivElement, max_elements: number = 5, active = false) {
         this.monitor = div;
         this.max_elements = max_elements;
+        this.active = active;
     }
 
     /**
@@ -38,5 +40,10 @@ export default class InputMonitor {
         setTimeout(() => {
             logEntry.classList.add("fade-out");
         }, 1500);
+    }
+
+    setActive(active: boolean) {
+        this.monitor.style.opacity = active ? "1" : "0.5";
+        this.active = active;
     }
 }

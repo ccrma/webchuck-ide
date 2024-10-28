@@ -328,18 +328,33 @@
             <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
               <button id="GUITab" type="button" class="header-item">GUI</button>
               <button id="HIDTab" type="button" class="header-item">HID</button>
+              <button id="SensorTab" type="button" class="header-item">SENSOR</button>
             </div>
             <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full">
               <div id="GUIPanel" class="w-full h-full relative overflow-hidden">
               </div>
             </div>
             <div id="HIDContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
-              <div id="HIDPanel" class="absolute w-full h-full">
+              <div id="HIDPanel" class="absolute w-full h-full p-2">
                 <button id="mouseHIDButton" class="toggle-button w-32" disabled>Mouse: Off</button>
                 <button id="keyboardHIDButton" class="toggle-button w-32" disabled>Keyboard: Off</button>
-                <div id="hidLog" class="opacity-50 text-sm"></div>
+                <div id="hidLog" class="log-container opacity-50 text-sm"></div>
               </div>
             </div>
+            <div id="SensorContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
+              <div id="SensorPanel" class="absolute w-full h-full p-2 pt-1">
+                <div class="pb-2 font-bold text-md">Mobile Only</div>
+                <div class="flex flex-wrap pb-1">
+                  <button id="gyroButton" class="toggle-button w-32 mr-2" disabled>Gryo: Off</button>
+                  <div id="gyroLog" class="log-container sensorLog opacity-50 text-sm"></div>
+                </div>
+                <div class="flex flex-wrap pb-1">
+                  <button id="accelButton" class="toggle-button w-32 mr-2" disabled>Accel: Off</button>
+                  <div id="accelLog" class="log-container sensorLog opacity-50 text-sm"></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 

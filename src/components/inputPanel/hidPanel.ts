@@ -14,7 +14,13 @@ const hidLog = document.querySelector<HTMLDivElement>("#hidLog")!;
 
 export default class HidPanel {
     public static hidMonitor: InputMonitor;
+    public static mouseActive: boolean = false;
+    public static keyboardActive: boolean = false;
     constructor(hid: HID) {
+        // Create Hid Log
+        HidPanel.hidMonitor = new InputMonitor(hidLog, MAX_ELEMENTS, false);
+
+        // Mouse
         new ButtonToggle(
             mouseButton,
             true,
@@ -26,6 +32,8 @@ export default class HidPanel {
                 document.addEventListener("mouseup", logMouseClick);
                 document.addEventListener("mousemove", logMouseMoveEvent);
                 document.addEventListener("wheel", logWheelEvent);
+                HidPanel.mouseActive = true;
+                HidPanel.setMonitorState();
             },
             () => {
                 hid.disableMouse();
@@ -33,9 +41,12 @@ export default class HidPanel {
                 document.removeEventListener("mouseup", logMouseClick);
                 document.removeEventListener("mousemove", logMouseMoveEvent);
                 document.removeEventListener("wheel", logWheelEvent);
+                HidPanel.mouseActive = false;
+                HidPanel.setMonitorState();
             }
         );
 
+        // Keyboard
         new ButtonToggle(
             keyboardButton,
             true,
@@ -45,20 +56,28 @@ export default class HidPanel {
                 hid.enableKeyboard();
                 document.addEventListener("keydown", logKeyEvent);
                 document.addEventListener("keyup", logKeyEvent);
+                HidPanel.keyboardActive = true;
+                HidPanel.setMonitorState();
             },
             () => {
                 hid.disableKeyboard;
                 document.removeEventListener("keydown", logKeyEvent);
                 document.removeEventListener("keyup", logKeyEvent);
+                HidPanel.keyboardActive = false;
+                HidPanel.setMonitorState();
             }
         );
 
         mouseButton.disabled = false;
         keyboardButton.disabled = false;
+        HidPanel.mouseActive = true;
+        HidPanel.keyboardActive = true;
+    }
 
-        // Setup Hid Log
-        HidPanel.hidMonitor = new InputMonitor(hidLog, MAX_ELEMENTS);
-        hidLog.style.opacity = "100";
+    static setMonitorState() {
+        HidPanel.hidMonitor.setActive(
+            HidPanel.mouseActive || HidPanel.keyboardActive
+        );
     }
 }
 

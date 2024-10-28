@@ -291,7 +291,7 @@ td:nth-child(4) {
 
 /* INPUT PANEL */
 .toggle-button {
-    @apply m-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
+    @apply mr-2 mb-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
 }
 .toggle-button.active {
     @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
@@ -304,9 +304,20 @@ td:nth-child(4) {
 
 /* HID CONTAINER */
 #hidLog {
-    @apply m-2 p-1 pt-0 w-72 h-32 overflow-hidden border border-dark-d rounded-lg bg-white dark:bg-dark dark:border-dark-4;
-    width: 280px;
-    height: 120px;
+    width: 270px;
+    height: 128px;
+}
+
+/* SENSOR CONTAINER */
+.sensorLog {
+    @apply pt-2 !important;
+    width: 240px;
+    height: 36px;
+}
+
+/* LOGGER */
+.log-container {
+    @apply px-2 py-1 mb-1 overflow-hidden border border-dark-d rounded-lg bg-white dark:bg-dark dark:border-dark-4;
 }
 .logMsg {
     margin-bottom: 5px;
@@ -422,7 +433,7 @@ dialog::backdrop {
 }
 
 .header {
-    @apply w-full flex items-center px-1;
+    @apply w-full flex items-center px-1 border-b border-sky-blue-700 dark:border-dark-5;
 }
 
 .header-item {

@@ -18,12 +18,21 @@ export default class InputPanelHeader {
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#GUIContainer")!
         );
+
         // HID
         InputPanelHeader.inputButtons.push(
             document.querySelector<HTMLButtonElement>("#HIDTab")!
         );
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#HIDContainer")!
+        );
+
+        // HID
+        InputPanelHeader.inputButtons.push(
+            document.querySelector<HTMLButtonElement>("#SensorTab")!
+        );
+        InputPanelHeader.inputContainers.push(
+            document.querySelector<HTMLDivElement>("#SensorContainer")!
         );
 
         // Build toggles with containers

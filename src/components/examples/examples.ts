@@ -133,6 +133,28 @@ export default class Examples {
             () => loadChuckFileFromURL("examples/keyboardHID.ck"),
             hidNested
         );
+
+        // Sensor Nested Examples
+        const sensorNested = NestedDropdown.createNewNestedDropdown(
+            this.examplesDropdownContainer,
+            "sensor",
+            "Sensor"
+        );
+        Examples.newExample(
+            "Gyro Demo",
+            () => {
+                loadChuckFileFromURL("examples/gyro/gyroDemo.ck");
+                loadDataFileFromURL("examples/gyro/gyroLoop.wav");
+            },
+            sensorNested
+        );
+        Examples.newExample(
+            "Accel Demo",
+            () => {
+                loadChuckFileFromURL("examples/accelDemo.ck");
+            },
+            sensorNested
+        );
     }
 
     /**

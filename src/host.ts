@@ -10,13 +10,14 @@
 // date:   August 2023
 //--------------------------------------------------------
 
-import { Chuck, HID } from "webchuck";
+import { Chuck, HID, Gyro, Accel } from "webchuck";
 import { calculateDisplayDigits } from "@utils/time";
 import { ChuckNow } from "@/components/vmMonitor";
 import { loadWebChugins } from "@/utils/webChugins";
 import Console from "@/components/outputPanel/console";
 import Visualizer from "@/components/outputPanel/visualizer";
 import HidPanel from "@/components/inputPanel/hidPanel";
+import SensorPanel from "@/components/inputPanel/sensorPanel";
 import ChuckBar from "@/components/chuckBar/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Recorder from "@/components/chuckBar/recorder";
@@ -42,10 +43,7 @@ let visual: Visualizer;
 // Recorder
 let recordGain: GainNode;
 
-// HID
-let hid: HID;
-
-export { theChuck, chuckVersion, audioContext, sampleRate, visual, hid };
+export { theChuck, chuckVersion, audioContext, sampleRate, visual };
 
 // Chuck Time
 let chuckNowCached: number = 0;
@@ -133,9 +131,13 @@ export async function startChuck() {
     theChuck.connect(recordGain);
     Recorder.configureRecorder(audioContext, recordGain);
 
-    // Start HID, mouse and keyboard on
-    hid = await HID.init(theChuck);
-    new HidPanel(hid);
+    // Enable WebChucK Packages
+    // HID, mouse and keyboard on
+    new HidPanel(await HID.init(theChuck));
+    new SensorPanel(
+        await Gyro.init(theChuck, false),
+        await Accel.init(theChuck, false)
+    );
 
     // TODO: for debugging, make theChuck global
     (window as any).theChuck = theChuck;

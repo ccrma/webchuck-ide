@@ -82,7 +82,11 @@ export default class ProjectSystem {
             "Enter new file name",
             "untitled.ck"
         );
-        if (filename === "" || !filename) {
+        if (filename === null || filename === "") {
+            return;
+        }
+        if (ProjectSystem.projectFiles.has(filename)) {
+            Console.print(`${filename} already exists`);
             return;
         }
         filename = filename.endsWith(".ck") ? filename : filename + ".ck";
@@ -180,7 +184,7 @@ export default class ProjectSystem {
         } else {
             if (wasActive) {
                 ProjectSystem.setActiveFile(
-                    ProjectSystem.projectFiles.values().next().value
+                    ProjectSystem.projectFiles.values().next().value!
                 );
             }
         }
