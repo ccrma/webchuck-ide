@@ -311,7 +311,7 @@ td:nth-child(4) {
 /* SENSOR CONTAINER */
 .sensorLog {
     @apply pt-2 !important;
-    width: 240px;
+    width: 270px;
     height: 36px;
 }
 
