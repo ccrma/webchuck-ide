@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 // name: gyroDemo.ck
 // desc: Gyro-scope WebChucK Demo (mobile only)
-//       Use mobile gyroscope to control audio playback 
-//       NOTE: enable gyroscope in sensor settings
+//       TILT! mobile gyroscope to control audio playback 
+//       note: enable gyroscope in sensor settings
 // 
 //       Gyro WebChucK Docs:
 //       https://chuck.stanford.edu/webchuck/docs/classes/Gyro.html
@@ -22,7 +22,7 @@ if( !gy.openGyro( device ) ) me.exit();
 <<< "only on mobile" >>>;
 
 SndBuf buf => Envelope gain => dac;
-buf.read("gyroloop.wav");
+buf.read("gyroLoop.wav");
 0 => buf.pos;
 1 => buf.loop;
 

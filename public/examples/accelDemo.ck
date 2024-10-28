@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 // name: accelDemo.ck
 // desc: Accel-erometer WebChucK Demo (mobile only)
-//       Use mobile accelerometer to control sound synthesis
-//       NOTE: enable accelerometer in sensor settings
+//       SHAKE! mobile accelerometer to control sound synthesis
+//       note: enable accelerometer in sensor settings
 // 
 //       Accel WebChucK Docs:
 //       https://chuck.stanford.edu/webchuck/docs/classes/Accel.html
