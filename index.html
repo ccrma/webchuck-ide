@@ -326,9 +326,18 @@
           <!-- Input Panel -->
           <div id="inputPanel" class="flex flex-col dark:bg-dark">
             <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
-              <button id="GUITab" type="button" class="header-item">GUI</button>
-              <button id="HIDTab" type="button" class="header-item">HID</button>
-              <button id="SensorTab" type="button" class="header-item">SENSOR</button>
+              <button id="GUITab" type="button" class="header-item flex items-center justify-center relative">
+                GUI
+                <span id="GUIPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
+              <button id="HIDTab" type="button" class="header-item flex items-center justify-center relative">
+                HID
+                <span id="HIDPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
+              <button id="SensorTab" type="button" class="header-item flex items-center justify-center relative">
+                SENSOR
+                <span id="SensorPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
             </div>
             <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full">
               <div id="GUIPanel" class="w-full h-full relative overflow-hidden">

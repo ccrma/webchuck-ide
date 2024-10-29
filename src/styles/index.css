@@ -315,7 +315,7 @@ td:nth-child(4) {
     height: 36px;
 }
 
-/* LOGGER */
+/* LOG CONSOLE */
 .log-container {
     @apply px-2 py-1 mb-1 overflow-hidden border border-dark-d rounded-lg bg-white dark:bg-dark dark:border-dark-4;
 }

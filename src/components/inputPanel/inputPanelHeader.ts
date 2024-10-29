@@ -6,6 +6,7 @@ export default class InputPanelHeader {
     public static inputButtons: HTMLButtonElement[] = [];
     public static inputContainers: HTMLDivElement[] = [];
     public static inputToggles: InputHeaderToggle[] = [];
+    public static inputPings: HTMLSpanElement[] = [];
 
     public static activeToggleIndex: number = -1;
 
@@ -18,6 +19,9 @@ export default class InputPanelHeader {
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#GUIContainer")!
         );
+        InputPanelHeader.inputPings.push(
+            document.querySelector<HTMLSpanElement>("#GUIPing")!
+        );
 
         // HID
         InputPanelHeader.inputButtons.push(
@@ -26,13 +30,19 @@ export default class InputPanelHeader {
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#HIDContainer")!
         );
+        InputPanelHeader.inputPings.push(
+            document.querySelector<HTMLSpanElement>("#HIDPing")!
+        );
 
-        // HID
+        // Sensor
         InputPanelHeader.inputButtons.push(
             document.querySelector<HTMLButtonElement>("#SensorTab")!
         );
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#SensorContainer")!
+        );
+        InputPanelHeader.inputPings.push(  
+            document.querySelector<HTMLSpanElement>("#SensorPing")!
         );
 
         // Build toggles with containers
@@ -41,6 +51,7 @@ export default class InputPanelHeader {
                 new InputHeaderToggle(
                     InputPanelHeader.inputButtons[i],
                     InputPanelHeader.inputContainers[i],
+                    InputPanelHeader.inputPings[i],
                     i
                 )
             );
@@ -73,5 +84,14 @@ export default class InputPanelHeader {
 
         // Resize GUI
         GUI.onResize();
+    }
+
+    /**
+     * Set the notification ping to be visible
+     */
+    static setNotificationPing(tabIndex: number, on: boolean) {
+        for (let i = 0; i < InputPanelHeader.inputButtons.length; i++) {
+            InputPanelHeader.inputToggles[i].setNotificationPing(i == tabIndex && on);
+        }
     }
 }

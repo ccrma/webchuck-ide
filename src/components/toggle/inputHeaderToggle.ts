@@ -18,13 +18,16 @@ import InputPanelHeader from "../inputPanel/inputPanelHeader";
 
 export default class InputHeaderToggle extends HeaderToggle {
     public tabIndex: number;
+    public notificationPing: HTMLSpanElement;
 
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,
+        notificationPing: HTMLSpanElement,
         tabIndex: number
     ) {
         super(button, contentContainer, false);
+        this.notificationPing = notificationPing;
         this.tabIndex = tabIndex;
     }
 
@@ -45,6 +48,7 @@ export default class InputHeaderToggle extends HeaderToggle {
             this.button.classList.remove(HOVER_COLOR_CLASS);
             this.button.classList.remove(DARK_TEXT_HOVER_CLASS);
             this.button.classList.remove(DARK_HOVER_COLOR_CLASS);
+            this.notificationPing.classList.add("hidden");
             this.contentContainer.classList.remove("hidden");
 
             this.open = true;
@@ -59,6 +63,18 @@ export default class InputHeaderToggle extends HeaderToggle {
             this.contentContainer.classList.add("hidden");
 
             this.open = false;
+        }
+    }
+
+    /**
+     * Set the notification ping to be visible
+     * @param on show or hide the notification ping
+     */
+    setNotificationPing(on: boolean) {
+        if (!this.open && on) {
+            this.notificationPing.classList.remove("hidden");
+        } else {
+            this.notificationPing.classList.add("hidden");
         }
     }
 }

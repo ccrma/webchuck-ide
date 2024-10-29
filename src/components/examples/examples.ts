@@ -9,6 +9,7 @@
 
 import DropdownElement from "@/components/navbar/dropdownElement";
 import NestedDropdown from "@/components/navbar/nestedDropdown";
+import InputPanelHeader from "@/components/inputPanel/inputPanelHeader";
 import {
     loadChuckFileFromURL,
     loadDataFileFromURL,
@@ -108,12 +109,18 @@ export default class Examples {
         );
         Examples.newExample(
             "Hello Sine GUI",
-            () => loadChuckFileFromURL("examples/helloSineGUI.ck"),
+            () => {
+                loadChuckFileFromURL("examples/helloSineGUI.ck")
+                InputPanelHeader.setNotificationPing(0, true);
+            },
             guiNested
         );
         Examples.newExample(
             "FM Synthesis GUI",
-            () => loadChuckFileFromURL("examples/fmGUI.ck"),
+            () => {
+                loadChuckFileFromURL("examples/fmGUI.ck")
+                InputPanelHeader.setNotificationPing(0, true);
+            },
             guiNested
         );
 
@@ -125,12 +132,18 @@ export default class Examples {
         );
         Examples.newExample(
             "Mouse PWM HID",
-            () => loadChuckFileFromURL("examples/mouseHID.ck"),
+            () => {
+                loadChuckFileFromURL("examples/mouseHID.ck"),
+                InputPanelHeader.setNotificationPing(1, true);
+            },
             hidNested
         );
         Examples.newExample(
             "Keyboard Organ HID",
-            () => loadChuckFileFromURL("examples/keyboardHID.ck"),
+            () => {
+                loadChuckFileFromURL("examples/keyboardHID.ck")
+                InputPanelHeader.setNotificationPing(1, true);
+            },
             hidNested
         );
 
@@ -145,6 +158,7 @@ export default class Examples {
             () => {
                 loadChuckFileFromURL("examples/gyro/gyroDemo.ck");
                 loadDataFileFromURL("examples/gyro/gyroLoop.wav");
+                InputPanelHeader.setNotificationPing(2, true);
             },
             sensorNested
         );
@@ -152,6 +166,7 @@ export default class Examples {
             "Accel Demo",
             () => {
                 loadChuckFileFromURL("examples/accelDemo.ck");
+                InputPanelHeader.setNotificationPing(2, true);
             },
             sensorNested
         );
