@@ -192,13 +192,16 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
                   </svg>
                 </button>
-                <div id="helpDropdown" class="hidden dropdown w-48">
+                <div id="helpDropdown" class="hidden dropdown w-52">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                     <li>
-                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="dropdownItem">ChucK Reference</a>
+                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="dropdownItem">ChucK API Reference</a>
                     </li>
                     <li>
-                      <a href="https://chuck.stanford.edu/doc" target="_blank" class="dropdownItem">Documentation</a>
+                      <a href="https://chuck.stanford.edu/webchuck/" target="_blank" class="dropdownItem">Learn WebChucK</a>
+                    </li>
+                    <li>
+                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="dropdownItem">Discord Community</a>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
@@ -209,13 +212,11 @@
                       <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="dropdownItem">Report an Issue</a>
                     </li>
 
-                    <li class="divider dark:border-t-gray-400" data-content="LINKS"></li>
+                    <li class="divider dark:border-t-gray-400" data-content="ABOUT"></li>
                     <li>
-                      <a href="https://chuck.stanford.edu/webchuck" target="_blank" class="dropdownItem">Learn WebChucK</a>
+                      <button id="about-ide" class="dropdownItem">About IDE...</button>
                     </li>
-                    <li>
-                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="dropdownItem">Discord Community</a>
-                    </li>
+
                   </ul>
                 </div>
               </div>
@@ -283,7 +284,7 @@
         <!-- Left -->
         <div id="app-left">
           <div id="fileExplorerPanel" class="h-full flex flex-col justify-start">
-            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
+            <div id="fileExplorerHeader" class="header h-8 justify-start flex-none border-b border-dark-d dark:border-dark-a drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
               <div class="px-2">File Explorer</div>
             </div>
             <div id="fileExplorerContainer">
@@ -325,20 +326,44 @@
           <!-- Input Panel -->
           <div id="inputPanel" class="flex flex-col dark:bg-dark">
             <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
-              <button id="GUITab" type="button" class="header-item">GUI</button>
-              <button id="HIDTab" type="button" class="header-item">HID</button>
+              <button id="GUITab" type="button" class="header-item flex items-center justify-center relative">
+                GUI
+                <span id="GUIPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
+              <button id="HIDTab" type="button" class="header-item flex items-center justify-center relative">
+                HID
+                <span id="HIDPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
+              <button id="SensorTab" type="button" class="header-item flex items-center justify-center relative">
+                SENSOR
+                <span id="SensorPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+              </button>
             </div>
             <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full">
               <div id="GUIPanel" class="w-full h-full relative overflow-hidden">
               </div>
             </div>
             <div id="HIDContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
-              <div id="HIDPanel" class="absolute w-full h-full">
+              <div id="HIDPanel" class="absolute w-full h-full p-2">
                 <button id="mouseHIDButton" class="toggle-button w-32" disabled>Mouse: Off</button>
                 <button id="keyboardHIDButton" class="toggle-button w-32" disabled>Keyboard: Off</button>
-                <div id="hidLog" class="opacity-50 text-sm"></div>
+                <div id="hidLog" class="log-container opacity-50 text-sm"></div>
               </div>
             </div>
+            <div id="SensorContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
+              <div id="SensorPanel" class="absolute w-full h-full p-2 pt-1">
+                <div class="pb-2 font-bold text-md">Mobile Only</div>
+                <div class="flex flex-wrap pb-1">
+                  <button id="gyroButton" class="toggle-button w-32 mr-2" disabled>Gryo: Off</button>
+                  <div id="gyroLog" class="log-container sensorLog opacity-50 text-sm"></div>
+                </div>
+                <div class="flex flex-wrap pb-1">
+                  <button id="accelButton" class="toggle-button w-32 mr-2" disabled>Accel: Off</button>
+                  <div id="accelLog" class="log-container sensorLog opacity-50 text-sm"></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -349,7 +374,7 @@
           <!-- VM Monitor -->
           <div id="vmMonitor" class="relative">
             <table id="shredTable" class="w-full table-auto absolute text-left overflow-auto">
-              <thead class="h-8 align-middle font-medium border-b border-dark-d drop-shadow-sm">
+              <thead class="h-8 align-middle font-medium border-b border-dark-d dark:border-dark-a drop-shadow-sm">
                 <tr>
                   <th scope="col">Shred</th>
                   <th scope="col">Code</th>
@@ -368,10 +393,13 @@
               <button id="consoleTab"    type="button" class="header-item text-orange underline transition">CONSOLE</button>
               <button id="visualizerTab" type="button" class="header-item text-dark-5">VISUALIZER</button>
             </div>
-            <div id="consoleContainer" style="height: calc(100% - 1.75rem)">
+            <div id="consoleContainer" style="height: calc(100% - 1.75rem)" class="border-b border-sky-blue dark:border-dark-4">
               <div id="console" class="bg-white dark:bg-dark-2 h-full"></div>
             </div>
             <div id="visualizerContainer" class="flex-1 bg-white dark:bg-dark-2 hidden">
+              <div id="visualizer-help" class="w-full h-full flex items-center justify-center text-[#666] dark:text-[#bbb] transition">
+                <b>Start WebChucK for visualizer</b>
+              </div>
               <canvas id="visualizer" class="w-full h-full"></canvas>
             </div>
           </div>
@@ -450,16 +478,28 @@
       <dialog class="modal" id="export-webchuck-modal">
         <form class="flex flex-col gap-2 py-2" method="dialog">
           <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
-          <label class="form-label">Title</label>
-          <input id="export-title" class="border px-2 py-1 rounded-md" type="text" placeholder="Hello Sine">
-          <label class="form-label">
-            Author
-          </label>
-          <input id="export-author" class="border px-2 py-1 rounded-md" type="text" placeholder="Terry Feng">
-          <label class="flex flex-col">
-            Description
-          </label>
-          <textarea id="export-description" class="border px-2 py-1 h-20 rounded-md" placeholder="A very cool sine wave!"></textarea>
+
+          <div>
+            <label class="form-label">Title</label>
+            <input id="export-title" class="form-input" type="text" placeholder="Hello Sine">
+          </div>
+
+          <div>
+            <label class="form-label">Author</label>
+            <input id="export-author" class="form-input" type="text" placeholder="Terry Feng">
+          </div>
+
+          <div>
+            <label class="form-label">Description</label>
+            <textarea id="export-description" class="form-input" placeholder="A very cool sine wave!"></textarea>
+          </div>
+
+          <div>
+            <label class="form-label pr-2">Main File</label>
+            <select id="export-wc-file-select" class="border px-1 py-1 rounded-md focus:outline-none disabled:opacity-50">
+            </select>
+          </div>
+
           <div class="flex gap-4 justify-end pt-4">
             <button id="export-cancel-btn" type="button" class="button secondary">Cancel</button>
             <button id="export-btn" type="submit" class="button primary">Export</button>

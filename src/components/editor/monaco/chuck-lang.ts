@@ -140,7 +140,8 @@ monaco.languages.setMonarchTokensProvider("chuck", {
 
     ugens: chuck_modules,
 
-    // we include these common regular expressions
+    // We include these common regular expressions
+    // eslint-disable-next-line no-useless-escape
     symbols: /[=><!~?:&|+\-*\/^%]+/,
 
     // C# style strings
@@ -177,7 +178,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             { include: "@whitespace" },
 
             // delimiters and operators
-            [/[{}()\[\]]/, "@brackets"],
+            [/[{}()[\]]/, "@brackets"],
             [/[<>](?!@symbols)/, "@brackets"],
             [
                 /@symbols/,
@@ -195,7 +196,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             [/@\s*[a-zA-Z_$][\w$]*/, { token: "annotation" }],
 
             // numbers
-            [/\d*\.\d+([eE][\-+]?\d+)?/, "number.float"],
+            [/\d*\.\d+([eE][-+]?\d+)?/, "number.float"],
             [/0[xX][0-9a-fA-F]+/, "number.hex"],
             [/\d+/, "number"],
 
@@ -213,9 +214,11 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         ],
 
         comment: [
+            // eslint-disable-next-line
             [/[^\/*]+/, "comment"],
             [/\/\*/, "comment", "@push"], // nested comment
             ["\\*/", "comment", "@pop"],
+            // eslint-disable-next-line
             [/[\/*]/, "comment"],
         ],
 
@@ -330,7 +333,7 @@ monaco.languages.registerCompletionItemProvider("chuck", {
             range: range,
         }));
 
-        var suggestions = word_suggestions.concat(statement_suggestions);
+        const suggestions = word_suggestions.concat(statement_suggestions);
         return { suggestions: suggestions };
     },
 });

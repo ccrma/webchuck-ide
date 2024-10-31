@@ -6,7 +6,7 @@
 // author: terry feng
 // date:   December 2023
 //---------------------------------------------------------
-import OutputPanelHeader from "@/components/panelHeader/outputPanelHeader";
+import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
 import {
     ACCENT_COLOR_CLASS,
     DARK_HOVER_COLOR_CLASS,

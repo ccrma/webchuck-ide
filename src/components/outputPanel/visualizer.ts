@@ -1,7 +1,9 @@
 //--------------------------------------------------
-// title: visualizer
-// desc:  audio visualizer for webchuck output
-//        uses web audio api, WebAnalyzerNode
+// title: Visualizer
+// desc:  Audio visualizer for WebChucK output
+//        Uses Web Audio API's AnalyzerNode
+//        https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+//
 // author: terry feng (original from celeste betancur)
 // date:   November 2023
 //--------------------------------------------------
@@ -43,6 +45,8 @@ export default class Visualizer {
     private spectrumFill: string = spectrumFillLight;
 
     constructor(canvas: HTMLCanvasElement, analyserNode: AnalyserNode) {
+        document.getElementById("visualizer-help")?.remove();
+
         const visualizerDefaultOptions = {
             frameSize: 2048,
             drawWaveform: true,
@@ -57,8 +61,6 @@ export default class Visualizer {
         this.frequencyData = new Float32Array(
             visualizerDefaultOptions.frameSize / 2
         );
-
-        // Set theme
         this.theme(getColorScheme() === "dark");
     }
 

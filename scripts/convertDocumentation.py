@@ -14,7 +14,7 @@
 import json
 
 # where the final ckdoc is outputted!!!
-OUTPUT_FILE_PATH = "../src/components/monaco/ckdoc.json"
+OUTPUT_FILE_PATH = "../src/components/editor/monaco/ckdoc.json"
 
 file_dir = "./json/"
 files = [

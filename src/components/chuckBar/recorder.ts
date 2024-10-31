@@ -10,9 +10,9 @@
 // date: April 2024
 //--------------------------------------------------------
 
-import Console from "./console";
-import ProjectSystem from "./fileExplorer/projectSystem";
-import VmMonitor from "./vmMonitor";
+import Console from "@components/outputPanel/console";
+import ProjectSystem from "@components/fileExplorer/projectSystem";
+import VmMonitor from "@components/vmMonitor";
 
 export enum RecordState {
     stopped = 0,

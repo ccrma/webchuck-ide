@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
-import Editor from "@/components/monaco/editor";
+import Editor from "@/components/editor/monaco/editor";
 import { getGlobalVariables } from "@/utils/chuckPreprocess";
 import { MIXER_JS } from "./exportSnippets";
 
@@ -12,12 +12,32 @@ const exportDialog: HTMLDialogElement =
     document.querySelector<HTMLDialogElement>("#export-webchuck-modal")!;
 const exportBtn: HTMLButtonElement =
     document.querySelector<HTMLButtonElement>("#export-btn")!;
+const exportWebchuckCkFileSelect = document.querySelector<HTMLSelectElement>(
+    "#export-wc-file-select"
+)!;
 
 /**
  * Export Project Files to a WebChucK Web App
  */
 export function initExportWebChuck() {
     exportWebchuckButton.addEventListener("click", () => {
+        // WebChucK Modal Main File Select
+        const allCkfiles = ProjectSystem.getProjectFiles().filter((file) =>
+            file.isChuckFile()
+        );
+        exportWebchuckCkFileSelect.innerHTML = "";
+        allCkfiles.forEach((file) => {
+            const option = document.createElement("option");
+            option.value = file.getFilename();
+            option.textContent = file.getFilename();
+            exportWebchuckCkFileSelect.appendChild(option);
+        });
+        exportWebchuckCkFileSelect.disabled = allCkfiles.length == 1;
+        const activeFile = ProjectSystem.activeFile;
+        if (activeFile.isChuckFile()) {
+            exportWebchuckCkFileSelect.value = activeFile.getFilename();
+        }
+
         exportDialog.showModal();
     });
     exportWebchuckCancel.addEventListener("click", () => {
@@ -81,7 +101,8 @@ async function exportWebchuck(
 
     // Check code for global variables to build mixer
     const globals = getGlobalVariables(code);
-    const mixer_code = globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
+    let mixer_code = `const mixer = document.querySelector('#webchuck-gui');\n`;
+    mixer_code += globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
     wc_html = docFindReplace(wc_html, "{{{ MIXER_CODE }}}", mixer_code);
     if (globals.float.length == 0) {
         wc_html.getElementById("webchuck-gui")?.remove();
@@ -89,9 +110,9 @@ async function exportWebchuck(
 
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
-    const currentFile = ProjectSystem.activeFile;
+    const selectedMainChucKFile = exportWebchuckCkFileSelect.value;
     const projectFilesToPreload = ProjectSystem.getProjectFiles().filter(
-        (file) => file !== currentFile
+        (file) => file.getFilename() !== selectedMainChucKFile
     );
     const preloadFileString = projectFilesToPreload.map((file) => {
         return {
@@ -109,7 +130,12 @@ async function exportWebchuck(
     if (projectFilesToPreload.length === 0) {
         exportSingleWCFile(wc_html);
     } else {
-        exportProjectWCFiles(wc_html, projectFilesToPreload);
+        exportProjectWCFiles(
+            title,
+            selectedMainChucKFile,
+            wc_html,
+            projectFilesToPreload
+        );
     }
 }
 
@@ -135,7 +161,15 @@ function exportSingleWCFile(wc_html: Document) {
  * Export all project files as a .zip
  * @param wc_html webchuck html document
  */
-function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
+function exportProjectWCFiles(
+    title: string,
+    mainChuckFile: string,
+    wc_html: Document,
+    projectFiles: any
+) {
+    if (title === "") {
+        title = mainChuckFile.split(".")[0];
+    }
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
     projectFiles.forEach((file: any) => {
@@ -147,7 +181,7 @@ function exportProjectWCFiles(wc_html: Document, projectFiles: any) {
         // Create invisible download link
         const downloadLink = document.createElement("a");
         downloadLink.href = zipURL;
-        downloadLink.download = "project.zip";
+        downloadLink.download = `${title} Project.zip`;
         downloadLink.click();
     });
 }

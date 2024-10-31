@@ -20,7 +20,7 @@ module.exports = {
         "orange": {
           DEFAULT: "#FF8833",
           dark: "#D2691E",
-          light: "#FFAA33",
+          light: "#ffa64d",
           peach: "#FFE5C4",
         },
         "sky-blue": {

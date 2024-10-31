@@ -15,7 +15,7 @@ import "@styles/xterm.css";
 import { theChuck } from "@/host";
 
 // Define a custom regular expression that matches blob URIs
-const blobRegex = /(blob:https?:\/\/\S+)/;
+const blobRegex = /((blob:)?https?:\/\/\S+)/;
 
 export default class Console {
     public static terminal: Terminal;
