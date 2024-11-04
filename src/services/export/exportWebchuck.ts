@@ -100,13 +100,15 @@ async function exportWebchuck(
         description;
 
     // Check code for global variables to build mixer
-    const globals = getGlobalVariables(code);
-    let mixer_code = `const mixer = document.querySelector('#webchuck-gui');\n`;
-    mixer_code += globals.float.length > 0 ? MIXER_JS : ""; // only look at floats
-    wc_html = docFindReplace(wc_html, "{{{ MIXER_CODE }}}", mixer_code);
-    if (globals.float.length == 0) {
+    const mixerGlobals = getGlobalVariables(code);
+    let mixerCode = "";
+    if (mixerGlobals.float.length == 0) {
         wc_html.getElementById("webchuck-gui")?.remove();
+    } else {
+        mixerCode = MIXER_JS;
     }
+    // Set/clear mixer code
+    wc_html = docFindReplace(wc_html, "{{{ MIXER_CODE }}}", mixerCode);
 
     // Add in PRELOAD_FILES
     // get all projectFiles excluding the current active file
