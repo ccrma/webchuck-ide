@@ -41,7 +41,7 @@ export default class InputPanelHeader {
         InputPanelHeader.inputContainers.push(
             document.querySelector<HTMLDivElement>("#SensorContainer")!
         );
-        InputPanelHeader.inputPings.push(  
+        InputPanelHeader.inputPings.push(
             document.querySelector<HTMLSpanElement>("#SensorPing")!
         );
 
@@ -91,7 +91,9 @@ export default class InputPanelHeader {
      */
     static setNotificationPing(tabIndex: number, on: boolean) {
         for (let i = 0; i < InputPanelHeader.inputButtons.length; i++) {
-            InputPanelHeader.inputToggles[i].setNotificationPing(i == tabIndex && on);
+            InputPanelHeader.inputToggles[i].setNotificationPing(
+                i == tabIndex && on
+            );
         }
     }
 }
