@@ -62,4 +62,4 @@ npm run build
 
 Contributions are welcome! Please report issues and open PRs to the `dev` branch.
 
-*Note: You will need to run `npm run lint` and `npm run format` to pass build checks.*
+Check out the [Developer Guide](./DEVELOPER_GUIDE.md) to get started.
