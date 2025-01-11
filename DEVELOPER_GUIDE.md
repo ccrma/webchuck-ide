@@ -9,7 +9,7 @@ release.
 - [WebChucK IDE Developer Guide](#webchuck-ide-developer-guide)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
-  - [Development Testing](#development-testing)
+  - [Development](#development)
   - [Building](#building)
   - [Deploy and Release](#deploy-and-release)
 
@@ -29,9 +29,9 @@ In the webchuck-ide repo, install npm dependencies
 npm install
 ```
 
-## Development Testing
+## Development 
 
-To run WebChucK IDE locally for development testing
+To run WebChucK IDE on a local development server for testing:
 
 ```
 npm run dev
@@ -62,4 +62,4 @@ npm version patch
 
 Copy the `./dist/` folder to hosting destination.
 
-Talk to **@gewang** to update the [WebChucK IDE](https://chuck.stanford.edu/ide) site..
+Talk to **@gewang** to update the [WebChucK IDE](https://chuck.stanford.edu/ide) site.
