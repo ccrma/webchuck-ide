@@ -110,7 +110,7 @@ export default class Examples {
         Examples.newExample(
             "Hello Sine GUI",
             () => {
-                loadChuckFileFromURL("examples/helloSineGUI.ck")
+                loadChuckFileFromURL("examples/helloSineGUI.ck");
                 InputPanelHeader.setNotificationPing(0, true);
             },
             guiNested
@@ -118,7 +118,7 @@ export default class Examples {
         Examples.newExample(
             "FM Synthesis GUI",
             () => {
-                loadChuckFileFromURL("examples/fmGUI.ck")
+                loadChuckFileFromURL("examples/fmGUI.ck");
                 InputPanelHeader.setNotificationPing(0, true);
             },
             guiNested
@@ -141,7 +141,7 @@ export default class Examples {
         Examples.newExample(
             "Keyboard Organ HID",
             () => {
-                loadChuckFileFromURL("examples/keyboardHID.ck")
+                loadChuckFileFromURL("examples/keyboardHID.ck");
                 InputPanelHeader.setNotificationPing(1, true);
             },
             hidNested
