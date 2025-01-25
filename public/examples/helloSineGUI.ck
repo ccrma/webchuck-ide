@@ -3,7 +3,7 @@
  * via sliders and buttons. GUI float sliders go from [0.0,1.0]
  */
 
-/* Play a sine wave and control the frecuency with the GUI */
+/* Play a sine wave and control the frequency with the GUI */
 /*
     1. Open the GUI Panel below and hit "Generate GUI".
     2. Run the code.

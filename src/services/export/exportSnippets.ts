@@ -1,7 +1,8 @@
 export const MIXER_JS = `
       // MIXER CODE for GUI (if there are global variables)
+      const mixer = document.querySelector('#webchuck-gui');
       const sliders = [...chuckCode.matchAll(/\\bglobal float\\s+(\\w+)\\b/g)]
-      .map(([, variable]) => variable);
+          .map(([, variable]) => variable);
 
       if (sliders.length > 0) mixer.style.display = 'flex';
 

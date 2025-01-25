@@ -13,7 +13,8 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Examples from "./examples";
 import DropdownElement from "../navbar/dropdownElement";
 import * as JsSearch from "js-search";
-import { fetchDataFile } from "@/utils/fileLoader";
+import { isPlaintextFile } from "webchuck/dist/utils";
+import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
 
 // JSON Structure
 interface MoreExamplesJSON {
@@ -322,8 +323,8 @@ export default class MoreExamples {
     }
 
     /**
-     * Create an item in the file explorer
-     * @param name
+     * Create a folder item in the file explorer
+     * @param name folder name
      */
     static createExplorerFolder(name: string) {
         const item = document.createElement("button");
@@ -335,6 +336,10 @@ export default class MoreExamples {
         MoreExamples.moreExamplesExplorer.appendChild(item);
     }
 
+    /**
+     * Create a file item in the file explorer
+     * @param file ChucKExample file
+     */
     static createExplorerFile(file: ChuckExample) {
         const item = document.createElement("button");
         item.classList.add("explorer-item");
@@ -368,7 +373,12 @@ export default class MoreExamples {
             MoreExamples.previewExample.code
         );
         MoreExamples.previewExample.data.forEach(async (url: string) => {
-            const file = await fetchDataFile(url);
+            let file: File | null = null;
+            if (isPlaintextFile(url)) {
+                file = await fetchTextFile(url);
+            } else {
+                file = await fetchDataFile(url);
+            }
             if (file !== null) {
                 ProjectSystem.addNewFile(file.name, file.data);
             }
