@@ -17,6 +17,7 @@ import { chuckVersion } from "@/host";
  * @class NavBar
  */
 export default class NavBar {
+    public static SessionDropdown: Dropdown;
     public static FileDropdown: Dropdown;
     public static EditDropdown: Dropdown;
     public static ViewDropdown: Dropdown;
@@ -39,6 +40,19 @@ export default class NavBar {
      * Initializes the expand and collapse functionality
      */
     static buildDropdowns() {
+        // File
+        const sessionContainer =
+            document.querySelector<HTMLDivElement>("#sessionContainer")!;
+        const sessionButton =
+            document.querySelector<HTMLButtonElement>("#sessionButton")!;
+        const sessionDropdown =
+            document.querySelector<HTMLDivElement>("#sessionDropdown")!;
+        NavBar.SessionDropdown = new Dropdown(
+            sessionContainer,
+            sessionButton,
+            sessionDropdown
+        );
+
         // File
         const fileContainer =
             document.querySelector<HTMLDivElement>("#fileContainer")!;

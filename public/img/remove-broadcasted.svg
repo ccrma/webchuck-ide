@@ -1,0 +1,11 @@
+
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Red Circle -->
+  <circle cx="25" cy="25" r="24.8498" fill="#FF5050"/>
+  <!-- Horizontal "removal" bar -->
+  <rect x="10" y="22.5" width="30" height="5" fill="white"/>
+  <!-- WiFi symbol (moved slightly upward) -->
+  <path d="M20 18a10 10 0 0110 0" stroke="white" stroke-width="1.2" fill="none"/> <!-- First arc -->
+  <path d="M17 15a14 14 0 0116 0" stroke="white" stroke-width="1.2" fill="none"/> <!-- Second arc -->
+  <path d="M14 12a18 18 0 0122 0" stroke="white" stroke-width="1.2" fill="none"/> <!-- Third arc -->
+</svg>

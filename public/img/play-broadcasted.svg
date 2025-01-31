@@ -1,0 +1,10 @@
+
+<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Slightly altered green color -->
+  <circle cx="24.8498" cy="25.7217" r="24.8498" fill="#66CC66"/>
+  <path d="M40.1084 25.7217L15.9126 39.6911L15.9126 11.7522L40.1084 25.7217Z" fill="white"/>
+  <!-- Three Circles -->
+  <circle cx="34.7" cy="38.6" r="3" stroke="white" stroke-width="0.8" fill="none"/>
+  <circle cx="34.7" cy="38.6" r="5" stroke="white" stroke-width="0.8" fill="none"/>
+  <circle cx="34.7" cy="38.6" r="7" stroke="white" stroke-width="0.8" fill="none"/>
+</svg>

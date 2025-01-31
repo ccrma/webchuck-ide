@@ -12,6 +12,8 @@
         "format": "prettier --write src"
     },
     "devDependencies": {
+        "@types/diff": "^6.0.0",
+        "@types/diff-match-patch": "^1.0.36",
         "@types/js-search": "^1.4.4",
         "@types/pako": "^2.0.3",
         "@typescript-eslint/eslint-plugin": "^6.19.0",
@@ -28,6 +30,9 @@
         "@xterm/addon-fit": "^0.10.0",
         "@xterm/addon-web-links": "^0.11.0",
         "@xterm/xterm": "^5.5.0",
+        "async-mutex": "^0.5.0",
+        "diff": "^7.0.0",
+        "diff-match-patch": "^1.0.5",
         "js-search": "^2.0.1",
         "jszip": "^3.10.1",
         "monaco-editor": "^0.37.1",

@@ -1,4 +1,5 @@
 @import "animation.css";
+@import "session.css";
 
 @tailwind base;
 @tailwind components;
@@ -13,8 +14,8 @@
 
 #chuck-bar {
     grid-area: chuck-bar;
-    user-select: none;
-    -webkit-touch-callout: none;
+    user-select: auto;
+    -webkit-touch-callout: auto;
 }
 
 #webchuck-ide {

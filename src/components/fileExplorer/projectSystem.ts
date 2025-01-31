@@ -16,6 +16,12 @@ import {
 } from "@/utils/fileLoader";
 import Console from "../outputPanel/console";
 import ProjectFile from "./projectFile";
+import SessionManager from "../session/sessionManager";
+
+// Currently, we cannot upload files larger than 10MB due to FastAPI
+// implementation's limitation (files are stored in memory only)
+// TODO: Implement chunked file upload after FastAPI supports it
+const MAX_FILE_SIZE = 10 * 1024 * 1024 - 1; // 10MB in bytes
 
 export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
@@ -95,6 +101,7 @@ export default class ProjectSystem {
             ProjectSystem.setActiveFile(newFile);
         }
         ProjectSystem.addFileToExplorer(newFile);
+        SessionManager.addFile(newFile);
     }
 
     /**
@@ -102,13 +109,24 @@ export default class ProjectSystem {
      * @param filename name of the file
      * @param data data of the file
      */
-    static addNewFile(filename: string, data: string | Uint8Array) {
+    static addNewFile(
+        filename: string,
+        data: string | Uint8Array,
+        setActive: boolean = true,
+        synchronize: boolean = true
+    ) {
         const newFile = new ProjectFile(filename, data);
         theChuck?.createFile("", filename, data);
-        if (isPlaintextFile(filename)) {
+
+        if (isPlaintextFile(filename) && setActive) {
             ProjectSystem.setActiveFile(newFile);
         }
+
         ProjectSystem.addFileToExplorer(newFile);
+
+        if (synchronize) {
+            SessionManager.addFile(newFile);
+        }
     }
 
     /**
@@ -121,6 +139,7 @@ export default class ProjectSystem {
             ProjectSystem.activeFile = projectFile;
             ProjectSystem.activeFile.loadFile();
             this.updateFileExplorerUI();
+            SessionManager.setActiveFile();
         }
     }
 
@@ -170,7 +189,10 @@ export default class ProjectSystem {
      * Remove a file from the file explorer
      * @param filename file to remove
      */
-    static removeFileFromExplorer(filename: string) {
+    static removeFileFromExplorer(
+        filename: string,
+        synchronize: boolean = true
+    ) {
         const wasActive = ProjectSystem.activeFile.isActive();
 
         ProjectSystem.projectFiles.delete(filename);
@@ -189,6 +211,10 @@ export default class ProjectSystem {
             }
         }
         ProjectSystem.updateFileExplorerUI();
+
+        if (synchronize) {
+            SessionManager.removeFile(filename);
+        }
     }
 
     /**
@@ -255,13 +281,16 @@ export default class ProjectSystem {
     /**
      * Clear the file system
      */
-    static clearFileSystem() {
+    static clearFileSystem(createDefaultFile: boolean = true) {
         // delete all files
         ProjectSystem.projectFiles.clear();
         ProjectSystem.fileUploader.value = "";
-        const newFile = new ProjectFile("untitled.ck", "");
-        ProjectSystem.setActiveFile(newFile);
-        ProjectSystem.addFileToExplorer(newFile);
+        if (createDefaultFile) {
+            const newFile = new ProjectFile("untitled.ck", "");
+            ProjectSystem.setActiveFile(newFile);
+            ProjectSystem.addFileToExplorer(newFile);
+        }
+        SessionManager.clearProject();
     }
 
     /**
@@ -276,6 +305,12 @@ export default class ProjectSystem {
 
         for (let i = 0; i < fileList.length; i++) {
             const file = fileList[i];
+            if (file.size > MAX_FILE_SIZE) {
+                alert(
+                    `File "${file.name}" is too large. Currently, max file size is 10MB (will be increased in the future).`
+                );
+                continue;
+            }
             const reader = new FileReader();
             if (isPlaintextFile(file.name)) {
                 reader.onload = (e) => {
@@ -315,6 +350,14 @@ export default class ProjectSystem {
      */
     static getProjectFiles(): ProjectFile[] {
         return Array.from(ProjectSystem.projectFiles.values());
+    }
+
+    /**
+     * Get the project files in its original map format
+     * @returns the project files
+     */
+    static getProjectFileMap(): Map<string, ProjectFile> {
+        return ProjectSystem.projectFiles;
     }
 
     /**
@@ -389,6 +432,12 @@ export default class ProjectSystem {
         // Loop through the FileList and load files into IDE/ChucK
         for (let i = 0; i < fileList.length; i++) {
             const file = fileList[i];
+            if (file.size > MAX_FILE_SIZE) {
+                alert(
+                    `File "${file.name}" is too large. Currently, max file size is 10MB (will be increased in the future).`
+                );
+                continue;
+            }
             const reader = new FileReader();
             if (isPlaintextFile(file.name)) {
                 reader.onload = (e) => {

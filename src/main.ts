@@ -27,6 +27,7 @@ import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { parseURLParams as initParseURLParams } from "./services/urlParamParser";
 import { initShareCode } from "./services/shareCode";
+import SessionSystem from "./components/session/sessionSystem";
 
 class Main {
     public static navBar: NavBar;
@@ -34,6 +35,7 @@ class Main {
     public static projectSystem: ProjectSystem;
     public static editor: Editor;
     public static editorPanelHeader: EditorPanelHeader;
+    public static sessionSystem: SessionSystem;
     public static vmMonitor: VmMonitor;
     public static inputPanelHeader: InputPanelHeader;
     public static outputPanelHeader: OutputPanelHeader;
@@ -52,6 +54,7 @@ class Main {
         Main.projectSystem = new ProjectSystem();
 
         // CONSTRUCT APP COMPONENTS
+        Main.sessionSystem = new SessionSystem();
         Main.vmMonitor = new VmMonitor();
         Main.inputPanelHeader = new InputPanelHeader();
         Main.outputPanelHeader = new OutputPanelHeader();
