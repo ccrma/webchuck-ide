@@ -19,6 +19,7 @@ import Editor from "@/components/editor/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
 import Console from "@/components/outputPanel/console";
+import SessionManager from "../session/sessionManager";
 
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
@@ -28,8 +29,10 @@ export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
     public static micButton: HTMLButtonElement;
     public static playButton: HTMLButtonElement;
+    public static broadcastPlayButton: HTMLButtonElement;
     public static replaceButton: HTMLButtonElement;
     public static removeButton: HTMLButtonElement;
+    public static broadcastRemoveButton: HTMLButtonElement;
     public static recordButton: HTMLButtonElement;
 
     public static running: boolean = false;
@@ -42,10 +45,16 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#micButton")!;
         ChuckBar.playButton =
             document.querySelector<HTMLButtonElement>("#playButton")!;
+        ChuckBar.broadcastPlayButton =
+            document.querySelector<HTMLButtonElement>("#broadcastPlayButton")!;
         ChuckBar.replaceButton =
             document.querySelector<HTMLButtonElement>("#replaceButton")!;
         ChuckBar.removeButton =
             document.querySelector<HTMLButtonElement>("#removeButton")!;
+        ChuckBar.broadcastRemoveButton =
+            document.querySelector<HTMLButtonElement>(
+                "#broadcastRemoveButton"
+            )!;
         ChuckBar.recordButton =
             document.querySelector<HTMLButtonElement>("#recordButton")!;
 
@@ -53,8 +62,10 @@ export default class ChuckBar {
         ChuckBar.webchuckButton.title = `Start ChucK VM [${metaKey} + .]`;
         ChuckBar.micButton.title = `Connect Microphone`;
         ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
+        ChuckBar.broadcastPlayButton.title = `Run (broadcast to all users in the session)`;
         ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
         ChuckBar.removeButton.title = `Remove [${metaKey} + ⌫]`;
+        ChuckBar.broadcastRemoveButton.title = `Remove (broadcast to all users in the session)`;
         ChuckBar.recordButton.title = `Record`;
 
         // Add button event listeners
@@ -68,19 +79,25 @@ export default class ChuckBar {
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
         });
+        ChuckBar.broadcastPlayButton.addEventListener("click", async () => {
+            ChuckBar.broadcastAndRunEditorCode();
+        });
         ChuckBar.replaceButton.addEventListener("click", async () => {
             ChuckBar.replaceCode();
         });
         ChuckBar.removeButton.addEventListener("click", async () => {
             ChuckBar.removeCode();
         });
+        ChuckBar.broadcastRemoveButton.addEventListener("click", async () => {
+            ChuckBar.broadcastAndRemoveCode();
+        });
 
         // Configure the recorder button
         new Recorder(ChuckBar.recordButton);
     }
 
-    static runEditorCode() {
-        theChuck?.runCode(Editor.getEditorCode()).then(
+    static runCode(code: string) {
+        theChuck?.runCode(code).then(
             // Success
             (shredID: number) => {
                 VmMonitor.addShredRow(shredID);
@@ -91,6 +108,14 @@ export default class ChuckBar {
             },
             () => {} // Failure, do nothing
         );
+    }
+
+    static runEditorCode() {
+        ChuckBar.runCode(Editor.getEditorCode());
+    }
+
+    static broadcastAndRunEditorCode() {
+        SessionManager.broadcast("play", Editor.getFileName());
     }
 
     static replaceCode() {
@@ -121,6 +146,10 @@ export default class ChuckBar {
         );
     }
 
+    static broadcastAndRemoveCode() {
+        SessionManager.broadcast("remove");
+    }
+
     static async startWebchuck() {
         if (ChuckBar.running) {
             return;
@@ -139,5 +168,10 @@ export default class ChuckBar {
         ChuckBar.replaceButton.disabled = false;
         ChuckBar.removeButton.disabled = false;
         ChuckBar.recordButton.disabled = false;
+
+        if (SessionManager.currentSession) {
+            ChuckBar.broadcastPlayButton.disabled = false;
+            ChuckBar.broadcastRemoveButton.disabled = false;
+        }
     }
 }

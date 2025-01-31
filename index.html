@@ -1,5 +1,5 @@
 <!--
-  WebChucK IDE, written by Terry Feng
+  WebChucK IDE, written by Terry Feng (with Co-Chuck written by Stuart Sul)
 
   Date: Spring 2023
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
@@ -29,7 +29,7 @@
     <meta property="og:image" content="https://ccrma.stanford.edu/~tzfeng/webchuck-ide/img/webchuck-ide.jpg" />
     <meta property="fb:app_id" content="966242223397117" /> <!--default app id-->
     <meta name="keywords"
-      content="ChucK, WebChucK, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
+      content="ChucK, WebChucK, Co-Chuck, IDE, CCRMA, Stanford University, Princeton University, computer music, programming language">
     <!-- FAVICON -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
@@ -68,6 +68,40 @@
             <!-- Nav Items -->
             <div id="menuItems" class="text-dark dark:text-gray-300 w-full px-2 flex items-center">
 
+              <!-- Session -->
+              <div id="sessionContainer" class="inline-block">
+                <button id="sessionButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
+                  Session
+                  <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="sessionDropdown" class="hidden dropdown w-40">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <button id="newSession" type="button" class="dropdownItem">
+                        New Session
+                      </button>
+                    </li>
+                    <li>
+                      <button id="joinSession" type="button" class="dropdownItem">
+                        Join Session
+                      </button>
+                    </li>
+                    <li>
+                      <button id="closeSession" type="button" class="dropdownItem disabled:opacity-50" disabled>
+                        Close Session
+                      </button>
+                    </li>
+                    <li class="divider dark:border-t-gray-400" data-content="About"></li>
+                    <li>
+                      <button id="sessionInfo" type="button" class="dropdownItem disabled:opacity-50" disabled>
+                        Session Info
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <!-- File -->
               <div id="fileContainer" class="inline-block">
                 <button id="fileButton" type="button" data-dropdown-toggle="dropdownNavbar" class="dropdownButton">
@@ -254,11 +288,17 @@
               <button id="playButton"     type="button" class="chuck-button" disabled>
                 <img src="img/play.svg" alt="Play" class="h-11" draggable="false">
               </button>
+              <button id="broadcastPlayButton"     type="button" class="chuck-button" disabled>
+                <img src="img/play-broadcasted.svg" alt="Broadcast Play" class="h-11" draggable="false">
+              </button>
               <button id="replaceButton"  type="button" class="chuck-button" disabled>
                 <img src="img/replace.svg" alt="Replace" class="h-11" draggable="false">
               </button>
               <button id="removeButton"   type="button" class="chuck-button" disabled>
                 <img src="img/remove.svg" alt="Remove" class="h-11" draggable="false">
+              </button>
+              <button id="broadcastRemoveButton"   type="button" class="chuck-button" disabled>
+                <img src="img/remove-broadcasted.svg" alt="Broadcast Remove" class="h-11" draggable="false">
               </button>
               <button id="recordButton"   type="button" class="chuck-button" disabled>
                 <img id="recordImage" src="img/record-button.svg" alt="Remove" class="h-11" draggable="false">
@@ -269,6 +309,15 @@
 
           <!-- right side -->
           <div id="chuckBarRight" class="flex justify-right items-center">
+            <div id="global-user-circles" class="global-user-circles"></div>
+            <div class="pr-2">
+              <span class="font-semibold text-orange">Session mode:</span>
+              <span id="chuck-bar-session-status" class="font-bold text-orange"><b>OFF</b></span>
+              <span id="chuck-bar-session-info" class="hidden">
+                <span class="font-mono text-dark-4 dark:text-light text-sm">(ID:</span>
+                <span id="chuck-bar-session-id" class="font-mono text-dark-4 dark:text-light text-sm"></span><span class="font-mono text-dark-4 dark:text-light text-sm">)</span>
+              </span>
+            </div>
             <div id="chuckNowStatus" class="pr-2">
               <span class="text-orange"><b>now:</b></span>
               <span id="chuckNowTime" class="font-mono text-dark-4 dark:text-light text-sm">00:00:00.00000</span>
@@ -318,6 +367,7 @@
                 </svg>
               </button>
               <div id="filename" class="header-item">untitled.ck</div>
+              <div id="local-user-circles"></div>
             </div>
             <div id="monacoEditor" style="height: calc(100% - 2rem - 1.75rem - 1px); width: 100%;"></div>
             <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 px-0.5 text-sm items-center flex-none hidden"></div>
@@ -408,6 +458,61 @@
       </div>
 
       <!-- MODALS -->
+      <!-- Session Modal -->
+      <dialog class="modal modal-med" id="session-modal">
+        <h1 class="text-2xl font-semibold pb-4 text-center">Session Configuration</h1>
+        <div class="ml-1 mr-1 mb-1 p-4 border border-gray-200 bg-gray-50 rounded-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col items-center justify-center gap-6">
+          <!-- Input Fields -->
+          <div id="session-create" class="hidden flex flex-col gap-4 items-center justify-center w-full">
+            <div class="flex items-center justify-center gap-4 w-full">
+              <label for="username" class="font-medium text-gray-700 dark:text-gray-200 text-right">Username</label>
+              <input type="text" id="session-create-username" class="py-3 px-4 border border-gray-300 rounded-md dark:bg-dark-4 w-2/3" placeholder="Enter username...">
+            </div>
+          </div>
+          <div id="session-join" class="hidden flex flex-col gap-4 items-center justify-center w-full">
+            <div class="flex items-center justify-center gap-4 w-full">
+              <label for="username" class="font-medium text-gray-700 dark:text-gray-200 text-right">Username</label>
+              <input type="text" id="session-join-username" class="py-3 px-4 border border-gray-300 rounded-md dark:bg-dark-4 w-2/3" placeholder="Enter username...">
+            </div>
+            <div class="flex items-center justify-center gap-4 w-full">
+              <label for="sessionId" class="font-medium mt-2 text-gray-700 dark:text-gray-200 text-right">Session ID:</label>
+              <input type="text" id="session-join-sessionId" class="py-3 px-4 border border-gray-300 rounded-md dark:bg-dark-4 w-2/3" placeholder="Enter the session ID...">
+            </div>
+            <p id="session-loaded-msg1" class="text-md font-semibold text-gray-700 dark:text-gray-200">
+              *Joining a session will overwrite your current project*
+            </p>
+          </div>
+          <div id="session-loading" class="hidden flex flex-col justify-center items-center text-center">
+            <div class="animate-spin h-12 w-12 mt-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+            <p class="text-lg mt-4 mb-2 text-gray-700 dark:text-gray-200">Preparing your session...</p>
+          </div>
+          <div id="session-loaded" class="hidden text-center">
+            <p id="session-loaded-msg1" class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+              Your session is live!
+            </p>
+            <p id="session-loaded-msg2" class="mt-3 mb-1 text-gray-700 dark:text-gray-200">
+              Share the session ID below to start collaborating:
+            </p>
+            <span class="text-gray-700 font-medium dark:text-gray-200">Session ID:</span>
+            <span id="session-loaded-id" class="font-semibold text-orange-500 dark:text-orange-400"></span>
+          </div>
+          <div id="session-info" class="hidden text-center">
+            <p class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+              Session Information
+            </p>
+            <p id="session-users" class="mt-3 mb-1 text-gray-700 font-medium dark:text-gray-200">
+              Users:
+            </p>
+            <span class="text-gray-700 font-medium dark:text-gray-200"><b>Session ID</b>:</span>
+            <span id="session-info-id" class="font-semibold text-orange-500 dark:text-orange-400"></span>
+          </div>
+          <!-- Buttons -->
+          <div class="flex justify-center gap-6 w-full">
+            <button id="session-ok" class="button primary px-8 py-3 bg-orange-500 text-white rounded-md w-36 hover:bg-orange-600"></button>
+            <button id="session-close" class="button secondary px-6 py-3 border border-orange-400 rounded-md w-32 text-orange-400 bg-white hover:bg-orange-50">Cancel</button>
+          </div>
+        </div>
+      </dialog>
       <!-- More Examples Modal -->
       <dialog class="modal modal-lg" id="more-examples-modal">
         <h1 class="text-xl font-medium pb-2">ChucK Example Library</h1>

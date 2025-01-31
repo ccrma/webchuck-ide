@@ -9,6 +9,7 @@
 
 import ChuckBar from "@/components/chuckBar/chuckBar";
 
+import { diffChars, Change } from "diff";
 import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
@@ -18,6 +19,7 @@ import EditorPanelHeader from "@/components/editor/editorPanelHeader";
 import Console from "@/components/outputPanel/console";
 import ProjectSystem from "../../fileExplorer/projectSystem";
 import GUI from "@/components/inputPanel/gui/gui";
+import SessionManager from "@/components/session/sessionManager";
 
 // Constants
 const HEADER_HEIGHT: string = "2rem";
@@ -29,7 +31,7 @@ monaco.editor.defineTheme("miniAudicleDark", miniAudicleDark);
 
 export default class Editor {
     // Private variables
-    private static editor: monaco.editor.IStandaloneCodeEditor;
+    public static editor: monaco.editor.IStandaloneCodeEditor; // COCHUCK TODO: make private again
     // Staic variables
     public static filename: string = "untitled.ck";
     public static editorContainer: HTMLDivElement;
@@ -64,6 +66,7 @@ export default class Editor {
         Editor.loadAutoSave();
         // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
+            SessionManager.handleEditorKeyboardInput();
             ProjectSystem.updateActiveFile(Editor.getEditorCode());
             Editor.saveCode();
         });
@@ -204,6 +207,91 @@ export default class Editor {
     }
 
     /**
+     * Update the contents of the editor
+     * Unlike setEditorCode(), this preserves current cursor/selection locations.
+     * It is meant for marginal updates, rather than whole text replacement.
+     * @param code code to update in the editor
+     */
+    public static updateEditorCode(newCode: string) {
+        const currentCode = Editor.getEditorCode();
+        if (currentCode === newCode) return;
+
+        const currentSelections = Editor.editor.getSelections();
+        if (!currentSelections) return;
+
+        const editorModel = Editor.editor.getModel();
+        if (!editorModel) return;
+
+        // Compute diffs between old and new text
+        const diffs = diffChars(currentCode, newCode);
+
+        // Compute new cursor/selection locations based on diffs
+        const newSelections = currentSelections.map((selection) => {
+            const startOffset = editorModel.getOffsetAt(
+                selection.getStartPosition()
+            );
+            const endOffset = editorModel.getOffsetAt(
+                selection.getEndPosition()
+            );
+
+            const newStartOffset = Editor.calculateNewOffset(
+                startOffset,
+                diffs
+            );
+            const newEndOffset = Editor.calculateNewOffset(endOffset, diffs);
+
+            const newStart = editorModel.getPositionAt(newStartOffset);
+            const newEnd = editorModel.getPositionAt(newEndOffset);
+
+            return new monaco.Selection(
+                newStart.lineNumber,
+                newStart.column,
+                newEnd.lineNumber,
+                newEnd.column
+            );
+        });
+
+        // Apply the new text & restore all selections
+        editorModel.pushEditOperations(
+            currentSelections,
+            [
+                {
+                    range: editorModel.getFullModelRange(),
+                    text: newCode,
+                },
+            ],
+            () => newSelections
+        );
+    }
+
+    /**
+     * Given the original cursor offset and list of changes to a text,
+     * Calculate the new cursor offset.
+     */
+    public static calculateNewOffset(
+        oldOffset: number,
+        diffs: Change[]
+    ): number {
+        let newOffset = oldOffset;
+        let currentIndex = 0;
+
+        for (const diff of diffs) {
+            if (diff.added) {
+                newOffset += diff.count!;
+                currentIndex += diff.count!;
+            } else if (diff.removed) {
+                newOffset -= diff.count!;
+            } else {
+                currentIndex += diff.count!;
+            }
+
+            if (currentIndex >= newOffset) break;
+        }
+
+        return newOffset;
+    }
+
+    /**
      * Set the file name
      * @param name The file name
      */
@@ -219,6 +307,19 @@ export default class Editor {
      */
     static getFileName(): string {
         return Editor.filename;
+    }
+
+    /**
+     * Get the current cursor position
+     * @returns The current cursor position
+     */
+    static getPosition() {
+        let position = Editor.editor.getPosition();
+        if (!position) {
+            Editor.editor.setPosition({ lineNumber: 1, column: 1 });
+            position = Editor.editor.getPosition();
+        }
+        return position;
     }
 
     /**
