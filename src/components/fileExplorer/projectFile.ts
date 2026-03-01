@@ -6,16 +6,15 @@
 // date:   January 2024
 //------------------------------------------------------------------
 
-import { isPlaintextFile } from "webchuck/dist/utils";
+import { isPlaintextFile } from "@/utils/fileLoader";
 import Editor from "@/components/editor/monaco/editor";
 
 export default class ProjectFile {
-    private readonly filename: string;
+    private filename: string;
     private data: string | Uint8Array;
-    private readonly isCk: boolean;
-    private readonly isPlaintext: boolean;
+    private isCk: boolean;
+    private isPlaintext: boolean;
     private active: boolean;
-    // TODO: do we need file extension?
 
     constructor(filename: string, data: string | Uint8Array) {
         this.filename = filename;
@@ -27,7 +26,6 @@ export default class ProjectFile {
     loadFile() {
         if (!this.active && this.isPlaintext) {
             Editor.setFileName(this.filename);
-            // TODO: Set Monaco Editor Language (js, html etc.)
             Editor.setEditorCode(this.data as string);
             this.active = true;
         }
@@ -35,7 +33,6 @@ export default class ProjectFile {
     unloadFile() {
         if (this.active) {
             this.data = Editor.getEditorCode();
-            // TODO: save data to file system (future indexDB)
             this.active = false;
         }
     }

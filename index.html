@@ -55,13 +55,13 @@
     text-base text-dark dark:text-light">
 
       <!-- NAVBAR -->
-      <div id="navbarWrapper" class="w-full relative">
+      <header id="navbarWrapper" class="w-full relative">
         <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4 overflow-x-auto">
 
           <!-- Left -->
           <div class="flex justify-left items-center">
             <!-- ChucK Logo -->
-            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank">
+            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank" rel="noopener noreferrer">
               <img src="img/ChonK.svg" class="h-10 md:h-8" alt="ChucK Logo" />
             </a>
 
@@ -77,47 +77,47 @@
                   </svg>
                 </button>
                 <div id="fileDropdown" class="hidden dropdown w-40">
-                  <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                      <button id="newFile" type="button" class="dropdownItem">
+                  <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="fileButton" role="menu">
+                    <li role="separator">
+                      <button id="newFile" type="button" class="dropdownItem" role="menuitem">
                         New
                       </button>
                     </li>
-                    <li>
-                      <input id="fileUploader" type="file" multiple hidden />
-                      <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" disabled>
+                    <li role="separator">
+                      <input id="fileUploader" type="file" multiple hidden aria-label="Upload files" />
+                      <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" role="menuitem" disabled>
                         Upload Files
                       </button>
                     </li>
-                    <li>
-                      <button id="newProject" type="button" class="dropdownItem">
+                    <li role="separator">
+                      <button id="newProject" type="button" class="dropdownItem" role="menuitem">
                         New Project
                       </button>
                     </li>
-                    <li id="exportToContainer" class="relative">
-                      <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton">
+                    <li id="exportToContainer" class="relative" role="separator">
+                      <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton" role="menuitem">
                         Export to
                         <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                           <path stroke="currentColor" stroke-linecap="" stroke-linejoin="round" stroke-width="1.5" d="m1 9 4-4-4-4"/>
                         </svg>
                       </button>
                       <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
-                        <ul class="py-2 text-base text-gray-700 dark:text-gray-200">
-                          <li>
-                            <button id="exportChuck" type="button" class="dropdownItem">
+                        <ul class="py-2 text-base text-gray-700 dark:text-gray-200" role="menu" aria-labelledby="exportToButton">
+                          <li role="separator">
+                            <button id="exportChuck" type="button" class="dropdownItem" role="menuitem">
                               ChucK
                             </button>
                           </li>
-                          <li>
-                            <button id="exportWebchuck" type="button" class="dropdownItem">
+                          <li role="separator">
+                            <button id="exportWebchuck" type="button" class="dropdownItem" role="menuitem">
                               WebChucK
                             </button>
                           </li>
                         </ul>
                       </div>
                     </li>
-                    <li>
-                      <button id="openSettings" type="button" class="dropdownItem">
+                    <li role="separator">
+                      <button id="openSettings" type="button" class="dropdownItem" role="menuitem">
                         Settings
                       </button>
                     </li>
@@ -133,9 +133,9 @@
                   </svg>
                 </button>
                 <div id="editDropdown" class="hidden dropdown w-40">
-                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                      <button id="vimToggle" type="button" class="dropdownItem">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="editButton" role="menu">
+                    <li role="separator">
+                      <button id="vimToggle" type="button" class="dropdownItem" role="menuitem">
                         Vim Mode: Off
                       </button>
                     </li>
@@ -151,20 +151,20 @@
                   </svg>
                 </button>
                 <div id="viewDropdown" class="hidden dropdown w-40">
-                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                      <button id="chuckNowToggle" type="button" class="dropdownItem">
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="viewButton" role="menu">
+                    <li role="separator">
+                      <button id="chuckNowToggle" type="button" class="dropdownItem" role="menuitem">
                         ChucK Time: Off
                       </button>
                     </li>
-                    <li class="divider dark:border-t-gray-400" data-content="THEME"></li>
-                    <li>
-                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50">
+                    <li class="divider dark:border-t-gray-400" data-content="THEME" role="separator"></li>
+                    <li role="separator">
+                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitem">
                         Mode: Light
                       </button>
                     </li>
-                    <li>
-                      <button id="colorPreferenceToggle" type="button" class="dropdownItem">
+                    <li role="separator">
+                      <button id="colorPreferenceToggle" type="button" class="dropdownItem" role="menuitem">
                         System: On
                       </button>
                     </li>
@@ -180,7 +180,7 @@
                   </svg>
                 </button>
                 <div id="examplesDropdown" class="hidden dropdown w-48">
-                  <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <ul id="examplesDropdownContainer" class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="examplesButton" role="menu">
                   </ul>
                 </div>
               </div>
@@ -193,28 +193,28 @@
                   </svg>
                 </button>
                 <div id="helpDropdown" class="hidden dropdown w-52">
-                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" class="dropdownItem">ChucK API Reference</a>
+                  <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="helpButton" role="menu">
+                    <li role="separator">
+                      <a href="https://chuck.stanford.edu/doc/reference" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">ChucK API Reference</a>
                     </li>
-                    <li>
-                      <a href="https://chuck.stanford.edu/webchuck/" target="_blank" class="dropdownItem">Learn WebChucK</a>
+                    <li role="separator">
+                      <a href="https://chuck.stanford.edu/webchuck/" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Learn WebChucK</a>
                     </li>
-                    <li>
-                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" class="dropdownItem">Discord Community</a>
-                    </li>
-
-                    <li class="divider dark:border-t-gray-400" data-content="GITHUB"></li>
-                    <li>
-                      <a href="https://github.com/ccrma/webchuck-ide" target="_blank" class="dropdownItem">GitHub Repo</a>
-                    </li>
-                    <li>
-                      <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" class="dropdownItem">Report an Issue</a>
+                    <li role="separator">
+                      <a href="https://discord.gg/ENr3nurrx8" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Discord Community</a>
                     </li>
 
-                    <li class="divider dark:border-t-gray-400" data-content="ABOUT"></li>
-                    <li>
-                      <button id="about-ide" class="dropdownItem">About IDE...</button>
+                    <li class="divider dark:border-t-gray-400" data-content="GITHUB" role="separator"></li>
+                    <li role="separator">
+                      <a href="https://github.com/ccrma/webchuck-ide" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">GitHub Repo</a>
+                    </li>
+                    <li role="separator">
+                      <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Report an Issue</a>
+                    </li>
+
+                    <li class="divider dark:border-t-gray-400" data-content="ABOUT" role="separator"></li>
+                    <li role="separator">
+                      <button id="about-ide" type="button" class="dropdownItem" role="menuitem">About IDE...</button>
                     </li>
 
                   </ul>
@@ -229,12 +229,12 @@
             <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-md font-medium ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200">Share</button>
           </div>
         </nav>
-      </div>
+      </header>
 
 
       <!-- CHUCK BAR -->
-      <div id="chuckBar" class="bg-orange-peach dark:bg-dark-4 flex items-center justify-start px-2 py-1 gap-2">
-          <div class="flex items-center gap-2 flex-shrink-0">
+      <nav id="chuckBar" class="bg-orange-peach dark:bg-dark-4 flex items-center justify-start px-2 py-1 gap-2" aria-label="ChucK controls">
+          <div class="flex items-center gap-2 flex-shrink-0" role="toolbar" aria-label="ChucK controls">
             <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
             <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" title="Enable Microphone" aria-label="Enable Microphone" disabled>
               <svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/></svg>
@@ -252,17 +252,17 @@
               <svg viewBox="13 13 24 24" fill="none" class="w-5 h-5"><circle cx="25" cy="25" r="10" fill="#FF6868"/></svg>
             </button>
           </div>
-      </div>
+      </nav>
 
 
       <!-- APP -->
-      <div id="app">
+      <main id="app">
 
         <!-- Left -->
         <div id="app-left">
           <div id="fileExplorerPanel" class="h-full flex flex-col justify-start">
-            <div id="fileExplorerHeader" class="header h-10 justify-start flex-none border-b border-dark-d dark:border-dark-a drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
-              <div class="px-2">File Explorer</div>
+            <div id="fileExplorerHeader" class="header h-10 justify-start flex-none border-b drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
+              <h2 class="px-2 text-base font-bold">File Explorer</h2>
             </div>
             <div id="fileExplorerContainer">
               <div id="fileExplorer" class="absolute w-full h-full overflow-y-auto overflow-x-hidden"></div>
@@ -331,7 +331,7 @@
               <div id="SensorPanel" class="absolute w-full h-full p-2 pt-1">
                 <div class="pb-2 font-bold text-md">Mobile Only</div>
                 <div class="flex flex-wrap pb-1">
-                  <button id="gyroButton" class="toggle-button w-32 mr-2" disabled>Gryo: Off</button>
+                  <button id="gyroButton" class="toggle-button w-32 mr-2" disabled>Gyro: Off</button>
                   <div id="gyroLog" class="log-container sensorLog opacity-50 text-sm"></div>
                 </div>
                 <div class="flex flex-wrap pb-1">
@@ -370,7 +370,7 @@
                   </tbody>
                 </table>
               </div>
-              <div id="chuckNowStatus" class="shrink-0 whitespace-nowrap px-2 flex items-center justify-end gap-1 text-sm bg-sky-blue-300 dark:bg-dark border-t border-sky-blue-700 dark:border-dark-5" style="display: none; height: 30px;">
+              <div id="chuckNowStatus" class="shrink-0 whitespace-nowrap px-2 flex items-center justify-end gap-1 text-sm" style="display: none; height: 30px; background-color: var(--ide-bg, #DDEEFF); border-top: 1px solid var(--ide-border, #C9E0F7);">
                 <span class="text-orange font-mono"><b>now:</b></span>
                 <span id="chuckNowTime" class="font-mono text-dark-4 dark:text-light">00:00:00.00000</span>
               </div>
@@ -387,12 +387,12 @@
           </div>
         </div>
 
-      </div>
+      </main>
 
       <!-- MODALS -->
       <!-- More Examples Modal -->
-      <dialog class="modal modal-lg" id="more-examples-modal">
-        <h1 class="text-xl font-medium pb-2">ChucK Example Library</h1>
+      <dialog class="modal modal-lg" id="more-examples-modal" aria-labelledby="more-examples-heading">
+        <h2 id="more-examples-heading" class="text-xl font-medium pb-2">ChucK Example Library</h2>
         <div class="w-full p-2 border border-gray-200 bg-gray-50 rounded-t-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col-reverse md:flex-row">
           <!-- Breadcrumbs -->
           <nav class="flex justify-left w-1/2 pl-2 pt-2 md:pt-0">
@@ -440,8 +440,8 @@
       </dialog>
 
       <!-- Settings Modal -->
-      <dialog class="modal" id="settings-modal">
-        <h1 class="text-xl font-medium pb-2">Settings</h1>
+      <dialog class="modal" id="settings-modal" aria-labelledby="settings-heading">
+        <h2 id="settings-heading" class="text-xl font-medium pb-2">Settings</h2>
         <!-- Setting Options-->
         <form class="flex flex-col gap-2 py-2 pr-7" method="dialog">
           <label class="form-label" for="chuck-version-select">ChucK version</label>
@@ -453,16 +453,16 @@
         </form>
         <!-- Close Settings -->
         <div class="flex gap-4 justify-end pt-4">
-          <button id="settings-close" class="button secondary">Cancel</button>
-          <button id="settings-apply" class="button primary">Reload</button>
+          <button id="settings-close" type="button" class="button secondary">Cancel</button>
+          <button id="settings-apply" type="button" class="button primary">Reload</button>
         </div>
       </dialog>
 
 
       <!-- Export to WebChucK Modal -->
-      <dialog class="modal" id="export-webchuck-modal">
+      <dialog class="modal" id="export-webchuck-modal" aria-labelledby="export-wc-heading">
         <form class="flex flex-col gap-2 py-2" method="dialog">
-          <h1 class="text-xl font-medium pb-2">Export to WebChucK</h1>
+          <h2 id="export-wc-heading" class="text-xl font-medium pb-2">Export to WebChucK</h2>
 
           <div>
             <label class="form-label" for="export-title">Title</label>
@@ -493,15 +493,16 @@
       </dialog>
 
       <!-- Share Code Modal -->
-      <dialog class="modal modal-sm" id="share-code-modal">
+      <dialog class="modal modal-sm" id="share-code-modal" aria-labelledby="share-code-heading">
         <form class="flex flex-col gap-2 py-2" method="dialog">
           <!-- display url to copy -->
+          <h2 id="share-code-heading" class="sr-only">Share Code</h2>
           <label class="form-label" for="share-code-url">Shareable URL</label>
           <input type="text" id="share-code-url" class="border px-2 py-1 rounded-md" readonly>
         </form>
         <div class="flex gap-4 justify-end pt-4">
-          <button id="share-code-close" class="button secondary">Close</button>
-          <button id="share-code-copy" class="button primary">Copy</button>
+          <button id="share-code-close" type="button" class="button secondary">Close</button>
+          <button id="share-code-copy" type="button" class="button primary">Copy</button>
         </div>
       </dialog>
     </div>

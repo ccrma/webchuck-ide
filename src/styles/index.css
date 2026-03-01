@@ -4,14 +4,96 @@
 @tailwind components;
 @tailwind utilities;
 
+/* IDE Theme: CSS variable colors for structural elements.
+   Light values are baked as var() fallbacks; dark overrides below.
+   A full theme system can later replace both with runtime setProperty(). */
+:root.dark {
+    --ide-bg: #222222;
+    --ide-bg-alt: #333333;
+    --ide-text: #EEEEEE;
+    --ide-text-muted: #AAAAAA;
+    --ide-accent: #FF8833;
+    --ide-accent-hover: #ffa64d;
+    --ide-border: #555555;
+    --ide-editor-bg: #1e1e1e;
+    --ide-console-bg: #222222;
+}
+
+body {
+    background-color: var(--ide-bg, #DDEEFF);
+    color: var(--ide-text, #555555);
+}
+
+/* Theme-aware scrollbars */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ide-border, #C9E0F7) var(--ide-bg, #DDEEFF);
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--ide-bg, #DDEEFF);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--ide-border, #C9E0F7);
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ide-text-muted, #8b8f96);
+}
+
+#app-left {
+    background-color: var(--ide-bg, #DDEEFF);
+}
+
+.header {
+    background-color: var(--ide-bg-alt, #DDEEFF);
+    border-color: var(--ide-border, #C9E0F7);
+}
+
+#vmMonitorContainer {
+    background-color: var(--ide-bg, #DDEEFF);
+}
+
+#inputPanel {
+    background-color: var(--ide-bg, #DDEEFF);
+}
+
+#GUIContainer,
+#HIDContainer,
+#SensorContainer {
+    background-color: var(--ide-bg, #DDEEFF);
+}
+
+#visualizerContainer {
+    background-color: var(--ide-console-bg, #ffffff);
+}
+
+#console {
+    background-color: var(--ide-console-bg, #ffffff);
+}
+
+/* Theme-aware accent color for toggles and selected items */
+.text-accent {
+    color: var(--ide-accent, #FF8833);
+}
+
 /* WEBCHUCK IDE LAYOUT */
 #navbarWrapper {
+    background-color: var(--ide-bg-alt, #DDEEFF);
     grid-area: nav;
     user-select: none;
     -webkit-touch-callout: none;
 }
 
 #chuckBar {
+    background-color: var(--ide-bg, #DDEEFF);
     grid-area: chuckBar;
 }
 
@@ -131,11 +213,19 @@
 }
 
 .dropdownItem {
-    @apply block w-full text-left font-medium px-4 py-2 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-dark-5 dark:focus-visible:bg-dark-5 dark:hover:text-light dark:focus-visible:text-light focus:outline-none;
+    @apply block w-full text-left font-medium px-4 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-blue-800;
+    color: var(--ide-text, #555);
+}
+.dropdownItem:hover,
+.dropdownItem:focus-visible {
+    background-color: var(--ide-border, #ccc);
+    color: var(--ide-text, #555);
 }
 
 .dropdown {
-    @apply absolute z-40 bg-white divide-y divide-gray-100 max-h-96 rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply absolute z-40 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    background-color: var(--ide-bg-alt, #ffffff);
+    border: 1px solid var(--ide-border, #ccc);
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
@@ -144,13 +234,19 @@
 }
 
 .nestedDropdown {
-    @apply absolute z-50 bg-white divide-y divide-gray-100 max-h-96 overflow-y-auto rounded-lg shadow-md dark:bg-dark dark:divide-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
+    @apply absolute z-50 max-h-96 overflow-y-auto rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
+    background-color: var(--ide-bg-alt, #ffffff);
+    border: 1px solid var(--ide-border, #ccc);
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
 /* EXAMPLES */
 #autocomplete-list li {
-    @apply px-3 py-2 cursor-pointer hover:bg-opacity-50 focus-visible:bg-opacity-50 hover:bg-sky-blue-100 focus-visible:bg-sky-blue-100 focus:outline-none dark:hover:bg-dark-5 dark:focus-visible:bg-dark-5;
+    @apply px-3 py-2 cursor-pointer focus:outline-none;
+}
+#autocomplete-list li:hover,
+#autocomplete-list li:focus-visible {
+    background-color: var(--ide-border, #ccc);
 }
 
 #autocomplete-list pre {
@@ -166,15 +262,21 @@
 }
 
 .breadcrumb-item {
-    @apply inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400;
+    @apply inline-flex items-center text-sm font-medium;
+    color: var(--ide-text-muted, #555);
 }
 
-.breadcrumb-item.hover {
-    @apply hover:text-orange;
+.breadcrumb-item.hover:hover {
+    color: var(--ide-accent, #FF8833);
 }
 
 .explorer-item {
-    @apply px-3 py-2 cursor-pointer text-lg rounded-lg text-orange hover:bg-opacity-50 focus-visible:bg-opacity-50 hover:bg-sky-blue-100 focus-visible:bg-sky-blue-100 focus:outline-none dark:hover:bg-dark-5 dark:focus-visible:bg-dark-5;
+    @apply px-3 py-2 cursor-pointer text-lg focus:outline-none;
+    color: var(--ide-accent, #FF8833);
+}
+.explorer-item:hover,
+.explorer-item:focus-visible {
+    background-color: var(--ide-border, #ccc);
 }
 
 .explorer-item.folder {
@@ -205,11 +307,16 @@
 }
 
 .fileExplorerEntry {
-    @apply flex items-center w-full relative hover:bg-[#ebeae8] focus-visible:bg-[#ebeae8] dark:hover:bg-dark-5 dark:focus-visible:bg-dark-5 hover:cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200;
+    @apply flex items-center w-full relative hover:cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200;
+}
+
+.fileExplorerEntry:hover,
+.fileExplorerEntry:focus-visible {
+    background-color: color-mix(in srgb, var(--ide-bg-alt, #FEFEFF) 50%, var(--ide-bg, #DDEEFF));
 }
 
 .fileExplorerEntry.active {
-    @apply bg-orange-peach dark:bg-dark-8;
+    background-color: var(--ide-bg-alt, #FCDEC0);
 }
 
 .fileExplorerItem {
@@ -286,9 +393,10 @@
     user-select: none;
 }
 
-#outputPanel>[role=tabpanel]:not(.hidden)+[role=tabpanel]:not(.hidden),
-#outputPanel>[role=tabpanel]:not(.hidden)+.hidden+[role=tabpanel]:not(.hidden) {
-    border-top: 1px solid rgb(68 68 68 / var(--tw-border-opacity, 1));
+/* Borders between visible output panels */
+#outputPanel > [role="tabpanel"]:not(.hidden) + [role="tabpanel"]:not(.hidden),
+#outputPanel > [role="tabpanel"]:not(.hidden) + .hidden + [role="tabpanel"]:not(.hidden) {
+    border-top: 1px solid var(--ide-border, #C9E0F7);
 }
 
 /* EDITOR */
@@ -342,13 +450,29 @@ span>.monaco-tokenized-source {
 }
 
 /* VM Monitor */
+
+#shredTable {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#shredTable thead {
+    border-color: var(--ide-border, #C9E0F7);
+}
+
+#shredTable thead tr th {
+    background-color: var(--ide-bg-alt, #DDEEFF);
+    border-color: var(--ide-border, #C9E0F7);
+}
+
 /* table header */
 table thead tr th {
     @apply px-4 bg-sky-blue-300 dark:bg-dark;
 }
 
 table tbody tr td {
-    @apply py-3 px-4 border-b border-sky-blue-700 dark:border-dark-5;
+    @apply py-3 px-4 border-b;
+    border-color: var(--ide-border, #C9E0F7);
 }
 
 td:nth-child(3) {
@@ -365,11 +489,24 @@ td:nth-child(4) {
 
 /* INPUT PANEL */
 .toggle-button {
-    @apply mr-2 mb-2 p-1 bg-transparent text-orange enabled:hover:text-white enabled:hover:bg-orange border border-orange rounded transition-all disabled:opacity-50;
+    @apply mr-2 mb-2 p-1 bg-transparent rounded transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    color: var(--ide-accent, #FF8833);
+    border: 1px solid var(--ide-accent, #FF8833);
+    --tw-ring-color: var(--ide-accent, #FF8833);
+}
+
+.toggle-button:enabled:hover {
+    background-color: var(--ide-accent, #FF8833);
+    color: white;
 }
 
 .toggle-button.active {
-    @apply bg-orange text-white enabled:hover:bg-orange-400 enabled:dark:hover:bg-orange-400;
+    background-color: var(--ide-accent, #FF8833);
+    color: white;
+}
+
+.toggle-button.active:enabled:hover {
+    background-color: var(--ide-accent-hover, #ffa64d);
 }
 
 /* GUI PANEL */
@@ -392,7 +529,9 @@ td:nth-child(4) {
 
 /* LOG CONSOLE */
 .log-container {
-    @apply px-2 py-1 mb-1 overflow-hidden border border-dark-d rounded-lg bg-white dark:bg-dark dark:border-dark-4;
+    @apply px-2 py-1 mb-1 overflow-hidden rounded-lg;
+    background-color: var(--ide-editor-bg, #FEFEFF);
+    border: 1px solid var(--ide-border, #CCCCCC);
 }
 
 .logMsg {
@@ -419,11 +558,14 @@ dialog {
 }
 
 dialog::backdrop {
-    @apply bg-white bg-opacity-50;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal {
-    @apply w-full px-8 py-6 rounded-lg dark:bg-dark dark:text-white;
+    @apply w-full px-8 py-6 rounded-lg;
+    background-color: var(--ide-bg-alt, #ffffff);
+    color: var(--ide-text, #555);
+    border: 1px solid var(--ide-border, #ccc);
     max-height: 75vh;
     max-width: 640px;
     animation: enter-transition 0.1s ease-in-out forwards;
@@ -432,7 +574,9 @@ dialog::backdrop {
 .modal form input,
 .modal form textarea,
 .modal form select {
-    @apply dark:bg-dark-4;
+    background-color: var(--ide-editor-bg, #fefeff);
+    color: var(--ide-text, #555);
+    border-color: var(--ide-border, #ccc);
 }
 
 .form-label {
@@ -440,11 +584,19 @@ dialog::backdrop {
 }
 
 .form-input {
-    @apply w-full border px-2 py-1 rounded-md focus-visible:outline-none focus-visible:border-blue-500 focus-visible:ring-1 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200;
+    @apply w-full px-2 py-1 rounded-md focus-visible:outline-none focus-visible:ring-1;
+    background-color: var(--ide-editor-bg, #fefeff);
+    color: var(--ide-text, #555);
+    border: 1px solid var(--ide-border, #ccc);
+    --tw-ring-color: var(--ide-accent, #FF8833);
 }
 
 .form-select {
-    @apply w-full border px-2 py-1 rounded-md focus-visible:outline-none focus-visible:border-blue-500 focus-visible:ring-1 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200;
+    @apply w-full px-2 py-1 rounded-md focus-visible:outline-none focus-visible:ring-1;
+    background-color: var(--ide-editor-bg, #fefeff);
+    color: var(--ide-text, #555);
+    border: 1px solid var(--ide-border, #ccc);
+    --tw-ring-color: var(--ide-accent, #FF8833);
 }
 
 .modal.modal-sm {
@@ -462,8 +614,8 @@ dialog::backdrop {
 
 .divider[data-content]::after,
 .divider-vert[data-content]::after {
-    background: #fff;
-    color: #bcc3ce;
+    background: var(--ide-bg-alt, #fff);
+    color: var(--ide-text-muted, #8b8f96);
     content: attr(data-content);
     display: inline-block;
     font-size: 0.8rem;
@@ -471,12 +623,8 @@ dialog::backdrop {
     transform: translateY(-0.85rem);
 }
 
-.dark .divider[data-content]::after {
-    background: #333;
-}
-
 .divider {
-    border-top: 0.06rem solid #e1e3e5;
+    border-top: 0.06rem solid var(--ide-border, #e1e3e5);
     height: 0.05rem;
     margin: 0.4rem 0.2rem 0.4rem 0;
 }
@@ -486,8 +634,11 @@ dialog::backdrop {
 }
 
 .resizer.hSplit {
-    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
+    @apply relative hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
     cursor: row-resize;
+}
+.resizer.hSplit:hover {
+    background-color: var(--ide-accent, #FF8833);
 }
 
 .hSplit::after {
@@ -496,8 +647,11 @@ dialog::backdrop {
 }
 
 .resizer.vSplit {
-    @apply relative hover:bg-orange hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
+    @apply relative hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
     cursor: col-resize;
+}
+.resizer.vSplit:hover {
+    background-color: var(--ide-accent, #FF8833);
 }
 
 .vSplit::after {
@@ -507,7 +661,7 @@ dialog::backdrop {
 
 .vSplit.active,
 .hSplit.active {
-    @apply bg-orange;
+    background-color: var(--ide-accent, #FF8833);
 }
 
 .resizer {

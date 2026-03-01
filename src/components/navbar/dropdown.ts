@@ -28,32 +28,13 @@ export default class Dropdown {
         this.dropdown = dropdown;
 
         // Open and Close
-        this.button.addEventListener("click", (/* event: MouseEvent */) => {
-            // TODO: Fix this, shouldn't need to stop propagation
-            // event?.stopPropagation();
+        this.button.addEventListener("click", () => {
             if (currentDropdown && currentDropdown !== this) {
                 currentDropdown.close();
             }
-            // Get the position of the button
-            const pos = this.button.getBoundingClientRect();
-            // Set the position of the dropdown relative to the button
-            this.dropdown.style.left = `${pos.left}px`;
-            this.dropdown.style.top = `${pos.bottom}px`;
-
             this.toggle();
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             currentDropdown = this;
-        });
-
-        this.container.addEventListener("click", () => {
-            const mouseLeaveHandler = () => {
-                this.close();
-                this.container.removeEventListener(
-                    "mouseleave",
-                    mouseLeaveHandler
-                );
-            };
-            this.container.addEventListener("mouseleave", mouseLeaveHandler);
         });
 
         document.addEventListener("click", (event: MouseEvent) => {
@@ -72,11 +53,41 @@ export default class Dropdown {
             }
         });
 
-        // Close on Escape
+        // Keyboard navigation
         this.container.addEventListener("keydown", (event: KeyboardEvent) => {
             if (event.key === "Escape") {
                 this.close();
                 this.button.focus();
+            }
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                event.preventDefault();
+                const items = Array.from(
+                    this.dropdown.querySelectorAll<HTMLElement>("[role=\"menuitem\"]")
+                );
+                if (items.length === 0) return;
+                const current = document.activeElement as HTMLElement;
+                const index = items.indexOf(current);
+                let next: number;
+                if (event.key === "ArrowDown") {
+                    next = index < items.length - 1 ? index + 1 : 0;
+                } else {
+                    next = index > 0 ? index - 1 : items.length - 1;
+                }
+                items[next].focus();
+            }
+        });
+
+        // Hover-to-switch: when a dropdown is already open, hovering
+        // over another menu button switches to that dropdown
+        this.button.addEventListener("mouseenter", () => {
+            if (currentDropdown && currentDropdown !== this) {
+                currentDropdown.close();
+                this.open = true;
+                this.button.setAttribute("aria-expanded", "true");
+                this.dropdown.classList.remove("hidden");
+                this.positionDropdown();
+                // eslint-disable-next-line @typescript-eslint/no-this-alias
+                currentDropdown = this;
             }
         });
 
@@ -86,10 +97,25 @@ export default class Dropdown {
 
         // Move the dropdown when navbar scrolls
         NavBar.navbar.addEventListener("scroll", () => {
-            const pos = this.button.getBoundingClientRect();
-            this.dropdown.style.left = `${pos.left}px`;
-            this.dropdown.style.top = `${pos.bottom}px`;
+            if (this.open) this.positionDropdown();
         });
+    }
+
+    /**
+     * Position the dropdown relative to its button, clamped to viewport edges
+     */
+    private positionDropdown() {
+        const pos = this.button.getBoundingClientRect();
+        let left = pos.left;
+        const dropdownRect = this.dropdown.getBoundingClientRect();
+        // Clamp right edge to viewport
+        if (left + dropdownRect.width > window.innerWidth) {
+            left = window.innerWidth - dropdownRect.width - 8;
+        }
+        // Clamp left edge
+        if (left < 0) left = 8;
+        this.dropdown.style.left = `${left}px`;
+        this.dropdown.style.top = `${pos.bottom}px`;
     }
 
     toggle() {
@@ -103,6 +129,7 @@ export default class Dropdown {
         this.open = true;
         this.button.setAttribute("aria-expanded", "true");
         this.dropdown.classList.remove("hidden");
+        this.positionDropdown();
     }
 
     close() {
