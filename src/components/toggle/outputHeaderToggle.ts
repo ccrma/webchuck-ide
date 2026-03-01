@@ -44,6 +44,8 @@ export default class OutputHeaderToggle extends HeaderToggle {
     }
 
     setActive(open: boolean) {
+        this.button.setAttribute("aria-selected", String(open));
+
         if (open) {
             // active
             this.button.classList.add("underline");

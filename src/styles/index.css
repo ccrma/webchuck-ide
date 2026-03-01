@@ -607,6 +607,34 @@ dialog::backdrop {
     max-width: 960px;
 }
 
+.shortcuts-section {
+    @apply py-3 last:border-b-0;
+    border-bottom: 1px solid var(--ide-border, #ccc);
+}
+
+.shortcuts-category {
+    @apply text-xs font-semibold uppercase tracking-wider pb-2;
+    color: var(--ide-text-muted, #888);
+}
+
+.shortcuts-grid {
+    @apply grid grid-cols-2 gap-y-2 gap-x-4 text-sm items-center;
+}
+
+.shortcuts-keys {
+    @apply text-right;
+}
+
+kbd {
+    @apply inline-block px-1.5 py-0.5 text-xs font-mono font-medium rounded shadow-sm;
+    background-color: var(--ide-bg, #f3f4f6);
+    color: var(--ide-text, #555);
+    border: 1px solid var(--ide-border, #ccc);
+    min-width: 1.5rem;
+    text-align: center;
+    line-height: 1.4;
+}
+
 .divider,
 .divider-vert {
     @apply block relative;
@@ -672,6 +700,10 @@ dialog::backdrop {
 @media (max-width: 640px) {
     .resizer {
         pointer-events: none;
+    }
+
+    #monacoEditor {
+        touch-action: none;
     }
 }
 

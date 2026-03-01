@@ -9,9 +9,11 @@
         "build": "tsc && vite build",
         "preview": "vite preview",
         "lint": "eslint --fix --ext .js,.ts src",
-        "format": "prettier --write src"
+        "format": "prettier --write src",
+        "a11y": "axe http://localhost:5173 --exit"
     },
     "devDependencies": {
+        "@axe-core/cli": "^4.10.3",
         "@types/js-search": "^1.4.4",
         "@types/pako": "^2.0.3",
         "@typescript-eslint/eslint-plugin": "^6.19.0",
