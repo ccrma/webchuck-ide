@@ -17,6 +17,7 @@ import { File, fetchTextFile } from "@/utils/fileLoader";
 import EditorPanelHeader from "@/components/editor/editorPanelHeader";
 import Console from "@/components/outputPanel/console";
 import ProjectSystem from "../../fileExplorer/projectSystem";
+import FindInProject from "../../fileExplorer/findInProject";
 import GUI from "@/components/inputPanel/gui/gui";
 
 // Constants
@@ -36,6 +37,7 @@ export default class Editor {
     public static vimToggle: HTMLButtonElement;
     public static vimMode: boolean = localStorage.getItem("vimMode") === "true";
     private static vimModule: any; // for the vim object from monaco-vim
+    private static saveTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(editorContainer: HTMLDivElement) {
         Editor.editorContainer = editorContainer;
@@ -50,12 +52,9 @@ export default class Editor {
                 localStorage.theme === "dark"
                     ? "miniAudicleDark"
                     : "miniAudicleLight",
-            // TODO: change automaticLayout to false
-            // For some reason, monaco height can't be resized to smaller, doesn't respond
-            // This trick temp fixes it but is really slow
-            automaticLayout: true,
+            automaticLayout: false,
             scrollBeyondLastLine: false,
-            fontSize: 14,
+            fontSize: parseInt(localStorage.getItem("editorFontSize") || "14"),
             cursorBlinking: "smooth",
             stickyScroll: { enabled: false },
             fixedOverflowWidgets: true,
@@ -66,7 +65,8 @@ export default class Editor {
         // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
             ProjectSystem.updateActiveFile(Editor.getEditorCode());
-            Editor.saveCode();
+            if (Editor.saveTimer) clearTimeout(Editor.saveTimer);
+            Editor.saveTimer = setTimeout(() => Editor.saveCode(), 300);
         });
 
         // Vim Toggle
@@ -80,6 +80,10 @@ export default class Editor {
         Editor.vimStatus =
             document.querySelector<HTMLDivElement>("#vimStatus")!;
         Editor.vimMode ? this.vimModeOn() : this.vimModeOff();
+
+        // Editor font size controls
+        document.getElementById("editorFontDown")?.addEventListener("click", () => Editor.changeEditorFontSize(-1));
+        document.getElementById("editorFontUp")?.addEventListener("click", () => Editor.changeEditorFontSize(1));
 
         // Resize editor on window resize
         window.addEventListener("resize", () => {
@@ -183,6 +187,15 @@ export default class Editor {
                 GUI.generateGUI();
             }
         );
+
+        // Command palette actions
+        Editor.editor.addAction({
+            id: "webchuck.findInFiles",
+            label: "Find in Files",
+            run: () => {
+                FindInProject.toggle();
+            },
+        });
     }
 
     /**
@@ -204,6 +217,23 @@ export default class Editor {
     }
 
     /**
+     * Open Monaco's command palette programmatically
+     */
+    static openCommandPalette() {
+        Editor.editor.focus();
+        Editor.editor.trigger("", "editor.action.quickCommand", null);
+    }
+
+    /**
+     * Reveal and highlight a specific line in the editor
+     */
+    static revealLine(lineNumber: number) {
+        Editor.editor?.revealLineInCenter(lineNumber);
+        Editor.editor?.setPosition({ lineNumber, column: 1 });
+        Editor.editor?.focus();
+    }
+
+    /**
      * Set the file name
      * @param name The file name
      */
@@ -219,6 +249,16 @@ export default class Editor {
      */
     static getFileName(): string {
         return Editor.filename;
+    }
+
+    /**
+     * Change the editor font size by delta
+     */
+    static changeEditorFontSize(delta: number) {
+        const current = Editor.editor.getOption(monaco.editor.EditorOption.fontSize);
+        const next = Math.max(10, Math.min(24, current + delta));
+        Editor.editor.updateOptions({ fontSize: next });
+        localStorage.setItem("editorFontSize", String(next));
     }
 
     /**

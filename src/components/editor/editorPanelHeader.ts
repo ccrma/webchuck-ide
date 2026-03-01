@@ -1,5 +1,7 @@
 import { toggleLeft } from "@utils/appLayout";
-import SVGToggle from "@components/toggle/svgToggle";
+import BottomSheet from "@components/mobile/bottomSheet";
+
+const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
 
 /**
  * Editor Header class
@@ -16,14 +18,13 @@ export default class EditorPanelHeader {
         EditorPanelHeader.filenameElement =
             document.querySelector<HTMLDivElement>("#filename")!;
 
-        // Build SVG Folder Toggle
-        new SVGToggle(
-            EditorPanelHeader.fileToggle,
-            () => {
+        EditorPanelHeader.fileToggle.addEventListener("click", () => {
+            if (isMobile()) {
+                BottomSheet.open();
+            } else {
                 toggleLeft();
-            },
-            false
-        );
+            }
+        });
     }
 
     static updateFileName(filename: string) {
