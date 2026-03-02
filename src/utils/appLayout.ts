@@ -28,8 +28,6 @@ const MIDDLE_WIDTH: number = 50;
 const RIGHT_WIDTH: number = 33.33;
 const EDITOR_PANEL_HEIGHT: number = window.innerWidth <= 800 ? 60 : 70; // mobile
 const INPUT_PANEL_HEIGHT: number = window.innerWidth <= 800 ? 40 : 30;
-const VM_MONITOR_HEIGHT: number = 50;
-const OUTPUT_PANEL_HEIGHT: number = 50;
 
 // if mobile, set INPUT height to 50
 // if mobile, set OUTPUT height to 50
@@ -41,10 +39,8 @@ const OUTPUT_PANEL_HEIGHT: number = 50;
 const appContainer = document.getElementById("app")!;
 const left_panel = document.getElementById("app-left")!;
 const middle_panel = document.getElementById("app-middle")!;
-const right_panel = document.getElementById("app-right")!;
 // const editor_panel = document.getElementById("editorPanel")!;
 // const input_panel = document.getElementById("inputPanel")!;
-// const vm_monitor_panel = document.getElementById("vmMonitor")!;
 // const output_panel = document.getElementById("outputPanel")!;
 
 // Initialize App Dimensions
@@ -58,8 +54,6 @@ let left_open = true;
 // let right_open = true;
 //let editor_open = true;
 let input_panel_open = false;
-//let vm_monitor = true;
-let output_panel_open = true;
 
 // App Layout Splitters
 const splitters: Resizer[] = [];
@@ -73,9 +67,7 @@ export const AppLayoutConstants = {
     MIDDLE_WIDTH,
     RIGHT_WIDTH,
     EDITOR_PANEL_HEIGHT,
-    VM_MONITOR_HEIGHT,
     INPUT_PANEL_HEIGHT,
-    OUTPUT_PANEL_HEIGHT,
 };
 
 // Initialize the app splitters
@@ -132,8 +124,6 @@ export function setContainerRowHeights(
     }
     if (container.id == "app-middle") {
         input_panel_open = isBottomOpen;
-    } else {
-        output_panel_open = isBottomOpen;
     }
     container.style.gridTemplateRows = heights.join(" ");
 }
@@ -189,28 +179,6 @@ export function openInputPanel(open: boolean) {
         input_panel_open = false;
     }
     Editor.resizeEditor();
-}
-
-/**
- * Open the Output Panel to the default height
- * @param open
- */
-export function openOutputPanel(open: boolean) {
-    if (open == output_panel_open) return;
-
-    if (open) {
-        // open output panel
-        setContainerRowHeights(
-            right_panel,
-            VM_MONITOR_HEIGHT,
-            OUTPUT_PANEL_HEIGHT
-        );
-        output_panel_open = true;
-    } else {
-        // close output panel
-        setContainerRowHeights(right_panel, -1, `${MIN_SIZE_V}px`);
-        output_panel_open = false;
-    }
 }
 
 /**
