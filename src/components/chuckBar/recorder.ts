@@ -20,16 +20,9 @@ export enum RecordState {
     armed = 2,
 }
 
-enum RecordButtonImage {
-    stop = "img/stop-button.svg",
-    record = "img/record-button.svg",
-    armed = "img/armed-button.svg",
-}
-
 export default class Recorder {
     public static state: RecordState = RecordState.stopped;
     public static recordButton: HTMLButtonElement;
-    public static recordImage: HTMLImageElement;
     public static playButton: HTMLButtonElement;
     public static removeButton: HTMLButtonElement;
 
@@ -43,10 +36,6 @@ export default class Recorder {
         Recorder.recordButton.addEventListener("click", async () => {
             Recorder.recordPressed();
         });
-        Recorder.recordImage = document.getElementById(
-            "recordImage"
-        )! as HTMLImageElement;
-
         // Get references to Chuck Buttons
         Recorder.playButton = document.getElementById(
             "playButton"
@@ -127,7 +116,7 @@ export default class Recorder {
     static startRecording() {
         Recorder.state = RecordState.recording;
         Console.print("\x1b[31mrecording...\x1b[0m"); // Print in red
-        Recorder.recordImage.src = RecordButtonImage.stop;
+        Recorder.recordButton.classList.remove("ring-2", "ring-red-500");
 
         Recorder.playButton.removeEventListener(
             "click",
@@ -139,7 +128,7 @@ export default class Recorder {
     static stopRecording() {
         Recorder.state = RecordState.stopped;
         Console.print("recording stopped...");
-        Recorder.recordImage.src = RecordButtonImage.record;
+        Recorder.recordButton.classList.remove("ring-2", "ring-red-500");
 
         Recorder.recorder.stop();
     }
@@ -147,14 +136,14 @@ export default class Recorder {
     static armRecorder() {
         Recorder.state = RecordState.armed;
         Console.print("armed for recording...");
-        Recorder.recordImage.src = RecordButtonImage.armed;
+        Recorder.recordButton.classList.add("ring-2", "ring-red-500");
 
         Recorder.playButton.addEventListener("click", Recorder.startRecording);
     }
 
     static disarmRecorder() {
         Recorder.state = RecordState.stopped;
-        Recorder.recordImage.src = RecordButtonImage.record;
+        Recorder.recordButton.classList.remove("ring-2", "ring-red-500");
         Recorder.playButton.removeEventListener(
             "click",
             Recorder.startRecording

@@ -93,7 +93,7 @@ body {
 }
 
 #chuckBar {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #FFE5C4);
     grid-area: chuckBar;
 }
 
@@ -218,14 +218,14 @@ body {
 }
 .dropdownItem:hover,
 .dropdownItem:focus-visible {
-    background-color: var(--ide-border, #ccc);
+    background-color: var(--ide-border, #f3f4f6);
     color: var(--ide-text, #555);
 }
 
 .dropdown {
     @apply absolute z-40 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
     background-color: var(--ide-bg-alt, #ffffff);
-    border: 1px solid var(--ide-border, #ccc);
+    border: 1px solid var(--ide-border, #f3f4f6);
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
@@ -236,7 +236,7 @@ body {
 .nestedDropdown {
     @apply absolute z-50 max-h-96 overflow-y-auto rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
     background-color: var(--ide-bg-alt, #ffffff);
-    border: 1px solid var(--ide-border, #ccc);
+    border: 1px solid var(--ide-border, #f3f4f6);
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
@@ -246,7 +246,7 @@ body {
 }
 #autocomplete-list li:hover,
 #autocomplete-list li:focus-visible {
-    background-color: var(--ide-border, #ccc);
+    background-color: var(--ide-border, #f3f4f6);
 }
 
 #autocomplete-list pre {

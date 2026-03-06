@@ -233,7 +233,7 @@
 
 
       <!-- CHUCK BAR -->
-      <nav id="chuckBar" class="bg-orange-peach dark:bg-dark-4 flex items-center justify-start px-2 py-1 gap-2" aria-label="ChucK controls">
+      <nav id="chuckBar" class="flex items-center justify-start px-2 py-1 gap-2" aria-label="ChucK controls">
           <div class="flex items-center gap-2 flex-shrink-0" role="toolbar" aria-label="ChucK controls">
             <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
             <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" title="Enable Microphone" aria-label="Enable Microphone" disabled>
@@ -403,7 +403,7 @@
           <div class="justify-right w-full h-10 md:w-1/2 relative">
             <input id="more-examples-search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false"
               aria-controls="autocomplete-list" aria-activedescendant=""
-              class="w-full h-full py-2 pl-11 pr-3 border border-gray-300 rounded-md dark:bg-dark-4"
+              class="form-input h-full !pl-11 !pr-3"
               placeholder="Search..." aria-label="Search examples">
             <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
@@ -498,7 +498,7 @@
           <!-- display url to copy -->
           <h2 id="share-code-heading" class="sr-only">Share Code</h2>
           <label class="form-label" for="share-code-url">Shareable URL</label>
-          <input type="text" id="share-code-url" class="border px-2 py-1 rounded-md" readonly>
+          <input type="text" id="share-code-url" class="form-input" readonly>
         </form>
         <div class="flex gap-4 justify-end pt-4">
           <button id="share-code-close" type="button" class="button secondary">Close</button>

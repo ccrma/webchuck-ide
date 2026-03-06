@@ -126,22 +126,26 @@ export default class MoreExamples {
 
         // More Examples Search
         MoreExamples.moreExamplesSearch.addEventListener("input", () => {
-            MoreExamples.searchExamples(MoreExamples.moreExamplesSearch.value);
+            const query = MoreExamples.moreExamplesSearch.value;
+            MoreExamples.searchExamples(query);
             MoreExamples.autoCompleteSelectedIndex = -1;
             MoreExamples.moreExamplesSearch.setAttribute("aria-activedescendant", "");
-            if (!MoreExamples.autoCompleteVisible) {
-                MoreExamples.moreExamplesAutoComplete.classList.remove(
-                    "hidden"
-                );
+            const hasResults = query.trim() !== "" && MoreExamples.moreExamplesAutoCompleteList.children.length > 0;
+            if (hasResults && !MoreExamples.autoCompleteVisible) {
+                MoreExamples.moreExamplesAutoComplete.classList.remove("hidden");
                 MoreExamples.moreExamplesSearch.setAttribute("aria-expanded", "true");
                 MoreExamples.autoCompleteVisible = true;
+            } else if (!hasResults && MoreExamples.autoCompleteVisible) {
+                MoreExamples.moreExamplesAutoComplete.classList.add("hidden");
+                MoreExamples.moreExamplesSearch.setAttribute("aria-expanded", "false");
+                MoreExamples.autoCompleteVisible = false;
             }
         });
         MoreExamples.moreExamplesSearch.addEventListener(
             "click",
             (e: MouseEvent) => {
                 e.stopPropagation();
-                if (!MoreExamples.autoCompleteVisible) {
+                if (!MoreExamples.autoCompleteVisible && MoreExamples.moreExamplesSearch.value.trim() !== "") {
                     MoreExamples.moreExamplesAutoComplete.classList.remove(
                         "hidden"
                     );
