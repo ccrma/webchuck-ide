@@ -20,7 +20,6 @@ import ProjectSystem from "../../fileExplorer/projectSystem";
 import GUI from "@/components/inputPanel/gui/gui";
 
 // Constants
-const HEADER_HEIGHT: string = "2rem";
 const VIM_STATUS_HEIGHT: string = "1.75rem";
 
 // Define editor themes
@@ -232,10 +231,10 @@ export default class Editor {
      * Turn on Vim mode and configure the editor height
      */
     vimModeOn() {
-        // Change Monaco Editor Height to compensate for Vim status bar
+        // Adjust editor bottom to make room for Vim status bar
         Editor.editorContainer.setAttribute(
             "style",
-            `height: calc(100% - ${HEADER_HEIGHT} - ${VIM_STATUS_HEIGHT} - 1px)`
+            `bottom: ${VIM_STATUS_HEIGHT}`
         );
         Editor.resizeEditor();
         Editor.vimModule = initVimMode(Editor.editor, Editor.vimStatus);
@@ -250,10 +249,10 @@ export default class Editor {
      * Turn off Vim mode
      */
     vimModeOff() {
-        // Change Monaco Editor Height to compensate for Vim status bar
+        // Reset editor to stretch to bottom
         Editor.editorContainer.setAttribute(
             "style",
-            `height: calc(100% - ${HEADER_HEIGHT} - 1px)`
+            "bottom: 0"
         );
         Editor.resizeEditor();
         Editor.vimModule?.dispose();

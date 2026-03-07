@@ -1,12 +1,10 @@
 import Console from "@/components/outputPanel/console";
 import OutputHeaderToggle from "@components/toggle/outputHeaderToggle";
 import { visual } from "@/host";
-import { openOutputPanel } from "@/utils/appLayout";
-
-const OUTPUT_HEADER_HEIGHT: number = 1.75; // rem
 
 export default class OutputPanelHeader {
     public static consoleContainer: HTMLDivElement;
+    public static vmMonitorContainer: HTMLDivElement;
     public static visualizerContainer: HTMLDivElement;
 
     constructor() {
@@ -16,6 +14,11 @@ export default class OutputPanelHeader {
             document.querySelector<HTMLButtonElement>("#consoleTab")!;
         OutputPanelHeader.consoleContainer =
             document.querySelector<HTMLDivElement>("#consoleContainer")!;
+        // VM Monitor
+        const vmMonitorButton =
+            document.querySelector<HTMLButtonElement>("#vmMonitorTab")!;
+        OutputPanelHeader.vmMonitorContainer =
+            document.querySelector<HTMLDivElement>("#vmMonitorContainer")!;
         // Visualizer
         const visualizerButton =
             document.querySelector<HTMLButtonElement>("#visualizerTab")!;
@@ -29,30 +32,42 @@ export default class OutputPanelHeader {
             true
         );
         new OutputHeaderToggle(
+            vmMonitorButton,
+            OutputPanelHeader.vmMonitorContainer,
+            true
+        );
+        new OutputHeaderToggle(
             visualizerButton,
             OutputPanelHeader.visualizerContainer
         );
+
+        // Recalculate split heights on window resize
+        window.addEventListener("resize", () => {
+            OutputPanelHeader.updateOutputPanel(
+                OutputHeaderToggle.numActive
+            );
+        });
     }
 
     /**
-     * Update the CSS for the Output Panel based on the number of tabs that are toggled
+     * Update the Output Panel after a tab toggle or resize.
+     * Content uses absolute-inset-0 containment so CSS flex: 1 1 0%
+     * handles equal sizing; we only need to re-fit xterm and the visualizer.
      * @param tabsActive number of tabs active
-     * @returns
      */
     static updateOutputPanel(tabsActive: number) {
-        // Open output panel if more than 0 tab is open
+        document.getElementById("app")?.classList.toggle(
+            "output-collapsed",
+            tabsActive === 0
+        );
+
         if (tabsActive === 0) {
-            openOutputPanel(false);
             return;
         }
 
-        openOutputPanel(true);
-        // Split the container heights evenly
-        const splitHeight: string = `calc((100% - ${OUTPUT_HEADER_HEIGHT}rem)/${tabsActive})`;
-        OutputPanelHeader.consoleContainer.style.height = splitHeight;
-        OutputPanelHeader.visualizerContainer.style.height = splitHeight;
-
-        Console.resizeConsole();
-        visual?.resize();
+        requestAnimationFrame(() => {
+            Console.resizeConsole();
+            visual?.resize();
+        });
     }
 }
