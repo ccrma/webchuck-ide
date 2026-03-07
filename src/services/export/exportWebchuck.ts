@@ -1,4 +1,3 @@
-import JSZip from "jszip";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Editor from "@/components/editor/monaco/editor";
 import { getGlobalVariables } from "@/utils/chuckPreprocess";
@@ -163,7 +162,7 @@ function exportSingleWCFile(wc_html: Document) {
  * Export all project files as a .zip
  * @param wc_html webchuck html document
  */
-function exportProjectWCFiles(
+async function exportProjectWCFiles(
     title: string,
     mainChuckFile: string,
     wc_html: Document,
@@ -172,6 +171,7 @@ function exportProjectWCFiles(
     if (title === "") {
         title = mainChuckFile.split(".")[0];
     }
+    const { default: JSZip } = await import("jszip");
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
     projectFiles.forEach((file: any) => {

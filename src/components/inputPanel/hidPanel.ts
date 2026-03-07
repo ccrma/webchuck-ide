@@ -60,7 +60,7 @@ export default class HidPanel {
                 HidPanel.setMonitorState();
             },
             () => {
-                hid.disableKeyboard;
+                hid.disableKeyboard();
                 document.removeEventListener("keydown", logKeyEvent);
                 document.removeEventListener("keyup", logKeyEvent);
                 HidPanel.keyboardActive = false;

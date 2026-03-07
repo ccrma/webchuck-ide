@@ -132,3 +132,14 @@ class Main {
 // Main entry point
 const main = new Main();
 main.init();
+
+// Suppress Monaco's harmless CancellationError from its clipboard workaround.
+// Monaco logs these via its internal logService.error(), which calls console.error().
+// See: https://github.com/compiler-explorer/compiler-explorer/issues/7181
+const _consoleError = console.error;
+console.error = (...args: any[]) => {
+    if (args.some((a) => a?.name === "Canceled" && a?.message === "Canceled")) {
+        return;
+    }
+    _consoleError.apply(console, args);
+};
