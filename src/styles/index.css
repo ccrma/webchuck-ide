@@ -51,7 +51,7 @@
             "splitH2"
             "app-right";
         grid-template-rows: 5fr 2px 5fr;
-        grid-template-columns: 100%;
+        grid-template-columns: 100% !important;
     }
 
     #chuck-bar {
