@@ -48,5 +48,6 @@ export default class ButtonToggle {
 
             this.state = false;
         }
+        this.button.setAttribute("aria-pressed", String(newState));
     }
 }

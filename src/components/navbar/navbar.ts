@@ -122,6 +122,22 @@ export default class NavBar {
             Console.print("|========================================|");
             NavBar.HelpDropdown.close();
         });
+
+        // Help > Keyboard Shortcuts
+        const shortcutsButton = document.querySelector<HTMLButtonElement>("#keyboard-shortcuts")!;
+        const shortcutsModal = document.querySelector<HTMLDialogElement>("#shortcuts-modal")!;
+        const shortcutsClose = document.querySelector<HTMLButtonElement>("#shortcuts-close")!;
+
+        shortcutsButton.addEventListener("click", () => {
+            shortcutsModal.showModal();
+            NavBar.HelpDropdown.close();
+        });
+        shortcutsClose.addEventListener("click", () => {
+            shortcutsModal.close();
+        });
+        shortcutsModal.addEventListener("mousedown", (e: MouseEvent) => {
+            if (e.target === shortcutsModal) shortcutsModal.close();
+        });
     }
 
     /**

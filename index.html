@@ -54,14 +54,18 @@
     <div id="webchuck-ide" class="grid w-full h-screen bg-sky-blue dark:bg-dark
     text-base text-dark dark:text-light">
 
+      <!-- Skip to main content (accessibility) -->
+      <a href="#monacoEditor" class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md">Skip to editor</a>
+
       <!-- NAVBAR -->
       <header id="navbarWrapper" class="w-full relative">
+        <h1 class="sr-only">WebChucK IDE</h1>
         <nav id="navbar" class="flex h-full items-center justify-between md:px-2 px-4 overflow-x-auto">
 
           <!-- Left -->
           <div class="flex justify-left items-center">
             <!-- ChucK Logo -->
-            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank" rel="noopener noreferrer">
+            <a href="https://chuck.stanford.edu" class="w-10 md:w-8" target="_blank" rel="noopener noreferrer" aria-label="Visit ChucK website (opens in new tab)">
               <img src="img/ChonK.svg" class="h-10 md:h-8" alt="ChucK Logo" />
             </a>
 
@@ -203,6 +207,9 @@
                     <li role="separator">
                       <a href="https://discord.gg/ENr3nurrx8" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Discord Community</a>
                     </li>
+                    <li role="separator">
+                      <button id="keyboard-shortcuts" type="button" class="dropdownItem" role="menuitem">Keyboard Shortcuts</button>
+                    </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="GITHUB" role="separator"></li>
                     <li role="separator">
@@ -281,13 +288,14 @@
           </div>
         </div>
 
-        <div id="splitV1" class="resizer vSplit"></div>
+        <div id="splitV1" class="resizer vSplit" role="separator" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Resize file explorer"></div>
 
         <!-- Middle -->
         <div id="app-middle">
           <!-- Editor Panel -->
           <div id="editorPanel" class="h-full flex flex-col justify-start">
             <!-- Monaco -->
+            <h2 class="sr-only">Code Editor</h2>
             <div id="editorPanelHeader" class="header h-10 justify-start flex-none">
               <button id="fileToggle" type="button" class="header-item icon px-1 mr-1" aria-label="Toggle File Explorer">
                 <svg class="w-6 h-5" aria-hidden="true" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -299,35 +307,35 @@
             <div id="monacoEditor"></div>
             <div id=vimStatus class="border-none bg-gray-200 dark:bg-dark-4 w-full h-7 px-0.5 text-sm items-center flex-none hidden"></div>
           </div>
-          <div id="splitH1" class="resizer hSplit"></div>
+          <div id="splitH1" class="resizer hSplit" role="separator" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Resize editor and input panel"></div>
           <!-- Input Panel -->
           <div id="inputPanel" class="flex flex-col dark:bg-dark">
-            <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm">
-              <button id="GUITab" type="button" class="header-item flex items-center justify-center relative">
+            <div id="inputPanelHeader" class="header h-7 justify-start flex-none drop-shadow-sm" role="tablist" aria-label="Input panels">
+              <button id="GUITab" type="button" class="header-item flex items-center justify-center relative" role="tab" aria-selected="false" aria-controls="GUIContainer">
                 GUI
-                <span id="GUIPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+                <span id="GUIPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden" aria-hidden="true"></span>
               </button>
-              <button id="HIDTab" type="button" class="header-item flex items-center justify-center relative">
+              <button id="HIDTab" type="button" class="header-item flex items-center justify-center relative" role="tab" aria-selected="false" aria-controls="HIDContainer">
                 HID
-                <span id="HIDPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+                <span id="HIDPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden" aria-hidden="true"></span>
               </button>
-              <button id="SensorTab" type="button" class="header-item flex items-center justify-center relative">
+              <button id="SensorTab" type="button" class="header-item flex items-center justify-center relative" role="tab" aria-selected="false" aria-controls="SensorContainer">
                 SENSOR
-                <span id="SensorPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden"></span>
+                <span id="SensorPing" class="animate-ping absolute top-0 right-0 h-2 w-2 rounded-full bg-orange opacity-75 hidden" aria-hidden="true"></span>
               </button>
             </div>
-            <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full">
+            <div id="GUIContainer" class="dark:bg-dark-2 w-full h-full" role="tabpanel" aria-labelledby="GUITab">
               <div id="GUIPanel" class="w-full h-full relative overflow-hidden">
               </div>
             </div>
-            <div id="HIDContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
+            <div id="HIDContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden" role="tabpanel" aria-labelledby="HIDTab">
               <div id="HIDPanel" class="absolute w-full h-full p-2">
                 <button id="mouseHIDButton" class="toggle-button w-32" disabled>Mouse: Off</button>
                 <button id="keyboardHIDButton" class="toggle-button w-32" disabled>Keyboard: Off</button>
                 <div id="hidLog" class="log-container opacity-50 text-sm"></div>
               </div>
             </div>
-            <div id="SensorContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden">
+            <div id="SensorContainer" class="relative dark:bg-dark-2 w-full h-full overflow-auto md:overflow-hidden" role="tabpanel" aria-labelledby="SensorTab">
               <div id="SensorPanel" class="absolute w-full h-full p-2 pt-1">
                 <div class="pb-2 font-bold text-md">Mobile Only</div>
                 <div class="flex flex-wrap pb-1">
@@ -344,19 +352,22 @@
           </div>
         </div>
 
-        <div id="splitV2" class="resizer vSplit"></div>
+        <div id="splitV2" class="resizer vSplit" role="separator" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Resize editor and output panel"></div>
 
         <!-- Right -->
         <div id="app-right" class="flex flex-col">
           <!-- Output Panel -->
           <div id="outputPanel" class="flex flex-col flex-1 min-h-0">
+            <h2 class="sr-only">Output</h2>
             <div id="outputPanelHeader" class="header h-10 justify-start flex-none drop-shadow-sm">
-              <button id="vmMonitorTab"  type="button" class="header-item text-dark-5">VM MONITOR</button>
-              <button id="consoleTab"    type="button" class="header-item text-dark-5">CONSOLE</button>
-              <button id="visualizerTab" type="button" class="header-item text-dark-5">VISUALIZER</button>
+              <div role="tablist" aria-label="Output panels" class="flex items-center">
+                <button id="vmMonitorTab"  type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="vmMonitorContainer">VM MONITOR</button>
+                <button id="consoleTab"    type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="consoleContainer">CONSOLE</button>
+                <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
+              </div>
             </div>
-            <div id="vmMonitorContainer" role="tabpanel" class="hidden flex flex-col">
-              <div class="flex-1 min-h-0 overflow-auto">
+            <div id="vmMonitorContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
+              <div class="flex-1 min-h-0 overflow-auto" tabindex="0">
                 <table id="shredTable" class="w-full table-auto text-left">
                   <thead class="h-12 align-middle font-medium sticky top-0 z-10">
                     <tr>
@@ -375,14 +386,14 @@
                 <span id="chuckNowTime" class="font-mono text-dark-4 dark:text-light">00:00:00.00000</span>
               </div>
             </div>
-            <div id="consoleContainer" role="tabpanel" class="hidden relative">
+            <div id="consoleContainer" class="hidden relative" role="tabpanel" aria-labelledby="consoleTab">
               <div id="console" class="absolute inset-0"></div>
             </div>
-            <div id="visualizerContainer" role="tabpanel" class="hidden relative bg-white dark:bg-dark-2">
+            <div id="visualizerContainer" class="hidden relative bg-white dark:bg-dark-2" role="tabpanel" aria-labelledby="visualizerTab">
               <div id="visualizer-help" class="absolute inset-0 flex items-center justify-center text-[#666] dark:text-[#bbb] transition">
                 <b>Start WebChucK for visualizer</b>
               </div>
-              <canvas id="visualizer" class="absolute inset-0 w-full h-full"></canvas>
+              <canvas id="visualizer" class="absolute inset-0 w-full h-full" aria-label="Audio visualizer"></canvas>
             </div>
           </div>
         </div>
@@ -458,6 +469,60 @@
         </div>
       </dialog>
 
+      <!-- Keyboard Shortcuts Modal -->
+      <dialog class="modal" id="shortcuts-modal" aria-labelledby="shortcuts-heading">
+        <h2 id="shortcuts-heading" class="text-xl font-medium pb-2">Keyboard Shortcuts</h2>
+
+        <section class="shortcuts-section">
+          <h3 class="shortcuts-category">ChucK Controls</h3>
+          <div class="shortcuts-grid">
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>.</kbd></div>
+            <div>Start WebChucK</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Enter</kbd></div>
+            <div>Run code</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>\</kbd></div>
+            <div>Replace shred</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Backspace</kbd></div>
+            <div>Remove shred</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>S</kbd></div>
+            <div>Generate GUI</div>
+          </div>
+        </section>
+
+        <section class="shortcuts-section">
+          <h3 class="shortcuts-category">Editor</h3>
+          <div class="shortcuts-grid">
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Z</kbd></div>
+            <div>Undo</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></div>
+            <div>Redo</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>D</kbd></div>
+            <div>Select next occurrence</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>/</kbd></div>
+            <div>Toggle line comment</div>
+            <div class="shortcuts-keys"><kbd>Alt</kbd> + <kbd>&uarr;</kbd>/<kbd>&darr;</kbd></div>
+            <div>Move line up/down</div>
+          </div>
+        </section>
+
+        <section class="shortcuts-section">
+          <h3 class="shortcuts-category">Navigation</h3>
+          <div class="shortcuts-grid">
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></div>
+            <div>Find in files</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd></div>
+            <div>Find in editor</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>H</kbd></div>
+            <div>Find and replace</div>
+            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></div>
+            <div>Command palette</div>
+          </div>
+        </section>
+
+        <div class="flex justify-end pt-4">
+          <button id="shortcuts-close" type="button" class="button secondary">Close</button>
+        </div>
+      </dialog>
 
       <!-- Export to WebChucK Modal -->
       <dialog class="modal" id="export-webchuck-modal" aria-labelledby="export-wc-heading">

@@ -266,7 +266,8 @@ body {
     color: var(--ide-text-muted, #555);
 }
 
-.breadcrumb-item.hover:hover {
+.breadcrumb-item.hover:hover,
+.breadcrumb-item.hover:focus-visible {
     color: var(--ide-accent, #FF8833);
 }
 
@@ -607,6 +608,34 @@ dialog::backdrop {
     max-width: 960px;
 }
 
+.shortcuts-section {
+    @apply py-3 last:border-b-0;
+    border-bottom: 1px solid var(--ide-border, #ccc);
+}
+
+.shortcuts-category {
+    @apply text-xs font-semibold uppercase tracking-wider pb-2;
+    color: var(--ide-text-muted, #888);
+}
+
+.shortcuts-grid {
+    @apply grid grid-cols-2 gap-y-2 gap-x-4 text-sm items-center;
+}
+
+.shortcuts-keys {
+    @apply text-right;
+}
+
+kbd {
+    @apply inline-block px-1.5 py-0.5 text-xs font-mono font-medium rounded shadow-sm;
+    background-color: var(--ide-bg, #f3f4f6);
+    color: var(--ide-text, #555);
+    border: 1px solid var(--ide-border, #ccc);
+    min-width: 1.5rem;
+    text-align: center;
+    line-height: 1.4;
+}
+
 .divider,
 .divider-vert {
     @apply block relative;
@@ -634,10 +663,11 @@ dialog::backdrop {
 }
 
 .resizer.hSplit {
-    @apply relative hover:transition hover:opacity-100 hover:h-2 hover:-top-1;
+    @apply relative hover:transition hover:opacity-100 hover:h-2 hover:-top-1 focus-visible:transition focus-visible:opacity-100 focus-visible:h-2 focus-visible:-top-1;
     cursor: row-resize;
 }
-.resizer.hSplit:hover {
+.resizer.hSplit:hover,
+.resizer.hSplit:focus-visible {
     background-color: var(--ide-accent, #FF8833);
 }
 
@@ -647,10 +677,11 @@ dialog::backdrop {
 }
 
 .resizer.vSplit {
-    @apply relative hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30;
+    @apply relative hover:transition hover:opacity-100 hover:w-2 hover:-left-1 z-30 focus-visible:transition focus-visible:opacity-100 focus-visible:w-2 focus-visible:-left-1;
     cursor: col-resize;
 }
-.resizer.vSplit:hover {
+.resizer.vSplit:hover,
+.resizer.vSplit:focus-visible {
     background-color: var(--ide-accent, #FF8833);
 }
 
@@ -672,6 +703,10 @@ dialog::backdrop {
 @media (max-width: 640px) {
     .resizer {
         pointer-events: none;
+    }
+
+    #monacoEditor {
+        touch-action: none;
     }
 }
 

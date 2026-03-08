@@ -26,7 +26,7 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
         },
         {
             token: "comment",
-            foreground: "609010",
+            foreground: "4B7A00",
         },
         {
             token: "string",
@@ -34,7 +34,7 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
         },
         {
             token: "number",
-            foreground: "D48010",
+            foreground: "A06000",
         },
     ],
     colors: {
@@ -62,10 +62,10 @@ const miniAudicleDark: monaco.editor.IStandaloneThemeData = {
             token: "library",
             foreground: "a64c65",
         },
-        // {
-        //     token: "comment",
-        //     foreground: "609010",
-        // },
+        {
+            token: "comment",
+            foreground: "6A9956",
+        },
         // {
         //     token: "string",
         //     foreground: "a0a0a0",

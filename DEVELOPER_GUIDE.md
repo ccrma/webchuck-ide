@@ -37,6 +37,16 @@ To run WebChucK IDE on a local development server for testing:
 npm run dev
 ```
 
+## Accessibility Testing
+
+To run local accessibility testing, make sure the local development server is running (see above), then:
+
+```
+npm run a11y
+```
+
+Make sure that the accessibility test passes before deploying.
+
 ## Building
 
 Build WebChucK IDE to a static site by running: 
