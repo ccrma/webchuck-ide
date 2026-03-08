@@ -23,7 +23,7 @@ export default class VmMonitor {
 
     constructor() {
         VmMonitor.vmContainer =
-            document.querySelector<HTMLDivElement>("#vmMonitor")!;
+            document.querySelector<HTMLDivElement>("#vmMonitorContainer")!;
         const shredTable =
             document.querySelector<HTMLDivElement>("#shredTable")!;
         VmMonitor.shredTableBody = shredTable.getElementsByTagName("tbody")[0]!;
@@ -99,12 +99,12 @@ export default class VmMonitor {
         })(time, theShred);
 
         // Remove button
-        const removeButton = document.createElement("input");
-        removeButton.setAttribute("type", "image");
-        removeButton.setAttribute("src", "img/remove.svg");
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
         removeButton.classList.add("removeButton");
-        removeButton.setAttribute("alt", "remove button");
         removeButton.setAttribute("aria-label", "Remove Shred");
+        removeButton.innerHTML =
+            "<svg viewBox=\"5 18 40 14\" fill=\"none\" class=\"w-4 h-4\"><rect x=\"9.89\" y=\"22.67\" width=\"30.52\" height=\"5.23\" fill=\"white\"/></svg>";
         remove.appendChild(removeButton);
 
         remove.addEventListener("click", () => {
@@ -184,7 +184,7 @@ export class ChuckNow {
         if (isDisplay) {
             // On
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: On";
-            ChuckNow.chuckNowStatus.style.display = "block";
+            ChuckNow.chuckNowStatus.style.display = "flex";
             ChuckNow.isDisplay = localStorage["chuckNow"] = true;
         } else {
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: Off";

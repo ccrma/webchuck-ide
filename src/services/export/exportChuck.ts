@@ -1,6 +1,5 @@
 import NavBar from "@/components/navbar/navbar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
-import JSZip from "jszip";
 
 const exportChuckButton =
     document.querySelector<HTMLButtonElement>("#exportChuck")!;
@@ -42,7 +41,8 @@ function exportSingleFile() {
 /**
  * Export all project files as a .zip
  */
-function exportProjectFiles() {
+async function exportProjectFiles() {
+    const { default: JSZip } = await import("jszip");
     const projectFiles = ProjectSystem.getProjectFiles();
     const zip = new JSZip();
     projectFiles.forEach((file) => {

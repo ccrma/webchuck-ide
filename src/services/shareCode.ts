@@ -47,10 +47,13 @@ export function initShareCode() {
     });
 
     // Copy URL
-    shareCodeCopyButton.addEventListener("click", () => {
-        // copy to clipboard
-        shareCodeURLField.select();
-        document.execCommand("copy");
+    shareCodeCopyButton.addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(shareCodeURLField.value);
+        } catch {
+            shareCodeURLField.select();
+            document.execCommand("copy");
+        }
         shareCodeURLField.setSelectionRange(0, 0);
 
         shareCodeCopyButton.textContent = "Copied!";

@@ -11,6 +11,18 @@ export interface File {
     data: string | Uint8Array;
 }
 
+const textFileExtensions = ["ck", "txt", "csv", "json", "xml", "html", "js"];
+
+/**
+ * Check if a file is a plaintext file based on its extension.
+ * Local copy of the utility from webchuck/dist/utils so it works
+ * in both WebChucK and WebChuGL modes.
+ */
+export function isPlaintextFile(filename: string): boolean {
+    const ext = filename.split(".").pop();
+    return textFileExtensions.includes(ext ?? "");
+}
+
 /**
  * Load a text file, can be a .ck file or a generic plaintext file
  * @param url
