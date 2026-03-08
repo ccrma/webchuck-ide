@@ -69,11 +69,11 @@ export default class Resizer {
      */
     nudge(delta: number) {
         const rect = this.split.getBoundingClientRect();
-        const fakeEvent = {
+        const mockPointerEvent = {
             clientX: rect.left + rect.width / 2 + (this.isHorizDrag ? delta : 0),
             clientY: rect.top + rect.height / 2 + (!this.isHorizDrag ? delta : 0),
         } as PointerEvent;
-        this.onDrag(fakeEvent);
+        this.onDrag(mockPointerEvent);
     }
 
     onDrag(event: PointerEvent) {
