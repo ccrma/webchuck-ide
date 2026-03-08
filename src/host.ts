@@ -131,6 +131,7 @@ export async function onChuckReady() {
     ChuckBar.webchuckButton.disabled = false;
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
     ProjectSystem.uploadFilesButton.disabled = false;
+    ProjectSystem.uploadFilesIcon.disabled = false;
     ProjectSystem.initDragUpload();
     theChuck.getParamString("VERSION").then((value: string) => {
         chuckVersion = value;

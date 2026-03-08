@@ -1,11 +1,14 @@
 import Console from "@/components/outputPanel/console";
+import Editor from "@/components/editor/monaco/editor";
 import OutputHeaderToggle from "@components/toggle/outputHeaderToggle";
 import { visual } from "@/host";
+import { getAppColumnWidths, setAppColumnWidths } from "@/utils/appLayout";
 
 export default class OutputPanelHeader {
     public static consoleContainer: HTMLDivElement;
     public static vmMonitorContainer: HTMLDivElement;
     public static visualizerContainer: HTMLDivElement;
+    private static savedColumnWidths: [number, number, number] | null = null;
 
     constructor() {
         // Setup Output Panel Header Tabs
@@ -56,12 +59,35 @@ export default class OutputPanelHeader {
      * @param tabsActive number of tabs active
      */
     static updateOutputPanel(tabsActive: number) {
+        const collapsed = tabsActive === 0;
         document.getElementById("app")?.classList.toggle(
             "output-collapsed",
-            tabsActive === 0
+            collapsed
         );
 
-        if (tabsActive === 0) {
+        // Collapse/expand the right column on desktop only
+        if (window.innerWidth > 640) {
+            if (collapsed && !OutputPanelHeader.savedColumnWidths) {
+                OutputPanelHeader.savedColumnWidths = getAppColumnWidths();
+                const app = document.getElementById("app")!;
+                const [left] = OutputPanelHeader.savedColumnWidths;
+                app.style.gridTemplateColumns = `${left}% 2px 1fr 2px auto`;
+                requestAnimationFrame(() => Editor.resizeEditor());
+            } else if (!collapsed && OutputPanelHeader.savedColumnWidths) {
+                setAppColumnWidths(OutputPanelHeader.savedColumnWidths);
+                OutputPanelHeader.savedColumnWidths = null;
+            }
+        }
+
+        // Show console font size buttons only when console is visible
+        const consoleFontSize = document.getElementById("consoleFontSize");
+        if (consoleFontSize) {
+            const consoleVisible = !OutputPanelHeader.consoleContainer.classList.contains("hidden");
+            consoleFontSize.classList.toggle("hidden", !consoleVisible);
+        }
+
+        if (collapsed) {
+            requestAnimationFrame(() => Editor.resizeEditor());
             return;
         }
 

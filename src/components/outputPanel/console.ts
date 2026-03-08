@@ -23,6 +23,10 @@ export default class Console {
     public static fitAddon: FitAddon;
     public static theme: string = "light";
 
+    private static readonly DEFAULT_FONT_SIZE = 15;
+    private static readonly MIN_FONT_SIZE = 10;
+    private static readonly MAX_FONT_SIZE = 24;
+
     private static firstPrint: boolean = true;
 
     constructor() {
@@ -30,7 +34,7 @@ export default class Console {
             cursorInactiveStyle: "none",
             fontFamily: "monaco, consolas, monospace",
             disableStdin: true,
-            fontSize: 15,
+            fontSize: parseInt(localStorage.getItem("consoleFontSize") || String(Console.DEFAULT_FONT_SIZE)),
             rows: 1, // start with 1 row, then grow
             theme: {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
@@ -63,6 +67,10 @@ export default class Console {
             Console.resizeConsole();
         });
 
+        // Font size controls
+        document.getElementById("consoleFontDown")?.addEventListener("click", () => Console.changeFontSize(-1));
+        document.getElementById("consoleFontUp")?.addEventListener("click", () => Console.changeFontSize(1));
+
         (window as any).Console = Console;
     }
 
@@ -70,6 +78,8 @@ export default class Console {
      * Resize the console and set the TTY_WIDTH
      */
     static resizeConsole() {
+        const container = Console.terminalElement?.parentElement;
+        if (!container || container.offsetHeight === 0) return;
         Console.fit();
         theChuck?.setParamInt("TTY_WIDTH", Console.getWidth());
     }
@@ -134,5 +144,16 @@ export default class Console {
      */
     static getRowHeight(): number {
         return Console.terminal.rows;
+    }
+
+    /**
+     * Change the console font size by delta
+     */
+    static changeFontSize(delta: number) {
+        const current = Console.terminal.options.fontSize ?? Console.DEFAULT_FONT_SIZE;
+        const next = Math.max(Console.MIN_FONT_SIZE, Math.min(Console.MAX_FONT_SIZE, current + delta));
+        Console.terminal.options.fontSize = next;
+        localStorage.setItem("consoleFontSize", String(next));
+        Console.fit();
     }
 }
