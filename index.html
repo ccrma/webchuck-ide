@@ -232,6 +232,13 @@
 
           <!-- Right -->
           <div class="flex justify-right items-center text-blue-600 dark:text-blue-200 overflow-none">
+            <!-- TODO: Just for v2.1.6 release -->
+            <!-- ChuGL Banner -->
+            <a href="https://chuck.stanford.edu/webchugl/" target="_blank" rel="noopener noreferrer"
+              class="hidden lg:flex items-center text-blue-600 dark:text-blue-200 bg-blue-600/10 dark:bg-blue-200/10 hover:bg-blue-600/20 dark:hover:bg-blue-200/20 px-3 py-1 rounded-full text-xs font-bold mr-4 transition-colors whitespace-nowrap">
+              <span class="mr-1">✨</span> Try the WebChucK IDE beta for graphics programming!
+            </a>
+
             <b class="w-[122px] text-md">WebChucK IDE </b><b><em class="text-3xl">2</em></b>
             <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-md font-medium ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200">Share</button>
           </div>
@@ -366,7 +373,7 @@
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
               </div>
             </div>
-            <div id="vmMonitorContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
+            <div id="vmMonitorContainer" class="flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
               <div class="flex-1 min-h-0 overflow-auto" tabindex="0">
                 <table id="shredTable" class="w-full table-auto text-left">
                   <thead class="h-12 align-middle font-medium sticky top-0 z-10">
