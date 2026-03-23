@@ -286,7 +286,7 @@
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                 </button>
-                <button id="searchToggleBtn" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Find in files (Ctrl+Shift+F)" aria-label="Find in files">
+                <button id="searchToggleBtn" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" aria-label="Find in files">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -408,10 +408,6 @@
                 <button id="consoleTab"    type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="consoleContainer">CONSOLE</button>
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
               </div>
-              <div id="consoleFontSize" class="ml-auto flex items-center gap-0.5 text-xs hidden" style="color: var(--ide-text-muted, #888)">
-                <button id="consoleFontDown" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Decrease font size" aria-label="Decrease console font size">A-</button>
-                <button id="consoleFontUp" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Increase font size" aria-label="Increase console font size">A+</button>
-              </div>
             </div>
             <div id="vmMonitorContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
               <div class="flex-1 min-h-0 overflow-auto" tabindex="0">
@@ -523,15 +519,15 @@
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">ChucK Controls</h3>
           <div class="shortcuts-grid">
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>.</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>.</kbd></div>
             <div>Start WebChucK</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Enter</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Enter</kbd></div>
             <div>Run code</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>\</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>\</kbd></div>
             <div>Replace shred</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Backspace</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Backspace</kbd></div>
             <div>Remove shred</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>S</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>S</kbd></div>
             <div>Generate GUI</div>
           </div>
         </section>
@@ -539,13 +535,13 @@
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">Editor</h3>
           <div class="shortcuts-grid">
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Z</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Z</kbd></div>
             <div>Undo</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></div>
             <div>Redo</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>D</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>D</kbd></div>
             <div>Select next occurrence</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>/</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>/</kbd></div>
             <div>Toggle line comment</div>
             <div class="shortcuts-keys"><kbd>Alt</kbd> + <kbd>&uarr;</kbd>/<kbd>&darr;</kbd></div>
             <div>Move line up/down</div>
@@ -555,13 +551,13 @@
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">Navigation</h3>
           <div class="shortcuts-grid">
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></div>
             <div>Find in files</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>F</kbd></div>
             <div>Find in editor</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>H</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>H</kbd></div>
             <div>Find and replace</div>
-            <div class="shortcuts-keys"><kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></div>
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></div>
             <div>Command palette</div>
           </div>
         </section>
@@ -622,16 +618,17 @@
       <div id="bottomSheet" class="bottom-sheet-overlay hidden" aria-modal="true" role="dialog" aria-label="File Explorer">
         <div id="bottomSheetBackdrop" class="bottom-sheet-backdrop"></div>
         <div id="bottomSheetContent" class="bottom-sheet-content">
-          <div class="bottom-sheet-handle" aria-hidden="true">
+          <div class="bottom-sheet-handle flex items-center" aria-hidden="true">
+            <div class="flex-1"></div>
             <div class="bottom-sheet-handle-bar"></div>
-          </div>
-          <div class="flex justify-end flex-none">
-            <button id="bottomSheetClose" type="button" class="p-1.5 mr-1" style="color: var(--ide-text-muted, #888)" aria-label="Close file explorer">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
+            <div class="flex-1 flex justify-end">
+              <button id="bottomSheetClose" type="button" class="p-1.5 mr-1" style="color: var(--ide-text-muted, #888)" aria-label="Close file explorer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
           </div>
           <div id="bottomSheetFiles" class="overflow-hidden" style="height: 50vh;"></div>
         </div>

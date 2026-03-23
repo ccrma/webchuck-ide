@@ -420,6 +420,12 @@ body {
     bottom: 0;
 }
 
+/* Remove right positioning so find widget renders on the left.
+   hacky, but this fixes the spasming and not being able to close the widgets */
+#monacoEditor .find-widget {
+    right: unset !important;
+}
+
 .rendered-markdown>p>strong>span {
     margin-bottom: 0 !important;
 }

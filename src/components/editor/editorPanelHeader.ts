@@ -1,7 +1,6 @@
 import { toggleLeft } from "@utils/appLayout";
 import BottomSheet from "@components/mobile/bottomSheet";
-
-const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+import { isMobile } from "@utils/mobile";
 
 /**
  * Editor Header class

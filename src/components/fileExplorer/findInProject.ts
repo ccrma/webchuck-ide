@@ -1,3 +1,10 @@
+//--------------------------------------------------------------------
+// title: Find in Project
+// desc:  Search across all plaintext files in the project.
+//        Results are displayed in the file explorer panel and
+//        clicking a match navigates to the corresponding line.
+//--------------------------------------------------------------------
+
 import ProjectSystem from "./projectSystem";
 import Editor from "@/components/editor/monaco/editor";
 
@@ -14,8 +21,16 @@ const searchCloseBtn =
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+/**
+ * Find-in-project panel that replaces the file explorer with a
+ * search interface. Searches file contents with input
+ * and renders clickable results grouped by file.
+ */
 export default class FindInProject {
     constructor() {
+        const metaKey = navigator.userAgent.includes("Windows") ? "Ctrl" : "⌘";
+        searchToggleBtn.title = `Find in files (${metaKey}+Shift+F)`;
+
         searchToggleBtn.addEventListener("click", () => {
             FindInProject.show();
         });
@@ -38,6 +53,7 @@ export default class FindInProject {
         });
     }
 
+    /** Toggle the search panel open or closed */
     static toggle() {
         if (fileExplorerPanel.dataset.mode === "search") {
             FindInProject.hide();
@@ -46,19 +62,25 @@ export default class FindInProject {
         }
     }
 
+    /** Show the search panel and focus the input */
     static show() {
         fileExplorerPanel.dataset.mode = "search";
         searchInput.focus();
         searchInput.select();
     }
 
+    /** Hide the search panel and clear results */
     static hide() {
         fileExplorerPanel.dataset.mode = "";
         searchInput.value = "";
         searchResults.innerHTML = "";
     }
 
-    // TODO: nice to have: regex search
+    /**
+     * Search all plaintext project files for the given query
+     * @param query the search string
+     * TODO: nice to have: regex search
+     */
     static search(query: string) {
         searchResults.textContent = "";
 
@@ -114,6 +136,10 @@ export default class FindInProject {
     }
 }
 
+/**
+ * Create the file header element for search results
+ * @param text the header text
+ */
 function createFileHeader(text: string): HTMLDivElement {
     const el = document.createElement("div");
     el.className =
@@ -122,6 +148,11 @@ function createFileHeader(text: string): HTMLDivElement {
     return el;
 }
 
+/**
+ * Create the match entry
+ * @param match the line number and text of the match
+ * @param query the search query
+ */
 function createMatchEntry(
     match: { line: number; text: string },
     query: string
@@ -137,6 +168,11 @@ function createMatchEntry(
     return entry;
 }
 
+/**
+ * Highlight the match
+ * @param text the source text
+ * @param query the substring to highlight
+ */
 function highlightMatch(text: string, query: string): string {
     const idx = text.toLowerCase().indexOf(query.toLowerCase());
     if (idx === -1) return escapeHtml(text);
@@ -150,6 +186,7 @@ function highlightMatch(text: string, query: string): string {
     );
 }
 
+/** Escape HTML special characters */
 function escapeHtml(text: string): string {
     return text
         .replace(/&/g, "&amp;")

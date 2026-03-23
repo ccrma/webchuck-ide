@@ -54,10 +54,10 @@ export default class Editor {
                     : "miniAudicleLight",
             automaticLayout: false,
             scrollBeyondLastLine: false,
+            find: { addExtraSpaceOnTop: false },
             fontSize: parseInt(localStorage.getItem("editorFontSize") || "14"),
             cursorBlinking: "smooth",
             stickyScroll: { enabled: false },
-            fixedOverflowWidgets: true,
         });
 
         // Editor autosave config
@@ -84,6 +84,7 @@ export default class Editor {
         // Editor font size controls
         document.getElementById("editorFontDown")?.addEventListener("click", () => Editor.changeEditorFontSize(-1));
         document.getElementById("editorFontUp")?.addEventListener("click", () => Editor.changeEditorFontSize(1));
+
 
         // Resize editor on window resize
         window.addEventListener("resize", () => {
@@ -188,12 +189,44 @@ export default class Editor {
             }
         );
 
-        // Command palette actions
+        // Ctrl+F and Ctrl+H (find / find-and-replace) using WinCtrl
+        // so the physical Ctrl key works on all platforms (including Mac,
+        // where CtrlCmd maps to Cmd and Ctrl+H would otherwise delete a char).
+        Editor.editor.addCommand(
+            monaco.KeyMod.WinCtrl | monaco.KeyCode.KeyF,
+            () => {
+                Editor.editor.trigger("", "actions.find", null);
+            }
+        );
+        Editor.editor.addCommand(
+            monaco.KeyMod.WinCtrl | monaco.KeyCode.KeyH,
+            () => {
+                Editor.editor.trigger("", "editor.action.startFindReplaceAction", null);
+            }
+        );
+
+        // Command palette & Find in Files keybindings
+        // These must be Monaco keybindings (not just document listeners)
+        // so they work when the editor has focus on all platforms.
         Editor.editor.addAction({
             id: "webchuck.findInFiles",
             label: "Find in Files",
+            keybindings: [
+                monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyF,
+            ],
             run: () => {
                 FindInProject.toggle();
+            },
+        });
+
+        Editor.editor.addAction({
+            id: "webchuck.commandPalette",
+            label: "Command Palette",
+            keybindings: [
+                monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyP,
+            ],
+            run: () => {
+                Editor.openCommandPalette();
             },
         });
     }
@@ -252,13 +285,23 @@ export default class Editor {
     }
 
     /**
-     * Change the editor font size by delta
+     * Change the editor and console font size by delta
      */
     static changeEditorFontSize(delta: number) {
-        const current = Editor.editor.getOption(monaco.editor.EditorOption.fontSize);
+        // Reset Monaco zoom to avoid desync with command palette zoom
+        monaco.editor.EditorZoom.setZoomLevel(0);
+        const current = parseInt(localStorage.getItem("editorFontSize") || "14");
         const next = Math.max(10, Math.min(24, current + delta));
         Editor.editor.updateOptions({ fontSize: next });
-        localStorage.setItem("editorFontSize", String(next));
+        Editor.syncFontSize(next);
+    }
+
+    /**
+     * Sync font size to console and localStorage
+     */
+    private static syncFontSize(size: number) {
+        localStorage.setItem("editorFontSize", String(size));
+        Console.changeFontSize(size);
     }
 
     /**
