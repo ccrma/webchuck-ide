@@ -56,11 +56,6 @@ export default class OutputPanelHeader {
      * @param tabsActive number of tabs active
      */
     static updateOutputPanel(tabsActive: number) {
-        document.getElementById("app")?.classList.toggle(
-            "output-collapsed",
-            tabsActive === 0
-        );
-
         if (tabsActive === 0) {
             return;
         }

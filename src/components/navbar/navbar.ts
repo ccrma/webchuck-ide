@@ -128,6 +128,12 @@ export default class NavBar {
         const shortcutsModal = document.querySelector<HTMLDialogElement>("#shortcuts-modal")!;
         const shortcutsClose = document.querySelector<HTMLButtonElement>("#shortcuts-close")!;
 
+        // Set platform-dependent meta key labels
+        const metaKey = navigator.userAgent.includes("Windows") ? "Ctrl" : "⌘";
+        shortcutsModal.querySelectorAll<HTMLElement>(".meta-key").forEach((el) => {
+            el.textContent = metaKey;
+        });
+
         shortcutsButton.addEventListener("click", () => {
             shortcutsModal.showModal();
             NavBar.HelpDropdown.close();
