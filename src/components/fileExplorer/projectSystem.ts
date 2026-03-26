@@ -301,22 +301,37 @@ export default class ProjectSystem {
     static showContextMenu(x: number, y: number, filename: string) {
         ProjectSystem.hideContextMenu();
 
+        const menuItems: HTMLButtonElement[] = [];
+
         const menu = document.createElement("div");
         menu.className = "fileContextMenu";
         menu.setAttribute("role", "menu");
-        menu.innerHTML =
-            `<button class="fileContextMenuItem" role="menuitem">Rename</button>` +
-            `<button class="fileContextMenuItem fileContextMenuItem--delete" role="menuitem">Delete</button>`;
 
-        const [renameBtn, deleteBtn] = Array.from(menu.querySelectorAll("button"));
-        renameBtn.addEventListener("click", () => {
-            ProjectSystem.hideContextMenu();
-            ProjectSystem.startInlineRename(filename);
-        });
-        deleteBtn.addEventListener("click", () => {
-            ProjectSystem.hideContextMenu();
+        // Helper function to create menu items 
+        const createMenuItem = (label: string, className: string, onClick: () => void) => {
+            const btn = document.createElement("button");
+            btn.className = `fileContextMenuItem ${className}`;
+            btn.textContent = label;
+            btn.setAttribute("role", "menuitem");
+            btn.addEventListener("click", () => {
+                ProjectSystem.hideContextMenu();
+                onClick();
+            });
+            menuItems.push(btn);
+            return btn;
+        };
+
+        // Show rename item if file is plaintext
+        if (isPlaintextFile(filename)) {
+            menu.appendChild(createMenuItem("Rename", "", () => {
+                ProjectSystem.startInlineRename(filename);
+            }));
+        }
+
+        // Delete item
+        menu.appendChild(createMenuItem("Delete", "fileContextMenuItem--delete", () => {
             ProjectSystem.removeFileFromExplorer(filename);
-        });
+        }));
 
         // Position, clamped to viewport
         menu.style.left = `${x}px`;
@@ -346,7 +361,19 @@ export default class ProjectSystem {
             if (e.key === "Escape") close();
         }, { signal: ac.signal });
 
-        renameBtn.focus();
+        // Arrow key navigation
+        menu.addEventListener("keydown", (e) => {
+            const currentIndex = menuItems.indexOf(document.activeElement as HTMLButtonElement);
+            if (e.key === "ArrowDown") {
+                menuItems[(currentIndex + 1) % menuItems.length].focus();
+            } else if (e.key === "ArrowUp") {
+                menuItems[(currentIndex - 1 + menuItems.length) % menuItems.length].focus();
+            }
+        }, { signal: ac.signal });
+
+        if (menuItems.length > 0) {
+            menuItems[0].focus();
+        }
     }
 
     /**
