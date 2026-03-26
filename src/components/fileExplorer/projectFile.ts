@@ -58,4 +58,9 @@ export default class ProjectFile {
     isPlaintextFile(): boolean {
         return this.isPlaintext;
     }
+    rename(newName: string) {
+        this.filename = newName;
+        this.isCk = newName.endsWith(".ck");
+        this.isPlaintext = isPlaintextFile(newName);
+    }
 }

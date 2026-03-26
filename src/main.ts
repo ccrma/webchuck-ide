@@ -15,10 +15,12 @@ import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
 import Console from "@/components/outputPanel/console";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import FindInProject from "@/components/fileExplorer/findInProject";
 import Examples from "@/components/examples/examples";
 import MoreExamples from "@/components/examples/moreExamples";
 import Settings from "@/components/settings";
 import GUI from "@/components/inputPanel/gui/gui";
+import BottomSheet from "@/components/mobile/bottomSheet";
 
 import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
@@ -32,6 +34,7 @@ class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
     public static projectSystem: ProjectSystem;
+    public static findInProject: FindInProject;
     public static editor: Editor;
     public static editorPanelHeader: EditorPanelHeader;
     public static vmMonitor: VmMonitor;
@@ -42,6 +45,7 @@ class Main {
     public static moreExamples: MoreExamples;
     public static settings: Settings;
     public static GUI: GUI;
+    public static bottomSheet: BottomSheet;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -50,6 +54,7 @@ class Main {
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
         Main.projectSystem = new ProjectSystem();
+        Main.findInProject = new FindInProject();
 
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
@@ -64,6 +69,7 @@ class Main {
         Main.moreExamples = new MoreExamples();
         Main.settings = new Settings();
         Main.GUI = new GUI();
+        Main.bottomSheet = new BottomSheet();
     }
 
     init() {
@@ -94,6 +100,20 @@ class Main {
     static keyboardShortcuts() {
         // global keyboard shortcuts
         document.addEventListener("keydown", (e) => {
+            // cmd + shift + f or ctrl + shift + f — Find in Files
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "F") {
+                e.preventDefault();
+                FindInProject.toggle();
+                return;
+            }
+
+            // cmd + shift + p or ctrl + shift + p — Command Palette
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "P") {
+                e.preventDefault();
+                Editor.openCommandPalette();
+                return;
+            }
+
             // cmd + . or ctrl + .
             if ((e.metaKey || e.ctrlKey) && e.key === ".") {
                 e.preventDefault();
