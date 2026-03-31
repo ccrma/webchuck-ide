@@ -10,10 +10,8 @@ import Editor from "@/components/editor/monaco/editor";
 
 const fileExplorerPanel =
     document.querySelector<HTMLDivElement>("#fileExplorerPanel")!;
-const searchInput =
-    document.querySelector<HTMLInputElement>("#searchInput")!;
-const searchResults =
-    document.querySelector<HTMLDivElement>("#searchResults")!;
+const searchInput = document.querySelector<HTMLInputElement>("#searchInput")!;
+const searchResults = document.querySelector<HTMLDivElement>("#searchResults")!;
 const searchToggleBtn =
     document.querySelector<HTMLButtonElement>("#searchToggleBtn")!;
 const searchCloseBtn =

@@ -21,10 +21,12 @@ export default class BottomSheet {
     constructor() {
         BottomSheet.overlay =
             document.querySelector<HTMLDivElement>("#bottomSheet")!;
-        BottomSheet.content =
-            document.querySelector<HTMLDivElement>("#bottomSheetContent")!;
-        BottomSheet.backdrop =
-            document.querySelector<HTMLDivElement>("#bottomSheetBackdrop")!;
+        BottomSheet.content = document.querySelector<HTMLDivElement>(
+            "#bottomSheetContent"
+        )!;
+        BottomSheet.backdrop = document.querySelector<HTMLDivElement>(
+            "#bottomSheetBackdrop"
+        )!;
         BottomSheet.filesContainer =
             document.querySelector<HTMLDivElement>("#bottomSheetFiles")!;
         BottomSheet.fileExplorerPanel =
@@ -79,13 +81,17 @@ export default class BottomSheet {
         BottomSheet.content.classList.add("closing");
         BottomSheet.content.style.transform = "";
 
-        BottomSheet.content.addEventListener("animationend", () => {
-            BottomSheet.overlay.classList.add("hidden");
-            BottomSheet.content.classList.remove("closing");
-            BottomSheet.originalParent.appendChild(
-                BottomSheet.fileExplorerPanel
-            );
-        }, { once: true });
+        BottomSheet.content.addEventListener(
+            "animationend",
+            () => {
+                BottomSheet.overlay.classList.add("hidden");
+                BottomSheet.content.classList.remove("closing");
+                BottomSheet.originalParent.appendChild(
+                    BottomSheet.fileExplorerPanel
+                );
+            },
+            { once: true }
+        );
     }
 
     // ----- Touch handling for swipe-to-dismiss -----

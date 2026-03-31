@@ -43,9 +43,7 @@ export default class OutputPanelHeader {
 
         // Recalculate split heights on window resize
         window.addEventListener("resize", () => {
-            OutputPanelHeader.updateOutputPanel(
-                OutputHeaderToggle.numActive
-            );
+            OutputPanelHeader.updateOutputPanel(OutputHeaderToggle.numActive);
         });
     }
 

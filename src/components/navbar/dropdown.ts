@@ -62,7 +62,9 @@ export default class Dropdown {
             if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
                 const items = Array.from(
-                    this.dropdown.querySelectorAll<HTMLElement>("[role=\"menuitem\"]")
+                    this.dropdown.querySelectorAll<HTMLElement>(
+                        '[role="menuitem"]'
+                    )
                 );
                 if (items.length === 0) return;
                 const current = document.activeElement as HTMLElement;

@@ -34,7 +34,10 @@ export default class Console {
             cursorInactiveStyle: "none",
             fontFamily: "monaco, consolas, monospace",
             disableStdin: true,
-            fontSize: parseInt(localStorage.getItem("editorFontSize") || String(Console.DEFAULT_FONT_SIZE)),
+            fontSize: parseInt(
+                localStorage.getItem("editorFontSize") ||
+                    String(Console.DEFAULT_FONT_SIZE)
+            ),
             rows: 1, // start with 1 row, then grow
             theme: {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
@@ -66,7 +69,6 @@ export default class Console {
         window.addEventListener("resize", () => {
             Console.resizeConsole();
         });
-
 
         (window as any).Console = Console;
     }
@@ -147,7 +149,10 @@ export default class Console {
      * Set the console font size to an absolute value
      */
     static changeFontSize(size: number) {
-        const clamped = Math.max(Console.MIN_FONT_SIZE, Math.min(Console.MAX_FONT_SIZE, size));
+        const clamped = Math.max(
+            Console.MIN_FONT_SIZE,
+            Math.min(Console.MAX_FONT_SIZE, size)
+        );
         Console.terminal.options.fontSize = clamped;
         Console.fit();
     }
