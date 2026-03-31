@@ -307,8 +307,12 @@ export default class ProjectSystem {
         menu.className = "fileContextMenu";
         menu.setAttribute("role", "menu");
 
-        // Helper function to create menu items 
-        const createMenuItem = (label: string, className: string, onClick: () => void) => {
+        // Helper function to create menu items
+        const createMenuItem = (
+            label: string,
+            className: string,
+            onClick: () => void
+        ) => {
             const btn = document.createElement("button");
             btn.className = `fileContextMenuItem ${className}`;
             btn.textContent = label;
@@ -323,15 +327,19 @@ export default class ProjectSystem {
 
         // Rename item (only for plaintext files)
         if (isPlaintextFile(filename)) {
-            menu.appendChild(createMenuItem("Rename", "", () => {
-                ProjectSystem.startInlineRename(filename);
-            }));
+            menu.appendChild(
+                createMenuItem("Rename", "", () => {
+                    ProjectSystem.startInlineRename(filename);
+                })
+            );
         }
 
         // Delete item
-        menu.appendChild(createMenuItem("Delete", "fileContextMenuItem--delete", () => {
-            ProjectSystem.removeFileFromExplorer(filename);
-        }));
+        menu.appendChild(
+            createMenuItem("Delete", "fileContextMenuItem--delete", () => {
+                ProjectSystem.removeFileFromExplorer(filename);
+            })
+        );
 
         // Position, clamped to viewport
         menu.style.left = `${x}px`;
@@ -349,29 +357,49 @@ export default class ProjectSystem {
         const ac = new AbortController();
         ProjectSystem.contextMenuAbort = ac;
         const close = () => ProjectSystem.hideContextMenu();
-        document.addEventListener("mousedown", (e) => {
-            if (!menu.contains(e.target as Node)) close();
-        }, { signal: ac.signal });
-        document.addEventListener("touchend", (e) => {
-            const t = e.changedTouches[0];
-            const target = document.elementFromPoint(t.clientX, t.clientY);
-            if (!target || !menu.contains(target)) close();
-        }, { signal: ac.signal, passive: true } as AddEventListenerOptions);
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") close();
-        }, { signal: ac.signal });
+        document.addEventListener(
+            "mousedown",
+            (e) => {
+                if (!menu.contains(e.target as Node)) close();
+            },
+            { signal: ac.signal }
+        );
+        document.addEventListener(
+            "touchend",
+            (e) => {
+                const t = e.changedTouches[0];
+                const target = document.elementFromPoint(t.clientX, t.clientY);
+                if (!target || !menu.contains(target)) close();
+            },
+            { signal: ac.signal, passive: true } as AddEventListenerOptions
+        );
+        document.addEventListener(
+            "keydown",
+            (e) => {
+                if (e.key === "Escape") close();
+            },
+            { signal: ac.signal }
+        );
 
         // Arrow key navigation and tab navigation
-        menu.addEventListener("keydown", (e) => {
-            const currentIndex = menuItems.indexOf(document.activeElement as HTMLButtonElement);
-            if (e.key === "ArrowDown" || e.key === "Tab") {
-                e.preventDefault();
-                menuItems[(currentIndex + 1) % menuItems.length].focus();
-            } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                menuItems[(currentIndex - 1 + menuItems.length) % menuItems.length].focus();
-            }
-        }, { signal: ac.signal });
+        menu.addEventListener(
+            "keydown",
+            (e) => {
+                const currentIndex = menuItems.indexOf(
+                    document.activeElement as HTMLButtonElement
+                );
+                if (e.key === "ArrowDown" || e.key === "Tab") {
+                    e.preventDefault();
+                    menuItems[(currentIndex + 1) % menuItems.length].focus();
+                } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    menuItems[
+                        (currentIndex - 1 + menuItems.length) % menuItems.length
+                    ].focus();
+                }
+            },
+            { signal: ac.signal }
+        );
 
         if (menuItems.length > 0) {
             menuItems[0].focus();
@@ -431,10 +459,17 @@ export default class ProjectSystem {
             const newName = input.value.trim();
 
             if (isNewFile) {
-                if (!newName) { fileEntry.remove(); return; }
-                const finalName = newName.includes(".") ? newName : newName + ".ck";
+                if (!newName) {
+                    fileEntry.remove();
+                    return;
+                }
+                const finalName = newName.includes(".")
+                    ? newName
+                    : newName + ".ck";
                 if (!isPlaintextFile(finalName)) {
-                    Console.print(`cannot create data file types — use upload instead`);
+                    Console.print(
+                        `cannot create data file types — use upload instead`
+                    );
                     fileEntry.remove();
                     return;
                 }
@@ -447,7 +482,10 @@ export default class ProjectSystem {
                 if (newFile.isChuckFile()) ProjectSystem.setActiveFile(newFile);
                 ProjectSystem.addFileToExplorer(newFile);
             } else {
-                if (!newName || newName === filename) { revert(); return; }
+                if (!newName || newName === filename) {
+                    revert();
+                    return;
+                }
                 // Enforce that renamed file stays plaintext
                 if (!isPlaintextFile(newName)) {
                     Console.print(`cannot rename to a data file type`);
@@ -464,8 +502,16 @@ export default class ProjectSystem {
         };
 
         input.addEventListener("keydown", (e: KeyboardEvent) => {
-            if (e.key === "Enter") { e.preventDefault(); commit(); }
-            else if (e.key === "Escape") { e.preventDefault(); if (!done) { done = true; revert(); } }
+            if (e.key === "Enter") {
+                e.preventDefault();
+                commit();
+            } else if (e.key === "Escape") {
+                e.preventDefault();
+                if (!done) {
+                    done = true;
+                    revert();
+                }
+            }
             e.stopPropagation();
         });
         input.addEventListener("blur", () => commit());
@@ -498,10 +544,15 @@ export default class ProjectSystem {
      * @returns the .fileExplorerEntry and .fileExplorerItem elements associated with the given filename
      */
     private static findEntry(filename: string) {
-        for (const entry of Array.from(ProjectSystem.fileExplorer.querySelectorAll(".fileExplorerEntry"))) {
+        for (const entry of Array.from(
+            ProjectSystem.fileExplorer.querySelectorAll(".fileExplorerEntry")
+        )) {
             const item = entry.querySelector(".fileExplorerItem");
             if (item?.textContent?.trim() === filename) {
-                return { fileEntry: entry as HTMLDivElement, fileItem: item as HTMLDivElement };
+                return {
+                    fileEntry: entry as HTMLDivElement,
+                    fileItem: item as HTMLDivElement,
+                };
             }
         }
         return { fileEntry: null, fileItem: null };
@@ -699,32 +750,56 @@ function onLongPress(
     let fired = false;
     let moveAc: AbortController | null = null;
 
-    el.addEventListener("touchstart", (e: TouchEvent) => {
-        fired = false;
-        moveAc?.abort();
-        moveAc = new AbortController();
-        const { clientX, clientY } = e.touches[0];
-        timer = setTimeout(() => { fired = true; callback(clientX, clientY); }, 500);
+    el.addEventListener(
+        "touchstart",
+        (e: TouchEvent) => {
+            fired = false;
+            moveAc?.abort();
+            moveAc = new AbortController();
+            const { clientX, clientY } = e.touches[0];
+            timer = setTimeout(() => {
+                fired = true;
+                callback(clientX, clientY);
+            }, 500);
 
-        el.addEventListener("touchmove", (me: TouchEvent) => {
-            if (Math.abs(me.touches[0].clientX - clientX) > 10 ||
-                Math.abs(me.touches[0].clientY - clientY) > 10) {
-                clearTimeout(timer!);
-                timer = null;
-                moveAc!.abort();
-            }
-        }, { passive: true, signal: moveAc.signal });
-    }, { passive: true });
+            el.addEventListener(
+                "touchmove",
+                (me: TouchEvent) => {
+                    if (
+                        Math.abs(me.touches[0].clientX - clientX) > 10 ||
+                        Math.abs(me.touches[0].clientY - clientY) > 10
+                    ) {
+                        clearTimeout(timer!);
+                        timer = null;
+                        moveAc!.abort();
+                    }
+                },
+                { passive: true, signal: moveAc.signal }
+            );
+        },
+        { passive: true }
+    );
 
     el.addEventListener("touchend", () => {
-        if (timer) { clearTimeout(timer); timer = null; }
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
         moveAc?.abort();
     });
 
     // Suppress click after long-press
-    el.addEventListener("click", (e: MouseEvent) => {
-        if (fired) { e.preventDefault(); e.stopImmediatePropagation(); fired = false; }
-    }, true);
+    el.addEventListener(
+        "click",
+        (e: MouseEvent) => {
+            if (fired) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                fired = false;
+            }
+        },
+        true
+    );
 }
 
 /**

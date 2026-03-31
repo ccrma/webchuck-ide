@@ -10,9 +10,9 @@
 :root.dark {
     --ide-bg: #222222;
     --ide-bg-alt: #333333;
-    --ide-text: #EEEEEE;
-    --ide-text-muted: #AAAAAA;
-    --ide-accent: #FF8833;
+    --ide-text: #eeeeee;
+    --ide-text-muted: #aaaaaa;
+    --ide-accent: #ff8833;
     --ide-accent-hover: #ffa64d;
     --ide-border: #555555;
     --ide-editor-bg: #1e1e1e;
@@ -20,14 +20,14 @@
 }
 
 body {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #ddeeff);
     color: var(--ide-text, #555555);
 }
 
 /* Theme-aware scrollbars */
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--ide-border, #C9E0F7) var(--ide-bg, #DDEEFF);
+    scrollbar-color: var(--ide-border, #c9e0f7) var(--ide-bg, #ddeeff);
 }
 
 *::-webkit-scrollbar {
@@ -36,11 +36,11 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-    background: var(--ide-bg, #DDEEFF);
+    background: var(--ide-bg, #ddeeff);
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: var(--ide-border, #C9E0F7);
+    background-color: var(--ide-border, #c9e0f7);
     border-radius: 4px;
 }
 
@@ -49,26 +49,26 @@ body {
 }
 
 #app-left {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #ddeeff);
 }
 
 .header {
-    background-color: var(--ide-bg-alt, #DDEEFF);
-    border-color: var(--ide-border, #C9E0F7);
+    background-color: var(--ide-bg-alt, #ddeeff);
+    border-color: var(--ide-border, #c9e0f7);
 }
 
 #vmMonitorContainer {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #ddeeff);
 }
 
 #inputPanel {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #ddeeff);
 }
 
 #GUIContainer,
 #HIDContainer,
 #SensorContainer {
-    background-color: var(--ide-bg, #DDEEFF);
+    background-color: var(--ide-bg, #ddeeff);
 }
 
 #visualizerContainer {
@@ -81,19 +81,19 @@ body {
 
 /* Theme-aware accent color for toggles and selected items */
 .text-accent {
-    color: var(--ide-accent, #FF8833);
+    color: var(--ide-accent, #ff8833);
 }
 
 /* WEBCHUCK IDE LAYOUT */
 #navbarWrapper {
-    background-color: var(--ide-bg-alt, #DDEEFF);
+    background-color: var(--ide-bg-alt, #ddeeff);
     grid-area: nav;
     user-select: none;
     -webkit-touch-callout: none;
 }
 
 #chuckBar {
-    background-color: var(--ide-bg, #FFE5C4);
+    background-color: var(--ide-bg, #ffe5c4);
     grid-area: chuckBar;
 }
 
@@ -135,7 +135,9 @@ body {
         grid-template-columns: 100% !important;
     }
 
-    #app-left, #splitV1, #splitV2 {
+    #app-left,
+    #splitV1,
+    #splitV2 {
         display: none;
     }
 
@@ -156,7 +158,6 @@ body {
         padding-right: 0.5rem;
     }
 
-
     #app.output-collapsed {
         grid-template-rows: 1fr 2px auto;
     }
@@ -174,7 +175,6 @@ body {
 #splitH1 {
     grid-area: splitH1;
 }
-
 
 #app-left {
     grid-area: app-left;
@@ -265,12 +265,12 @@ body {
 
 .breadcrumb-item.hover:hover,
 .breadcrumb-item.hover:focus-visible {
-    color: var(--ide-accent, #FF8833);
+    color: var(--ide-accent, #ff8833);
 }
 
 .explorer-item {
     @apply px-3 py-2 cursor-pointer text-lg focus:outline-none;
-    color: var(--ide-accent, #FF8833);
+    color: var(--ide-accent, #ff8833);
 }
 .explorer-item:hover,
 .explorer-item:focus-visible {
@@ -310,11 +310,15 @@ body {
 
 .fileExplorerEntry:hover,
 .fileExplorerEntry:focus-visible {
-    background-color: color-mix(in srgb, var(--ide-bg-alt, #FEFEFF) 50%, var(--ide-bg, #DDEEFF));
+    background-color: color-mix(
+        in srgb,
+        var(--ide-bg-alt, #fefeff) 50%,
+        var(--ide-bg, #ddeeff)
+    );
 }
 
 .fileExplorerEntry.active {
-    background-color: var(--ide-bg-alt, #FCDEC0);
+    background-color: var(--ide-bg-alt, #fcdec0);
 }
 
 .fileExplorerItem {
@@ -349,7 +353,7 @@ body {
 .fileExplorerRenameInput {
     @apply flex-1 min-w-0 border rounded px-1 outline-none focus:ring-1;
     background-color: var(--ide-bg, #ffffff);
-    border-color: var(--ide-accent, #FF6F20);
+    border-color: var(--ide-accent, #ff6f20);
 }
 
 .fileContextMenu {
@@ -408,8 +412,11 @@ body {
 
 /* Borders between visible output panels */
 #outputPanel > [role="tabpanel"]:not(.hidden) + [role="tabpanel"]:not(.hidden),
-#outputPanel > [role="tabpanel"]:not(.hidden) + .hidden + [role="tabpanel"]:not(.hidden) {
-    border-top: 1px solid var(--ide-border, #C9E0F7);
+#outputPanel
+    > [role="tabpanel"]:not(.hidden)
+    + .hidden
+    + [role="tabpanel"]:not(.hidden) {
+    border-top: 1px solid var(--ide-border, #c9e0f7);
 }
 
 /* EDITOR */
@@ -427,7 +434,7 @@ body {
     right: unset !important;
 }
 
-.rendered-markdown>p>strong>span {
+.rendered-markdown > p > strong > span {
     margin-bottom: 0 !important;
 }
 
@@ -442,12 +449,12 @@ body {
 }
 
 .monaco-hover code,
-span>.monaco-tokenized-source {
+span > .monaco-tokenized-source {
     font-size: 0.95em !important;
     font-family: "Consolas", monospace;
 }
 
-.monaco-tokenized-source>span.mtk1 {
+.monaco-tokenized-source > span.mtk1 {
     @apply text-dark dark:text-light;
 }
 
@@ -460,7 +467,7 @@ span>.monaco-tokenized-source {
     overflow: hidden;
 }
 
-#vimStatus>span>span>input {
+#vimStatus > span > span > input {
     @apply outline-none bg-transparent border-none;
 }
 
@@ -476,12 +483,12 @@ span>.monaco-tokenized-source {
 }
 
 #shredTable thead {
-    border-color: var(--ide-border, #C9E0F7);
+    border-color: var(--ide-border, #c9e0f7);
 }
 
 #shredTable thead tr th {
-    background-color: var(--ide-bg-alt, #DDEEFF);
-    border-color: var(--ide-border, #C9E0F7);
+    background-color: var(--ide-bg-alt, #ddeeff);
+    border-color: var(--ide-border, #c9e0f7);
 }
 
 /* table header */
@@ -491,7 +498,7 @@ table thead tr th {
 
 table tbody tr td {
     @apply py-3 px-4 border-b;
-    border-color: var(--ide-border, #C9E0F7);
+    border-color: var(--ide-border, #c9e0f7);
 }
 
 td:nth-child(3) {
@@ -509,18 +516,18 @@ td:nth-child(4) {
 /* INPUT PANEL */
 .toggle-button {
     @apply mr-2 mb-2 p-1 bg-transparent rounded transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-    color: var(--ide-accent, #FF8833);
-    border: 1px solid var(--ide-accent, #FF8833);
-    --tw-ring-color: var(--ide-accent, #FF8833);
+    color: var(--ide-accent, #ff8833);
+    border: 1px solid var(--ide-accent, #ff8833);
+    --tw-ring-color: var(--ide-accent, #ff8833);
 }
 
 .toggle-button:enabled:hover {
-    background-color: var(--ide-accent, #FF8833);
+    background-color: var(--ide-accent, #ff8833);
     color: white;
 }
 
 .toggle-button.active {
-    background-color: var(--ide-accent, #FF8833);
+    background-color: var(--ide-accent, #ff8833);
     color: white;
 }
 
@@ -549,8 +556,8 @@ td:nth-child(4) {
 /* LOG CONSOLE */
 .log-container {
     @apply px-2 py-1 mb-1 overflow-hidden rounded-lg;
-    background-color: var(--ide-editor-bg, #FEFEFF);
-    border: 1px solid var(--ide-border, #CCCCCC);
+    background-color: var(--ide-editor-bg, #fefeff);
+    border: 1px solid var(--ide-border, #cccccc);
 }
 
 .logMsg {
@@ -607,7 +614,7 @@ dialog::backdrop {
     background-color: var(--ide-editor-bg, #fefeff);
     color: var(--ide-text, #555);
     border: 1px solid var(--ide-border, #ccc);
-    --tw-ring-color: var(--ide-accent, #FF8833);
+    --tw-ring-color: var(--ide-accent, #ff8833);
 }
 
 .form-select {
@@ -615,7 +622,7 @@ dialog::backdrop {
     background-color: var(--ide-editor-bg, #fefeff);
     color: var(--ide-text, #555);
     border: 1px solid var(--ide-border, #ccc);
-    --tw-ring-color: var(--ide-accent, #FF8833);
+    --tw-ring-color: var(--ide-accent, #ff8833);
 }
 
 .modal.modal-sm {
@@ -686,7 +693,7 @@ kbd {
 }
 .resizer.hSplit:hover,
 .resizer.hSplit:focus-visible {
-    background-color: var(--ide-accent, #FF8833);
+    background-color: var(--ide-accent, #ff8833);
 }
 
 .hSplit::after {
@@ -700,7 +707,7 @@ kbd {
 }
 .resizer.vSplit:hover,
 .resizer.vSplit:focus-visible {
-    background-color: var(--ide-accent, #FF8833);
+    background-color: var(--ide-accent, #ff8833);
 }
 
 .vSplit::after {
@@ -710,7 +717,7 @@ kbd {
 
 .vSplit.active,
 .hSplit.active {
-    background-color: var(--ide-accent, #FF8833);
+    background-color: var(--ide-accent, #ff8833);
 }
 
 .resizer {
@@ -746,10 +753,16 @@ kbd {
 }
 
 /* File Explorer: toggle between file list and search panel */
-#fileExplorerPanel #searchPanel { display: none; }
-#fileExplorerPanel[data-mode="search"] #searchPanel { display: flex; }
+#fileExplorerPanel #searchPanel {
+    display: none;
+}
+#fileExplorerPanel[data-mode="search"] #searchPanel {
+    display: flex;
+}
 #fileExplorerPanel[data-mode="search"] #fileExplorerHeader,
-#fileExplorerPanel[data-mode="search"] #fileExplorerContainer { display: none; }
+#fileExplorerPanel[data-mode="search"] #fileExplorerContainer {
+    display: none;
+}
 
 /* BOTTOM SHEET (Mobile file explorer) */
 .bottom-sheet-overlay {
@@ -789,13 +802,21 @@ kbd {
 }
 
 @keyframes slide-up {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
 
 @keyframes slide-down {
-    from { transform: translateY(0); }
-    to { transform: translateY(100%); }
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
 }
 
 .bottom-sheet-handle {

@@ -22,8 +22,9 @@ export default class VmMonitor {
     private static shredsToRows: { [key: number]: HTMLTableRowElement } = {};
 
     constructor() {
-        VmMonitor.vmContainer =
-            document.querySelector<HTMLDivElement>("#vmMonitorContainer")!;
+        VmMonitor.vmContainer = document.querySelector<HTMLDivElement>(
+            "#vmMonitorContainer"
+        )!;
         const shredTable =
             document.querySelector<HTMLDivElement>("#shredTable")!;
         VmMonitor.shredTableBody = shredTable.getElementsByTagName("tbody")[0]!;
@@ -104,7 +105,7 @@ export default class VmMonitor {
         removeButton.classList.add("removeButton");
         removeButton.setAttribute("aria-label", "Remove Shred");
         removeButton.innerHTML =
-            "<svg viewBox=\"5 18 40 14\" fill=\"none\" class=\"w-4 h-4\"><rect x=\"9.89\" y=\"22.67\" width=\"30.52\" height=\"5.23\" fill=\"white\"/></svg>";
+            '<svg viewBox="5 18 40 14" fill="none" class="w-4 h-4"><rect x="9.89" y="22.67" width="30.52" height="5.23" fill="white"/></svg>';
         remove.appendChild(removeButton);
 
         remove.addEventListener("click", () => {
