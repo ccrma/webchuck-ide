@@ -1,5 +1,8 @@
-import { getShareURL } from "@/services/shareCode";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import Editor from "../editor/monaco/editor";
+import ProjectFile from "../fileExplorer/projectFile";
+import { compressSharedFiles, SharedFile } from "@/services/sharedFile";
+import { generateURLFromParams, URLParams } from "@/services/urlParamParser";
 
 export default class ShareModal {
     public static shareCodeButton: HTMLButtonElement;
@@ -46,13 +49,13 @@ export default class ShareModal {
         ShareModal.closer =
             document.querySelector<HTMLButtonElement>("#share-code-done")!;
 
-        this.initEventListeners();
+        ShareModal.initEventListeners();
     }
 
     /**
      * Arm event listeners for the share modal
      */
-    initEventListeners() {
+    static initEventListeners() {
         // Advanced Options
         if (ShareModal.advancedBtn && ShareModal.advancedOptions) {
             ShareModal.advancedBtn.addEventListener("click", () => {
@@ -75,7 +78,7 @@ export default class ShareModal {
                     ShareModal.shareProjectFilesCheckbox.dispatchEvent(
                         new Event("change")
                     );
-                    this.updateScopeUI();
+                    ShareModal.updateScopeUI();
                 }
             });
         }
@@ -88,7 +91,7 @@ export default class ShareModal {
                     ShareModal.shareProjectFilesCheckbox.dispatchEvent(
                         new Event("change")
                     );
-                    this.updateScopeUI();
+                    ShareModal.updateScopeUI();
                 }
             });
         }
@@ -145,15 +148,15 @@ export default class ShareModal {
                     activeFile.getFilename();
             }
 
-            this.updateScopeUI();
+            ShareModal.updateScopeUI();
 
-            this.updateShareURL();
+            ShareModal.updateShareURL();
             ShareModal.shareCodeURLField.setSelectionRange(0, 0);
         });
 
         // Update URL on input
         ShareModal.shareFileUrlField.addEventListener("input", () => {
-            this.updateShareURL();
+            ShareModal.updateShareURL();
         });
 
         ShareModal.shareProjectFilesCheckbox.addEventListener("change", () => {
@@ -165,11 +168,12 @@ export default class ShareModal {
                     );
                 }
             }
-            this.updateShareURL();
+            ShareModal.updateShareURL();
         });
 
         // Copy URL
         ShareModal.shareCodeCopyButton.addEventListener("click", async () => {
+            ShareModal.shareCodeURLField.select();
             try {
                 await navigator.clipboard.writeText(
                     ShareModal.shareCodeURLField.value
@@ -205,38 +209,67 @@ export default class ShareModal {
     }
 
     /**
-     * Updates scope UI based on the current scope.
+     * Updates scope UI based on scope selection
      */
-    updateScopeUI() {
+    static updateScopeUI() {
         const multipleChuckFiles = ProjectSystem.numChuckFiles() > 1;
 
         if (multipleChuckFiles) {
             ShareModal.shareScopeAll.disabled = false;
             ShareModal.shareProjectFilesCheckbox.disabled = false;
         } else {
-            // Single file
+            // Only single file
             ShareModal.shareScopeAll.disabled = true;
             ShareModal.shareProjectFilesCheckbox.disabled = true;
         }
 
-        const allFilesActive = ShareModal.shareProjectFilesCheckbox.checked;
-        const newAllFilesActive = allFilesActive && multipleChuckFiles;
-        ShareModal.shareProjectFilesCheckbox.checked = newAllFilesActive;
-
-        ShareModal.shareScopeAll.classList.toggle("active", newAllFilesActive);
-        ShareModal.shareScopeCurrent.classList.toggle(
-            "active",
-            !newAllFilesActive
-        );
+        if (
+            multipleChuckFiles &&
+            ShareModal.shareProjectFilesCheckbox.checked
+        ) {
+            ShareModal.shareScopeAll.classList.add("active");
+            ShareModal.shareScopeCurrent.classList.remove("active");
+        } else {
+            ShareModal.shareScopeAll.classList.remove("active");
+            ShareModal.shareScopeCurrent.classList.add("active");
+        }
     }
 
     /**
-     * Updates the share URL based on the current scope and file URL.
+     * Updates the share URL based on the selected file scope and file URL
      */
-    updateShareURL() {
-        ShareModal.shareCodeURLField.value = getShareURL(
-            ShareModal.shareProjectFilesCheckbox.checked,
-            ShareModal.shareFileUrlField.value
-        );
+    static updateShareURL() {
+        const urlParams: URLParams = {
+            url: null,
+            project: null,
+            share: null,
+            code: null,
+        };
+        let shareFiles: SharedFile[] = [];
+
+        if (ShareModal.shareProjectFilesCheckbox.checked) {
+            ProjectSystem.updateActiveFile(Editor.getEditorCode());
+            const projectFiles: ProjectFile[] =
+                ProjectSystem.getProjectFiles().filter((f) => f.isChuckFile());
+            shareFiles = projectFiles.map((f) => ({
+                name: f.getFilename(),
+                data: f.getData() as string,
+            }));
+            urlParams.project = compressSharedFiles(shareFiles);
+        } else {
+            shareFiles = [
+                {
+                    name: Editor.getFileName(),
+                    data: Editor.getEditorCode(),
+                },
+            ];
+            urlParams.share = compressSharedFiles(shareFiles);
+        }
+
+        if (ShareModal.shareFileUrlField.value !== "") {
+            urlParams.url = ShareModal.shareFileUrlField.value;
+        }
+
+        ShareModal.shareCodeURLField.value = generateURLFromParams(urlParams);
     }
 }

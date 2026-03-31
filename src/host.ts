@@ -133,6 +133,7 @@ export async function onChuckReady() {
     ProjectSystem.uploadFilesButton.disabled = false;
     ProjectSystem.uploadFilesIcon.disabled = false;
     ProjectSystem.initDragUpload();
+    ProjectSystem.syncFilesToChuck();
     theChuck.getParamString("VERSION").then((value: string) => {
         chuckVersion = value;
     });

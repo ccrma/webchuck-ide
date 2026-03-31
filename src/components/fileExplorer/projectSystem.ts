@@ -547,6 +547,25 @@ export default class ProjectSystem {
     }
 
     /**
+     * Load the autosave from local storage or default if no autosave exists
+     */
+    static loadAutoSaveOrDefault() {
+        const filename =
+            localStorage.getItem("editorFilename") || "untitled.ck";
+        const code = localStorage.getItem("editorCode") || "";
+        if (code === "") {
+            ProjectSystem.loadDefaultProject();
+            return;
+        }
+        ProjectSystem.addNewFile(filename, code);
+        Console.print(
+            `loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
+            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+        );
+    }
+
+    /**
      * Create a new project and clear the file system
      * Warn that current project will be lost
      */
@@ -560,6 +579,14 @@ export default class ProjectSystem {
             ProjectSystem.setActiveFile(newFile);
             ProjectSystem.addFileToExplorer(newFile);
         }
+    }
+
+    /**
+     * Load default code into the editor
+     */
+    private static async loadDefaultProject() {
+        const code: FileData = await fetchTextFile("./examples/helloSine.ck");
+        ProjectSystem.addNewFile("untitled.ck", code.data as string);
     }
 
     /**
@@ -719,6 +746,17 @@ export default class ProjectSystem {
                 reader.readAsArrayBuffer(file);
             }
         }
+    }
+
+    /**
+     * Sync all project files to the WebChucK Virtual File System
+     * Used after WebChucK initializes to ensure pre-loaded files are available
+     */
+    static syncFilesToChuck() {
+        if (!theChuck) return;
+        ProjectSystem.projectFiles.forEach((file: ProjectFile) => {
+            theChuck.createFile("", file.getFilename(), file.getData());
+        });
     }
 }
 

@@ -13,7 +13,7 @@ export interface SharedFile {
  * @param fileData Array of SharedFile objects
  * @returns Base64 string
  */
-export function compressSharedFile(fileData: SharedFile[]): string {
+export function compressSharedFiles(fileData: SharedFile[]): string {
     const projectJSON = JSON.stringify(fileData);
     const input = new Uint8Array([...projectJSON].map((c) => c.charCodeAt(0)));
     let compressedPayload = "";
@@ -32,7 +32,7 @@ export function compressSharedFile(fileData: SharedFile[]): string {
  * @param compressedPayload Base64 string
  * @returns Array of SharedFile objects
  */
-export function decompressSharedFile(compressedPayload: string): SharedFile[] {
+export function decompressSharedFiles(compressedPayload: string): SharedFile[] {
     try {
         const decoded = atob(compressedPayload.replace(/ /g, "+"));
         const uncompressed = pako.inflate(

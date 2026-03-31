@@ -1,27 +1,32 @@
-import Editor from "@/components/editor/monaco/editor";
-import { parseURLParams } from "./urlParamParser";
-import ProjectSystem, { loadChuckFileFromURL, loadDataFileFromURL } from "@/components/fileExplorer/projectSystem";
 import Console from "@/components/outputPanel/console";
+import ProjectSystem, {
+    loadChuckFileFromURL,
+    loadDataFileFromURL,
+} from "@/components/fileExplorer/projectSystem";
+import { parseURLParams, URLParams } from "./urlParamParser";
 import { isPlaintextFile } from "webchuck/dist/utils";
-import { SharedFile, decompressSharedFile } from "./sharedFile";
+import { SharedFile, decompressSharedFiles } from "./sharedFile";
 
 /**
- * Handle IDE startup sequence, namely project loading and URL parsing
+ * Handle IDE project startup sequence, loading files into the project system.
+ * This will load files from URL params, local storage autosave, or fallback to
+ * the default project.
+ *
  * Flow:
- * 1. URL parameters (share, project, code)
- * 2. URL parameter (url)
- * 3. Local Storage (Last auto-save)
- * 4. Default Fallback
+ * 1. Chuck files via URL param (share, project, code)
+ * 2. External chuck or data file via (url) param
+ * 3. ChucK auto-save via Local Storage
+ * 4. Default new project
  */
-export function initStartup() {
-    const params = parseURLParams();
+export function initProjectStartup() {
+    const params: URLParams = parseURLParams();
     const files: SharedFile[] = [];
 
     if (params.share) {
-        files.push(...decompressSharedFile(params.share));
+        files.push(...decompressSharedFiles(params.share));
     }
     if (params.project) {
-        files.push(...decompressSharedFile(params.project));
+        files.push(...decompressSharedFiles(params.project));
     }
     if (params.code) {
         files.push({ name: "code.ck", data: params.code });
@@ -39,11 +44,13 @@ export function initStartup() {
         // 1. & 2. Load project from URL parameters
         ProjectSystem.clearFileSystem();
         files.forEach((f: SharedFile) => {
-            Console.print(`loaded project file: \x1b[38;2;34;178;254m${f.name}\x1b[0m`);
-            ProjectSystem.addNewFile(f.name, f.data)
+            Console.print(
+                `loaded project file: \x1b[38;2;34;178;254m${f.name}\x1b[0m`
+            );
+            ProjectSystem.addNewFile(f.name, f.data);
         });
     } else {
         // 3. & 4. Load Autosave or Default
-        Editor.loadAutoSaveOrDefault();
+        ProjectSystem.loadAutoSaveOrDefault();
     }
 }

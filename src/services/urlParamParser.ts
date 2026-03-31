@@ -19,8 +19,8 @@ export function parseURLParams(): URLParams {
         project: urlParams.get("project"),
         share: urlParams.get("share"),
         code: urlParams.get("code"),
-    }
-}    
+    };
+}
 
 /**
  * Generate a URL from URLParams

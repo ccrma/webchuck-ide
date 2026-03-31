@@ -602,25 +602,25 @@
 
       <!-- Share Code Modal -->
       <dialog class="modal" id="share-code-modal" aria-labelledby="share-code-heading">
-        <form class="flex flex-col gap-6 py-2" method="dialog">
-          <div class="flex flex-col gap-1">
-            <h2 id="share-code-title" class="text-xl font-semibold pb-1">Share Code</h2>
-            <p>
-              Share your code via the link below. Your project is encoded directly in the
-              URL. <em>If you make any new changes, hit "Share" to generate a new link.</em>
+        <form class="flex flex-col gap-4 py-2" method="dialog">
+          <div class="flex flex-col">
+            <h2 id="share-code-heading" class="text-xl font-semibold pb-2">Share Code</h2>
+            <p class="text-dark-6 dark:text-dark-c">
+              Share your ChucK code via the link below. Your project is encoded
+              directly in the URL. <em>If you make any code changes, hit "Share"
+              again to generate a new link.</em>
             </p>
           </div>
       
           <!-- Shareable Link -->
           <div>
-            <label class="form-label font-semibold" for="share-code-url">Your Shareable Link</label>
-            <div
-              class="flex border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden focus-within:border-orange focus-within:ring-1 focus-within:ring-orange">
+            <label class="form-label" for="share-code-url">Shareable Link</label>
+            <div class="flex gap-2">
               <input type="text" id="share-code-url"
-                class="w-full bg-gray-50 dark:bg-[#1a1c1e] text-dark-5 dark:text-gray-300 px-3 py-[0.6rem] text-sm text-ellipsis overflow-hidden focus:outline-none select-all whitespace-nowrap"
+                class="h-10 form-input text-sm text-ellipsis select-all whitespace-nowrap"
                 readonly aria-label="Share Link">
               <button id="share-code-copy" type="button"
-                class="bg-orange hover:bg-orange-light text-dark font-[500] px-3 flex items-center justify-center gap-[0.35rem] min-w-[6.5rem] transition-colors">
+                class="button primary flex items-center justify-center gap-[0.35rem] min-w-[6.5rem]">
                 <img src="./img/copy.svg" class="w-[1.125rem] h-[1.125rem] -ml-1" alt="" aria-hidden="true">
                 Copy
               </button>
@@ -629,7 +629,7 @@
       
           <div>
             <!-- Scope Selection -->
-            <label class="form-label sr-only" for="scope-title">Select Scope</label>
+            <label class="form-label sr-only" for="share-project-files">Select Scope</label>
             <div class="grid grid-cols-2 gap-3">
               <button type="button" id="share-scope-current" class="shareScopeBtn active">
                 <div class="flex flex-row items-center gap-2">
@@ -653,13 +653,11 @@
             <!-- Add External Link -->
             <details id="share-advanced-options" class="group">
               <summary class="hidden"></summary>
-              <div class="flex flex-col gap-2 py-2 mb-2 mt-2">
-                <div class="flex flex-col pb-1">
-                  <label class="form-label !py-0" for="share-file-url">Include External Link</label>
-                </div>
+              <div class="flex flex-col py-2 mt-2">
+                <label class="form-label" for="share-file-url">Include External Link</label>
                 <div class="relative flex items-center">
                   <input type="url" id="share-file-url"
-                    class="form-input w-full px-3 py-[0.5rem] dark:bg-[#1a1c1e] text-sm border-gray-300 dark:border-gray-600 rounded-md focus-visible:ring-1"
+                    class="form-input"
                     placeholder="https://example.com/sound.wav">
                 </div>
                 <p class="text-sm text-dark-8 dark:text-gray-400 mt-1">
@@ -670,10 +668,10 @@
           </div>
       
           <!-- Footer -->
-          <div class="flex justify-between pt-6">
+          <div class="flex justify-between pt-4">
             <button id="share-advanced-btn" type="button"
-              class="flex items-center gap-2 button text-gray-600 dark:text-gray-200 px-0 py-1 focus-visible:ring-2 focus-visible:ring-gray-600 dark:focus-visible:ring-gray-200">
-              <svg class="w-2.5 h-2.5 ml-1.5 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              class="flex items-center gap-2 text-sm text-dark-5 dark:text-gray-400 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-600 dark:focus-visible:ring-gray-200 rounded px-1 transition">
+              <svg class="w-2.5 h-2.5 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="m1 1 4 4 4-4" />

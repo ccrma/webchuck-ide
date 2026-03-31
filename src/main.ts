@@ -19,7 +19,7 @@ import FindInProject from "@/components/fileExplorer/findInProject";
 import Examples from "@/components/examples/examples";
 import MoreExamples from "@/components/examples/moreExamples";
 import Settings from "@/components/settings";
-import ShareModal from "@/components/shareModal";
+import ShareModal from "@/components/navbar/shareModal";
 import GUI from "@/components/inputPanel/gui/gui";
 import BottomSheet from "@/components/mobile/bottomSheet";
 
@@ -28,7 +28,7 @@ import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
-import { initStartup } from "./services/startup";
+import { initProjectStartup } from "@/services/startup";
 
 class Main {
     public static navBar: NavBar;
@@ -80,20 +80,17 @@ class Main {
         Main.keyboardShortcuts();
 
         // Prevent accidental page refresh/close
-        // window.addEventListener("beforeunload", (e) => {
-        //     if (ProjectSystem.size() > 1) {
-        //         e.preventDefault();
-        //         e.returnValue = "";
-        //     }
-        // });
+        window.addEventListener("beforeunload", (e) => {
+            if (ProjectSystem.size() > 1) {
+                e.preventDefault();
+                e.returnValue = "";
+            }
+        });
 
         // SERVICES
         initExportChuck();
         initExportWebChuck();
-        initStartup();
-
-        // Click on shareCode button
-        document.querySelector<HTMLButtonElement>("#shareCode")!.click();
+        initProjectStartup();
 
         // Init WebChucK
         window.addEventListener("load", async () => {
