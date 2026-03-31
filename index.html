@@ -446,7 +446,7 @@
       <!-- MODALS -->
       <!-- More Examples Modal -->
       <dialog class="modal modal-lg" id="more-examples-modal" aria-labelledby="more-examples-heading">
-        <h2 id="more-examples-heading" class="text-xl font-medium pb-2">ChucK Example Library</h2>
+        <h2 id="more-examples-heading" class="text-xl font-semibold pb-2">ChucK Example Library</h2>
         <div class="w-full p-2 border border-gray-200 bg-gray-50 rounded-t-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col-reverse md:flex-row">
           <!-- Breadcrumbs -->
           <nav class="flex justify-left w-1/2 pl-2 pt-2 md:pt-0">
@@ -495,9 +495,9 @@
 
       <!-- Settings Modal -->
       <dialog class="modal" id="settings-modal" aria-labelledby="settings-heading">
-        <h2 id="settings-heading" class="text-xl font-medium pb-2">Settings</h2>
+        <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
-        <form class="flex flex-col gap-2 py-2 pr-7" method="dialog">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
           <label class="form-label" for="chuck-version-select">ChucK version</label>
           <select id="chuck-version-select" class="form-select">
             <option value="stable">Stable</option>
@@ -514,7 +514,7 @@
 
       <!-- Keyboard Shortcuts Modal -->
       <dialog class="modal" id="shortcuts-modal" aria-labelledby="shortcuts-heading">
-        <h2 id="shortcuts-heading" class="text-xl font-medium pb-2">Keyboard Shortcuts</h2>
+        <h2 id="shortcuts-heading" class="text-xl font-semibold pb-2">Keyboard Shortcuts</h2>
 
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">ChucK Controls</h3>
@@ -570,7 +570,7 @@
       <!-- Export to WebChucK Modal -->
       <dialog class="modal" id="export-webchuck-modal" aria-labelledby="export-wc-heading">
         <form class="flex flex-col gap-2 py-2" method="dialog">
-          <h2 id="export-wc-heading" class="text-xl font-medium pb-2">Export to WebChucK</h2>
+          <h2 id="export-wc-heading" class="text-xl font-semibold pb-2">Export to WebChucK</h2>
 
           <div>
             <label class="form-label" for="export-title">Title</label>
@@ -602,64 +602,88 @@
 
       <!-- Share Code Modal -->
       <dialog class="modal" id="share-code-modal" aria-labelledby="share-code-heading">
-        <form class="flex flex-col gap-2 py-2" method="dialog">
-          <h2 id="share-code-title" class="text-xl font-medium pb-2">Share Code</h2>
-          
-          <div>
-            <label class="form-label" for="scope-title">Select Scope</label>
-            <div class="grid grid-cols-2 gap-3">
-              <button type="button" id="share-scope-current" class="shareScopeBtn active">
-                <img src="./img/ck-color.svg" class="h-7">
-                <span class="text-sm font-bold text-dark dark:text-light">Current File</span>
-                <span id="share-current-filename" class="text-xs text-dark-8 dark:text-gray-500">active.ck</span>
-              </button>
-              <button type="button" id="share-scope-all" class="shareScopeBtn">
-                  <img src="./img/folder-color.svg" class="h-6">
-                <span class="text-sm font-bold text-dark dark:text-light">All Files</span>
-                <span id="share-project-name" class="text-xs text-dark-8 dark:text-gray-500">Entire Project (all .ck files)</span>
-              </button>
-              <input type="checkbox" id="share-project-files" class="hidden">
-            </div>
+        <form class="flex flex-col gap-6 py-2" method="dialog">
+          <div class="flex flex-col gap-1">
+            <h2 id="share-code-title" class="text-xl font-semibold pb-1">Share Code</h2>
+            <p>
+              Share your code via the link below. Your project is encoded directly in the
+              URL. <em>If you make any new changes, hit "Share" to generate a new link.</em>
+            </p>
           </div>
-
-          <!-- Add External Link -->
-          <details id="share-advanced-options" class="group">
-            <summary class="hidden"></summary>
-            <div class="mb-2 mt-2">
-              <div class="flex justify-between items-end mb-2">
-                <label class="text-[0.65rem] font-bold tracking-widest text-dark-8 dark:text-gray-400 uppercase" for="share-file-url">Include External Link</label>
-                <span class="text-xs italic text-dark-8 dark:text-gray-500">Load external file alongside your code</span>
-              </div>
-              <div class="relative flex items-center">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-dark-5 dark:text-gray-400">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                </div>
-                <input type="url" id="share-file-url" class="form-input w-full pl-9 py-[0.55rem] dark:bg-[#1a1c1e] text-sm border-gray-300 dark:border-gray-600 rounded-md focus-visible:ring-1" placeholder="https://example.com/sound.wav">
-              </div>
-            </div>
-          </details>
-
+      
           <!-- Shareable Link -->
-          <div class="pt-1 pb-1">
-            <label class="form-label" for="share-code-url">Shareable Link</label>
-            <div class="flex border border-gray-300 dark:border-gray-600 rounded-md focus-within:ring-1 focus-within:ring-orange focus-within:border-orange overflow-hidden">
-              <input type="text" id="share-code-url" class="w-full bg-gray-50 dark:bg-[#1a1c1e] text-dark-5 dark:text-gray-300 px-3 py-[0.6rem] font-mono text-[0.8rem] text-ellipsis overflow-hidden focus:outline-none select-all whitespace-nowrap" readonly aria-label="Share Link">
-              <button id="share-code-copy" type="button" class="bg-orange hover:bg-orange-light text-white font-bold px-4 flex items-center justify-center gap-[0.35rem] min-w-[6.5rem] transition-colors">
-                <svg class="w-[0.95rem] h-[0.95rem]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          <div>
+            <label class="form-label font-semibold" for="share-code-url">Your Shareable Link</label>
+            <div
+              class="flex border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden focus-within:border-orange focus-within:ring-1 focus-within:ring-orange">
+              <input type="text" id="share-code-url"
+                class="w-full bg-gray-50 dark:bg-[#1a1c1e] text-dark-5 dark:text-gray-300 px-3 py-[0.6rem] text-sm text-ellipsis overflow-hidden focus:outline-none select-all whitespace-nowrap"
+                readonly aria-label="Share Link">
+              <button id="share-code-copy" type="button"
+                class="bg-orange hover:bg-orange-light text-dark font-[500] px-3 flex items-center justify-center gap-[0.35rem] min-w-[6.5rem] transition-colors">
+                <img src="./img/copy.svg" class="w-[1.125rem] h-[1.125rem] -ml-1" alt="" aria-hidden="true">
                 Copy
               </button>
             </div>
           </div>
-
-        </form>
-
-        <!-- Footer -->
-        <div class="flex gap-4 justify-between pt-4">
-          <button id="share-advanced-btn" class="button text-blue-600 dark:text-blue-200 px-0 py-1 font-medium focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200">+ Advanced Settings</button>
-            <!-- <button id="share-code-cancel" type="button" class="button secondary">Cancel</button> -->
-            <button id="share-code-done" type="submit" class="button primary">Done</button>
+      
+          <div>
+            <!-- Scope Selection -->
+            <label class="form-label sr-only" for="scope-title">Select Scope</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" id="share-scope-current" class="shareScopeBtn active">
+                <div class="flex flex-row items-center gap-2">
+                  <img src="./img/ck-color.svg" class="h-6" alt="" aria-hidden="true">
+                  <span class="font-medium text-[0.95rem] text-dark dark:text-light">Current File</span>
+                </div>
+                <span class="text-xs text-dark-5 dark:text-gray-400"><span id="share-current-filename">active.ck</span>
+                  only</span>
+              </button>
+              <button type="button" id="share-scope-all" class="shareScopeBtn">
+                <div class="flex flex-row items-center gap-2">
+                  <img src="./img/folder-color.svg" class="h-6" alt="" aria-hidden="true">
+                  <span class="font-medium text-[0.95rem] text-dark dark:text-light">Full Project</span>
+                </div>
+                <span id="share-project-name" class="text-xs text-dark-5 dark:text-gray-400">All .ck files will be
+                  included</span>
+              </button>
+              <input type="checkbox" id="share-project-files" class="hidden">
+            </div>
+      
+            <!-- Add External Link -->
+            <details id="share-advanced-options" class="group">
+              <summary class="hidden"></summary>
+              <div class="flex flex-col gap-2 py-2 mb-2 mt-2">
+                <div class="flex flex-col pb-1">
+                  <label class="form-label !py-0" for="share-file-url">Include External Link</label>
+                </div>
+                <div class="relative flex items-center">
+                  <input type="url" id="share-file-url"
+                    class="form-input w-full px-3 py-[0.5rem] dark:bg-[#1a1c1e] text-sm border-gray-300 dark:border-gray-600 rounded-md focus-visible:ring-1"
+                    placeholder="https://example.com/sound.wav">
+                </div>
+                <p class="text-sm text-dark-8 dark:text-gray-400 mt-1">
+                  Load an external file alongside your project
+                </p>
+              </div>
+            </details>
           </div>
-        </div>
+      
+          <!-- Footer -->
+          <div class="flex justify-between pt-6">
+            <button id="share-advanced-btn" type="button"
+              class="flex items-center gap-2 button text-gray-600 dark:text-gray-200 px-0 py-1 focus-visible:ring-2 focus-visible:ring-gray-600 dark:focus-visible:ring-gray-200">
+              <svg class="w-2.5 h-2.5 ml-1.5 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="m1 1 4 4 4-4" />
+              </svg>
+              Advanced Settings</button>
+            <div class="flex gap-4">
+              <button id="share-code-done" type="button" class="button secondary">Done</button>
+            </div>
+          </div>
+        </form>
       </dialog>
 
       <!-- Mobile Bottom Sheet: File Explorer -->

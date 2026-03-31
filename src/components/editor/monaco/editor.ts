@@ -60,8 +60,7 @@ export default class Editor {
             stickyScroll: { enabled: false },
         });
 
-        // Editor autosave config
-        Editor.loadAutoSave();
+        // Editor autosave will be loaded by startup service
         // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
             ProjectSystem.updateActiveFile(Editor.getEditorCode());
@@ -82,9 +81,12 @@ export default class Editor {
         Editor.vimMode ? this.vimModeOn() : this.vimModeOff();
 
         // Editor font size controls
-        document.getElementById("editorFontDown")?.addEventListener("click", () => Editor.changeEditorFontSize(-1));
-        document.getElementById("editorFontUp")?.addEventListener("click", () => Editor.changeEditorFontSize(1));
-
+        document
+            .getElementById("editorFontDown")
+            ?.addEventListener("click", () => Editor.changeEditorFontSize(-1));
+        document
+            .getElementById("editorFontUp")
+            ?.addEventListener("click", () => Editor.changeEditorFontSize(1));
 
         // Resize editor on window resize
         window.addEventListener("resize", () => {
@@ -102,9 +104,9 @@ export default class Editor {
     }
 
     /**
-     * Load the autosave from local storage
+     * Load the autosave from local storage or default if no autosave exists
      */
-    static loadAutoSave() {
+    static loadAutoSaveOrDefault() {
         const filename =
             localStorage.getItem("editorFilename") || "untitled.ck";
         const code = localStorage.getItem("editorCode") || "";
@@ -114,7 +116,8 @@ export default class Editor {
         }
         ProjectSystem.addNewFile(filename, code);
         Console.print(
-            `loaded autosave: \x1b[38;2;34;178;254m${Editor.filename
+            `loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
             }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
         );
     }
@@ -201,7 +204,11 @@ export default class Editor {
         Editor.editor.addCommand(
             monaco.KeyMod.WinCtrl | monaco.KeyCode.KeyH,
             () => {
-                Editor.editor.trigger("", "editor.action.startFindReplaceAction", null);
+                Editor.editor.trigger(
+                    "",
+                    "editor.action.startFindReplaceAction",
+                    null
+                );
             }
         );
 
@@ -212,7 +219,9 @@ export default class Editor {
             id: "webchuck.findInFiles",
             label: "Find in Files",
             keybindings: [
-                monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyF,
+                monaco.KeyMod.CtrlCmd |
+                    monaco.KeyMod.Shift |
+                    monaco.KeyCode.KeyF,
             ],
             run: () => {
                 FindInProject.toggle();
@@ -223,7 +232,9 @@ export default class Editor {
             id: "webchuck.commandPalette",
             label: "Command Palette",
             keybindings: [
-                monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyP,
+                monaco.KeyMod.CtrlCmd |
+                    monaco.KeyMod.Shift |
+                    monaco.KeyCode.KeyP,
             ],
             run: () => {
                 Editor.openCommandPalette();
@@ -290,7 +301,9 @@ export default class Editor {
     static changeEditorFontSize(delta: number) {
         // Reset Monaco zoom to avoid desync with command palette zoom
         monaco.editor.EditorZoom.setZoomLevel(0);
-        const current = parseInt(localStorage.getItem("editorFontSize") || "14");
+        const current = parseInt(
+            localStorage.getItem("editorFontSize") || "14"
+        );
         const next = Math.max(10, Math.min(24, current + delta));
         Editor.editor.updateOptions({ fontSize: next });
         Editor.syncFontSize(next);
@@ -333,10 +346,7 @@ export default class Editor {
      */
     vimModeOff() {
         // Reset editor to stretch to bottom
-        Editor.editorContainer.setAttribute(
-            "style",
-            "bottom: 0"
-        );
+        Editor.editorContainer.setAttribute("style", "bottom: 0");
         Editor.resizeEditor();
         Editor.vimModule?.dispose();
         Editor.editor.updateOptions({
