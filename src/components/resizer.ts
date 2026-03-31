@@ -33,8 +33,14 @@ export default class Resizer {
         this.onPointerDragHandler = (e: PointerEvent) => this.onDrag(e);
         this.onPointerEndHandler = (e: PointerEvent) => {
             this.split.releasePointerCapture(e.pointerId);
-            this.split.removeEventListener("pointermove", this.onPointerDragHandler);
-            this.split.removeEventListener("pointerup", this.onPointerEndHandler);
+            this.split.removeEventListener(
+                "pointermove",
+                this.onPointerDragHandler
+            );
+            this.split.removeEventListener(
+                "pointerup",
+                this.onPointerEndHandler
+            );
             this.deactivate();
         };
 
@@ -42,7 +48,10 @@ export default class Resizer {
         this.split.addEventListener("pointerdown", (e: PointerEvent) => {
             e.preventDefault();
             this.split.setPointerCapture(e.pointerId);
-            this.split.addEventListener("pointermove", this.onPointerDragHandler);
+            this.split.addEventListener(
+                "pointermove",
+                this.onPointerDragHandler
+            );
             this.split.addEventListener("pointerup", this.onPointerEndHandler);
             this.activate();
         });
@@ -55,11 +64,23 @@ export default class Resizer {
         this.split.addEventListener("keydown", (e: KeyboardEvent) => {
             const step = 20; // px per keypress
             if (this.isHorizDrag) {
-                if (e.key === "ArrowLeft") { e.preventDefault(); this.nudge(-step); }
-                if (e.key === "ArrowRight") { e.preventDefault(); this.nudge(step); }
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    this.nudge(-step);
+                }
+                if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    this.nudge(step);
+                }
             } else {
-                if (e.key === "ArrowUp") { e.preventDefault(); this.nudge(-step); }
-                if (e.key === "ArrowDown") { e.preventDefault(); this.nudge(step); }
+                if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    this.nudge(-step);
+                }
+                if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    this.nudge(step);
+                }
             }
         });
     }
@@ -70,8 +91,10 @@ export default class Resizer {
     nudge(delta: number) {
         const rect = this.split.getBoundingClientRect();
         const mockPointerEvent = {
-            clientX: rect.left + rect.width / 2 + (this.isHorizDrag ? delta : 0),
-            clientY: rect.top + rect.height / 2 + (!this.isHorizDrag ? delta : 0),
+            clientX:
+                rect.left + rect.width / 2 + (this.isHorizDrag ? delta : 0),
+            clientY:
+                rect.top + rect.height / 2 + (!this.isHorizDrag ? delta : 0),
         } as PointerEvent;
         this.onDrag(mockPointerEvent);
     }

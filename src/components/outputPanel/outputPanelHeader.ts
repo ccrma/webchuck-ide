@@ -43,9 +43,7 @@ export default class OutputPanelHeader {
 
         // Recalculate split heights on window resize
         window.addEventListener("resize", () => {
-            OutputPanelHeader.updateOutputPanel(
-                OutputHeaderToggle.numActive
-            );
+            OutputPanelHeader.updateOutputPanel(OutputHeaderToggle.numActive);
         });
     }
 
@@ -56,11 +54,6 @@ export default class OutputPanelHeader {
      * @param tabsActive number of tabs active
      */
     static updateOutputPanel(tabsActive: number) {
-        document.getElementById("app")?.classList.toggle(
-            "output-collapsed",
-            tabsActive === 0
-        );
-
         if (tabsActive === 0) {
             return;
         }

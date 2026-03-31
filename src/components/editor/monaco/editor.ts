@@ -17,6 +17,7 @@ import { File, fetchTextFile } from "@/utils/fileLoader";
 import EditorPanelHeader from "@/components/editor/editorPanelHeader";
 import Console from "@/components/outputPanel/console";
 import ProjectSystem from "../../fileExplorer/projectSystem";
+import FindInProject from "../../fileExplorer/findInProject";
 import GUI from "@/components/inputPanel/gui/gui";
 
 // Constants
@@ -36,6 +37,7 @@ export default class Editor {
     public static vimToggle: HTMLButtonElement;
     public static vimMode: boolean = localStorage.getItem("vimMode") === "true";
     private static vimModule: any; // for the vim object from monaco-vim
+    private static saveTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(editorContainer: HTMLDivElement) {
         Editor.editorContainer = editorContainer;
@@ -50,15 +52,12 @@ export default class Editor {
                 localStorage.theme === "dark"
                     ? "miniAudicleDark"
                     : "miniAudicleLight",
-            // TODO: change automaticLayout to false
-            // For some reason, monaco height can't be resized to smaller, doesn't respond
-            // This trick temp fixes it but is really slow
-            automaticLayout: true,
+            automaticLayout: false,
             scrollBeyondLastLine: false,
-            fontSize: 14,
+            find: { addExtraSpaceOnTop: false },
+            fontSize: parseInt(localStorage.getItem("editorFontSize") || "14"),
             cursorBlinking: "smooth",
             stickyScroll: { enabled: false },
-            fixedOverflowWidgets: true,
         });
 
         // Editor autosave config
@@ -66,7 +65,8 @@ export default class Editor {
         // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
             ProjectSystem.updateActiveFile(Editor.getEditorCode());
-            Editor.saveCode();
+            if (Editor.saveTimer) clearTimeout(Editor.saveTimer);
+            Editor.saveTimer = setTimeout(() => Editor.saveCode(), 300);
         });
 
         // Vim Toggle
@@ -80,6 +80,14 @@ export default class Editor {
         Editor.vimStatus =
             document.querySelector<HTMLDivElement>("#vimStatus")!;
         Editor.vimMode ? this.vimModeOn() : this.vimModeOff();
+
+        // Editor font size controls
+        document
+            .getElementById("editorFontDown")
+            ?.addEventListener("click", () => Editor.changeEditorFontSize(-1));
+        document
+            .getElementById("editorFontUp")
+            ?.addEventListener("click", () => Editor.changeEditorFontSize(1));
 
         // Resize editor on window resize
         window.addEventListener("resize", () => {
@@ -109,7 +117,8 @@ export default class Editor {
         }
         ProjectSystem.addNewFile(filename, code);
         Console.print(
-            `loaded autosave: \x1b[38;2;34;178;254m${Editor.filename
+            `loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
             }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
         );
     }
@@ -183,6 +192,55 @@ export default class Editor {
                 GUI.generateGUI();
             }
         );
+
+        // Ctrl+F and Ctrl+H (find / find-and-replace) using WinCtrl
+        // so the physical Ctrl key works on all platforms (including Mac,
+        // where CtrlCmd maps to Cmd and Ctrl+H would otherwise delete a char).
+        Editor.editor.addCommand(
+            monaco.KeyMod.WinCtrl | monaco.KeyCode.KeyF,
+            () => {
+                Editor.editor.trigger("", "actions.find", null);
+            }
+        );
+        Editor.editor.addCommand(
+            monaco.KeyMod.WinCtrl | monaco.KeyCode.KeyH,
+            () => {
+                Editor.editor.trigger(
+                    "",
+                    "editor.action.startFindReplaceAction",
+                    null
+                );
+            }
+        );
+
+        // Command palette & Find in Files keybindings
+        // These must be Monaco keybindings (not just document listeners)
+        // so they work when the editor has focus on all platforms.
+        Editor.editor.addAction({
+            id: "webchuck.findInFiles",
+            label: "Find in Files",
+            keybindings: [
+                monaco.KeyMod.CtrlCmd |
+                    monaco.KeyMod.Shift |
+                    monaco.KeyCode.KeyF,
+            ],
+            run: () => {
+                FindInProject.toggle();
+            },
+        });
+
+        Editor.editor.addAction({
+            id: "webchuck.commandPalette",
+            label: "Command Palette",
+            keybindings: [
+                monaco.KeyMod.CtrlCmd |
+                    monaco.KeyMod.Shift |
+                    monaco.KeyCode.KeyP,
+            ],
+            run: () => {
+                Editor.openCommandPalette();
+            },
+        });
     }
 
     /**
@@ -204,6 +262,23 @@ export default class Editor {
     }
 
     /**
+     * Open Monaco's command palette programmatically
+     */
+    static openCommandPalette() {
+        Editor.editor.focus();
+        Editor.editor.trigger("", "editor.action.quickCommand", null);
+    }
+
+    /**
+     * Reveal and highlight a specific line in the editor
+     */
+    static revealLine(lineNumber: number) {
+        Editor.editor?.revealLineInCenter(lineNumber);
+        Editor.editor?.setPosition({ lineNumber, column: 1 });
+        Editor.editor?.focus();
+    }
+
+    /**
      * Set the file name
      * @param name The file name
      */
@@ -219,6 +294,28 @@ export default class Editor {
      */
     static getFileName(): string {
         return Editor.filename;
+    }
+
+    /**
+     * Change the editor and console font size by delta
+     */
+    static changeEditorFontSize(delta: number) {
+        // Reset Monaco zoom to avoid desync with command palette zoom
+        monaco.editor.EditorZoom.setZoomLevel(0);
+        const current = parseInt(
+            localStorage.getItem("editorFontSize") || "14"
+        );
+        const next = Math.max(10, Math.min(24, current + delta));
+        Editor.editor.updateOptions({ fontSize: next });
+        Editor.syncFontSize(next);
+    }
+
+    /**
+     * Sync font size to console and localStorage
+     */
+    private static syncFontSize(size: number) {
+        localStorage.setItem("editorFontSize", String(size));
+        Console.changeFontSize(size);
     }
 
     /**
@@ -250,10 +347,7 @@ export default class Editor {
      */
     vimModeOff() {
         // Reset editor to stretch to bottom
-        Editor.editorContainer.setAttribute(
-            "style",
-            "bottom: 0"
-        );
+        Editor.editorContainer.setAttribute("style", "bottom: 0");
         Editor.resizeEditor();
         Editor.vimModule?.dispose();
         Editor.editor.updateOptions({
