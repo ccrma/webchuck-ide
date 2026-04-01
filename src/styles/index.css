@@ -99,9 +99,10 @@ body {
 
 #webchuck-ide {
     display: grid;
-    grid-template-rows: 3rem auto 1fr;
+    grid-template-rows: auto 3rem auto 1fr;
     grid-template-columns: 100%;
     grid-template-areas:
+        "betaBanner"
         "nav"
         "chuckBar"
         "app";

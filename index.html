@@ -57,6 +57,12 @@
       <!-- Skip to main content (accessibility) -->
       <a href="#monacoEditor" class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md">Skip to editor</a>
 
+      <!-- Beta Banner -->
+      <div id="betaBanner" class="h-8 bg-orange text-white flex items-center justify-center relative font-semibold text-sm w-full">
+        <div> Try WebChucK IDE with ChuGL beta! </div>
+        <button id="closeBetaBanner" class="absolute right-4 hover:text-gray-200">X</button>
+      </div>
+
       <!-- NAVBAR -->
       <header id="navbarWrapper" class="w-full relative">
         <h1 class="sr-only">WebChucK IDE</h1>
@@ -235,8 +241,8 @@
             <!-- TODO: Just for v2.1.6 release -->
             <!-- ChuGL Banner -->
             <a href="https://chuck.stanford.edu/webchugl/" target="_blank" rel="noopener noreferrer"
-              class="hidden lg:flex items-center text-blue-600 dark:text-blue-200 bg-blue-600/10 dark:bg-blue-200/10 hover:bg-blue-600/20 dark:hover:bg-blue-200/20 px-3 py-1 rounded-full text-xs font-bold mr-4 transition-colors whitespace-nowrap">
-              <span class="mr-1">✨</span> Try the WebChucK IDE beta for graphics programming!
+              class="hidden lg:flex items-center text-orange bg-orange/20 dark:bg-orange/10 hover:bg-orange/30 dark:hover:bg-orange/20 px-3 py-1 rounded-full text-sm font-semibold mr-4 transition-all whitespace-nowrap">
+              Try WebChucK IDE with ChuGL beta!
             </a>
 
             <b class="w-[122px] text-md">WebChucK IDE </b><b><em class="text-3xl">2</em></b>
