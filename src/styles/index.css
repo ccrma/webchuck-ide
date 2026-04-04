@@ -102,7 +102,7 @@ body {
     grid-template-rows: auto 3rem auto 1fr;
     grid-template-columns: 100%;
     grid-template-areas:
-        "betaBanner"
+        "notificationBanner"
         "nav"
         "chuckBar"
         "app";
@@ -796,6 +796,15 @@ kbd {
     transition: transform 0.3s ease-out;
     z-index: 101;
     animation: slide-up 0.3s ease-out forwards;
+}
+
+/* NOTIFICATION BANNER & CHIP */
+html.hide-notification-banner #notificationBanner {
+    display: none !important;
+}
+
+html:not(.hide-notification-banner) #notificationChip {
+    display: none !important;
 }
 
 .bottom-sheet-content.closing {

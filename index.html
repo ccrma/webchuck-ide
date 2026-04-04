@@ -5,7 +5,7 @@
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-banner-version="1">
 
   <head>
     <!-- Google tag (gtag.js) -->
@@ -44,6 +44,10 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
+      // Set notification banner
+      if (localStorage.getItem("hideNotificationBanner") === document.documentElement.getAttribute("data-banner-version")) {
+        document.documentElement.classList.add("hide-notification-banner");
+      }
     </script>
   </head>
 
@@ -57,11 +61,13 @@
       <!-- Skip to main content (accessibility) -->
       <a href="#monacoEditor" class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md">Skip to editor</a>
 
-      <!-- Beta Banner -->
-      <div id="betaBanner" class="h-8 bg-orange text-white flex items-center justify-center relative font-semibold text-sm w-full">
-        <div> Try WebChucK IDE with ChuGL beta! </div>
-        <button id="closeBetaBanner" class="absolute right-4 hover:text-gray-200">X</button>
-      </div>
+      <!-- Notification Banner -->
+      <section id="notificationBanner" aria-label="Notification Banner" class="h-8 flex bg-blue-600 text-white items-center justify-center relative font-semibold text-sm w-full">
+        <a href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" class="hover:underline">
+          <div>(Beta) Try out WebChucK IDE with ChuGL and audiovisual programming!</div>
+        </a>
+        <button id="closeNotificationBanner" class="absolute right-4 hover:opacity-80" aria-label="Close notification banner">X</button>
+      </section>
 
       <!-- NAVBAR -->
       <header id="navbarWrapper" class="w-full relative">
@@ -238,10 +244,9 @@
 
           <!-- Right -->
           <div class="flex justify-right items-center text-blue-600 dark:text-blue-200 overflow-none">
-            <!-- TODO: Just for v2.1.6 release -->
-            <!-- ChuGL Banner -->
-            <a href="https://chuck.stanford.edu/webchugl/" target="_blank" rel="noopener noreferrer"
-              class="hidden lg:flex items-center text-orange bg-orange/20 dark:bg-orange/10 hover:bg-orange/30 dark:hover:bg-orange/20 px-3 py-1 rounded-full text-sm font-semibold mr-4 transition-all whitespace-nowrap">
+            <!-- Notification Chip -->
+            <a id="notificationChip" href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" rel="noopener noreferrer"
+              class="hidden lg:flex items-center bg-blue-400/20 dark:bg-blue-400/10 hover:bg-blue-400/30 dark:hover:bg-blue-400/20 px-3 py-1 rounded-full text-sm font-semibold mr-4 transition-all whitespace-nowrap">
               Try WebChucK IDE with ChuGL beta!
             </a>
 
