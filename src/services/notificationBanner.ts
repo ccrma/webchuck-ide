@@ -17,11 +17,8 @@ export function initNotificationBanner() {
     const closeBtn = document.getElementById(
         "closeNotificationBanner"
     ) as HTMLButtonElement | null;
-    const chip = document.getElementById(
-        "notificationChip"
-    ) as HTMLAnchorElement | null;
 
-    if (!banner || !closeBtn || !chip) return;
+    if (!banner || !closeBtn) return;
 
     closeBtn.addEventListener("click", () => {
         const version =
@@ -29,6 +26,6 @@ export function initNotificationBanner() {
                 "data-banner-version"
             ) || "1";
         document.documentElement.classList.add("hide-notification-banner");
-        localStorage.setItem("hideBanner", version);
+        localStorage.setItem("hideNotificationBanner", version);
     });
 }
