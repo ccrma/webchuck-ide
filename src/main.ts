@@ -29,6 +29,7 @@ import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { parseURLParams as initParseURLParams } from "./services/urlParamParser";
 import { initShareCode } from "./services/shareCode";
+import { initNotificationBanner } from "@/services/notificationBanner";
 
 class Main {
     public static navBar: NavBar;
@@ -90,6 +91,7 @@ class Main {
         initExportWebChuck();
         initShareCode();
         initParseURLParams();
+        initNotificationBanner();
 
         // Init WebChucK
         window.addEventListener("load", async () => {
