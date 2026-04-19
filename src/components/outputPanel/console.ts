@@ -45,6 +45,12 @@ export default class Console {
                 selectionBackground:
                     Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
             },
+            linkHandler: {
+                activate: (_, uri) => {
+                    // This bypasses the default warning and opens the link directly
+                    window.open(uri, "_blank", "noopener,noreferrer");
+                },
+            },
         });
 
         Console.terminalElement =

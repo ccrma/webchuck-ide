@@ -6,6 +6,7 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
+import AnnouncementBanner from "@/components/navbar/announcementBanner";
 import NavBar from "@/components/navbar/navbar";
 import ChuckBar from "@/components/chuckBar/chuckBar";
 import Editor from "@/components/editor/monaco/editor";
@@ -29,7 +30,6 @@ import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { initProjectStartup } from "@/services/startup";
-import { initNotificationBanner } from "@/services/notificationBanner";
 
 class Main {
     public static navBar: NavBar;
@@ -48,6 +48,7 @@ class Main {
     public static GUI: GUI;
     public static bottomSheet: BottomSheet;
     public static shareModal: ShareModal;
+    public static announcementBanner: AnnouncementBanner;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -73,6 +74,7 @@ class Main {
         Main.GUI = new GUI();
         Main.bottomSheet = new BottomSheet();
         Main.shareModal = new ShareModal();
+        Main.announcementBanner = new AnnouncementBanner();
     }
 
     init() {
@@ -92,7 +94,6 @@ class Main {
         initExportChuck();
         initExportWebChuck();
         initProjectStartup();
-        initNotificationBanner();
 
         // Init WebChucK
         window.addEventListener("load", async () => {
