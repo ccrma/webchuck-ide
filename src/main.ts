@@ -29,6 +29,7 @@ import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { initProjectStartup } from "@/services/startup";
+import { initNotificationBanner } from "@/services/notificationBanner";
 
 class Main {
     public static navBar: NavBar;
@@ -91,6 +92,7 @@ class Main {
         initExportChuck();
         initExportWebChuck();
         initProjectStartup();
+        initNotificationBanner();
 
         // Init WebChucK
         window.addEventListener("load", async () => {

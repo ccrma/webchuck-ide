@@ -5,7 +5,7 @@
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-banner-version="1">
 
   <head>
     <!-- Google tag (gtag.js) -->
@@ -44,6 +44,10 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
+      // Set notification banner
+      if (localStorage.getItem("hideNotificationBanner") === document.documentElement.getAttribute("data-banner-version")) {
+        document.documentElement.classList.add("hide-notification-banner");
+      }
     </script>
   </head>
 
@@ -56,6 +60,14 @@
 
       <!-- Skip to main content (accessibility) -->
       <a href="#monacoEditor" class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md">Skip to editor</a>
+
+      <!-- Notification Banner -->
+      <section id="notificationBanner" aria-label="Notification Banner" class="hidden sm:flex h-8 bg-blue-600 text-white items-center justify-center relative font-semibold text-sm w-full">
+        <a href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" class="hover:underline">
+          <div>(Beta) Try out WebChucK IDE with ChuGL for audiovisual programming!</div>
+        </a>
+        <button id="closeNotificationBanner" class="absolute right-4 hover:opacity-80" aria-label="Close notification banner">X</button>
+      </section>
 
       <!-- NAVBAR -->
       <header id="navbarWrapper" class="w-full relative">
@@ -222,6 +234,9 @@
                     <li class="divider dark:border-t-gray-400" data-content="ABOUT" role="separator"></li>
                     <li role="separator">
                       <button id="about-ide" type="button" class="dropdownItem" role="menuitem">About IDE...</button>
+                    </li>
+                    <li role="separator">
+                      <a href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Try IDE + ChuGL (Beta)</a>
                     </li>
 
                   </ul>
@@ -409,7 +424,7 @@
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
               </div>
             </div>
-            <div id="vmMonitorContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
+            <div id="vmMonitorContainer" class="flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
               <div class="flex-1 min-h-0 overflow-auto" tabindex="0">
                 <table id="shredTable" class="w-full table-auto text-left">
                   <thead class="h-12 align-middle font-medium sticky top-0 z-10">

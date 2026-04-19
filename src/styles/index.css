@@ -99,9 +99,10 @@ body {
 
 #webchuck-ide {
     display: grid;
-    grid-template-rows: 3rem auto 1fr;
+    grid-template-rows: auto 3rem auto 1fr;
     grid-template-columns: 100%;
     grid-template-areas:
+        "notificationBanner"
         "nav"
         "chuckBar"
         "app";
@@ -220,7 +221,7 @@ body {
 }
 
 .dropdown {
-    @apply absolute z-40 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply fixed z-40 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
     background-color: var(--ide-bg-alt, #ffffff);
     border: 1px solid var(--ide-border, #f3f4f6);
     animation: enter-transition 0.1s ease-in-out forwards;
@@ -813,6 +814,11 @@ kbd {
     transition: transform 0.3s ease-out;
     z-index: 101;
     animation: slide-up 0.3s ease-out forwards;
+}
+
+/* NOTIFICATION BANNER */
+html.hide-notification-banner #notificationBanner {
+    display: none !important;
 }
 
 .bottom-sheet-content.closing {
