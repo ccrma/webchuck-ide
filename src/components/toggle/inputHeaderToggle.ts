@@ -11,7 +11,7 @@ import {
     DARK_HOVER_COLOR_CLASS,
     DARK_TEXT_HOVER_CLASS,
     HOVER_COLOR_CLASS,
-    TEXT_COLOR_CLASS,
+    TEXT_COLOR_CLASS
 } from "@/utils/theme";
 import HeaderToggle from "./headerToggle";
 import InputPanelHeader from "../inputPanel/inputPanelHeader";

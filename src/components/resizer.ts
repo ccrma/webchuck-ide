@@ -1,7 +1,7 @@
 import {
     AppLayoutConstants,
     setAppColumnWidths,
-    setContainerRowHeights,
+    setContainerRowHeights
 } from "@utils/appLayout";
 import Editor from "@/components/editor/monaco/editor";
 import Console from "@/components/outputPanel/console";
@@ -94,7 +94,7 @@ export default class Resizer {
             clientX:
                 rect.left + rect.width / 2 + (this.isHorizDrag ? delta : 0),
             clientY:
-                rect.top + rect.height / 2 + (!this.isHorizDrag ? delta : 0),
+                rect.top + rect.height / 2 + (!this.isHorizDrag ? delta : 0)
         } as PointerEvent;
         this.onDrag(mockPointerEvent);
     }
@@ -260,13 +260,13 @@ function sortColWidths(
         return [
             newLeftTopSize,
             newRightBotSize,
-            document.getElementById("app-right")!.clientWidth,
+            document.getElementById("app-right")!.clientWidth
         ];
     } else if (leftID === "app-middle" && rightID === "app-right") {
         return [
             document.getElementById("app-left")!.clientWidth,
             newLeftTopSize,
-            newRightBotSize,
+            newRightBotSize
         ];
     } else if (leftID === "app-left" && rightID === "app-right") {
         return [newLeftTopSize, 0, newRightBotSize];

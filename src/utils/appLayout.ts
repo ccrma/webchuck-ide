@@ -67,7 +67,7 @@ export const AppLayoutConstants = {
     MIDDLE_WIDTH,
     RIGHT_WIDTH,
     EDITOR_PANEL_HEIGHT,
-    INPUT_PANEL_HEIGHT,
+    INPUT_PANEL_HEIGHT
 };
 
 // Initialize the app splitters
@@ -98,7 +98,7 @@ export function setAppColumnWidths(colPercents: number[]) {
         `${SPLITTER_THICKNESS}px`,
         `calc(${100 - (left_width + middle_width)}% - ${
             2 * SPLITTER_THICKNESS
-        }px)`, // actual percent in CSS
+        }px)` // actual percent in CSS
     ];
     appContainer.style.gridTemplateColumns = cols.join(" ");
 }
@@ -151,7 +151,7 @@ export function toggleLeft() {
         setAppColumnWidths([
             LEFT_WIDTH,
             widths[1] - LEFT_WIDTH / 2.0,
-            100 - LEFT_WIDTH - (widths[1] - LEFT_WIDTH / 2.0),
+            100 - LEFT_WIDTH - (widths[1] - LEFT_WIDTH / 2.0)
         ]);
         left_panel.classList.remove("hidden");
         splitters[0].activate();

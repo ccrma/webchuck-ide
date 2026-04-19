@@ -6,40 +6,40 @@ const miniAudicleLight: monaco.editor.IStandaloneThemeData = {
     rules: [
         {
             token: "",
-            foreground: "000000",
+            foreground: "000000"
         },
         {
             token: "keyword",
-            foreground: "0000FF",
+            foreground: "0000FF"
         },
         {
             token: "type",
-            foreground: "A200EC",
+            foreground: "A200EC"
         },
         {
             token: "event",
-            foreground: "800023",
+            foreground: "800023"
         },
         {
             token: "library",
-            foreground: "800023",
+            foreground: "800023"
         },
         {
             token: "comment",
-            foreground: "4B7A00",
+            foreground: "4B7A00"
         },
         {
             token: "string",
-            foreground: "404040",
+            foreground: "404040"
         },
         {
             token: "number",
-            foreground: "A06000",
-        },
+            foreground: "A06000"
+        }
     ],
     colors: {
-        "editor.background": "#FEFEFF",
-    },
+        "editor.background": "#FEFEFF"
+    }
 };
 
 const miniAudicleDark: monaco.editor.IStandaloneThemeData = {
@@ -52,19 +52,19 @@ const miniAudicleDark: monaco.editor.IStandaloneThemeData = {
         // },
         {
             token: "type",
-            foreground: "d07ff5",
+            foreground: "d07ff5"
         },
         {
             token: "event",
-            foreground: "800023",
+            foreground: "800023"
         },
         {
             token: "library",
-            foreground: "a64c65",
+            foreground: "a64c65"
         },
         {
             token: "comment",
-            foreground: "6A9956",
+            foreground: "6A9956"
         },
         // {
         //     token: "string",
@@ -72,10 +72,10 @@ const miniAudicleDark: monaco.editor.IStandaloneThemeData = {
         // },
         {
             token: "number",
-            foreground: "E49020",
-        },
+            foreground: "E49020"
+        }
     ],
-    colors: {},
+    colors: {}
 };
 
 export { miniAudicleLight, miniAudicleDark };

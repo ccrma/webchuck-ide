@@ -183,7 +183,7 @@ export default class ShareModal {
             url: null,
             project: null,
             share: null,
-            code: null,
+            code: null
         };
         let shareFiles: SharedFile[] = [];
 
@@ -193,15 +193,15 @@ export default class ShareModal {
                 ProjectSystem.getProjectFiles().filter((f) => f.isChuckFile());
             shareFiles = projectFiles.map((f) => ({
                 name: f.getFilename(),
-                data: f.getData() as string,
+                data: f.getData() as string
             }));
             urlParams.project = compressSharedFiles(shareFiles);
         } else {
             shareFiles = [
                 {
                     name: Editor.getFileName(),
-                    data: Editor.getEditorCode(),
-                },
+                    data: Editor.getEditorCode()
+                }
             ];
             urlParams.share = compressSharedFiles(shareFiles);
         }

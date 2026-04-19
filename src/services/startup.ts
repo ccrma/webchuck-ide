@@ -1,7 +1,7 @@
 import Console from "@/components/outputPanel/console";
 import ProjectSystem, {
     loadChuckFileFromURL,
-    loadDataFileFromURL,
+    loadDataFileFromURL
 } from "@/components/fileExplorer/projectSystem";
 import { parseURLParams, URLParams } from "./urlParamParser";
 import { isPlaintextFile } from "webchuck/dist/utils";
