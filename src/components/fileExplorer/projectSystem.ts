@@ -100,18 +100,6 @@ export default class ProjectSystem {
     }
 
     /**
-     * Remove the blank "untitled.ck" created at startup, if it exists and is empty.
-     * Called when an example is loaded from the welcome screen.
-     */
-    static removeBlankDefaultFile() {
-        const untitled = ProjectSystem.projectFiles.get("untitled.ck");
-        if (untitled && untitled.getData() === "") {
-            ProjectSystem.projectFiles.delete("untitled.ck");
-            ProjectSystem.updateFileExplorerUI();
-        }
-    }
-
-    /**
      * Add new file to the file system
      * @param filename name of the file
      * @param data data of the file
@@ -559,6 +547,25 @@ export default class ProjectSystem {
     }
 
     /**
+     * Load the autosave from local storage or default if no autosave exists
+     */
+    static loadAutoSaveOrDefault() {
+        const filename =
+            localStorage.getItem("editorFilename") || "untitled.ck";
+        const code = localStorage.getItem("editorCode") || "";
+        if (code === "") {
+            ProjectSystem.loadDefaultProject();
+            return;
+        }
+        ProjectSystem.addNewFile(filename, code);
+        Console.print(
+            `loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
+            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+        );
+    }
+
+    /**
      * Create a new project and clear the file system
      * Warn that current project will be lost
      */
@@ -568,7 +575,18 @@ export default class ProjectSystem {
             confirm("Create a new project? You will lose your current files.")
         ) {
             ProjectSystem.clearFileSystem();
+            const newFile = new ProjectFile("untitled.ck", "");
+            ProjectSystem.setActiveFile(newFile);
+            ProjectSystem.addFileToExplorer(newFile);
         }
+    }
+
+    /**
+     * Load default code into the editor
+     */
+    private static async loadDefaultProject() {
+        const code: FileData = await fetchTextFile("./examples/helloSine.ck");
+        ProjectSystem.addNewFile("untitled.ck", code.data as string);
     }
 
     /**
@@ -578,9 +596,6 @@ export default class ProjectSystem {
         // delete all files
         ProjectSystem.projectFiles.clear();
         ProjectSystem.fileUploader.value = "";
-        const newFile = new ProjectFile("untitled.ck", "");
-        ProjectSystem.setActiveFile(newFile);
-        ProjectSystem.addFileToExplorer(newFile);
     }
 
     /**
@@ -732,6 +747,17 @@ export default class ProjectSystem {
             }
         }
     }
+
+    /**
+     * Sync all project files to the WebChucK Virtual File System
+     * Used after WebChucK initializes to ensure pre-loaded files are available
+     */
+    static syncFilesToChuck() {
+        if (!theChuck) return;
+        ProjectSystem.projectFiles.forEach((file: ProjectFile) => {
+            theChuck.createFile("", file.getFilename(), file.getData());
+        });
+    }
 }
 
 //----------------------------------------
@@ -808,7 +834,6 @@ function onLongPress(
  */
 export async function loadChuckFileFromURL(url: string) {
     const chuckFile: FileData = await fetchTextFile(url);
-    ProjectSystem.removeBlankDefaultFile();
     ProjectSystem.addNewFile(chuckFile.name, chuckFile.data as string);
     Console.print(`loaded ChucK file: ${chuckFile.name}`);
 }

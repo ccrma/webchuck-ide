@@ -13,7 +13,6 @@ import { monaco } from "./monacoLite";
 import { editorConfig } from "./chuck-lang";
 import { initVimMode, VimMode } from "monaco-vim";
 import { miniAudicleLight, miniAudicleDark } from "./miniAudicleTheme";
-import { File, fetchTextFile } from "@/utils/fileLoader";
 import EditorPanelHeader from "@/components/editor/editorPanelHeader";
 import Console from "@/components/outputPanel/console";
 import ProjectSystem from "../../fileExplorer/projectSystem";
@@ -60,8 +59,7 @@ export default class Editor {
             stickyScroll: { enabled: false },
         });
 
-        // Editor autosave config
-        Editor.loadAutoSave();
+        // Editor autosave will be loaded by startup service
         // When the editor is changed, save the code to local storage & project system
         Editor.editor.onDidChangeModelContent(() => {
             ProjectSystem.updateActiveFile(Editor.getEditorCode());
@@ -102,30 +100,6 @@ export default class Editor {
         });
         // Keybindings
         this.initMonacoKeyBindings();
-    }
-
-    /**
-     * Load the autosave from local storage
-     */
-    static loadAutoSave() {
-        const filename =
-            localStorage.getItem("editorFilename") || "untitled.ck";
-        const code = localStorage.getItem("editorCode") || "";
-        if (code === "") {
-            Editor.loadDefault();
-            return;
-        }
-        ProjectSystem.addNewFile(filename, code);
-        Console.print(
-            `loaded autosave: \x1b[38;2;34;178;254m${
-                Editor.filename
-            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
-        );
-    }
-
-    static async loadDefault() {
-        const code: File = await fetchTextFile("./examples/helloSine.ck");
-        ProjectSystem.addNewFile("untitled.ck", code.data as string);
     }
 
     /**

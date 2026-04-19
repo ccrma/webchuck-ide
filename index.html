@@ -461,7 +461,7 @@
       <!-- MODALS -->
       <!-- More Examples Modal -->
       <dialog class="modal modal-lg" id="more-examples-modal" aria-labelledby="more-examples-heading">
-        <h2 id="more-examples-heading" class="text-xl font-medium pb-2">ChucK Example Library</h2>
+        <h2 id="more-examples-heading" class="text-xl font-semibold pb-2">ChucK Example Library</h2>
         <div class="w-full p-2 border border-gray-200 bg-gray-50 rounded-t-xl dark:border-gray-600 dark:bg-dark-4 flex flex-col-reverse md:flex-row">
           <!-- Breadcrumbs -->
           <nav class="flex justify-left w-1/2 pl-2 pt-2 md:pt-0">
@@ -510,9 +510,9 @@
 
       <!-- Settings Modal -->
       <dialog class="modal" id="settings-modal" aria-labelledby="settings-heading">
-        <h2 id="settings-heading" class="text-xl font-medium pb-2">Settings</h2>
+        <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
-        <form class="flex flex-col gap-2 py-2 pr-7" method="dialog">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
           <label class="form-label" for="chuck-version-select">ChucK version</label>
           <select id="chuck-version-select" class="form-select">
             <option value="stable">Stable</option>
@@ -529,7 +529,7 @@
 
       <!-- Keyboard Shortcuts Modal -->
       <dialog class="modal" id="shortcuts-modal" aria-labelledby="shortcuts-heading">
-        <h2 id="shortcuts-heading" class="text-xl font-medium pb-2">Keyboard Shortcuts</h2>
+        <h2 id="shortcuts-heading" class="text-xl font-semibold pb-2">Keyboard Shortcuts</h2>
 
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">ChucK Controls</h3>
@@ -585,7 +585,7 @@
       <!-- Export to WebChucK Modal -->
       <dialog class="modal" id="export-webchuck-modal" aria-labelledby="export-wc-heading">
         <form class="flex flex-col gap-2 py-2" method="dialog">
-          <h2 id="export-wc-heading" class="text-xl font-medium pb-2">Export to WebChucK</h2>
+          <h2 id="export-wc-heading" class="text-xl font-semibold pb-2">Export to WebChucK</h2>
 
           <div>
             <label class="form-label" for="export-title">Title</label>
@@ -616,17 +616,63 @@
       </dialog>
 
       <!-- Share Code Modal -->
-      <dialog class="modal modal-sm" id="share-code-modal" aria-labelledby="share-code-heading">
-        <form class="flex flex-col gap-2 py-2" method="dialog">
-          <!-- display url to copy -->
-          <h2 id="share-code-heading" class="sr-only">Share Code</h2>
-          <label class="form-label" for="share-code-url">Shareable URL</label>
-          <input type="text" id="share-code-url" class="form-input" readonly>
+      <dialog class="modal" id="share-code-modal" aria-labelledby="share-code-heading">
+        <form class="flex flex-col gap-4 py-2" method="dialog">
+          <div class="flex flex-col">
+            <h2 id="share-code-heading" class="text-xl font-semibold pb-2">Share Code</h2>
+            <p class="text-dark-6 dark:text-dark-c">
+              Share your ChucK code via the link below. Your project is encoded
+              directly in the URL. <em>If you make any code changes, hit "Share"
+              again to generate a new link.</em>
+            </p>
+          </div>
+      
+          <!-- Shareable Link -->
+          <div>
+            <label class="form-label" for="share-code-url">Shareable Link</label>
+            <div class="flex gap-2">
+              <input type="text" id="share-code-url"
+                class="h-10 form-input text-sm text-ellipsis select-all whitespace-nowrap"
+                readonly aria-label="Share Link">
+              <button id="share-code-copy" type="button"
+                class="button primary flex items-center justify-center gap-[0.35rem] min-w-[6.5rem]">
+                <img src="./img/copy.svg" class="w-[1.125rem] h-[1.125rem] -ml-1" alt="" aria-hidden="true">
+                Copy
+              </button>
+            </div>
+          </div>
+      
+          <div>
+            <!-- Scope Selection -->
+            <label class="form-label sr-only" for="share-project-files">Select Scope</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" id="share-scope-current" class="shareScopeBtn active">
+                <div class="flex flex-row items-center gap-2">
+                  <img src="./img/ck-color.svg" class="h-6" alt="" aria-hidden="true">
+                  <span class="font-medium text-[0.95rem] text-dark dark:text-light">Current File</span>
+                </div>
+                <span class="text-xs text-dark-5 dark:text-gray-400"><span id="share-current-filename">active.ck</span>
+                  only</span>
+              </button>
+              <button type="button" id="share-scope-all" class="shareScopeBtn">
+                <div class="flex flex-row items-center gap-2">
+                  <img src="./img/folder-color.svg" class="h-6" alt="" aria-hidden="true">
+                  <span class="font-medium text-[0.95rem] text-dark dark:text-light">Full Project</span>
+                </div>
+                <span id="share-project-name" class="text-xs text-dark-5 dark:text-gray-400">All .ck files will be
+                  included</span>
+              </button>
+              <input type="checkbox" id="share-project-files" class="hidden">
+            </div>
+          </div>
+      
+          <!-- Footer -->
+          <div class="flex justify-end pt-4">
+            <div class="flex gap-4">
+              <button id="share-code-done" type="button" class="button secondary">Done</button>
+            </div>
+          </div>
         </form>
-        <div class="flex gap-4 justify-end pt-4">
-          <button id="share-code-close" type="button" class="button secondary">Close</button>
-          <button id="share-code-copy" type="button" class="button primary">Copy</button>
-        </div>
       </dialog>
 
       <!-- Mobile Bottom Sheet: File Explorer -->

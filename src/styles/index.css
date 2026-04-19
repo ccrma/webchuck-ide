@@ -238,6 +238,24 @@ body {
     animation: enter-transition 0.1s ease-in-out forwards;
 }
 
+.shareScopeBtn {
+    @apply flex flex-col items-start gap-2 p-4 border-2 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange disabled:opacity-50 disabled:pointer-events-none;
+    border-color: var(--ide-border, #d1d5db);
+}
+
+.shareScopeBtn:hover {
+    border-color: var(--ide-accent, #ff8833);
+    background-color: color-mix(
+        in srgb,
+        var(--ide-accent, #ff8833) 5%,
+        transparent
+    );
+}
+
+.shareScopeBtn.active {
+    @apply border-orange bg-orange/10 dark:bg-orange/5;
+}
+
 /* EXAMPLES */
 #autocomplete-list li {
     @apply px-3 py-2 cursor-pointer focus:outline-none;
