@@ -3,6 +3,8 @@
 import { monaco } from "./monacoLite";
 import { chuck_modules, chuck_libraries } from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
+import chuglDocJSON from "./chugl-doc.json";
+import { engineMode } from "@/host";
 
 // Documentation Type for ckdoc
 interface docType {
@@ -13,7 +15,10 @@ interface docType {
     examples: string[];
     link: string;
 }
-const ckdoc: { [key: string]: docType } = ckdocJSON;
+const ckdoc: { [key: string]: docType } =
+    engineMode === "webchugl"
+        ? { ...ckdocJSON, ...chuglDocJSON }
+        : ckdocJSON;
 
 // Register a new language for Monaco
 monaco.languages.register({ id: "chuck" });
