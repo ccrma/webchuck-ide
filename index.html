@@ -173,6 +173,11 @@
                         ChucK Time: Off
                       </button>
                     </li>
+                    <li id="fpsToggleItem" class="hidden" role="separator">
+                      <button id="fpsToggle" type="button" class="dropdownItem" role="menuitem">
+                        FPS: Off
+                      </button>
+                    </li>
                     <li class="divider dark:border-t-gray-400" data-content="THEME" role="separator"></li>
                     <li role="separator">
                       <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitem">
@@ -452,6 +457,7 @@
             <div id="canvasContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="canvasTab">
               <div class="flex-1 min-h-0 relative">
                 <canvas id="chuglCanvas" class="absolute inset-0 w-full h-full"></canvas>
+                <div id="fpsCounter" class="absolute top-2 right-2 text-xs font-mono text-white bg-black/50 px-1.5 py-0.5 rounded pointer-events-none" style="display: none;">0 FPS</div>
               </div>
             </div>
           </div>
