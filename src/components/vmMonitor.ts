@@ -7,7 +7,7 @@
 // date:   September 2023
 //---------------------------------------------------
 
-import { getChuckNow, sampleRate, theChuck } from "@/host";
+import { getChuckNow, sampleRate, theChuck, resetChuGL } from "@/host";
 import { displayFormatTime, samplesToTimeHMSS } from "@/utils/time";
 import Editor from "@/components/editor/monaco/editor";
 
@@ -130,6 +130,16 @@ export default class VmMonitor {
             );
             delete VmMonitor.shredsToRows[theShred];
             this.numShreds--;
+
+            // Reset ChuGL graphics when all shreds are gone.
+            // Deferred so replaceCode (remove + add in same tick) doesn't trigger.
+            if (this.numShreds === 0) {
+                queueMicrotask(() => {
+                    if (this.numShreds === 0) {
+                        void resetChuGL();
+                    }
+                });
+            }
         }
     }
 

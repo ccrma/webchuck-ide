@@ -14,7 +14,7 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import { theChuck, startChuck, connectMic } from "@/host";
+import { theChuck, startChuck, connectMic, engineMode } from "@/host";
 import Editor from "@/components/editor/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
@@ -23,6 +23,9 @@ import Console from "@/components/outputPanel/console";
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
 const metaKey = isWindows ? "Ctrl" : "⌘";
+function getEngineLabel(): string {
+    return engineMode === "webchugl" ? "WebChuGL" : "WebChucK";
+}
 
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
@@ -50,7 +53,7 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#recordButton")!;
 
         // Add tooltips
-        ChuckBar.webchuckButton.title = `Start ChucK VM [${metaKey} + .]`;
+        ChuckBar.webchuckButton.title = `Start ${getEngineLabel()} [${metaKey} + .]`;
         ChuckBar.micButton.title = `Connect Microphone`;
         ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
         ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
@@ -65,6 +68,10 @@ export default class ChuckBar {
             connectMic();
             ChuckBar.micButton.disabled = true;
         });
+        // Mic is not needed in WebChuGL mode
+        if (engineMode === "webchugl") {
+            ChuckBar.micButton.style.display = "none";
+        }
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
         });
@@ -130,7 +137,7 @@ export default class ChuckBar {
 
         // Start WebChuck Host
         await startChuck();
-        ChuckBar.webchuckButton.innerText = "WebChucK running...";
+        ChuckBar.webchuckButton.innerText = `${getEngineLabel()} running...`;
         ChuckBar.running = true;
 
         // Enable the ChuckBar buttons

@@ -209,6 +209,20 @@ async function initWebChuGL() {
 }
 
 /**
+ * Reset WebChuGL graphics state.
+ * Called when all shreds are removed so stale GPU state (e.g. bloom)
+ * doesn't leak into the next program.
+ */
+export async function resetChuGL(): Promise<void> {
+    if (engineMode !== "webchugl") return;
+
+    // Only reset if frames were actually rendered (i.e. graphics state exists)
+    if (theChuck.rawRuntime.frameCount() === 0) return;
+
+    await theChuck.rawRuntime.reset();
+}
+
+/**
  * Called when theChuck is ready
  */
 export async function onChuckReady() {
