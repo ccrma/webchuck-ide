@@ -22,7 +22,6 @@ import SensorPanel from "@/components/inputPanel/sensorPanel";
 import ChuckBar from "@/components/chuckBar/chuckBar";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Recorder from "@/components/chuckBar/recorder";
-import Editor from "@/components/editor/monaco/editor";
 import NavBar from "./components/navbar/navbar";
 import { getEngineMode, type EngineMode } from "@/components/settings";
 import {
@@ -322,9 +321,6 @@ export async function startChuck() {
     } catch (error) {
         console.error("Failed to load EZScore", error);
     }
-
-    // Run any .js host files in the project
-    await runProjectJsFiles();
 }
 
 /**
@@ -477,21 +473,3 @@ export async function runJsCode(code: string, filename: string = "<js>") {
     }
 }
 
-/**
- * Auto-run all .js files in the project when the VM starts.
- */
-async function runProjectJsFiles() {
-    const jsFiles = ProjectSystem.getProjectFiles().filter((f) =>
-        f.getFilename().endsWith(".js")
-    );
-
-    for (const file of jsFiles) {
-        const filename = file.getFilename();
-        // If this file is active in the editor, get latest content from editor
-        const code = file.isActive()
-            ? Editor.getEditorCode()
-            : (file.getData() as string);
-        Console.print(`[js] running ${filename}...`);
-        await runJsCode(code, filename);
-    }
-}
