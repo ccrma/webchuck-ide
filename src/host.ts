@@ -347,6 +347,17 @@ export function getChuckNow(): number {
 }
 
 /**
+ * Request webcam access for WebChuGL. Delegates to the raw ChuGL
+ * runtime's requestWebcam(), which prompts the browser permission
+ * dialog and wires the stream into ChuGL's internal webcam device.
+ * No-op in WebChucK mode.
+ */
+export async function requestWebcam() {
+    if (engineMode !== "webchugl") return;
+    await theChuck.rawRuntime.requestWebcam();
+}
+
+/**
  * Connect microphone input to theChuck
  * In WebChuGL mode, mic is managed internally — this is a no-op.
  */

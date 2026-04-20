@@ -18,6 +18,7 @@ import {
     theChuck,
     startChuck,
     connectMic,
+    requestWebcam,
     engineMode,
     runJsCode
 } from "@/host";
@@ -37,6 +38,7 @@ function getEngineLabel(): string {
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
     public static micButton: HTMLButtonElement;
+    public static webcamButton: HTMLButtonElement;
     public static playButton: HTMLButtonElement;
     public static replaceButton: HTMLButtonElement;
     public static removeButton: HTMLButtonElement;
@@ -50,6 +52,8 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#webchuckButton")!;
         ChuckBar.micButton =
             document.querySelector<HTMLButtonElement>("#micButton")!;
+        ChuckBar.webcamButton =
+            document.querySelector<HTMLButtonElement>("#webcamButton")!;
         ChuckBar.playButton =
             document.querySelector<HTMLButtonElement>("#playButton")!;
         ChuckBar.replaceButton =
@@ -62,6 +66,7 @@ export default class ChuckBar {
         // Add tooltips
         ChuckBar.webchuckButton.title = `Start ${getEngineLabel()} [${metaKey} + .]`;
         ChuckBar.micButton.title = `Connect Microphone`;
+        ChuckBar.webcamButton.title = `Connect Webcam`;
         ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
         ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
         ChuckBar.removeButton.title = `Remove [${metaKey} + ⌫]`;
@@ -75,9 +80,15 @@ export default class ChuckBar {
             connectMic();
             ChuckBar.micButton.disabled = true;
         });
-        // Mic is not needed in WebChuGL mode
+        ChuckBar.webcamButton.addEventListener("click", async () => {
+            await requestWebcam();
+            ChuckBar.webcamButton.disabled = true;
+        });
+        // Mic is WebChucK-only; Webcam is WebChuGL-only.
         if (engineMode === "webchugl") {
             ChuckBar.micButton.style.display = "none";
+        } else {
+            ChuckBar.webcamButton.style.display = "none";
         }
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
@@ -158,6 +169,7 @@ export default class ChuckBar {
 
         // Enable the ChuckBar buttons
         ChuckBar.micButton.disabled = false;
+        ChuckBar.webcamButton.disabled = false;
         ChuckBar.playButton.disabled = false;
         ChuckBar.replaceButton.disabled = false;
         ChuckBar.removeButton.disabled = false;
