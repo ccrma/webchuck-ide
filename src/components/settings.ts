@@ -1,6 +1,7 @@
 //---------------------------------------------------
 // title: Settings
-// desc:  IDE settings modal for ChucK versions
+// desc:  IDE settings modal for ChucK version
+//        and engine mode (WebChucK vs WebChuGL)
 //
 // author: terry feng
 // date:   April 2024
@@ -8,23 +9,28 @@
 
 import { selectChuckSrc } from "@/host";
 
-export type EngineMode = "webchuck" | "webchugl";
-
-export function getEngineMode(): EngineMode {
-    const stored = localStorage.getItem("engineMode");
-    // Default: webchugl on the webchugl branch (first-time visitors).
-    if (stored !== "webchuck" && stored !== "webchugl") return "webchugl";
-    return stored;
-}
-
-export function setEngineMode(mode: EngineMode): void {
-    localStorage.setItem("engineMode", mode);
-}
-
 const versionString = Object.freeze({
     stable: "stable",
     dev: "dev"
 });
+
+const engineString = Object.freeze({
+    webchuck: "webchuck",
+    webchugl: "webchugl"
+});
+
+export type EngineMode = "webchuck" | "webchugl";
+
+/**
+ * Read the current engine mode from localStorage.
+ * Defaults to WebChuGL on first visit for the webchugl branch.
+ */
+export function getEngineMode(): EngineMode {
+    const stored = localStorage.getItem("engineMode");
+    if (stored === engineString.webchuck) return engineString.webchuck;
+    if (stored === engineString.webchugl) return engineString.webchugl;
+    return engineString.webchugl;
+}
 
 export default class Settings {
     public static openButton: HTMLButtonElement;
@@ -33,7 +39,9 @@ export default class Settings {
     public static applyButton: HTMLButtonElement;
     public static versionSelect: HTMLSelectElement;
     public static versionDescription: HTMLParagraphElement;
+    public static versionGroup: HTMLDivElement;
     public static engineSelect: HTMLSelectElement;
+    public static engineDescription: HTMLParagraphElement;
 
     constructor() {
         Settings.openButton =
@@ -51,9 +59,12 @@ export default class Settings {
             document.querySelector<HTMLParagraphElement>(
                 "#chuck-version-desc"
             )!;
-        Settings.engineSelect = document.querySelector<HTMLSelectElement>(
-            "#engineSelect"
-        )!;
+        Settings.versionGroup =
+            document.querySelector<HTMLDivElement>("#chuck-version-group")!;
+        Settings.engineSelect =
+            document.querySelector<HTMLSelectElement>("#engine-select")!;
+        Settings.engineDescription =
+            document.querySelector<HTMLParagraphElement>("#engine-desc")!;
 
         // Open settings
         Settings.openButton.addEventListener("click", () => {
@@ -73,6 +84,12 @@ export default class Settings {
             this.applySettings();
         });
 
+        // Engine select — only updates preview; reload happens on Apply
+        Settings.engineSelect.addEventListener("change", () => {
+            this.selectEngine(Settings.engineSelect.value as EngineMode);
+        });
+        this.selectEngine(getEngineMode());
+
         // Chuck version select
         Settings.versionSelect.addEventListener("change", () => {
             this.selectChucKVersion(Settings.versionSelect.value);
@@ -80,13 +97,24 @@ export default class Settings {
         this.selectChucKVersion(
             localStorage.getItem("chuckVersion") || versionString.stable
         );
+    }
 
-        // Engine select
-        Settings.engineSelect.value = getEngineMode();
-        Settings.engineSelect.addEventListener("change", () => {
-            setEngineMode(Settings.engineSelect.value as EngineMode);
-            window.location.reload();
-        });
+    /**
+     * Select engine mode (WebChucK or WebChuGL).
+     * Hides the ChucK version group when WebChuGL is chosen, since WebChuGL
+     * ships with its own bundled ChucK version.
+     */
+    selectEngine(engine: EngineMode) {
+        Settings.engineSelect.value = engine;
+        if (engine === engineString.webchugl) {
+            Settings.engineDescription.textContent =
+                "ChucK with ChuGL graphics (WebGPU). Enables 3D rendering.";
+            Settings.versionGroup.classList.add("hidden");
+        } else {
+            Settings.engineDescription.textContent =
+                "Audio-only ChucK runtime. Lightweight and fast.";
+            Settings.versionGroup.classList.remove("hidden");
+        }
     }
 
     /**
@@ -114,6 +142,10 @@ export default class Settings {
      * Apply settings and refresh the page
      */
     applySettings() {
+        // Save engine mode
+        localStorage.setItem("engineMode", Settings.engineSelect.value);
+
+        // Save ChucK version (relevant for WebChucK mode)
         const version = Settings.versionSelect.value === versionString.stable;
         selectChuckSrc(version);
         localStorage.setItem(

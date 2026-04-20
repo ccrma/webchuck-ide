@@ -522,19 +522,21 @@
         <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
         <form class="flex flex-col gap-2 py-2" method="dialog">
-          <label class="form-label" for="chuck-version-select">ChucK version</label>
-          <select id="chuck-version-select" class="form-select">
-            <option value="stable">Stable</option>
-            <option value="dev">Development</option>
+          <label class="form-label" for="engine-select">Engine</label>
+          <select id="engine-select" class="form-select">
+            <option value="webchuck">WebChucK (Audio only)</option>
+            <option value="webchugl">WebChuGL (Audio + Graphics)</option>
           </select>
-          <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+          <p id="engine-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
 
-          <label class="form-label" for="engineSelect">Engine</label>
-          <select id="engineSelect" class="form-select">
-            <option value="webchuck">WebChucK (audio only)</option>
-            <option value="webchugl">WebChuGL (audio + graphics)</option>
-          </select>
-          <p id="engine-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1">Changing the engine reloads the page.</p>
+          <div id="chuck-version-group">
+            <label class="form-label" for="chuck-version-select">ChucK version</label>
+            <select id="chuck-version-select" class="form-select">
+              <option value="stable">Stable</option>
+              <option value="dev">Development</option>
+            </select>
+            <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+          </div>
         </form>
         <!-- Close Settings -->
         <div class="flex gap-4 justify-end pt-4">
