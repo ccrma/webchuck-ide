@@ -161,10 +161,20 @@ async function initWebChuCK() {
 async function initWebChuGL() {
     // TS can't resolve an https:// URL import, but Vite and the browser
     // handle it natively (see /* @vite-ignore */ below).
-    const { default: ChuGL } = await import(
-        // @ts-expect-error — URL module import is runtime-resolved
-        /* @vite-ignore */ "https://cdn.jsdelivr.net/npm/webchugl/+esm"
-    );
+    let ChuGL: any;
+    try {
+        const mod = await import(
+            // @ts-expect-error — URL module import is runtime-resolved
+            /* @vite-ignore */ "https://cdn.jsdelivr.net/npm/webchugl/+esm"
+        );
+        ChuGL = mod.default;
+    } catch (error) {
+        Console.print(
+            "\x1b[31m[WebChuGL] CDN unreachable (https://cdn.jsdelivr.net/npm/webchugl/+esm). Check your network, or switch to WebChucK in Settings.\x1b[0m"
+        );
+        console.error("[WebChuGL] Failed to load from CDN", error);
+        throw error;
+    }
 
     const canvas =
         document.querySelector<HTMLCanvasElement>("#chuglCanvas")!;
@@ -180,10 +190,12 @@ async function initWebChuGL() {
 
     if (!ck) {
         Console.print(
-            "\x1b[31mWebChuGL failed to initialize. Check browser WebGPU support.\x1b[0m"
+            "\x1b[31m[WebChuGL] WebGPU is not supported in this browser. Try Chrome 113+ or Edge 113+, or switch to WebChucK in Settings.\x1b[0m"
         );
         console.error("[WebChuGL] Init returned null");
-        return;
+        throw new Error(
+            "WebGPU is not supported in this browser. Please try Chrome 113+ or Edge 113+."
+        );
     }
 
     theChuck = new WebChuGLAdapter(ck);
