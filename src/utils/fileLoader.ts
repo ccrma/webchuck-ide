@@ -53,7 +53,7 @@ export async function fetchDataFile(url: string): Promise<File | null> {
         const buffer = await response.arrayBuffer();
         file = {
             name: url.split("/").pop()!, // file name
-            data: new Uint8Array(buffer), // file data
+            data: new Uint8Array(buffer) // file data
         };
     } catch (error) {
         console.error(error);

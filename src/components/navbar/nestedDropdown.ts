@@ -38,7 +38,7 @@ export default class NestedDropdown {
                 currentNestedDropdown.close();
             }
             this.toggle();
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
+
             currentNestedDropdown = this;
         });
 

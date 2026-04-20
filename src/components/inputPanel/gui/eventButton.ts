@@ -93,8 +93,8 @@ export default class EventButton {
         this.ctx.fillStyle = this.isPressed
             ? this.pressedColor
             : this.isHovered
-            ? this.hoverColor
-            : this.color;
+              ? this.hoverColor
+              : this.color;
         this.ctx.fill();
 
         // Add the button text

@@ -118,7 +118,7 @@ async function exportWebchuck(
     const preloadFileString = projectFilesToPreload.map((file) => {
         return {
             serverFilename: `./${file.getFilename()}`,
-            virtualFilename: file.getFilename(),
+            virtualFilename: file.getFilename()
         };
     });
     wc_html = docFindReplace(
@@ -147,7 +147,7 @@ async function exportWebchuck(
 function exportSingleWCFile(wc_html: Document) {
     // Download a single HTML file
     const webchuckFileBlob = new Blob([wc_html.documentElement.outerHTML], {
-        type: "text/html",
+        type: "text/html"
     });
     window.URL = window.URL || window.webkitURL;
     const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
