@@ -30,6 +30,7 @@ import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
+import { initExportWebChuGL } from "@/services/export/exportWebchugl";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { initProjectStartup } from "@/services/startup";
 
@@ -97,6 +98,7 @@ class Main {
         // SERVICES
         initExportChuck();
         initExportWebChuck();
+        initExportWebChuGL();
         initProjectStartup();
 
         // Init WebChucK

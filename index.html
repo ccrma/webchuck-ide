@@ -129,6 +129,11 @@
                               WebChucK
                             </button>
                           </li>
+                          <li role="separator">
+                            <button id="exportWebchugl" type="button" class="dropdownItem" role="menuitem">
+                              WebChuGL
+                            </button>
+                          </li>
                         </ul>
                       </div>
                     </li>
@@ -634,6 +639,29 @@
           <div class="flex gap-4 justify-end pt-4">
             <button id="export-cancel-btn" type="button" class="button secondary">Cancel</button>
             <button id="export-btn" type="submit" class="button primary">Export</button>
+          </div>
+        </form>
+      </dialog>
+
+      <!-- Export to WebChuGL Modal -->
+      <dialog class="modal" id="export-webchugl-modal" aria-labelledby="export-chugl-heading">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <h2 id="export-chugl-heading" class="text-xl font-semibold pb-2">Export to WebChuGL</h2>
+
+          <div>
+            <label class="form-label" for="export-chugl-title">Title</label>
+            <input id="export-chugl-title" class="form-input" type="text" placeholder="My ChuGL Project">
+          </div>
+
+          <div>
+            <label class="form-label pr-2" for="export-chugl-file-select">Main File</label>
+            <select id="export-chugl-file-select" class="form-select disabled:opacity-50">
+            </select>
+          </div>
+
+          <div class="flex gap-4 justify-end pt-4">
+            <button id="export-chugl-cancel-btn" type="button" class="button secondary">Cancel</button>
+            <button id="export-chugl-btn" type="submit" class="button primary">Export</button>
           </div>
         </form>
       </dialog>
