@@ -43,14 +43,14 @@ export default class Console {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
                 background: Console.theme === "light" ? "#ffffff" : "#222222",
                 selectionBackground:
-                    Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
+                    Console.theme === "light" ? "#cccccc55" : "#eeeeee55"
             },
             linkHandler: {
                 activate: (_, uri) => {
                     // This bypasses the default warning and opens the link directly
                     window.open(uri, "_blank", "noopener,noreferrer");
-                },
-            },
+                }
+            }
         });
 
         Console.terminalElement =
@@ -63,7 +63,7 @@ export default class Console {
 
         // Blob Links
         Console.terminal.registerLinkProvider(
-            // @ts-expect-error Link Provider relies on a deprecated version of
+            // Link Provider relies on a deprecated version of
             // xterm. Either wait for it to be updated, or write a custom
             // Link Provider class - terry 7/16/2024
             new LinkProvider(Console.terminal, blobRegex, (_e, uri) => {
@@ -118,7 +118,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 background: "#222222",
                 foreground: "#ffffff",
-                selectionBackground: "#eeeeee55",
+                selectionBackground: "#eeeeee55"
             };
         }
     }
@@ -132,7 +132,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 foreground: "#222222",
                 background: "#ffffff",
-                selectionBackground: "#cccccc55",
+                selectionBackground: "#cccccc55"
             };
         }
     }

@@ -90,7 +90,7 @@ const chuck_modules = [
     "Centroid",
     "Flux",
     "RMS",
-    "RollOff",
+    "RollOff"
 ];
 
 const chuck_libraries = ["Object", "Event", "Shred", "Math", "Machine", "Std"];

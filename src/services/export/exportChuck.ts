@@ -26,8 +26,8 @@ export function initExportChuck() {
 function exportSingleFile() {
     const projectFiles = ProjectSystem.getProjectFiles();
     const currentFile = projectFiles[0];
-    const chuckFileBlob = new Blob([currentFile.getData()], {
-        type: "text/plain",
+    const chuckFileBlob = new Blob([currentFile.getData() as any], {
+        type: "text/plain"
     });
     window.URL = window.URL || window.webkitURL;
     const chuckFileURL = window.URL.createObjectURL(chuckFileBlob);

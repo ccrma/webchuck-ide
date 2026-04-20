@@ -83,7 +83,7 @@ export async function initChuck() {
             // Check headers of an essential file to test uptime
             await fetch(whereIsChuck + "webchuck.js", {
                 method: "HEAD",
-                signal: controller.signal,
+                signal: controller.signal
             });
             clearTimeout(timeoutId);
         } catch (e) {
@@ -253,8 +253,8 @@ export async function connectMic() {
             audio: {
                 echoCancellation: false,
                 autoGainControl: false,
-                noiseSuppression: false,
-            },
+                noiseSuppression: false
+            }
         })
         .then((stream) => {
             const adc = audioContext.createMediaStreamSource(stream);

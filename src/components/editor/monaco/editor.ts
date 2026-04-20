@@ -44,7 +44,7 @@ export default class Editor {
             // Params
             language: "chuck",
             minimap: {
-                enabled: false,
+                enabled: false
             },
             model: editorConfig,
             theme:
@@ -56,7 +56,7 @@ export default class Editor {
             find: { addExtraSpaceOnTop: false },
             fontSize: parseInt(localStorage.getItem("editorFontSize") || "14"),
             cursorBlinking: "smooth",
-            stickyScroll: { enabled: false },
+            stickyScroll: { enabled: false }
         });
 
         // Editor autosave will be loaded by startup service
@@ -123,7 +123,7 @@ export default class Editor {
      */
     static setTheme(dark: boolean) {
         Editor.editor?.updateOptions({
-            theme: dark ? "miniAudicleDark" : "miniAudicleLight",
+            theme: dark ? "miniAudicleDark" : "miniAudicleLight"
         });
     }
 
@@ -196,11 +196,11 @@ export default class Editor {
             keybindings: [
                 monaco.KeyMod.CtrlCmd |
                     monaco.KeyMod.Shift |
-                    monaco.KeyCode.KeyF,
+                    monaco.KeyCode.KeyF
             ],
             run: () => {
                 FindInProject.toggle();
-            },
+            }
         });
 
         Editor.editor.addAction({
@@ -209,11 +209,11 @@ export default class Editor {
             keybindings: [
                 monaco.KeyMod.CtrlCmd |
                     monaco.KeyMod.Shift |
-                    monaco.KeyCode.KeyP,
+                    monaco.KeyCode.KeyP
             ],
             run: () => {
                 Editor.openCommandPalette();
-            },
+            }
         });
     }
 
@@ -326,7 +326,7 @@ export default class Editor {
         Editor.vimModule?.dispose();
         Editor.editor.updateOptions({
             cursorStyle: "line",
-            cursorBlinking: "smooth",
+            cursorBlinking: "smooth"
         });
         Editor.vimToggle.innerText = "Vim Mode: Off";
         Editor.vimStatus?.setAttribute("style", "display: none !important");

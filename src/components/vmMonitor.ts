@@ -104,8 +104,7 @@ export default class VmMonitor {
         removeButton.type = "button";
         removeButton.classList.add("removeButton");
         removeButton.setAttribute("aria-label", "Remove Shred");
-        removeButton.innerHTML =
-            '<svg viewBox="5 18 40 14" fill="none" class="w-4 h-4"><rect x="9.89" y="22.67" width="30.52" height="5.23" fill="white"/></svg>';
+        removeButton.innerHTML = `<svg viewBox="5 18 40 14" fill="none" class="w-4 h-4"><rect x="9.89" y="22.67" width="30.52" height="5.23" fill="white"/></svg>`;
         remove.appendChild(removeButton);
 
         remove.addEventListener("click", () => {

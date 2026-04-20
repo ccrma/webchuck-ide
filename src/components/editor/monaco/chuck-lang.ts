@@ -70,7 +70,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "dac",
         "adc",
         "blackhole",
-        "bunghole",
+        "bunghole"
     ],
 
     typeKeywords: [
@@ -83,7 +83,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "vec4",
         "complex",
         "polar",
-        "string",
+        "string"
     ],
 
     library: ["Object", "Event", "Shred", "Math", "Machine", "Std"],
@@ -135,7 +135,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
         "@",
         "@@",
         "->",
-        "<-",
+        "<-"
     ],
 
     ugens: chuck_modules,
@@ -156,9 +156,9 @@ monaco.languages.setMonarchTokensProvider("chuck", {
                 new RegExp(`(?:${chuck_libraries.join("|")})`),
                 {
                     cases: {
-                        "@library": "library",
-                    },
-                },
+                        "@library": "library"
+                    }
+                }
             ],
 
             // identifiers and keywords
@@ -168,9 +168,9 @@ monaco.languages.setMonarchTokensProvider("chuck", {
                     cases: {
                         "@typeKeywords": "keyword",
                         "@keywords": "keyword",
-                        "@default": "identifier",
-                    },
-                },
+                        "@default": "identifier"
+                    }
+                }
             ],
             [/[A-Z][\w$]*/, "type.identifier"], // to show class names nicely
 
@@ -185,9 +185,9 @@ monaco.languages.setMonarchTokensProvider("chuck", {
                 {
                     cases: {
                         "@operators": "operator",
-                        "@default": "",
-                    },
-                },
+                        "@default": ""
+                    }
+                }
             ],
 
             // @ annotations.
@@ -210,7 +210,7 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             // characters
             [/'[^\\']'/, "string"],
             [/(')(@escapes)(')/, ["string", "string.escape", "string"]],
-            [/'/, "string.invalid"],
+            [/'/, "string.invalid"]
         ],
 
         comment: [
@@ -219,48 +219,51 @@ monaco.languages.setMonarchTokensProvider("chuck", {
             [/\/\*/, "comment", "@push"], // nested comment
             ["\\*/", "comment", "@pop"],
             // eslint-disable-next-line
-            [/[\/*]/, "comment"],
+            [/[\/*]/, "comment"]
         ],
 
         string: [
             [/[^\\"]+/, "string"],
             [/@escapes/, "string.escape"],
             [/\\./, "string.escape.invalid"],
-            [/"/, { token: "string.quote", bracket: "@close", next: "@pop" }],
+            [/"/, { token: "string.quote", bracket: "@close", next: "@pop" }]
         ],
 
         whitespace: [
             [/[ \t\r\n]+/, "white"],
             [/\/\*/, "comment", "@comment"],
-            [/\/\/.*$/, "comment"],
-        ],
-    },
+            [/\/\/.*$/, "comment"]
+        ]
+    }
 });
 
 // Register comment support for the new language
 monaco.languages.setLanguageConfiguration("chuck", {
     comments: {
         lineComment: "//",
-        blockComment: ["/*", "*/"],
-    },
+        blockComment: ["/*", "*/"]
+    }
 });
 
 // Register a completion item provider for the new language
 monaco.languages.registerCompletionItemProvider("chuck", {
-    provideCompletionItems: (model, position) => {
+    provideCompletionItems: (
+        model: monaco.editor.ITextModel,
+        position: monaco.Position
+    ) => {
         const word = model.getWordUntilPosition(position);
         const range = {
             startLineNumber: position.lineNumber,
             endLineNumber: position.lineNumber,
             startColumn: word.startColumn,
-            endColumn: word.endColumn,
+            endColumn: word.endColumn
         };
 
         const textUntilPosition = model.getValueInRange({
             startLineNumber: 1,
             startColumn: 1,
             endLineNumber: position.lineNumber,
-            endColumn: position.column,
+            endColumn: position.column
         });
 
         const statement_suggestions = [
@@ -271,7 +274,7 @@ monaco.languages.registerCompletionItemProvider("chuck", {
                 insertTextRules:
                     monaco.languages.CompletionItemInsertTextRule
                         .InsertAsSnippet,
-                range: range,
+                range: range
             },
             {
                 label: "ifelse",
@@ -281,13 +284,13 @@ monaco.languages.registerCompletionItemProvider("chuck", {
                     "\t$0",
                     "} else {",
                     "\t",
-                    "}",
+                    "}"
                 ].join("\n"),
                 insertTextRules:
                     monaco.languages.CompletionItemInsertTextRule
                         .InsertAsSnippet,
                 documentation: "If-Else Statement",
-                range: range,
+                range: range
             },
             {
                 label: "for",
@@ -296,13 +299,13 @@ monaco.languages.registerCompletionItemProvider("chuck", {
                     "for (0 => int i; i < ${1:condition}; ++i)",
                     "{",
                     "\t$0",
-                    "}",
+                    "}"
                 ].join("\n"),
                 insertTextRules:
                     monaco.languages.CompletionItemInsertTextRule
                         .InsertAsSnippet,
                 documentation: "For Statement",
-                range: range,
+                range: range
             },
             {
                 label: "while",
@@ -314,15 +317,15 @@ monaco.languages.registerCompletionItemProvider("chuck", {
                     monaco.languages.CompletionItemInsertTextRule
                         .InsertAsSnippet,
                 documentation: "While Statement",
-                range: range,
-            },
+                range: range
+            }
         ];
 
         const words = textUntilPosition
             .split(/\W+/)
             .concat(chuck_modules)
             .filter(
-                (word) =>
+                (word: string) =>
                     !statement_suggestions.map((s) => s.label).includes(word)
             );
         const uniqueWords = Array.from(new Set(words));
@@ -330,17 +333,20 @@ monaco.languages.registerCompletionItemProvider("chuck", {
             label: word,
             kind: monaco.languages.CompletionItemKind.Text,
             insertText: word,
-            range: range,
+            range: range
         }));
 
         const suggestions = word_suggestions.concat(statement_suggestions);
         return { suggestions: suggestions };
-    },
+    }
 });
 
 // Register a hover provider for the new language
 monaco.languages.registerHoverProvider("chuck", {
-    provideHover: function (model, position) {
+    provideHover: function (
+        model: monaco.editor.ITextModel,
+        position: monaco.Position
+    ) {
         // Get the word at current mouse position
         const word: monaco.editor.IWordAtPosition =
             model.getWordAtPosition(position)!; // ! TS check that word is not null
@@ -361,30 +367,30 @@ monaco.languages.registerHoverProvider("chuck", {
                 // Hover contents
                 contents: [
                     {
-                        value: word_doc.title,
+                        value: word_doc.title
                     },
                     {
-                        value: word_doc.description,
+                        value: word_doc.description
                     },
                     {
-                        value: word_doc.constructors.join("\n\n"),
+                        value: word_doc.constructors.join("\n\n")
                     },
                     {
-                        value: word_doc.functions.join("\n\n"),
+                        value: word_doc.functions.join("\n\n")
                     },
                     {
-                        value: word_doc.examples.join("\n\n"),
+                        value: word_doc.examples.join("\n\n")
                     },
                     {
-                        value: word_doc.link,
-                    },
-                ],
+                        value: word_doc.link
+                    }
+                ]
             };
         }
 
         // If we don't have a hover
         return null;
-    },
+    }
 });
 
 export const editorConfig = monaco.editor.createModel("", "chuck");
