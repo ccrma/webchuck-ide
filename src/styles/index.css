@@ -206,11 +206,11 @@ body {
 
 /* NAVBAR */
 .dropdownButton {
-    @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 focus-visible:text-sky-blue-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-blue-800;
+    @apply relative px-2 py-2 mr-1 inline-flex items-center font-semibold rounded hover:text-sky-blue-800 focus-visible:text-sky-blue-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-blue-800 cursor-pointer;
 }
 
 .dropdownItem {
-    @apply block w-full text-left font-medium px-4 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-blue-800;
+    @apply block w-full text-left font-medium px-4 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-blue-800 cursor-pointer;
     color: var(--ide-text, #555);
 }
 .dropdownItem:hover,
@@ -227,7 +227,7 @@ body {
 }
 
 .nestedDropdownButton {
-    @apply flex items-center justify-between w-full;
+    @apply flex items-center justify-between w-full cursor-pointer;
 }
 
 .nestedDropdown {
@@ -238,7 +238,7 @@ body {
 }
 
 .shareScopeBtn {
-    @apply flex flex-col items-start gap-2 p-4 border-2 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange disabled:opacity-50 disabled:pointer-events-none;
+    @apply flex flex-col items-start gap-2 p-4 border-2 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange disabled:opacity-50 disabled:pointer-events-none cursor-pointer;
     border-color: var(--ide-border, #d1d5db);
 }
 
@@ -281,6 +281,10 @@ body {
     color: var(--ide-text-muted, #555);
 }
 
+.breadcrumb-item.hover {
+    @apply cursor-pointer;
+}
+
 .breadcrumb-item.hover:hover,
 .breadcrumb-item.hover:focus-visible {
     color: var(--ide-accent, #ff8833);
@@ -301,7 +305,7 @@ body {
 
 /* CHUCK BAR */
 #chuckBar .chuck-button {
-    @apply rounded-md flex items-center justify-center disabled:opacity-50 focus:outline-none enabled:hover:brightness-110 transition duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-dark;
+    @apply rounded-md flex items-center justify-center disabled:opacity-50 focus:outline-none enabled:hover:brightness-110 transition duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-dark cursor-pointer;
     margin: 0.25rem 0;
     padding: 0.375rem 0.75rem;
 }
@@ -382,7 +386,7 @@ body {
 }
 
 .fileContextMenuItem {
-    @apply block w-full text-left px-3 py-1 text-sm focus:outline-none;
+    @apply block w-full text-left px-3 py-1 text-sm focus:outline-none cursor-pointer;
     color: var(--ide-text, #333);
 }
 
@@ -532,12 +536,12 @@ td:nth-child(4) {
 }
 
 .removeButton {
-    @apply h-7 px-2 m-auto flex items-center justify-center bg-[#FF6868] rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 hover:brightness-110 transition duration-300;
+    @apply h-7 px-2 m-auto flex items-center justify-center bg-[#FF6868] rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 hover:brightness-110 transition duration-300 cursor-pointer;
 }
 
 /* INPUT PANEL */
 .toggle-button {
-    @apply mr-2 mb-2 p-1 bg-transparent rounded transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply mr-2 mb-2 p-1 bg-transparent rounded transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer;
     color: var(--ide-accent, #ff8833);
     border: 1px solid var(--ide-accent, #ff8833);
     --tw-ring-color: var(--ide-accent, #ff8833);
@@ -594,11 +598,11 @@ td:nth-child(4) {
 
 /* MISC. COMPONENTS */
 .button.primary {
-    @apply bg-orange hover:bg-orange-light px-3 py-1.5 text-white transition rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2;
+    @apply bg-orange hover:bg-orange-light px-3 py-1.5 text-white transition rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 cursor-pointer;
 }
 
 .button.secondary {
-    @apply text-orange hover:text-orange-light border border-orange hover:border-orange-light px-3 py-1.5 rounded-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2;
+    @apply text-orange hover:text-orange-light border border-orange hover:border-orange-light px-3 py-1.5 rounded-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 cursor-pointer;
 }
 
 dialog {
@@ -764,7 +768,7 @@ kbd {
 }
 
 .header-item {
-    @apply text-sm px-2 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 rounded;
+    @apply text-sm px-2 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 rounded cursor-pointer;
     user-select: none;
 }
 

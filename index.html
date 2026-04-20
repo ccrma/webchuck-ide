@@ -66,7 +66,7 @@
         <a id="notificationLink" href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" class="hover:underline">
           <div id="notificationText">(Beta) Try out WebChucK IDE with ChuGL for audiovisual programming!</div>
         </a>
-        <button id="closeNotificationBanner" class="absolute right-4 hover:opacity-80" aria-label="Close notification banner">X</button>
+        <button id="closeNotificationBanner" class="absolute right-4 hover:opacity-80 cursor-pointer" aria-label="Close notification banner">X</button>
       </section>
 
       <!-- NAVBAR -->
@@ -244,7 +244,7 @@
           <!-- Right -->
           <div class="flex justify-right items-center text-blue-600 dark:text-blue-200 overflow-none">
             <b class="w-[122px] text-md">WebChucK IDE </b><b><em class="text-3xl">2</em></b>
-            <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-md font-medium ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200">Share</button>
+            <button id="shareCode" class="button border-2 border-blue-600 dark:border-blue-200 px-3 py-1 rounded-md font-medium ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-blue-200 cursor-pointer">Share</button>
           </div>
         </nav>
       </header>
@@ -281,7 +281,7 @@
             <div id="fileExplorerHeader" class="header h-10 justify-start flex-none border-b drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
               <h2 class="px-2 text-base font-bold">File Explorer</h2>
               <div class="ml-auto flex items-center gap-0.5" style="color: var(--ide-text-muted, #888)">
-                <button id="newFileIcon" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="New file" aria-label="New file">
+                <button id="newFileIcon" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded cursor-pointer" title="New file" aria-label="New file">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -289,14 +289,14 @@
                     <line x1="9" y1="15" x2="15" y2="15"></line>
                   </svg>
                 </button>
-                <button id="uploadFilesIcon" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded disabled:opacity-50" title="Upload files" aria-label="Upload files" disabled>
+                <button id="uploadFilesIcon" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded disabled:opacity-50 cursor-pointer" title="Upload files" aria-label="Upload files" disabled>
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                 </button>
-                <button id="searchToggleBtn" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" aria-label="Find in files">
+                <button id="searchToggleBtn" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded cursor-pointer" aria-label="Find in files">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -308,7 +308,7 @@
             <div id="searchPanel" class="flex-1 flex flex-col overflow-hidden">
               <div class="header h-10 justify-start flex-none border-b drop-shadow-sm font-bold overflow-hidden whitespace-nowrap">
                 <h2 class="px-2 text-base font-bold">Find in Files</h2>
-                <button id="searchCloseBtn" type="button" class="ml-auto px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" style="color: var(--ide-text-muted, #888)" title="Close search" aria-label="Close search">
+                <button id="searchCloseBtn" type="button" class="ml-auto px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded cursor-pointer" style="color: var(--ide-text-muted, #888)" title="Close search" aria-label="Close search">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -352,9 +352,9 @@
                 </svg>
               </button>
               <div id="filename" class="header-item">untitled.ck</div>
-              <div class="ml-auto flex items-center gap-0.5 text-xs flex-shrink-0" style="color: var(--ide-text-muted, #888)">
-                <button id="editorFontDown" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Decrease font size" aria-label="Decrease editor font size">A-</button>
-                <button id="editorFontUp" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Increase font size" aria-label="Increase editor font size">A+</button>
+              <div class="ml-auto flex items-center gap-0.5 text-xs shrink-0" style="color: var(--ide-text-muted, #888)">
+                <button id="editorFontDown" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded cursor-pointer" title="Decrease font size" aria-label="Decrease editor font size">A-</button>
+                <button id="editorFontUp" type="button" class="px-1 hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded cursor-pointer" title="Increase font size" aria-label="Increase editor font size">A+</button>
               </div>
             </div>
             <div id="monacoEditor"></div>
@@ -678,7 +678,7 @@
             <div class="flex-1"></div>
             <div class="bottom-sheet-handle-bar"></div>
             <div class="flex-1 flex justify-end">
-              <button id="bottomSheetClose" type="button" class="p-1.5 mr-1" style="color: var(--ide-text-muted, #888)" aria-label="Close file explorer">
+              <button id="bottomSheetClose" type="button" class="p-1.5 mr-1 cursor-pointer" style="color: var(--ide-text-muted, #888)" aria-label="Close file explorer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
