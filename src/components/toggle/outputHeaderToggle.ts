@@ -12,7 +12,7 @@ import {
     DARK_HOVER_COLOR_CLASS,
     DARK_TEXT_HOVER_CLASS,
     HOVER_COLOR_CLASS,
-    TEXT_COLOR_CLASS,
+    TEXT_COLOR_CLASS
 } from "@/utils/theme";
 import HeaderToggle from "./headerToggle";
 
@@ -44,6 +44,8 @@ export default class OutputHeaderToggle extends HeaderToggle {
     }
 
     setActive(open: boolean) {
+        this.button.setAttribute("aria-selected", String(open));
+
         if (open) {
             // active
             this.button.classList.add("underline");

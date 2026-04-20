@@ -1,4 +1,3 @@
-import JSZip from "jszip";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Editor from "@/components/editor/monaco/editor";
 import { getGlobalVariables } from "@/utils/chuckPreprocess";
@@ -119,7 +118,7 @@ async function exportWebchuck(
     const preloadFileString = projectFilesToPreload.map((file) => {
         return {
             serverFilename: `./${file.getFilename()}`,
-            virtualFilename: file.getFilename(),
+            virtualFilename: file.getFilename()
         };
     });
     wc_html = docFindReplace(
@@ -148,7 +147,7 @@ async function exportWebchuck(
 function exportSingleWCFile(wc_html: Document) {
     // Download a single HTML file
     const webchuckFileBlob = new Blob([wc_html.documentElement.outerHTML], {
-        type: "text/html",
+        type: "text/html"
     });
     window.URL = window.URL || window.webkitURL;
     const webchuckFileURL = window.URL.createObjectURL(webchuckFileBlob);
@@ -163,7 +162,7 @@ function exportSingleWCFile(wc_html: Document) {
  * Export all project files as a .zip
  * @param wc_html webchuck html document
  */
-function exportProjectWCFiles(
+async function exportProjectWCFiles(
     title: string,
     mainChuckFile: string,
     wc_html: Document,
@@ -172,6 +171,7 @@ function exportProjectWCFiles(
     if (title === "") {
         title = mainChuckFile.split(".")[0];
     }
+    const { default: JSZip } = await import("jszip");
     const zip = new JSZip();
     zip.file("index.html", wc_html.documentElement.outerHTML);
     projectFiles.forEach((file: any) => {

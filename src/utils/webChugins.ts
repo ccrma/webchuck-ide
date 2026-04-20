@@ -41,7 +41,7 @@ const chugins = [
     "Wavetable.chug.wasm",
     "WarpBuf.chug.wasm",
     "WinFuncEnv.chug.wasm",
-    "XML.chug.wasm",
+    "XML.chug.wasm"
 ];
 
 /**

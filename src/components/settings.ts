@@ -10,7 +10,7 @@ import { selectChuckSrc } from "@/host";
 
 const versionString = Object.freeze({
     stable: "stable",
-    dev: "dev",
+    dev: "dev"
 });
 
 export default class Settings {

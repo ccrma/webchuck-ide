@@ -6,6 +6,7 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
+import AnnouncementBanner from "@/components/navbar/announcementBanner";
 import NavBar from "@/components/navbar/navbar";
 import ChuckBar from "@/components/chuckBar/chuckBar";
 import Editor from "@/components/editor/monaco/editor";
@@ -15,23 +16,26 @@ import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
 import Console from "@/components/outputPanel/console";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import FindInProject from "@/components/fileExplorer/findInProject";
 import Examples from "@/components/examples/examples";
 import MoreExamples from "@/components/examples/moreExamples";
 import Settings from "@/components/settings";
+import ShareModal from "@/components/navbar/shareModal";
 import GUI from "@/components/inputPanel/gui/gui";
+import BottomSheet from "@/components/mobile/bottomSheet";
 
 import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
 import { initExportChuck } from "@/services/export/exportChuck";
-import { parseURLParams as initParseURLParams } from "./services/urlParamParser";
-import { initShareCode } from "./services/shareCode";
+import { initProjectStartup } from "@/services/startup";
 
 class Main {
     public static navBar: NavBar;
     public static chuckBar: ChuckBar;
     public static projectSystem: ProjectSystem;
+    public static findInProject: FindInProject;
     public static editor: Editor;
     public static editorPanelHeader: EditorPanelHeader;
     public static vmMonitor: VmMonitor;
@@ -42,6 +46,9 @@ class Main {
     public static moreExamples: MoreExamples;
     public static settings: Settings;
     public static GUI: GUI;
+    public static bottomSheet: BottomSheet;
+    public static shareModal: ShareModal;
+    public static announcementBanner: AnnouncementBanner;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -50,6 +57,7 @@ class Main {
         Main.navBar = new NavBar();
         Main.chuckBar = new ChuckBar();
         Main.projectSystem = new ProjectSystem();
+        Main.findInProject = new FindInProject();
 
         // CONSTRUCT APP COMPONENTS
         Main.vmMonitor = new VmMonitor();
@@ -64,6 +72,9 @@ class Main {
         Main.moreExamples = new MoreExamples();
         Main.settings = new Settings();
         Main.GUI = new GUI();
+        Main.bottomSheet = new BottomSheet();
+        Main.shareModal = new ShareModal();
+        Main.announcementBanner = new AnnouncementBanner();
     }
 
     init() {
@@ -82,8 +93,7 @@ class Main {
         // SERVICES
         initExportChuck();
         initExportWebChuck();
-        initShareCode();
-        initParseURLParams();
+        initProjectStartup();
 
         // Init WebChucK
         window.addEventListener("load", async () => {
@@ -94,6 +104,20 @@ class Main {
     static keyboardShortcuts() {
         // global keyboard shortcuts
         document.addEventListener("keydown", (e) => {
+            // cmd + shift + f or ctrl + shift + f — Find in Files
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "F") {
+                e.preventDefault();
+                FindInProject.toggle();
+                return;
+            }
+
+            // cmd + shift + p or ctrl + shift + p — Command Palette
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "P") {
+                e.preventDefault();
+                Editor.openCommandPalette();
+                return;
+            }
+
             // cmd + . or ctrl + .
             if ((e.metaKey || e.ctrlKey) && e.key === ".") {
                 e.preventDefault();
@@ -132,3 +156,14 @@ class Main {
 // Main entry point
 const main = new Main();
 main.init();
+
+// Suppress Monaco's harmless CancellationError from its clipboard workaround.
+// Monaco logs these via its internal logService.error(), which calls console.error().
+// See: https://github.com/compiler-explorer/compiler-explorer/issues/7181
+const _consoleError = console.error;
+console.error = (...args: any[]) => {
+    if (args.some((a) => a?.name === "Canceled" && a?.message === "Canceled")) {
+        return;
+    }
+    _consoleError.apply(console, args);
+};

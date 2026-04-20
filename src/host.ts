@@ -83,7 +83,7 @@ export async function initChuck() {
             // Check headers of an essential file to test uptime
             await fetch(whereIsChuck + "webchuck.js", {
                 method: "HEAD",
-                signal: controller.signal,
+                signal: controller.signal
             });
             clearTimeout(timeoutId);
         } catch (e) {
@@ -131,7 +131,9 @@ export async function onChuckReady() {
     ChuckBar.webchuckButton.disabled = false;
     ChuckBar.webchuckButton.innerText = "Start WebChucK";
     ProjectSystem.uploadFilesButton.disabled = false;
+    ProjectSystem.uploadFilesIcon.disabled = false;
     ProjectSystem.initDragUpload();
+    ProjectSystem.syncFilesToChuck();
     theChuck.getParamString("VERSION").then((value: string) => {
         chuckVersion = value;
     });
@@ -251,8 +253,8 @@ export async function connectMic() {
             audio: {
                 echoCancellation: false,
                 autoGainControl: false,
-                noiseSuppression: false,
-            },
+                noiseSuppression: false
+            }
         })
         .then((stream) => {
             const adc = audioContext.createMediaStreamSource(stream);

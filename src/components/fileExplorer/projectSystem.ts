@@ -8,12 +8,13 @@
 //--------------------------------------------------------------------
 
 import { theChuck } from "@/host";
-import { isPlaintextFile } from "webchuck/dist/utils";
 import {
     File as FileData,
     fetchDataFile,
     fetchTextFile,
+    isPlaintextFile
 } from "@/utils/fileLoader";
+import Editor from "@/components/editor/monaco/editor";
 import Console from "../outputPanel/console";
 import ProjectFile from "./projectFile";
 
@@ -21,6 +22,8 @@ export default class ProjectSystem {
     public static newFileButton: HTMLButtonElement;
     public static newProjectButton: HTMLButtonElement;
     public static uploadFilesButton: HTMLButtonElement;
+    public static newFileIcon: HTMLButtonElement;
+    public static uploadFilesIcon: HTMLButtonElement;
     public static fileExplorerContainer: HTMLDivElement;
     public static fileExplorer: HTMLDivElement;
     public static fileExplorerUploadPrompt: HTMLDivElement;
@@ -28,6 +31,9 @@ export default class ProjectSystem {
 
     private static projectFiles: Map<string, ProjectFile>;
     private static fileUploader: HTMLInputElement;
+
+    private static activeContextMenu: HTMLDivElement | null = null;
+    private static contextMenuAbort: AbortController | null = null;
 
     constructor() {
         ProjectSystem.newFileButton =
@@ -57,6 +63,19 @@ export default class ProjectSystem {
             ProjectSystem.newProject();
         });
 
+        // File explorer header icon buttons
+        ProjectSystem.newFileIcon =
+            document.querySelector<HTMLButtonElement>("#newFileIcon")!;
+        ProjectSystem.newFileIcon.addEventListener("click", () => {
+            ProjectSystem.createNewFile();
+        });
+
+        ProjectSystem.uploadFilesIcon =
+            document.querySelector<HTMLButtonElement>("#uploadFilesIcon")!;
+        ProjectSystem.uploadFilesIcon.addEventListener("click", () => {
+            ProjectSystem.fileUploader.click();
+        });
+
         ProjectSystem.fileExplorer =
             document.querySelector<HTMLDivElement>("#fileExplorer")!;
         ProjectSystem.fileExplorerContainer =
@@ -74,27 +93,10 @@ export default class ProjectSystem {
     }
 
     /**
-     * Create a new file and clear the editor
+     * Create a new file via inline rename
      */
     static createNewFile() {
-        // Ask for new file name
-        let filename: string | null = prompt(
-            "Enter new file name",
-            "untitled.ck"
-        );
-        if (filename === null || filename === "") {
-            return;
-        }
-        if (ProjectSystem.projectFiles.has(filename)) {
-            Console.print(`${filename} already exists`);
-            return;
-        }
-        filename = filename.endsWith(".ck") ? filename : filename + ".ck";
-        const newFile = new ProjectFile(filename, "");
-        if (newFile.isChuckFile()) {
-            ProjectSystem.setActiveFile(newFile);
-        }
-        ProjectSystem.addFileToExplorer(newFile);
+        ProjectSystem.startInlineRename("untitled.ck", true);
     }
 
     /**
@@ -192,15 +194,52 @@ export default class ProjectSystem {
     }
 
     /**
+     * Rename a file in the project
+     * @param oldName the name to be renamed
+     * @param newName the name to rename to
+     * TODO: Also rename the file in VFS (primarily data files)
+     */
+    static renameFile(oldName: string, newName: string) {
+        if (!newName || newName === oldName) return;
+        if (ProjectSystem.projectFiles.has(newName)) {
+            Console.print(`"${newName}" already exists`);
+            return;
+        }
+        const file = ProjectSystem.projectFiles.get(oldName);
+        if (!file) return;
+
+        // Disallow renaming data files until renamed in VFS
+        if (!file.isPlaintextFile()) {
+            Console.print(`renaming data files is not yet supported`);
+            return;
+        }
+
+        ProjectSystem.projectFiles.delete(oldName);
+        file.rename(newName);
+        ProjectSystem.projectFiles.set(newName, file);
+        if (file.isActive()) {
+            Editor.setFileName(newName);
+        }
+        ProjectSystem.updateFileExplorerUI();
+    }
+
+    /**
      * Update File Explorer UI with project files
      */
     static updateFileExplorerUI() {
         ProjectSystem.fileExplorer.innerHTML = "";
+        ProjectSystem.fileExplorer.setAttribute("role", "listbox");
+        ProjectSystem.fileExplorer.setAttribute("aria-label", "Project files");
 
         ProjectSystem.projectFiles.forEach((projectFile) => {
             const fileEntry = document.createElement("div");
             fileEntry.className = "fileExplorerEntry";
             fileEntry.setAttribute("tabindex", "0");
+            fileEntry.setAttribute("role", "option");
+            fileEntry.setAttribute(
+                "aria-selected",
+                String(projectFile.isActive())
+            );
 
             // File Info (icon + name)
             const fileItem = document.createElement("div");
@@ -209,29 +248,9 @@ export default class ProjectSystem {
             fileItem.className = "fileExplorerItem";
             fileItem.setAttribute("type", fileExt);
             fileItem.innerHTML += filename;
-            // File Options
-            const fileOptions = document.createElement("div");
-            const deleteButton = document.createElement("button");
-            deleteButton.setAttribute("aria-label", "Delete file");
-            fileOptions.className = "fileExplorerOptions hide";
-            deleteButton.className = "fileEntryDelete";
-            deleteButton.innerHTML = `<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/> </svg>`;
-            fileOptions.appendChild(deleteButton);
-            fileOptions.addEventListener("click", (e) => {
-                e?.stopPropagation();
-                ProjectSystem.removeFileFromExplorer(filename);
-            });
-            deleteButton.addEventListener("keydown", (e: KeyboardEvent) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    ProjectSystem.removeFileFromExplorer(filename);
-                }
-            });
 
             // Arm File Entry
             fileEntry.appendChild(fileItem);
-            fileEntry.appendChild(fileOptions);
             if (projectFile.isActive()) {
                 fileEntry.classList.add("active");
             }
@@ -244,22 +263,306 @@ export default class ProjectSystem {
                     ProjectSystem.setActiveFile(projectFile);
                 }
             });
-            fileEntry.addEventListener("mouseover", () => {
-                fileOptions.classList.remove("hide");
+
+            // Right-click context menu
+            fileEntry.addEventListener("contextmenu", (e: MouseEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                ProjectSystem.showContextMenu(e.clientX, e.clientY, filename);
             });
-            fileEntry.addEventListener("mouseout", () => {
-                fileOptions.classList.add("hide");
+
+            // Long-press context menu for touch devices
+            onLongPress(fileEntry, (x, y) => {
+                ProjectSystem.showContextMenu(x, y, filename);
             });
-            fileEntry.addEventListener("focusin", () => {
-                fileOptions.classList.remove("hide");
-            });
-            fileEntry.addEventListener("focusout", (e: FocusEvent) => {
-                if (!fileEntry.contains(e.relatedTarget as Node)) {
-                    fileOptions.classList.add("hide");
-                }
-            });
+
             ProjectSystem.fileExplorer.appendChild(fileEntry);
         });
+    }
+
+    /**
+     * Show a context menu for a file entry, containing rename and delete buttons
+     * @param x the x position of the context menu
+     * @param y the y position of the context menu
+     * @param filename the name of the file that the context menu is referencing
+     */
+    static showContextMenu(x: number, y: number, filename: string) {
+        ProjectSystem.hideContextMenu();
+
+        const menuItems: HTMLButtonElement[] = [];
+
+        const menu = document.createElement("div");
+        menu.className = "fileContextMenu";
+        menu.setAttribute("role", "menu");
+
+        // Helper function to create menu items
+        const createMenuItem = (
+            label: string,
+            className: string,
+            onClick: () => void
+        ) => {
+            const btn = document.createElement("button");
+            btn.className = `fileContextMenuItem ${className}`;
+            btn.textContent = label;
+            btn.setAttribute("role", "menuitem");
+            btn.addEventListener("click", () => {
+                ProjectSystem.hideContextMenu();
+                onClick();
+            });
+            menuItems.push(btn);
+            return btn;
+        };
+
+        // Rename item (only for plaintext files)
+        if (isPlaintextFile(filename)) {
+            menu.appendChild(
+                createMenuItem("Rename", "", () => {
+                    ProjectSystem.startInlineRename(filename);
+                })
+            );
+        }
+
+        // Delete item
+        menu.appendChild(
+            createMenuItem("Delete", "fileContextMenuItem--delete", () => {
+                ProjectSystem.removeFileFromExplorer(filename);
+            })
+        );
+
+        // Position, clamped to viewport
+        menu.style.left = `${x}px`;
+        menu.style.top = `${y}px`;
+        document.body.appendChild(menu);
+        const rect = menu.getBoundingClientRect();
+        if (rect.right > window.innerWidth)
+            menu.style.left = `${window.innerWidth - rect.width - 4}px`;
+        if (rect.bottom > window.innerHeight)
+            menu.style.top = `${window.innerHeight - rect.height - 4}px`;
+
+        ProjectSystem.activeContextMenu = menu;
+
+        // Close on click/tap outside or Escape
+        const ac = new AbortController();
+        ProjectSystem.contextMenuAbort = ac;
+        const close = () => ProjectSystem.hideContextMenu();
+        document.addEventListener(
+            "mousedown",
+            (e) => {
+                if (!menu.contains(e.target as Node)) close();
+            },
+            { signal: ac.signal }
+        );
+        document.addEventListener(
+            "touchend",
+            (e) => {
+                const t = e.changedTouches[0];
+                const target = document.elementFromPoint(t.clientX, t.clientY);
+                if (!target || !menu.contains(target)) close();
+            },
+            { signal: ac.signal, passive: true } as AddEventListenerOptions
+        );
+        document.addEventListener(
+            "keydown",
+            (e) => {
+                if (e.key === "Escape") close();
+            },
+            { signal: ac.signal }
+        );
+
+        // Arrow key navigation and tab navigation
+        menu.addEventListener(
+            "keydown",
+            (e) => {
+                const currentIndex = menuItems.indexOf(
+                    document.activeElement as HTMLButtonElement
+                );
+                if (e.key === "ArrowDown" || e.key === "Tab") {
+                    e.preventDefault();
+                    menuItems[(currentIndex + 1) % menuItems.length].focus();
+                } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    menuItems[
+                        (currentIndex - 1 + menuItems.length) % menuItems.length
+                    ].focus();
+                }
+            },
+            { signal: ac.signal }
+        );
+
+        if (menuItems.length > 0) {
+            menuItems[0].focus();
+        }
+    }
+
+    /**
+     * Hide the shown context menu
+     */
+    static hideContextMenu() {
+        ProjectSystem.contextMenuAbort?.abort();
+        ProjectSystem.contextMenuAbort = null;
+        ProjectSystem.activeContextMenu?.remove();
+        ProjectSystem.activeContextMenu = null;
+    }
+
+    /**
+     * Start inline rename editing on a file entry in the explorer
+     * @param filename current filename (or default name for new files)
+     * @param isNewFile true when creating a new file
+     */
+    static startInlineRename(filename: string, isNewFile: boolean = false) {
+        // Find or create the file entry
+        const { fileEntry, fileItem } = isNewFile
+            ? ProjectSystem.createTempEntry()
+            : ProjectSystem.findEntry(filename);
+
+        if (!fileEntry || !fileItem) return;
+
+        // Replace text with input
+        fileItem.textContent = "";
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "fileExplorerRenameInput";
+        input.value = filename;
+        fileItem.appendChild(input);
+
+        // Select filename stem (before the last dot)
+        input.focus();
+        const dotIndex = filename.lastIndexOf(".");
+        if (dotIndex > 0) {
+            input.setSelectionRange(0, dotIndex);
+        } else {
+            input.select();
+        }
+
+        let done = false;
+        const revert = () => {
+            if (isNewFile) fileEntry.remove();
+            else fileItem.textContent = filename;
+        };
+
+        const commit = () => {
+            if (done) return;
+            done = true;
+
+            const newName = input.value.trim();
+
+            if (isNewFile) {
+                if (!newName) {
+                    fileEntry.remove();
+                    return;
+                }
+                const finalName = newName.includes(".")
+                    ? newName
+                    : newName + ".ck";
+                if (!isPlaintextFile(finalName)) {
+                    Console.print(
+                        `cannot create data file types — use upload instead`
+                    );
+                    fileEntry.remove();
+                    return;
+                }
+                if (ProjectSystem.projectFiles.has(finalName)) {
+                    Console.print(`"${finalName}" already exists`);
+                    fileEntry.remove();
+                    return;
+                }
+                const newFile = new ProjectFile(finalName, "");
+                if (newFile.isChuckFile()) ProjectSystem.setActiveFile(newFile);
+                ProjectSystem.addFileToExplorer(newFile);
+            } else {
+                if (!newName || newName === filename) {
+                    revert();
+                    return;
+                }
+                // Enforce that renamed file stays plaintext
+                if (!isPlaintextFile(newName)) {
+                    Console.print(`cannot rename to a data file type`);
+                    revert();
+                    return;
+                }
+                if (ProjectSystem.projectFiles.has(newName)) {
+                    Console.print(`"${newName}" already exists`);
+                    revert();
+                    return;
+                }
+                ProjectSystem.renameFile(filename, newName);
+            }
+        };
+
+        input.addEventListener("keydown", (e: KeyboardEvent) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                commit();
+            } else if (e.key === "Escape") {
+                e.preventDefault();
+                if (!done) {
+                    done = true;
+                    revert();
+                }
+            }
+            e.stopPropagation();
+        });
+        input.addEventListener("blur", () => commit());
+        input.addEventListener("click", (e) => e.stopPropagation());
+        input.addEventListener("mousedown", (e) => e.stopPropagation());
+    }
+
+    /**
+     * Creates a dummy file entry, used when adding a new file
+     */
+    private static createTempEntry() {
+        const fileEntry = document.createElement("div");
+        fileEntry.className = "fileExplorerEntry";
+        fileEntry.setAttribute("tabindex", "0");
+        fileEntry.setAttribute("role", "option");
+        fileEntry.setAttribute("aria-selected", "false");
+
+        const fileItem = document.createElement("div");
+        fileItem.className = "fileExplorerItem";
+        fileItem.setAttribute("type", "ck");
+        fileEntry.appendChild(fileItem);
+
+        ProjectSystem.fileExplorer.prepend(fileEntry);
+        return { fileEntry, fileItem };
+    }
+
+    /**
+     * Finds the file entry with the given filename
+     * @param filename filename to search for
+     * @returns the .fileExplorerEntry and .fileExplorerItem elements associated with the given filename
+     */
+    private static findEntry(filename: string) {
+        for (const entry of Array.from(
+            ProjectSystem.fileExplorer.querySelectorAll(".fileExplorerEntry")
+        )) {
+            const item = entry.querySelector(".fileExplorerItem");
+            if (item?.textContent?.trim() === filename) {
+                return {
+                    fileEntry: entry as HTMLDivElement,
+                    fileItem: item as HTMLDivElement
+                };
+            }
+        }
+        return { fileEntry: null, fileItem: null };
+    }
+
+    /**
+     * Load the autosave from local storage or default if no autosave exists
+     */
+    static loadAutoSaveOrDefault() {
+        const filename =
+            localStorage.getItem("editorFilename") || "untitled.ck";
+        const code = localStorage.getItem("editorCode") || "";
+        if (code === "") {
+            ProjectSystem.loadDefaultProject();
+            return;
+        }
+        ProjectSystem.addNewFile(filename, code);
+        Console.print(
+            `loaded autosave: \x1b[38;2;34;178;254m${
+                Editor.filename
+            }\x1b[0m (${localStorage.getItem("editorCodeTime")})`
+        );
     }
 
     /**
@@ -272,7 +575,18 @@ export default class ProjectSystem {
             confirm("Create a new project? You will lose your current files.")
         ) {
             ProjectSystem.clearFileSystem();
+            const newFile = new ProjectFile("untitled.ck", "");
+            ProjectSystem.setActiveFile(newFile);
+            ProjectSystem.addFileToExplorer(newFile);
         }
+    }
+
+    /**
+     * Load default code into the editor
+     */
+    private static async loadDefaultProject() {
+        const code: FileData = await fetchTextFile("./examples/helloSine.ck");
+        ProjectSystem.addNewFile("untitled.ck", code.data as string);
     }
 
     /**
@@ -282,9 +596,6 @@ export default class ProjectSystem {
         // delete all files
         ProjectSystem.projectFiles.clear();
         ProjectSystem.fileUploader.value = "";
-        const newFile = new ProjectFile("untitled.ck", "");
-        ProjectSystem.setActiveFile(newFile);
-        ProjectSystem.addFileToExplorer(newFile);
     }
 
     /**
@@ -436,11 +747,87 @@ export default class ProjectSystem {
             }
         }
     }
+
+    /**
+     * Sync all project files to the WebChucK Virtual File System
+     * Used after WebChucK initializes to ensure pre-loaded files are available
+     */
+    static syncFilesToChuck() {
+        if (!theChuck) return;
+        ProjectSystem.projectFiles.forEach((file: ProjectFile) => {
+            theChuck.createFile("", file.getFilename(), file.getData());
+        });
+    }
 }
 
 //----------------------------------------
 // Helper Functions
 //----------------------------------------
+
+/**
+ * Attach a long-press gesture to an element (touch devices).
+ * TODO: probably doesn't belong here, but it's only used here so it's fine for now.
+ */
+function onLongPress(
+    el: HTMLElement,
+    callback: (x: number, y: number) => void
+) {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let fired = false;
+    let moveAc: AbortController | null = null;
+
+    el.addEventListener(
+        "touchstart",
+        (e: TouchEvent) => {
+            fired = false;
+            moveAc?.abort();
+            moveAc = new AbortController();
+            const { clientX, clientY } = e.touches[0];
+            timer = setTimeout(() => {
+                fired = true;
+                callback(clientX, clientY);
+            }, 500);
+
+            el.addEventListener(
+                "touchmove",
+                (me: TouchEvent) => {
+                    if (
+                        Math.abs(me.touches[0].clientX - clientX) > 10 ||
+                        Math.abs(me.touches[0].clientY - clientY) > 10
+                    ) {
+                        clearTimeout(timer!);
+                        timer = null;
+                        moveAc!.abort();
+                    }
+                },
+                { passive: true, signal: moveAc.signal }
+            );
+        },
+        { passive: true }
+    );
+
+    el.addEventListener("touchend", () => {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+        moveAc?.abort();
+    });
+
+    // Suppress click after long-press
+    el.addEventListener(
+        "click",
+        (e: MouseEvent) => {
+            if (fired) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                fired = false;
+            }
+        },
+        true
+    );
+}
+
 /**
  * Load a chuck file from a url
  * @param url url to fetch example from

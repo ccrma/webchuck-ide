@@ -23,6 +23,10 @@ export default class Console {
     public static fitAddon: FitAddon;
     public static theme: string = "light";
 
+    private static readonly DEFAULT_FONT_SIZE = 15;
+    private static readonly MIN_FONT_SIZE = 10;
+    private static readonly MAX_FONT_SIZE = 24;
+
     private static firstPrint: boolean = true;
 
     constructor() {
@@ -30,14 +34,23 @@ export default class Console {
             cursorInactiveStyle: "none",
             fontFamily: "monaco, consolas, monospace",
             disableStdin: true,
-            fontSize: 15,
+            fontSize: parseInt(
+                localStorage.getItem("editorFontSize") ||
+                    String(Console.DEFAULT_FONT_SIZE)
+            ),
             rows: 1, // start with 1 row, then grow
             theme: {
                 foreground: Console.theme === "light" ? "#222222" : "#ffffff",
                 background: Console.theme === "light" ? "#ffffff" : "#222222",
                 selectionBackground:
-                    Console.theme === "light" ? "#cccccc55" : "#eeeeee55",
+                    Console.theme === "light" ? "#cccccc55" : "#eeeeee55"
             },
+            linkHandler: {
+                activate: (_, uri) => {
+                    // This bypasses the default warning and opens the link directly
+                    window.open(uri, "_blank", "noopener,noreferrer");
+                }
+            }
         });
 
         Console.terminalElement =
@@ -50,7 +63,7 @@ export default class Console {
 
         // Blob Links
         Console.terminal.registerLinkProvider(
-            // @ts-expect-error Link Provider relies on a deprecated version of
+            // Link Provider relies on a deprecated version of
             // xterm. Either wait for it to be updated, or write a custom
             // Link Provider class - terry 7/16/2024
             new LinkProvider(Console.terminal, blobRegex, (_e, uri) => {
@@ -70,6 +83,8 @@ export default class Console {
      * Resize the console and set the TTY_WIDTH
      */
     static resizeConsole() {
+        const container = Console.terminalElement?.parentElement;
+        if (!container || container.offsetHeight === 0) return;
         Console.fit();
         theChuck?.setParamInt("TTY_WIDTH", Console.getWidth());
     }
@@ -103,7 +118,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 background: "#222222",
                 foreground: "#ffffff",
-                selectionBackground: "#eeeeee55",
+                selectionBackground: "#eeeeee55"
             };
         }
     }
@@ -117,7 +132,7 @@ export default class Console {
             Console.terminal.options.theme = {
                 foreground: "#222222",
                 background: "#ffffff",
-                selectionBackground: "#cccccc55",
+                selectionBackground: "#cccccc55"
             };
         }
     }
@@ -134,5 +149,17 @@ export default class Console {
      */
     static getRowHeight(): number {
         return Console.terminal.rows;
+    }
+
+    /**
+     * Set the console font size to an absolute value
+     */
+    static changeFontSize(size: number) {
+        const clamped = Math.max(
+            Console.MIN_FONT_SIZE,
+            Math.min(Console.MAX_FONT_SIZE, size)
+        );
+        Console.terminal.options.fontSize = clamped;
+        Console.fit();
     }
 }
