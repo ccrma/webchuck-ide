@@ -1,8 +1,7 @@
-@import "animation.css";
+@import "./animation.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.js";
 
 /* IDE Theme: CSS variable colors for structural elements.
    Light values are baked as var() fallbacks; dark overrides below.
@@ -221,7 +220,7 @@ body {
 }
 
 .dropdown {
-    @apply fixed z-40 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left;
+    @apply fixed z-40 rounded-lg shadow-md ring-1 ring-black/5 focus:outline-none origin-top-left;
     background-color: var(--ide-bg-alt, #ffffff);
     border: 1px solid var(--ide-border, #f3f4f6);
     animation: enter-transition 0.1s ease-in-out forwards;
@@ -232,7 +231,7 @@ body {
 }
 
 .nestedDropdown {
-    @apply absolute z-50 max-h-96 overflow-y-auto rounded-lg shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none origin-top-left left-full top-0 -mt-2;
+    @apply absolute z-50 max-h-96 overflow-y-auto rounded-lg shadow-md ring-1 ring-black/5 focus:outline-none origin-top-left left-full top-0 -mt-2;
     background-color: var(--ide-bg-alt, #ffffff);
     border: 1px solid var(--ide-border, #f3f4f6);
     animation: enter-transition 0.1s ease-in-out forwards;
@@ -318,7 +317,7 @@ body {
 }
 
 #fileExplorerUploadPrompt {
-    @apply absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 dark:bg-opacity-20 transition;
+    @apply absolute inset-0 flex items-center justify-center bg-white/70 dark:bg-white/20 transition;
     user-select: none;
     pointer-events: none;
 }
@@ -422,6 +421,10 @@ body {
 #console > .xterm {
     height: 100%;
     box-sizing: border-box;
+}
+
+.xterm .xterm-viewport {
+    background-color: var(--ide-bg, #ffffff) !important;
 }
 
 #outputPanel {
@@ -567,7 +570,7 @@ td:nth-child(4) {
 
 /* SENSOR CONTAINER */
 .sensorLog {
-    @apply pt-2 !important;
+    @apply !pt-2;
     width: 270px;
     height: 36px;
 }
@@ -599,7 +602,9 @@ td:nth-child(4) {
 }
 
 dialog {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 7px 10px rgba(0, 0, 0, 0.05);
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.15),
+        0 7px 10px rgba(0, 0, 0, 0.05);
 }
 
 dialog::backdrop {
@@ -607,7 +612,7 @@ dialog::backdrop {
 }
 
 .modal {
-    @apply w-full px-8 py-6 rounded-lg;
+    @apply w-full px-8 py-6 rounded-lg m-auto;
     background-color: var(--ide-bg-alt, #ffffff);
     color: var(--ide-text, #555);
     border: 1px solid var(--ide-border, #ccc);
