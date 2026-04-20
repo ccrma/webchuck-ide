@@ -5,7 +5,7 @@
 // author: terry feng
 //------------------------------------------------------------------------------
 
-const WEBCHUGIN_URL = "https://ccrma.stanford.edu/~tzfeng/static/webchugins/";
+const WEBCHUGIN_URL = "https://ccrma.stanford.edu/~hoangben/webchugl/chugins/";
 
 const chugins = [
     "ABSaturator.chug.wasm",
@@ -19,7 +19,7 @@ const chugins = [
     "FoldbackSaturator.chug.wasm",
     "GVerb.chug.wasm",
     "KasFilter.chug.wasm",
-    "Ladspa.chug.wasm",
+    // "Ladspa.chug.wasm",
     "Line.chug.wasm",
     "MagicSine.chug.wasm",
     "Mesh2D.chug.wasm",
@@ -39,14 +39,15 @@ const chugins = [
     "WPDiodeLadder.chug.wasm",
     "WPKorg35.chug.wasm",
     "Wavetable.chug.wasm",
-    "WarpBuf.chug.wasm",
+    // "WarpBuf.chug.wasm",
     "WinFuncEnv.chug.wasm",
     "XML.chug.wasm"
 ];
 
 /**
  * Create paths to webchugins for loading into WebChucK
- * TODO: implement some kind of caching
+ * Note: caching is handled by browser HTTP cache; WASM fetch
+ * happens inside Chuck.loadChugin() which we don't control.
  * @returns {string[]} array of chugin paths
  */
 export function loadWebChugins(): string[] {
