@@ -4,7 +4,7 @@ import { monaco } from "./monacoLite";
 import { chuck_modules, chuck_libraries } from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
 import chuglDocJSON from "./chugl-doc.json";
-import { engineMode } from "@/host";
+import { getEngineMode } from "@/components/settings";
 
 // Documentation Type for ckdoc
 interface docType {
@@ -16,7 +16,7 @@ interface docType {
     link: string;
 }
 const ckdoc: { [key: string]: docType } =
-    engineMode === "webchugl"
+    getEngineMode() === "webchugl"
         ? { ...ckdocJSON, ...chuglDocJSON }
         : ckdocJSON;
 

@@ -5,7 +5,7 @@
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
-<html lang="en" data-banner-version="1">
+<html lang="en">
 
   <head>
     <!-- Google tag (gtag.js) -->
@@ -44,10 +44,6 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
-      // Set notification banner
-      if (localStorage.getItem("hideNotificationBanner") === document.documentElement.getAttribute("data-banner-version")) {
-        document.documentElement.classList.add("hide-notification-banner");
-      }
     </script>
   </head>
 
@@ -60,14 +56,6 @@
 
       <!-- Skip to main content (accessibility) -->
       <a href="#monacoEditor" class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md">Skip to editor</a>
-
-      <!-- Notification Banner -->
-      <section id="notificationBanner" aria-label="Notification Banner" class="hidden sm:flex h-8 bg-blue-600 text-white items-center justify-center relative font-semibold text-sm w-full">
-        <a id="notificationLink" href="https://ccrma.stanford.edu/~hoangben/webchuck-ide/" target="_blank" class="hover:underline">
-          <div id="notificationText">(Beta) Try out WebChucK IDE with ChuGL for audiovisual programming!</div>
-        </a>
-        <button id="closeNotificationBanner" class="absolute right-4 hover:opacity-80 cursor-pointer" aria-label="Close notification banner">X</button>
-      </section>
 
       <!-- NAVBAR -->
       <header id="navbarWrapper" class="w-full relative">
