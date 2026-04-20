@@ -14,8 +14,15 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import { theChuck, startChuck, connectMic, engineMode } from "@/host";
+import {
+    theChuck,
+    startChuck,
+    connectMic,
+    engineMode,
+    runJsCode
+} from "@/host";
 import Editor from "@/components/editor/monaco/editor";
+import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
 import Console from "@/components/outputPanel/console";
@@ -87,6 +94,15 @@ export default class ChuckBar {
     }
 
     static runEditorCode() {
+        const activeFile = ProjectSystem.activeFile;
+        const filename = activeFile?.getFilename() ?? "";
+
+        if (filename.endsWith(".js")) {
+            Console.print(`[js] running ${filename}...`);
+            runJsCode(Editor.getEditorCode(), filename);
+            return;
+        }
+
         theChuck?.runCode(Editor.getEditorCode()).then(
             // Success
             (shredID: number) => {
