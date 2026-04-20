@@ -8,6 +8,19 @@
 
 import { selectChuckSrc } from "@/host";
 
+export type EngineMode = "webchuck" | "webchugl";
+
+export function getEngineMode(): EngineMode {
+    const stored = localStorage.getItem("engineMode");
+    // Default: webchugl on the webchugl branch (first-time visitors).
+    if (stored !== "webchuck" && stored !== "webchugl") return "webchugl";
+    return stored;
+}
+
+export function setEngineMode(mode: EngineMode): void {
+    localStorage.setItem("engineMode", mode);
+}
+
 const versionString = Object.freeze({
     stable: "stable",
     dev: "dev"
