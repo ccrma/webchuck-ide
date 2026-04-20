@@ -424,6 +424,15 @@
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
                 <button id="canvasTab" type="button" class="header-item text-dark-5 hidden" role="tab" aria-selected="false" aria-controls="canvasContainer">CANVAS</button>
               </div>
+              <div id="fullscreenBtnWrap" class="ml-auto flex items-center hidden" style="color: var(--ide-text-muted, #888)">
+                <button id="fullscreenBtn" type="button" class="px-1 text-xs hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Fullscreen" aria-label="Fullscreen">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                    <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2 2h6"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div id="vmMonitorContainer" class="flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
               <div class="flex-1 min-h-0 overflow-auto" tabindex="0">
@@ -707,6 +716,34 @@
           </div>
           <div id="bottomSheetFiles" class="overflow-hidden" style="height: 50vh;"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Overlay (outside #webchuck-ide grid to avoid layout interference) -->
+    <div id="fullscreenOverlay" class="fullscreen-overlay hidden">
+      <div id="fullscreenContent" class="fullscreen-content"></div>
+      <div id="fullscreenToolbar" class="fullscreen-toolbar toolbar-hidden">
+        <button id="fullscreenClose" type="button" class="fullscreen-btn" title="Exit fullscreen (Esc)" aria-label="Close fullscreen">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="fullscreen-divider"></div>
+        <button id="fullscreenToggleBtn" type="button" class="fullscreen-btn" title="Toggle fullscreen" aria-label="Toggle fullscreen">
+          <svg id="fullscreenExpandIcon" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <svg id="fullscreenShrinkIcon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 14 10 14 10 20"></polyline>
+            <polyline points="20 10 14 10 14 4"></polyline>
+            <line x1="14" y1="10" x2="21" y2="3"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+        </button>
       </div>
     </div>
 

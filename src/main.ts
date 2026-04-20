@@ -15,6 +15,7 @@ import InputPanelHeader from "@/components/inputPanel/inputPanelHeader";
 import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
 import Console from "@/components/outputPanel/console";
 import FpsCounter from "@components/outputPanel/fpsCounter";
+import FullscreenOverlay from "@components/outputPanel/fullscreenOverlay";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import FindInProject from "@/components/fileExplorer/findInProject";
@@ -67,6 +68,7 @@ class Main {
         Main.editorPanelHeader = new EditorPanelHeader();
         Main.console = new Console();
         new FpsCounter();
+        new FullscreenOverlay();
         Main.editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
