@@ -1,13 +1,16 @@
 import Console from "@/components/outputPanel/console";
 import OutputHeaderToggle from "@components/toggle/outputHeaderToggle";
-import { visual } from "@/host";
+import { engineMode, visual } from "@/host";
 
 export default class OutputPanelHeader {
     public static consoleContainer: HTMLDivElement;
     public static vmMonitorContainer: HTMLDivElement;
     public static visualizerContainer: HTMLDivElement;
+    public static canvasContainer: HTMLDivElement;
 
     constructor() {
+        const isChuGL = engineMode === "webchugl";
+
         // Setup Output Panel Header Tabs
         // Console
         const consoleButton =
@@ -24,6 +27,11 @@ export default class OutputPanelHeader {
             document.querySelector<HTMLButtonElement>("#visualizerTab")!;
         OutputPanelHeader.visualizerContainer =
             document.querySelector<HTMLDivElement>("#visualizerContainer")!;
+        // Canvas (WebChuGL)
+        const canvasButton =
+            document.querySelector<HTMLButtonElement>("#canvasTab")!;
+        OutputPanelHeader.canvasContainer =
+            document.querySelector<HTMLDivElement>("#canvasContainer")!;
 
         // Build toggles
         new OutputHeaderToggle(
@@ -34,12 +42,22 @@ export default class OutputPanelHeader {
         new OutputHeaderToggle(
             vmMonitorButton,
             OutputPanelHeader.vmMonitorContainer,
-            true
+            !isChuGL
         );
         new OutputHeaderToggle(
             visualizerButton,
             OutputPanelHeader.visualizerContainer
         );
+
+        // Canvas tab: only in WebChuGL mode
+        if (isChuGL) {
+            canvasButton.classList.remove("hidden");
+            new OutputHeaderToggle(
+                canvasButton,
+                OutputPanelHeader.canvasContainer,
+                true
+            );
+        }
 
         // Recalculate split heights on window resize
         window.addEventListener("resize", () => {

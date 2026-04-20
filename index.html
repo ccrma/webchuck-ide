@@ -417,6 +417,7 @@
                 <button id="vmMonitorTab"  type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="vmMonitorContainer">VM MONITOR</button>
                 <button id="consoleTab"    type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="consoleContainer">CONSOLE</button>
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
+                <button id="canvasTab" type="button" class="header-item text-dark-5 hidden" role="tab" aria-selected="false" aria-controls="canvasContainer">CANVAS</button>
               </div>
             </div>
             <div id="vmMonitorContainer" class="flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
@@ -447,6 +448,11 @@
                 <b>Start WebChucK for visualizer</b>
               </div>
               <canvas id="visualizer" class="absolute inset-0 w-full h-full" aria-label="Audio visualizer"></canvas>
+            </div>
+            <div id="canvasContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="canvasTab">
+              <div class="flex-1 min-h-0 relative">
+                <canvas id="chuglCanvas" class="absolute inset-0 w-full h-full"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -697,9 +703,6 @@
         </div>
       </div>
     </div>
-
-    <!-- WebChuGL canvas placeholder (hidden — repositioned by Task 3) -->
-    <canvas id="chuglCanvas" class="hidden"></canvas>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
