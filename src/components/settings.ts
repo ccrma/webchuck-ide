@@ -33,6 +33,7 @@ export default class Settings {
     public static applyButton: HTMLButtonElement;
     public static versionSelect: HTMLSelectElement;
     public static versionDescription: HTMLParagraphElement;
+    public static engineSelect: HTMLSelectElement;
 
     constructor() {
         Settings.openButton =
@@ -50,6 +51,9 @@ export default class Settings {
             document.querySelector<HTMLParagraphElement>(
                 "#chuck-version-desc"
             )!;
+        Settings.engineSelect = document.querySelector<HTMLSelectElement>(
+            "#engineSelect"
+        )!;
 
         // Open settings
         Settings.openButton.addEventListener("click", () => {
@@ -76,6 +80,13 @@ export default class Settings {
         this.selectChucKVersion(
             localStorage.getItem("chuckVersion") || versionString.stable
         );
+
+        // Engine select
+        Settings.engineSelect.value = getEngineMode();
+        Settings.engineSelect.addEventListener("change", () => {
+            setEngineMode(Settings.engineSelect.value as EngineMode);
+            window.location.reload();
+        });
     }
 
     /**
