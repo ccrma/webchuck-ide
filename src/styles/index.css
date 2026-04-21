@@ -151,13 +151,8 @@ body {
     }
 
     #chuckBar {
-        overflow: hidden;
-    }
-
-    #chuckBar > div:last-child {
-        flex: 1 1 0 !important;
-        min-width: 0;
-        justify-content: space-evenly;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     #chuckBar .chuck-button {

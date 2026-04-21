@@ -63,7 +63,7 @@ export default class Dropdown {
                 event.preventDefault();
                 const items = Array.from(
                     this.dropdown.querySelectorAll<HTMLElement>(
-                        '[role="menuitem"]'
+                        "[role=\"menuitem\"]"
                     )
                 );
                 if (items.length === 0) return;
