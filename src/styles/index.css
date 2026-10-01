@@ -6,6 +6,10 @@
 /* IDE Theme: CSS variable colors for structural elements.
    Light values are baked as var() fallbacks; dark overrides below.
    A full theme system can later replace both with runtime setProperty(). */
+:root {
+    --ide-text-muted: #555555;
+}
+
 :root.dark {
     --ide-bg: #222222;
     --ide-bg-alt: #333333;

@@ -1,7 +1,7 @@
 {
     "name": "webchuck-ide",
     "private": true,
-    "version": "2.1.6",
+    "version": "2.2.0-beta",
     "type": "module",
     "scripts": {
         "clean": "rm -rf dist && rm -rf node_modules",
