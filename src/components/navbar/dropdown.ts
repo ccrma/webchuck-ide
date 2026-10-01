@@ -48,7 +48,19 @@ export default class Dropdown {
 
         // Close dropdown when focus leaves the container
         this.container.addEventListener("focusout", (event: FocusEvent) => {
-            if (!this.container.contains(event.relatedTarget as Node)) {
+            if (
+                event.relatedTarget &&
+                !this.container.contains(event.relatedTarget as Node)
+            ) {
+                this.close();
+            }
+        });
+
+        // Close dropdown when a menu item is clicked
+        this.dropdown.addEventListener("click", (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            const item = target.closest("button, a");
+            if (item && !item.classList.contains("nestedDropdownButton")) {
                 this.close();
             }
         });
@@ -63,7 +75,7 @@ export default class Dropdown {
                 event.preventDefault();
                 const items = Array.from(
                     this.dropdown.querySelectorAll<HTMLElement>(
-                        '[role="menuitem"]'
+                        "[role=\"menuitem\"]"
                     )
                 );
                 if (items.length === 0) return;
