@@ -14,6 +14,7 @@ import {
     loadChuckFileFromURL,
     loadDataFileFromURL
 } from "@components/fileExplorer/projectSystem";
+import { engineMode } from "@/host";
 
 export default class Examples {
     public static examplesDropdownContainer: HTMLUListElement;
@@ -29,6 +30,17 @@ export default class Examples {
      * Create all the basic example buttons to load
      */
     static buildBasicExamples() {
+        if (engineMode === "webchugl") {
+            Examples.buildChuGLExamples();
+        } else {
+            Examples.buildWebChucKExamples();
+        }
+    }
+
+    /**
+     * WebChucK examples (audio-only)
+     */
+    static buildWebChucKExamples() {
         Examples.newExample("Hello Sine", () =>
             loadChuckFileFromURL("examples/helloSine.ck")
         );
@@ -169,6 +181,46 @@ export default class Examples {
                 InputPanelHeader.setNotificationPing(2, true);
             },
             sensorNested
+        );
+    }
+
+    /**
+     * ChuGL examples (audio + graphics)
+     */
+    static buildChuGLExamples() {
+        Examples.newExample("Basic Shapes", () =>
+            loadChuckFileFromURL("examples/chugl/basicShapes.ck")
+        );
+        Examples.newExample("Circles", () =>
+            loadChuckFileFromURL("examples/chugl/circles.ck")
+        );
+        Examples.newExample("Solar System", () =>
+            loadChuckFileFromURL("examples/chugl/solarSystem.ck")
+        );
+        Examples.newExample("Lissajous", () =>
+            loadChuckFileFromURL("examples/chugl/lissajous.ck")
+        );
+
+        // JS Examples
+        const jsNested = NestedDropdown.createNewNestedDropdown(
+            this.examplesDropdownContainer,
+            "js-host",
+            "JS"
+        );
+        Examples.newExample(
+            "JS Freq Control",
+            () => {
+                loadChuckFileFromURL("examples/chugl/jsFreqControl.ck");
+                loadChuckFileFromURL("examples/chugl/jsFreqControl.js");
+            },
+            jsNested
+        );
+        Examples.newExample(
+            "JS Scene Builder",
+            () => {
+                loadChuckFileFromURL("examples/chugl/jsSceneBuilder.js");
+            },
+            jsNested
         );
     }
 
