@@ -8,6 +8,7 @@
 //---------------------------------------------------
 
 import { selectChuckSrc } from "@/host";
+import { parseURLParams } from "@/services/urlParamParser";
 
 const versionString = Object.freeze({
     stable: "stable",
@@ -22,10 +23,15 @@ const engineString = Object.freeze({
 export type EngineMode = "webchuck" | "webchugl";
 
 /**
- * Read the current engine mode from localStorage.
+ * Read the current engine mode. An ?engine= URL param overrides
+ * localStorage for this page load only (it is not persisted).
  * Defaults to WebChuGL on first visit for the webchugl branch.
  */
 export function getEngineMode(): EngineMode {
+    const param = parseURLParams().engine;
+    if (param === engineString.webchuck) return engineString.webchuck;
+    if (param === engineString.webchugl) return engineString.webchugl;
+
     const stored = localStorage.getItem("engineMode");
     if (stored === engineString.webchuck) return engineString.webchuck;
     if (stored === engineString.webchugl) return engineString.webchugl;
@@ -152,6 +158,13 @@ export default class Settings {
             "chuckVersion",
             version ? versionString.stable : versionString.dev
         );
+
+        // Drop any ?engine= override so the saved engine takes effect
+        const url = new URL(location.href);
+        if (url.searchParams.has("engine")) {
+            url.searchParams.delete("engine");
+            history.replaceState(null, "", url.toString());
+        }
 
         // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
         location.reload();
