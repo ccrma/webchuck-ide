@@ -19,7 +19,7 @@ const chugins = [
     "FoldbackSaturator.chug.wasm",
     "GVerb.chug.wasm",
     "KasFilter.chug.wasm",
-    // "Ladspa.chug.wasm",
+    "Ladspa.chug.wasm",
     "Line.chug.wasm",
     "MagicSine.chug.wasm",
     "Mesh2D.chug.wasm",
@@ -39,7 +39,7 @@ const chugins = [
     "WPDiodeLadder.chug.wasm",
     "WPKorg35.chug.wasm",
     "Wavetable.chug.wasm",
-    // "WarpBuf.chug.wasm",
+    "WarpBuf.chug.wasm",
     "WinFuncEnv.chug.wasm",
     "XML.chug.wasm"
 ];
