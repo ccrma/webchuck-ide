@@ -25,7 +25,7 @@ export type EngineMode = "webchuck" | "webchugl";
 /**
  * Read the current engine mode. An ?engine= URL param overrides
  * localStorage for this page load only (it is not persisted).
- * Defaults to WebChuGL on first visit for the webchugl branch.
+ * Defaults to WebChucK on first visit.
  */
 export function getEngineMode(): EngineMode {
     const param = parseURLParams().engine;
@@ -35,7 +35,7 @@ export function getEngineMode(): EngineMode {
     const stored = localStorage.getItem("engineMode");
     if (stored === engineString.webchuck) return engineString.webchuck;
     if (stored === engineString.webchugl) return engineString.webchugl;
-    return engineString.webchugl;
+    return engineString.webchuck;
 }
 
 export default class Settings {
