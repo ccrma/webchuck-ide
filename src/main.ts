@@ -6,6 +6,7 @@
 // date: August 2023
 //-------------------------------------------------------------------
 
+import AnnouncementBanner from "@/components/navbar/announcementBanner";
 import NavBar from "@/components/navbar/navbar";
 import ChuckBar from "@/components/chuckBar/chuckBar";
 import Editor from "@/components/editor/monaco/editor";
@@ -50,6 +51,7 @@ class Main {
     public static GUI: GUI;
     public static bottomSheet: BottomSheet;
     public static shareModal: ShareModal;
+    public static announcementBanner: AnnouncementBanner;
 
     constructor() {
         initTheme(); // Set color scheme
@@ -77,6 +79,7 @@ class Main {
         Main.GUI = new GUI();
         Main.bottomSheet = new BottomSheet();
         Main.shareModal = new ShareModal();
+        Main.announcementBanner = new AnnouncementBanner();
     }
 
     init() {
