@@ -66,6 +66,12 @@ export default class ChuckBar {
         ChuckBar.recordButton =
             document.querySelector<HTMLButtonElement>("#recordButton")!;
 
+        ChuckBar.micButton.disabled = true;
+        ChuckBar.playButton.disabled = true;
+        ChuckBar.replaceButton.disabled = true;
+        ChuckBar.removeButton.disabled = true;
+        ChuckBar.recordButton.disabled = true;
+
         // Add tooltips
         ChuckBar.webchuckButton.title = `Start ${getEngineLabel()} [${metaKey} + .]`;
         ChuckBar.micButton.title = `Connect Microphone`;
