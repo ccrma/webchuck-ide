@@ -120,20 +120,16 @@ export default class Settings {
      * Open the settings modal
      */
     static async openModal() {
+        await Settings.populateAudioDevices();
         // Silently probe if permission was already granted previously
-        if (!Settings.hasDeviceLabels && navigator.permissions?.query) {
-            try {
-                const status = await navigator.permissions.query({
-                    name: "microphone" as PermissionName
-                });
-                if (status.state === "granted") {
-                    await Settings.requestMicPermission();
-                }
-            } catch {
-                // Permissions query not supported in all browsers
+        if (!Settings.hasDeviceLabels) {
+            const status = await navigator.permissions
+                .query({ name: "microphone" as PermissionName})
+                .catch(() => null);
+            if (status?.state === "granted") {
+                await Settings.requestMicPermission();
             }
         }
-        await Settings.populateAudioDevices();
         Settings.resetState();
         Settings.modal.showModal();
     }
@@ -183,10 +179,7 @@ export default class Settings {
         return {
             chuckVersion:
                 localStorage.getItem("chuckVersion") || versionString.stable,
-            audioInput:
-                Settings.hasDeviceLabels && savedInput !== "none"
-                    ? savedInput
-                    : "default",
+            audioInput: Settings.hasDeviceLabels ? savedInput : "default",
             audioOutput: Settings.hasDeviceLabels ? savedOutput : "default"
         };
     }
@@ -375,18 +368,25 @@ export default class Settings {
             );
 
             // Explicitly set values on select elements and sync pending state
-            Settings.audioInputSelect.value = activeInputId;
-            Settings.audioOutputSelect.value = activeOutputId;
-            if (!Settings.audioInputSelect.value) {
-                Settings.audioInputSelect.value = "default";
-            }
-            if (!Settings.audioOutputSelect.value) {
-                Settings.audioOutputSelect.value = "default";
-            }
-            if (Settings.pending) {
-                Settings.pending.audioInput = Settings.audioInputSelect.value;
-                Settings.pending.audioOutput = Settings.audioOutputSelect.value;
-            }
+            const syncSelect = (
+                select: HTMLSelectElement,
+                key: "audioInput" | "audioOutput",
+                activeId: string
+            ) => {
+                select.value = activeId;
+                if (!select.value) {
+                    select.value = "default";
+                }
+                if (Settings.pending) {
+                    Settings.pending[key] = select.value;
+                }
+            };
+            syncSelect(Settings.audioInputSelect, "audioInput", activeInputId);
+            syncSelect(
+                Settings.audioOutputSelect,
+                "audioOutput",
+                activeOutputId
+            );
         } catch (err) {
             console.error("Error communicating with audio devices:", err);
         }

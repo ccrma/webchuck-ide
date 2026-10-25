@@ -256,20 +256,56 @@ export function getChuckNow(): number {
     return chuckNowCached;
 }
 
+declare global {
+    interface AudioContext {
+        setSinkId?(sinkId: string): Promise<void>;
+        readonly sinkId?: string;
+    }
+}
+
+type MicStateCallback = (active: boolean) => void;
+const micStateCallbacks: MicStateCallback[] = [];
+
+export function onMicStateChange(callback: MicStateCallback): () => void {
+    micStateCallbacks.push(callback);
+    return () => {
+        const index = micStateCallbacks.indexOf(callback);
+        if (index !== -1) micStateCallbacks.splice(index, 1);
+    };
+}
+
+function notifyMicState(active: boolean) {
+    micStateCallbacks.forEach((cb) => cb(active));
+}
+
 /**
  * Set the audio output device sink ID
  */
 export async function setAudioOutputDevice(deviceId: string): Promise<boolean> {
-    selectedOutputDeviceId = deviceId;
-    if (!audioContext) return false;
-    if ("setSinkId" in AudioContext.prototype) {
+    if (!audioContext) {
+        selectedOutputDeviceId = deviceId;
+        return false;
+    }
+    if (typeof audioContext.setSinkId === "function") {
         try {
-            await (audioContext as any).setSinkId(
-                deviceId === "default" ? "" : deviceId
-            );
+            const sinkId = deviceId === "default" ? "" : deviceId;
+            await audioContext.setSinkId(sinkId);
+            selectedOutputDeviceId = deviceId;
             return true;
         } catch (err) {
             console.error("Failed to set audio sink ID:", err);
+            // Fallback to default sink if custom device fails
+            if (deviceId !== "default") {
+                try {
+                    await audioContext.setSinkId("");
+                    selectedOutputDeviceId = "default";
+                } catch (fallbackErr) {
+                    console.error(
+                        "Failed to reset to default audio sink:",
+                        fallbackErr
+                    );
+                }
+            }
             return false;
         }
     } else {
@@ -317,7 +353,7 @@ export async function connectMic(deviceId?: string): Promise<boolean> {
     const audioConstraints: MediaTrackConstraints = {
         ...baseConstraints,
         ...(selectedInputDeviceId && selectedInputDeviceId !== "default"
-            ? { deviceId: { exact: selectedInputDeviceId } }
+            ? { deviceId: { ideal: selectedInputDeviceId } }
             : {})
     };
 
@@ -326,37 +362,23 @@ export async function connectMic(deviceId?: string): Promise<boolean> {
             video: false,
             audio: audioConstraints
         });
+
+        // Listen for hardware disconnection or permission revocation
+        const audioTrack = stream.getAudioTracks()[0];
+        if (audioTrack) {
+            audioTrack.addEventListener("ended", () => {
+                disconnectMic();
+            });
+        }
+
         currentMicStream = stream;
         currentAdcNode = audioContext.createMediaStreamSource(stream);
         currentAdcNode.connect(theChuck);
+        notifyMicState(true);
         return true;
     } catch (err: any) {
-        // Fallback to default microphone if the saved device was unplugged
-        if (
-            err?.name === "OverconstrainedError" ||
-            err?.name === "NotFoundError"
-        ) {
-            console.warn(
-                "Saved microphone not found, falling back to default input."
-            );
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: false,
-                    audio: baseConstraints
-                });
-                currentMicStream = stream;
-                currentAdcNode = audioContext.createMediaStreamSource(stream);
-                currentAdcNode.connect(theChuck);
-                return true;
-            } catch (fallbackErr) {
-                console.error(
-                    "Failed to connect fallback microphone:",
-                    fallbackErr
-                );
-            }
-        } else {
-            console.error("Failed to connect microphone:", err);
-        }
+        console.error("Failed to connect microphone:", err);
+        notifyMicState(false);
         return false;
     }
 }
@@ -365,13 +387,19 @@ export async function connectMic(deviceId?: string): Promise<boolean> {
  * Disconnect and stop the microphone stream
  */
 export function disconnectMic(): void {
+    let wasConnected = false;
     if (currentAdcNode) {
         currentAdcNode.disconnect();
         currentAdcNode = null;
+        wasConnected = true;
     }
     if (currentMicStream) {
         currentMicStream.getTracks().forEach((track) => track.stop());
         currentMicStream = null;
+        wasConnected = true;
+    }
+    if (wasConnected) {
+        notifyMicState(false);
     }
 }
 
