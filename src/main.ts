@@ -124,6 +124,12 @@ class Main {
                 ChuckBar.startWebchuck();
             }
 
+            // cmd + , or ctrl + ,
+            if ((e.metaKey || e.ctrlKey) && e.key === ",") {
+                e.preventDefault();
+                Settings.openModal();
+            }
+
             if (!ChuckBar.running) return;
 
             // cmd + enter or ctrl + enter

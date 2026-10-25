@@ -37,6 +37,14 @@ let chuckVersion: string = "1.5.X.X";
 let audioContext: AudioContext;
 let sampleRate: number = 0;
 
+// Audio Devices
+let currentMicStream: MediaStream | null = null;
+let currentAdcNode: MediaStreamAudioSourceNode | null = null;
+let selectedInputDeviceId: string =
+    localStorage.getItem("audioInputDevice") || "default";
+let selectedOutputDeviceId: string =
+    localStorage.getItem("audioOutputDevice") || "default";
+
 // Audio Visualizer
 let analyser: AnalyserNode;
 let visual: Visualizer;
@@ -119,6 +127,12 @@ export async function initChuck() {
         }
     }
     theChuck.connect(audioContext.destination);
+
+    // Apply saved audio output device if supported
+    if (selectedOutputDeviceId && selectedOutputDeviceId !== "default") {
+        setAudioOutputDevice(selectedOutputDeviceId);
+    }
+
     Console.print("WebChucK is ready!");
 
     onChuckReady();
@@ -243,23 +257,129 @@ export function getChuckNow(): number {
 }
 
 /**
- * Connect microphone input to theChuck
+ * Set the audio output device sink ID
  */
-export async function connectMic() {
-    // Get microphone with no constraints
-    navigator.mediaDevices
-        .getUserMedia({
+export async function setAudioOutputDevice(deviceId: string): Promise<boolean> {
+    selectedOutputDeviceId = deviceId;
+    if (!audioContext) return false;
+    if ("setSinkId" in AudioContext.prototype) {
+        try {
+            await (audioContext as any).setSinkId(
+                deviceId === "default" ? "" : deviceId
+            );
+            return true;
+        } catch (err) {
+            console.error("Failed to set audio sink ID:", err);
+            return false;
+        }
+    } else {
+        console.warn(
+            "AudioContext.setSinkId is not supported in this browser."
+        );
+        return false;
+    }
+}
+
+/**
+ * Set the preferred audio input device and switch live if mic is already active
+ */
+export async function setAudioInputDevice(deviceId: string): Promise<void> {
+    if (deviceId === selectedInputDeviceId) {
+        return;
+    }
+    selectedInputDeviceId = deviceId;
+    // If microphone is currently active, switch to the newly selected device live
+    if (isMicConnected()) {
+        await connectMic(deviceId);
+    }
+}
+
+/**
+ * Connect or switch microphone input to theChuck
+ */
+export async function connectMic(deviceId?: string): Promise<boolean> {
+    if (deviceId !== undefined) {
+        selectedInputDeviceId = deviceId;
+    }
+    if (!audioContext || !theChuck) {
+        return false;
+    }
+
+    // Disconnect previous mic if any
+    disconnectMic();
+
+    const baseConstraints: MediaTrackConstraints = {
+        echoCancellation: false,
+        autoGainControl: false,
+        noiseSuppression: false
+    };
+
+    const audioConstraints: MediaTrackConstraints = {
+        ...baseConstraints,
+        ...(selectedInputDeviceId && selectedInputDeviceId !== "default"
+            ? { deviceId: { exact: selectedInputDeviceId } }
+            : {})
+    };
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
             video: false,
-            audio: {
-                echoCancellation: false,
-                autoGainControl: false,
-                noiseSuppression: false
-            }
-        })
-        .then((stream) => {
-            const adc = audioContext.createMediaStreamSource(stream);
-            adc.connect(theChuck);
+            audio: audioConstraints
         });
+        currentMicStream = stream;
+        currentAdcNode = audioContext.createMediaStreamSource(stream);
+        currentAdcNode.connect(theChuck);
+        return true;
+    } catch (err: any) {
+        // Fallback to default microphone if the saved device was unplugged
+        if (
+            err?.name === "OverconstrainedError" ||
+            err?.name === "NotFoundError"
+        ) {
+            console.warn(
+                "Saved microphone not found, falling back to default input."
+            );
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: false,
+                    audio: baseConstraints
+                });
+                currentMicStream = stream;
+                currentAdcNode = audioContext.createMediaStreamSource(stream);
+                currentAdcNode.connect(theChuck);
+                return true;
+            } catch (fallbackErr) {
+                console.error(
+                    "Failed to connect fallback microphone:",
+                    fallbackErr
+                );
+            }
+        } else {
+            console.error("Failed to connect microphone:", err);
+        }
+        return false;
+    }
+}
+
+/**
+ * Disconnect and stop the microphone stream
+ */
+export function disconnectMic(): void {
+    if (currentAdcNode) {
+        currentAdcNode.disconnect();
+        currentAdcNode = null;
+    }
+    if (currentMicStream) {
+        currentMicStream.getTracks().forEach((track) => track.stop());
+        currentMicStream = null;
+    }
+}
+
+/**
+ * Check if microphone stream is currently active
+ */
+export function isMicConnected(): boolean {
+    return currentMicStream !== null;
 }
 
 /**

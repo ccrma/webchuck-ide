@@ -3,7 +3,7 @@
 // desc:  Button interface for communicating with ChucK VM.
 //
 //        Left:
-//        Start VM, Mic On, Compile and Play, Replace Shred,
+//        Start VM, Mic Toggle, Compile and Play, Replace Shred,
 //        Remove Shred
 //
 //        Right:
@@ -14,7 +14,13 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
-import { theChuck, startChuck, connectMic } from "@/host";
+import {
+    theChuck,
+    startChuck,
+    connectMic,
+    disconnectMic,
+    isMicConnected
+} from "@/host";
 import Editor from "@/components/editor/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
@@ -23,6 +29,11 @@ import Console from "@/components/outputPanel/console";
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
 const metaKey = isWindows ? "Ctrl" : "⌘";
+
+const MicButtonIcon = {
+    off: `<svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/></svg>`,
+    on: `<svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/><line x1="15" y1="12" x2="35" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>`
+};
 
 export default class ChuckBar {
     public static webchuckButton: HTMLButtonElement;
@@ -68,8 +79,7 @@ export default class ChuckBar {
             await ChuckBar.startWebchuck();
         });
         ChuckBar.micButton.addEventListener("click", async () => {
-            connectMic();
-            ChuckBar.micButton.disabled = true;
+            await ChuckBar.toggleMic();
         });
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
@@ -83,6 +93,35 @@ export default class ChuckBar {
 
         // Configure the recorder button
         new Recorder(ChuckBar.recordButton);
+    }
+
+    static async toggleMic() {
+        if (isMicConnected()) {
+            disconnectMic();
+            ChuckBar.setMicButtonState(false);
+        } else {
+            const connected = await connectMic();
+            ChuckBar.setMicButtonState(connected);
+        }
+    }
+
+    static setMicButtonState(active: boolean) {
+        if (active) {
+            ChuckBar.micButton.innerHTML = MicButtonIcon.on;
+            ChuckBar.micButton.classList.add("ring-2", "ring-purple-500");
+            ChuckBar.micButton.title = "Disconnect Microphone";
+            ChuckBar.micButton.setAttribute(
+                "aria-label",
+                "Disconnect Microphone"
+            );
+            ChuckBar.micButton.setAttribute("aria-pressed", "true");
+        } else {
+            ChuckBar.micButton.innerHTML = MicButtonIcon.off;
+            ChuckBar.micButton.classList.remove("ring-2", "ring-purple-500");
+            ChuckBar.micButton.title = "Connect Microphone";
+            ChuckBar.micButton.setAttribute("aria-label", "Connect Microphone");
+            ChuckBar.micButton.setAttribute("aria-pressed", "false");
+        }
     }
 
     static runEditorCode() {
