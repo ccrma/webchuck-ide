@@ -200,28 +200,6 @@ export default class Examples {
         Examples.newExample("Lissajous", () =>
             loadChuckFileFromURL("examples/chugl/lissajous.ck")
         );
-
-        // JS Examples
-        const jsNested = NestedDropdown.createNewNestedDropdown(
-            this.examplesDropdownContainer,
-            "js-host",
-            "JS"
-        );
-        Examples.newExample(
-            "JS Freq Control",
-            () => {
-                loadChuckFileFromURL("examples/chugl/jsFreqControl.ck");
-                loadChuckFileFromURL("examples/chugl/jsFreqControl.js");
-            },
-            jsNested
-        );
-        Examples.newExample(
-            "JS Scene Builder",
-            () => {
-                loadChuckFileFromURL("examples/chugl/jsSceneBuilder.js");
-            },
-            jsNested
-        );
     }
 
     /**
