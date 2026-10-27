@@ -118,6 +118,10 @@ export default class ChuckBar {
             return;
         }
 
+        if (engineMode === "webchugl" && VmMonitor.getNumShreds() > 0) {
+            return;
+        }
+
         theChuck?.runCode(Editor.getEditorCode()).then(
             // Success
             (shredID: number) => {
@@ -131,7 +135,13 @@ export default class ChuckBar {
         );
     }
 
-    static replaceCode() {
+    static async replaceCode() {
+        if (engineMode === "webchugl") {
+            await ChuckBar.removeCode();
+            ChuckBar.runEditorCode();
+            return;
+        }
+
         theChuck?.replaceCode(Editor.getEditorCode()).then(
             // Success
             (shreds: { oldShred: number; newShred: number }) => {
@@ -143,7 +153,13 @@ export default class ChuckBar {
     }
 
     static removeCode() {
-        theChuck?.removeLastCode().then(
+        // Dropping the shred row resets the ChuGL VM, which is what stops the
+        // scene's parent shred and everything it sporked
+        if (engineMode === "webchugl") {
+            return VmMonitor.removeShredRow(VmMonitor.getLastShred());
+        }
+
+        return theChuck?.removeLastCode().then(
             // Success
             (shredID: number) => {
                 VmMonitor.removeShredRow(shredID);

@@ -216,9 +216,6 @@ async function initWebChuGL() {
 export async function resetChuGL(): Promise<void> {
     if (engineMode !== "webchugl") return;
 
-    // Only reset if frames were actually rendered (i.e. graphics state exists)
-    if (theChuck.rawRuntime.frameCount() === 0) return;
-
     await theChuck.rawRuntime.reset();
 }
 

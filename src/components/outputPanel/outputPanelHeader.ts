@@ -54,25 +54,25 @@ export default class OutputPanelHeader {
             OutputPanelHeader.consoleContainer,
             true
         );
+        // for now, VM Monitor is hidden in WebChuGL mode
         new OutputHeaderToggle(
             vmMonitorButton,
             OutputPanelHeader.vmMonitorContainer,
-            !isChuGL
+            true,
+            isChuGL
         );
         new OutputHeaderToggle(
             visualizerButton,
             OutputPanelHeader.visualizerContainer
         );
 
-        // Canvas tab: only in WebChuGL mode
-        if (isChuGL) {
-            canvasButton.classList.remove("hidden");
-            new OutputHeaderToggle(
-                canvasButton,
-                OutputPanelHeader.canvasContainer,
-                true
-            );
-        }
+        // Canvas: only in WebChuGL mode
+        new OutputHeaderToggle(
+            canvasButton,
+            OutputPanelHeader.canvasContainer,
+            true,
+            !isChuGL
+        );
 
         // Recalculate split heights on window resize
         window.addEventListener("resize", () => {
