@@ -253,8 +253,8 @@
       <nav id="chuckBar" class="flex items-center justify-start px-2 py-1 gap-2" aria-label="ChucK controls">
           <div class="flex items-center gap-2 flex-shrink-0" role="toolbar" aria-label="ChucK controls">
             <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
-            <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" title="Enable Microphone" aria-label="Enable Microphone" disabled>
-              <svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/></svg>
+            <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" aria-label="Microphone" aria-pressed="false" disabled>
+              <svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/><line x1="15" y1="12" x2="35" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
             </button>
             <button id="playButton" type="button" class="chuck-button bg-[#70E16E]" aria-label="Play" disabled>
               <svg viewBox="14 10 28 33" fill="none" class="w-5 h-5"><path d="M40.1084 25.7217L15.9126 39.6911L15.9126 11.7522L40.1084 25.7217Z" fill="white"/><rect x="30.5172" y="35.5744" width="10.4631" height="1.79367" fill="white"/><rect x="34.7024" y="41.8522" width="10.4631" height="1.79367" transform="rotate(-90 34.7024 41.8522)" fill="white"/></svg>
@@ -507,18 +507,80 @@
       <dialog class="modal" id="settings-modal" aria-labelledby="settings-heading">
         <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
-        <form class="flex flex-col gap-2 py-2" method="dialog">
-          <label class="form-label" for="chuck-version-select">ChucK version</label>
-          <select id="chuck-version-select" class="form-select">
-            <option value="stable">Stable</option>
-            <option value="dev">Development</option>
-          </select>
-          <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+        <form class="flex flex-col py-1" method="dialog">
+          <!-- Audio Section -->
+          <section class="shortcuts-section">
+            <h3 class="shortcuts-category">Audio</h3>
+            <div class="flex flex-col gap-3 pt-1">
+              <!-- Audio Input Device -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-input-select">Input Device</label>
+                <select id="audio-input-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default Input</option>
+                </select>
+              </div>
+
+              <!-- Audio Output Device -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-output-select">Output Device</label>
+                <select id="audio-output-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default Output</option>
+                </select>
+              </div>
+
+              <!-- Audio Permission Banner -->
+              <div id="audio-permission-prompt" class="hidden p-2.5 rounded bg-orange/10 border border-orange/30 flex items-center justify-between gap-3 text-xs">
+                <span class="text-dark-8 dark:text-gray-300">Microphone permission is required to detect audio device names.</span>
+                <button id="audio-grant-permission" type="button" class="button secondary text-xs py-1 px-2.5 whitespace-nowrap">Grant Access</button>
+              </div>
+
+              <!-- Output Channels -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-channels-select">
+                  Output Channels <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="audio-channels-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default</option>
+                </select>
+              </div>
+
+              <!-- Sample Rate -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-srate-select">
+                  Sample Rate <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="audio-srate-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default</option>
+                  <option value="44100">44100</option>
+                  <option value="48000">48000</option>
+                  <option value="96000">96000</option>
+                  <option value="192000">192000</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <!-- ChucK Section -->
+          <section class="shortcuts-section">
+            <h3 class="shortcuts-category">ChucK</h3>
+            <div class="pt-1">
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="chuck-version-select">
+                  Version <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="chuck-version-select" class="form-select sm:col-span-2 min-w-0 truncate" aria-describedby="chuck-version-desc">
+                  <option value="stable">Stable</option>
+                  <option value="dev">Development</option>
+                </select>
+              </div>
+              <p id="chuck-version-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1.5"></p>
+            </div>
+          </section>
         </form>
         <!-- Close Settings -->
         <div class="flex gap-4 justify-end pt-4">
           <button id="settings-close" type="button" class="button secondary">Cancel</button>
-          <button id="settings-apply" type="button" class="button primary">Reload</button>
+          <button id="settings-apply" type="button" class="button primary">Apply</button>
         </div>
       </dialog>
 
@@ -561,6 +623,8 @@
         <section class="shortcuts-section">
           <h3 class="shortcuts-category">Navigation</h3>
           <div class="shortcuts-grid">
+            <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>,</kbd></div>
+            <div>Open settings</div>
             <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></div>
             <div>Find in files</div>
             <div class="shortcuts-keys"><kbd class="meta-key"></kbd> + <kbd>F</kbd></div>
