@@ -9,7 +9,13 @@
 import {
     selectChuckSrc,
     getAudioOutputDevice,
-    setAudioOutputDevice
+    setAudioOutputDevice,
+    getAudioSampleRate,
+    setAudioSampleRate,
+    getSystemSampleRate,
+    getAudioOutputChannels,
+    setAudioOutputChannels,
+    getMaxOutputChannels
 } from "@/host";
 import { getAudioInputDevice, setAudioInputDevice } from "@/services/micInput";
 
@@ -22,10 +28,16 @@ export interface SettingsState {
     chuckVersion: string;
     audioInput: string;
     audioOutput: string;
+    sampleRate: string;
+    outputChannels: string;
 }
 
 // Any setting in this list requires a full page reload when changed
-const RELOADABLE_KEYS: (keyof SettingsState)[] = ["chuckVersion"];
+const RELOADABLE_KEYS: (keyof SettingsState)[] = [
+    "chuckVersion",
+    "sampleRate",
+    "outputChannels"
+];
 
 export default class Settings {
     public static openButton: HTMLButtonElement;
@@ -37,6 +49,8 @@ export default class Settings {
     public static versionDescription: HTMLParagraphElement;
     public static audioInputSelect: HTMLSelectElement;
     public static audioOutputSelect: HTMLSelectElement;
+    public static sampleRateSelect: HTMLSelectElement;
+    public static outputChannelsSelect: HTMLSelectElement;
     public static permissionPrompt: HTMLDivElement;
     public static grantPermissionButton: HTMLButtonElement;
 
@@ -62,6 +76,12 @@ export default class Settings {
         )!;
         Settings.audioOutputSelect = document.querySelector(
             "#audio-output-select"
+        )!;
+        Settings.sampleRateSelect = document.querySelector(
+            "#audio-srate-select"
+        )!;
+        Settings.outputChannelsSelect = document.querySelector(
+            "#audio-channels-select"
         )!;
         Settings.permissionPrompt = document.querySelector(
             "#audio-permission-prompt"
@@ -101,12 +121,25 @@ export default class Settings {
 
         Settings.audioInputSelect.addEventListener("change", () => {
             Settings.setPending("audioInput", Settings.audioInputSelect.value);
+            Settings.updateSelectTitle(Settings.audioInputSelect);
         });
 
         Settings.audioOutputSelect.addEventListener("change", () => {
             Settings.setPending(
                 "audioOutput",
                 Settings.audioOutputSelect.value
+            );
+            Settings.updateSelectTitle(Settings.audioOutputSelect);
+        });
+
+        Settings.sampleRateSelect.addEventListener("change", () => {
+            Settings.setPending("sampleRate", Settings.sampleRateSelect.value);
+        });
+
+        Settings.outputChannelsSelect.addEventListener("change", () => {
+            Settings.setPending(
+                "outputChannels",
+                Settings.outputChannelsSelect.value
             );
         });
 
@@ -169,7 +202,9 @@ export default class Settings {
             chuckVersion:
                 localStorage.getItem("chuckVersion") || versionString.stable,
             audioInput: getAudioInputDevice(),
-            audioOutput: getAudioOutputDevice()
+            audioOutput: getAudioOutputDevice(),
+            sampleRate: getAudioSampleRate(),
+            outputChannels: getAudioOutputChannels()
         };
     }
 
@@ -181,7 +216,53 @@ export default class Settings {
         Settings.pending = { ...Settings.initial };
         Settings.versionSelect.value = Settings.pending.chuckVersion;
         Settings.updateVersionDescription(Settings.pending.chuckVersion);
+        Settings.populateSampleRates();
+        Settings.populateOutputChannels();
         Settings.updateApplyButton();
+    }
+
+    /**
+     * Update sample rate dropdown default label and selection
+     */
+    private static populateSampleRates() {
+        const sysRate = getSystemSampleRate();
+        const defaultOpt = Settings.sampleRateSelect.options[0];
+        if (defaultOpt) {
+            defaultOpt.text = sysRate
+                ? `System Default (${sysRate})`
+                : "System Default";
+        }
+        Settings.sampleRateSelect.value = Settings.pending.sampleRate;
+        if (!Settings.sampleRateSelect.value) {
+            Settings.sampleRateSelect.value = "default";
+            Settings.pending.sampleRate = "default";
+        }
+    }
+
+    /**
+     * Populate output channel options from 1 up to maxChannelCount
+     */
+    private static populateOutputChannels() {
+        const maxCh = getMaxOutputChannels();
+        const active = Settings.pending.outputChannels;
+        const select = Settings.outputChannelsSelect;
+
+        select.innerHTML = "";
+        select.add(
+            new Option(
+                `System Default (${maxCh})`,
+                "default",
+                false,
+                active === "default"
+            )
+        );
+        for (let ch = 1; ch <= maxCh; ch++) {
+            select.add(
+                new Option(String(ch), String(ch), false, active === String(ch))
+            );
+        }
+        Settings.pending.outputChannels = select.value;
+        Settings.initial.outputChannels = select.value;
     }
 
     /**
@@ -224,6 +305,13 @@ export default class Settings {
             version === versionString.stable
                 ? "Latest stable version of ChucK available via <a href='https://chuck.stanford.edu/webchuck' target='_blank' class='text-orange-light underline'>WebChucK</a>"
                 : "Bleeding edge version of ChucK. Built from the tip of <a href='https://github.com/ccrma/chuck' target='_blank' class='text-orange-light underline'>main</a>";
+    }
+
+    /**
+     * Sync a select element's hover tooltip with its currently selected option text
+     */
+    private static updateSelectTitle(select: HTMLSelectElement) {
+        select.title = select.selectedOptions[0]?.text || "";
     }
 
     /**
@@ -316,14 +404,12 @@ export default class Settings {
                 "Microphone",
                 activeInputId
             );
+            Settings.updateSelectTitle(Settings.audioInputSelect);
 
             // Populate Audio Outputs
             const sinkIdSupported = "setSinkId" in AudioContext.prototype;
 
             Settings.audioOutputSelect.disabled = !sinkIdSupported;
-            Settings.audioOutputSelect.title = sinkIdSupported
-                ? ""
-                : "This browser does not support choosing an output device";
             Settings.fillDeviceSelect(
                 Settings.audioOutputSelect,
                 sinkIdSupported && Settings.hasDeviceLabels ? audioOutputs : [],
@@ -331,6 +417,9 @@ export default class Settings {
                 "Speaker",
                 sinkIdSupported ? activeOutputId : "default"
             );
+            Settings.audioOutputSelect.title = sinkIdSupported
+                ? Settings.audioOutputSelect.selectedOptions[0]?.text || ""
+                : "This browser does not support choosing an output device";
 
             Settings.pending.audioInput = Settings.audioInputSelect.value;
             Settings.pending.audioOutput = Settings.audioOutputSelect.value;
@@ -351,6 +440,9 @@ export default class Settings {
             setAudioInputDevice(Settings.pending.audioInput);
             setAudioOutputDevice(Settings.pending.audioOutput);
         }
+
+        setAudioSampleRate(Settings.pending.sampleRate);
+        setAudioOutputChannels(Settings.pending.outputChannels);
 
         localStorage.setItem("chuckVersion", Settings.pending.chuckVersion);
         selectChuckSrc(Settings.pending.chuckVersion === versionString.stable);

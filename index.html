@@ -511,47 +511,69 @@
           <!-- Audio Section -->
           <section class="shortcuts-section">
             <h3 class="shortcuts-category">Audio</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-3 pt-1">
               <!-- Audio Input Device -->
-              <div>
-                <label class="form-label font-medium" for="audio-input-select">Input Device</label>
-                <select id="audio-input-select" class="form-select" aria-describedby="audio-input-desc">
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-input-select">Input Device</label>
+                <select id="audio-input-select" class="form-select sm:col-span-2 min-w-0 truncate">
                   <option value="default" selected>System Default Input</option>
                 </select>
-                <p id="audio-input-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1">
-                  Input to ChucK via <span class="font-mono">adc</span>
-                </p>
               </div>
 
               <!-- Audio Output Device -->
-              <div>
-                <label class="form-label font-medium" for="audio-output-select">Output Device</label>
-                <select id="audio-output-select" class="form-select" aria-describedby="audio-output-desc">
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-output-select">Output Device</label>
+                <select id="audio-output-select" class="form-select sm:col-span-2 min-w-0 truncate">
                   <option value="default" selected>System Default Output</option>
                 </select>
-                <p id="audio-output-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1">
-                  Output from ChucK via <span class="font-mono">dac</span>
-                </p>
               </div>
-            </div>
 
-            <!-- Audio Permission Banner -->
-            <div id="audio-permission-prompt" class="hidden mt-3 p-2.5 rounded bg-orange/10 border border-orange/30 flex items-center justify-between gap-3 text-xs">
-              <span class="text-dark-8 dark:text-gray-300">Microphone permission is required to detect audio device names.</span>
-              <button id="audio-grant-permission" type="button" class="button secondary text-xs py-1 px-2.5 whitespace-nowrap">Grant Access</button>
+              <!-- Audio Permission Banner -->
+              <div id="audio-permission-prompt" class="hidden p-2.5 rounded bg-orange/10 border border-orange/30 flex items-center justify-between gap-3 text-xs">
+                <span class="text-dark-8 dark:text-gray-300">Microphone permission is required to detect audio device names.</span>
+                <button id="audio-grant-permission" type="button" class="button secondary text-xs py-1 px-2.5 whitespace-nowrap">Grant Access</button>
+              </div>
+
+              <!-- Output Channels -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-channels-select">
+                  Output Channels <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="audio-channels-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default</option>
+                </select>
+              </div>
+
+              <!-- Sample Rate -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="audio-srate-select">
+                  Sample Rate <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="audio-srate-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                  <option value="default" selected>System Default</option>
+                  <option value="44100">44100</option>
+                  <option value="48000">48000</option>
+                  <option value="96000">96000</option>
+                  <option value="192000">192000</option>
+                </select>
+              </div>
             </div>
           </section>
 
           <!-- ChucK Section -->
           <section class="shortcuts-section">
             <h3 class="shortcuts-category">ChucK</h3>
-            <div>
-              <label class="form-label font-medium" for="chuck-version-select">Version</label>
-              <select id="chuck-version-select" class="form-select" aria-describedby="chuck-version-desc">
-                <option value="stable">Stable</option>
-                <option value="dev">Development</option>
-              </select>
-              <p id="chuck-version-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1"></p>
+            <div class="pt-1">
+              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5" for="chuck-version-select">
+                  Version <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+                </label>
+                <select id="chuck-version-select" class="form-select sm:col-span-2 min-w-0 truncate" aria-describedby="chuck-version-desc">
+                  <option value="stable">Stable</option>
+                  <option value="dev">Development</option>
+                </select>
+              </div>
+              <p id="chuck-version-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1.5"></p>
             </div>
           </section>
         </form>

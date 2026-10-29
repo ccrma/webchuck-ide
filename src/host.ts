@@ -37,10 +37,17 @@ let chuckVersion: string = "1.5.X.X";
 let audioContext: AudioContext;
 let sampleRate: number = 0;
 
-// Audio Devices (mic input lives in services/micInput.ts)
+// Audio Devices & Engine Settings (mic input lives in services/micInput.ts)
 const OUTPUT_STORAGE_KEY = "audioOutputDevice";
+const SAMPLE_RATE_STORAGE_KEY = "audioSampleRate";
+const OUT_CHANNELS_STORAGE_KEY = "audioOutputChannels";
 let selectedOutputDeviceId: string =
     localStorage.getItem(OUTPUT_STORAGE_KEY) || "default";
+let selectedSampleRate: string =
+    localStorage.getItem(SAMPLE_RATE_STORAGE_KEY) || "default";
+let selectedOutChannels: string =
+    localStorage.getItem(OUT_CHANNELS_STORAGE_KEY) || "default";
+let systemSampleRate: number = 0;
 
 // Audio Visualizer
 let analyser: AnalyserNode;
@@ -64,7 +71,20 @@ export async function selectChuckSrc(production: boolean) {
  * Audio Context will be suspended until the user presses "Start WebChucK"
  */
 export async function initChuck() {
-    audioContext = new AudioContext();
+    // Probe system default sample rate before creating the main AudioContext
+    const probeCtx = new AudioContext();
+    systemSampleRate = probeCtx.sampleRate;
+    await probeCtx.close();
+
+    const requestedSampleRate = Number(selectedSampleRate);
+    try {
+        audioContext =
+            requestedSampleRate > 0
+                ? new AudioContext({ sampleRate: requestedSampleRate })
+                : new AudioContext();
+    } catch {
+        audioContext = new AudioContext();
+    }
     audioContext.suspend();
 
     // Apply saved audio output device if supported
@@ -105,6 +125,13 @@ export async function initChuck() {
         }
     }
 
+    const maxChannels = audioContext.destination.maxChannelCount;
+    const requestedChannels = Number(selectedOutChannels);
+    const numOutChannels =
+        requestedChannels >= 1 && requestedChannels <= maxChannels
+            ? requestedChannels
+            : maxChannels;
+
     try {
         if (targetSrc === BACKUP_CHUCK_SRC) {
             Chuck.chuginsToLoad = [];
@@ -112,7 +139,7 @@ export async function initChuck() {
         theChuck = await Chuck.init(
             [],
             audioContext,
-            audioContext.destination.maxChannelCount,
+            numOutChannels,
             targetSrc
         );
     } catch (error) {
@@ -124,7 +151,7 @@ export async function initChuck() {
             theChuck = await Chuck.init(
                 [],
                 audioContext,
-                audioContext.destination.maxChannelCount,
+                numOutChannels,
                 BACKUP_CHUCK_SRC
             );
         }
@@ -174,7 +201,7 @@ export async function startChuck() {
         Console.print("chuck version: " + value);
     });
     Console.print(
-        "number of channels: " + audioContext.destination.maxChannelCount
+        "number of channels: " + audioContext.destination.channelCount
     );
 
     setInterval(updateChuckNow, 50);
@@ -265,6 +292,50 @@ declare global {
  */
 export function getAudioOutputDevice(): string {
     return selectedOutputDeviceId;
+}
+
+/**
+ * Get the selected (saved) sample rate ("default" or Hz string)
+ */
+export function getAudioSampleRate(): string {
+    return selectedSampleRate;
+}
+
+/**
+ * Set and save the preferred sample rate (takes effect on reload)
+ */
+export function setAudioSampleRate(srate: string): void {
+    selectedSampleRate = srate;
+    localStorage.setItem(SAMPLE_RATE_STORAGE_KEY, srate);
+}
+
+/**
+ * Get the system default sample rate in Hz (0 if not yet initialized)
+ */
+export function getSystemSampleRate(): number {
+    return systemSampleRate;
+}
+
+/**
+ * Get the selected (saved) output channel count ("default" or count string)
+ */
+export function getAudioOutputChannels(): string {
+    return selectedOutChannels;
+}
+
+/**
+ * Set and save the preferred output channel count (takes effect on reload)
+ */
+export function setAudioOutputChannels(channels: string): void {
+    selectedOutChannels = channels;
+    localStorage.setItem(OUT_CHANNELS_STORAGE_KEY, channels);
+}
+
+/**
+ * Get the maximum output channels supported by the current destination
+ */
+export function getMaxOutputChannels(): number {
+    return audioContext?.destination.maxChannelCount || 2;
 }
 
 /**
