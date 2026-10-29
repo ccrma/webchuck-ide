@@ -8,9 +8,10 @@
 
 import {
     selectChuckSrc,
-    setAudioOutputDevice,
-    setAudioInputDevice
+    getAudioOutputDevice,
+    setAudioOutputDevice
 } from "@/host";
+import { getAudioInputDevice, setAudioInputDevice } from "@/services/micInput";
 
 export const versionString = Object.freeze({
     stable: "stable",
@@ -77,12 +78,11 @@ export default class Settings {
             Settings.openModal();
         });
         Settings.closeButton.addEventListener("click", () =>
-            Settings.closeModal()
+            Settings.modal.close()
         );
         Settings.modal.addEventListener("click", (e) => {
-            if (e.target === Settings.modal) Settings.closeModal();
+            if (e.target === Settings.modal) Settings.modal.close();
         });
-        Settings.modal.addEventListener("close", () => Settings.resetState());
 
         // Apply changes
         Settings.applyButton.addEventListener("click", () =>
@@ -120,17 +120,17 @@ export default class Settings {
      * Open the settings modal
      */
     static async openModal() {
+        Settings.resetState();
         await Settings.populateAudioDevices();
         // Silently probe if permission was already granted previously
         if (!Settings.hasDeviceLabels) {
             const status = await navigator.permissions
-                .query({ name: "microphone" as PermissionName})
+                .query({ name: "microphone" as PermissionName })
                 .catch(() => null);
             if (status?.state === "granted") {
                 await Settings.requestMicPermission();
             }
         }
-        Settings.resetState();
         Settings.modal.showModal();
     }
 
@@ -148,20 +148,13 @@ export default class Settings {
             // Stop probe stream tracks immediately
             stream.getTracks().forEach((track) => track.stop());
 
-            // Restore saved devices from localStorage or default
-            const savedInput =
-                localStorage.getItem("audioInputDevice") || "default";
-            const savedOutput =
-                localStorage.getItem("audioOutputDevice") || "default";
-            Settings.pending.audioInput = savedInput;
-            Settings.pending.audioOutput = savedOutput;
+            Settings.pending.audioInput = Settings.initial.audioInput;
+            Settings.pending.audioOutput = Settings.initial.audioOutput;
 
             await Settings.populateAudioDevices();
             return true;
         } catch (err) {
             console.warn("Microphone access was not granted:", err);
-            Settings.setPending("audioInput", "default");
-            Settings.audioInputSelect.value = "default";
             return false;
         } finally {
             Settings.isProbing = false;
@@ -172,15 +165,11 @@ export default class Settings {
      * Read currently saved settings from localStorage or fallback defaults
      */
     static getSavedSettings(): SettingsState {
-        const savedInput =
-            localStorage.getItem("audioInputDevice") || "default";
-        const savedOutput =
-            localStorage.getItem("audioOutputDevice") || "default";
         return {
             chuckVersion:
                 localStorage.getItem("chuckVersion") || versionString.stable,
-            audioInput: Settings.hasDeviceLabels ? savedInput : "default",
-            audioOutput: Settings.hasDeviceLabels ? savedOutput : "default"
+            audioInput: getAudioInputDevice(),
+            audioOutput: getAudioOutputDevice()
         };
     }
 
@@ -190,28 +179,9 @@ export default class Settings {
     static resetState() {
         Settings.initial = Settings.getSavedSettings();
         Settings.pending = { ...Settings.initial };
-        Settings.syncUIWithPending();
-        Settings.updateApplyButton();
-    }
-
-    /**
-     * Synchronize form inputs and descriptions with the pending settings state
-     */
-    static syncUIWithPending() {
         Settings.versionSelect.value = Settings.pending.chuckVersion;
         Settings.updateVersionDescription(Settings.pending.chuckVersion);
-        Settings.audioInputSelect.value = Settings.pending.audioInput;
-        Settings.audioOutputSelect.value = Settings.pending.audioOutput;
-
-        // Ensure valid selection fallback if saved value doesn't match available options
-        if (!Settings.audioInputSelect.value) {
-            Settings.audioInputSelect.value = "default";
-            Settings.pending.audioInput = "default";
-        }
-        if (!Settings.audioOutputSelect.value) {
-            Settings.audioOutputSelect.value = "default";
-            Settings.pending.audioOutput = "default";
-        }
+        Settings.updateApplyButton();
     }
 
     /**
@@ -325,19 +295,16 @@ export default class Settings {
             );
 
             // Toggle permission banner
-            if (Settings.permissionPrompt) {
-                if (Settings.hasDeviceLabels) {
-                    Settings.permissionPrompt.classList.add("hidden");
-                } else {
-                    Settings.permissionPrompt.classList.remove("hidden");
-                }
-            }
+            Settings.permissionPrompt.classList.toggle(
+                "hidden",
+                Settings.hasDeviceLabels
+            );
 
             const activeInputId = Settings.hasDeviceLabels
-                ? Settings.pending?.audioInput || "default"
+                ? Settings.pending.audioInput
                 : "default";
             const activeOutputId = Settings.hasDeviceLabels
-                ? Settings.pending?.audioOutput || "default"
+                ? Settings.pending.audioOutput
                 : "default";
 
             // Populate Audio Inputs
@@ -351,9 +318,7 @@ export default class Settings {
             );
 
             // Populate Audio Outputs
-            const sinkIdSupported =
-                typeof AudioContext !== "undefined" &&
-                "setSinkId" in AudioContext.prototype;
+            const sinkIdSupported = "setSinkId" in AudioContext.prototype;
 
             Settings.audioOutputSelect.disabled = !sinkIdSupported;
             Settings.audioOutputSelect.title = sinkIdSupported
@@ -367,37 +332,11 @@ export default class Settings {
                 sinkIdSupported ? activeOutputId : "default"
             );
 
-            // Explicitly set values on select elements and sync pending state
-            const syncSelect = (
-                select: HTMLSelectElement,
-                key: "audioInput" | "audioOutput",
-                activeId: string
-            ) => {
-                select.value = activeId;
-                if (!select.value) {
-                    select.value = "default";
-                }
-                if (Settings.pending) {
-                    Settings.pending[key] = select.value;
-                }
-            };
-            syncSelect(Settings.audioInputSelect, "audioInput", activeInputId);
-            syncSelect(
-                Settings.audioOutputSelect,
-                "audioOutput",
-                activeOutputId
-            );
+            Settings.pending.audioInput = Settings.audioInputSelect.value;
+            Settings.pending.audioOutput = Settings.audioOutputSelect.value;
         } catch (err) {
             console.error("Error communicating with audio devices:", err);
         }
-    }
-
-    /**
-     * Cancel changes and close modal
-     */
-    static closeModal() {
-        Settings.resetState();
-        Settings.modal.close();
     }
 
     /**
@@ -407,28 +346,14 @@ export default class Settings {
         const needsReload = Settings.requiresReload();
 
         // Commit audio settings only if device labels were unlocked
+        // (setters save, apply live, and no-op when unchanged)
         if (Settings.hasDeviceLabels) {
-            localStorage.setItem(
-                "audioInputDevice",
-                Settings.pending.audioInput
-            );
-            localStorage.setItem(
-                "audioOutputDevice",
-                Settings.pending.audioOutput
-            );
-            if (Settings.pending.audioInput !== Settings.initial.audioInput) {
-                setAudioInputDevice(Settings.pending.audioInput);
-            }
-            if (Settings.pending.audioOutput !== Settings.initial.audioOutput) {
-                setAudioOutputDevice(Settings.pending.audioOutput);
-            }
+            setAudioInputDevice(Settings.pending.audioInput);
+            setAudioOutputDevice(Settings.pending.audioOutput);
         }
 
         localStorage.setItem("chuckVersion", Settings.pending.chuckVersion);
         selectChuckSrc(Settings.pending.chuckVersion === versionString.stable);
-
-        // Update settings state snapshot
-        Settings.initial = { ...Settings.pending };
 
         Settings.modal.close();
 

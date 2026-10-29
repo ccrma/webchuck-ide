@@ -37,13 +37,10 @@ let chuckVersion: string = "1.5.X.X";
 let audioContext: AudioContext;
 let sampleRate: number = 0;
 
-// Audio Devices
-let currentMicStream: MediaStream | null = null;
-let currentAdcNode: MediaStreamAudioSourceNode | null = null;
-let selectedInputDeviceId: string =
-    localStorage.getItem("audioInputDevice") || "default";
+// Audio Devices (mic input lives in services/micInput.ts)
+const OUTPUT_STORAGE_KEY = "audioOutputDevice";
 let selectedOutputDeviceId: string =
-    localStorage.getItem("audioOutputDevice") || "default";
+    localStorage.getItem(OUTPUT_STORAGE_KEY) || "default";
 
 // Audio Visualizer
 let analyser: AnalyserNode;
@@ -69,6 +66,12 @@ export async function selectChuckSrc(production: boolean) {
 export async function initChuck() {
     audioContext = new AudioContext();
     audioContext.suspend();
+
+    // Apply saved audio output device if supported
+    if (selectedOutputDeviceId !== "default") {
+        await applyOutputDevice();
+    }
+
     sampleRate = audioContext.sampleRate;
     calculateDisplayDigits(sampleRate);
 
@@ -127,12 +130,6 @@ export async function initChuck() {
         }
     }
     theChuck.connect(audioContext.destination);
-
-    // Apply saved audio output device if supported
-    if (selectedOutputDeviceId && selectedOutputDeviceId !== "default") {
-        setAudioOutputDevice(selectedOutputDeviceId);
-    }
-
     Console.print("WebChucK is ready!");
 
     onChuckReady();
@@ -263,151 +260,45 @@ declare global {
     }
 }
 
-type MicStateCallback = (active: boolean) => void;
-const micStateCallbacks: MicStateCallback[] = [];
-
-export function onMicStateChange(callback: MicStateCallback): () => void {
-    micStateCallbacks.push(callback);
-    return () => {
-        const index = micStateCallbacks.indexOf(callback);
-        if (index !== -1) micStateCallbacks.splice(index, 1);
-    };
-}
-
-function notifyMicState(active: boolean) {
-    micStateCallbacks.forEach((cb) => cb(active));
+/**
+ * Get the selected (saved) audio output device ID
+ */
+export function getAudioOutputDevice(): string {
+    return selectedOutputDeviceId;
 }
 
 /**
- * Set the audio output device sink ID
+ * Set and save the audio output device, applying it live
  */
 export async function setAudioOutputDevice(deviceId: string): Promise<boolean> {
-    if (!audioContext) {
-        selectedOutputDeviceId = deviceId;
-        return false;
+    if (deviceId === selectedOutputDeviceId) {
+        return true;
     }
-    if (typeof audioContext.setSinkId === "function") {
-        try {
-            const sinkId = deviceId === "default" ? "" : deviceId;
-            await audioContext.setSinkId(sinkId);
-            selectedOutputDeviceId = deviceId;
-            return true;
-        } catch (err) {
-            console.error("Failed to set audio sink ID:", err);
-            // Fallback to default sink if custom device fails
-            if (deviceId !== "default") {
-                try {
-                    await audioContext.setSinkId("");
-                    selectedOutputDeviceId = "default";
-                } catch (fallbackErr) {
-                    console.error(
-                        "Failed to reset to default audio sink:",
-                        fallbackErr
-                    );
-                }
-            }
-            return false;
-        }
-    } else {
+    selectedOutputDeviceId = deviceId;
+    localStorage.setItem(OUTPUT_STORAGE_KEY, deviceId);
+    return applyOutputDevice();
+}
+
+/**
+ * Route the AudioContext to the selected output device (if supported)
+ */
+async function applyOutputDevice(): Promise<boolean> {
+    if (!audioContext) return false;
+    if (typeof audioContext.setSinkId !== "function") {
         console.warn(
             "AudioContext.setSinkId is not supported in this browser."
         );
         return false;
     }
-}
-
-/**
- * Set the preferred audio input device and switch live if mic is already active
- */
-export async function setAudioInputDevice(deviceId: string): Promise<void> {
-    if (deviceId === selectedInputDeviceId) {
-        return;
-    }
-    selectedInputDeviceId = deviceId;
-    // If microphone is currently active, switch to the newly selected device live
-    if (isMicConnected()) {
-        await connectMic(deviceId);
-    }
-}
-
-/**
- * Connect or switch microphone input to theChuck
- */
-export async function connectMic(deviceId?: string): Promise<boolean> {
-    if (deviceId !== undefined) {
-        selectedInputDeviceId = deviceId;
-    }
-    if (!audioContext || !theChuck) {
-        return false;
-    }
-
-    // Disconnect previous mic if any
-    disconnectMic();
-
-    const baseConstraints: MediaTrackConstraints = {
-        echoCancellation: false,
-        autoGainControl: false,
-        noiseSuppression: false
-    };
-
-    const audioConstraints: MediaTrackConstraints = {
-        ...baseConstraints,
-        ...(selectedInputDeviceId && selectedInputDeviceId !== "default"
-            ? { deviceId: { ideal: selectedInputDeviceId } }
-            : {})
-    };
-
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: false,
-            audio: audioConstraints
-        });
-
-        // Listen for hardware disconnection or permission revocation
-        const audioTrack = stream.getAudioTracks()[0];
-        if (audioTrack) {
-            audioTrack.addEventListener("ended", () => {
-                disconnectMic();
-            });
-        }
-
-        currentMicStream = stream;
-        currentAdcNode = audioContext.createMediaStreamSource(stream);
-        currentAdcNode.connect(theChuck);
-        notifyMicState(true);
+        await audioContext.setSinkId(
+            selectedOutputDeviceId === "default" ? "" : selectedOutputDeviceId
+        );
         return true;
-    } catch (err: any) {
-        console.error("Failed to connect microphone:", err);
-        notifyMicState(false);
+    } catch (err) {
+        console.error("Failed to set audio sink ID:", err);
         return false;
     }
-}
-
-/**
- * Disconnect and stop the microphone stream
- */
-export function disconnectMic(): void {
-    let wasConnected = false;
-    if (currentAdcNode) {
-        currentAdcNode.disconnect();
-        currentAdcNode = null;
-        wasConnected = true;
-    }
-    if (currentMicStream) {
-        currentMicStream.getTracks().forEach((track) => track.stop());
-        currentMicStream = null;
-        wasConnected = true;
-    }
-    if (wasConnected) {
-        notifyMicState(false);
-    }
-}
-
-/**
- * Check if microphone stream is currently active
- */
-export function isMicConnected(): boolean {
-    return currentMicStream !== null;
 }
 
 /**

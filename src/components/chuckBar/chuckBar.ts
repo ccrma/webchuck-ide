@@ -14,14 +14,15 @@
 // date:   August 2023
 //--------------------------------------------------------------------
 
+import { theChuck, startChuck } from "@/host";
 import {
-    theChuck,
-    startChuck,
     connectMic,
     disconnectMic,
     isMicConnected,
-    onMicStateChange
-} from "@/host";
+    isMicConnecting,
+    onMicStateChange,
+    type InputState
+} from "@/services/micInput";
 import Editor from "@/components/editor/monaco/editor";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
@@ -69,7 +70,7 @@ export default class ChuckBar {
 
         // Add tooltips
         ChuckBar.webchuckButton.title = `Start ChucK VM [${metaKey} + .]`;
-        ChuckBar.micButton.title = `Connect Microphone`;
+        ChuckBar.micButton.title = `Microphone`;
         ChuckBar.playButton.title = `Run [${metaKey} + Enter]`;
         ChuckBar.replaceButton.title = `Replace [${metaKey} + \\]`;
         ChuckBar.removeButton.title = `Remove [${metaKey} + ⌫]`;
@@ -95,37 +96,39 @@ export default class ChuckBar {
         // Configure the recorder button
         new Recorder(ChuckBar.recordButton);
 
-        // Listen for external microphone connection changes
-        onMicStateChange((active: boolean) => {
-            ChuckBar.setMicButtonState(active);
+        // Listen for microphone state changes (off / connecting / on)
+        onMicStateChange((state: InputState) => {
+            ChuckBar.setMicButtonState(state);
         });
     }
 
     static async toggleMic() {
-        if (isMicConnected()) {
+        // Clicking while connecting cancels the pending request
+        if (isMicConnected() || isMicConnecting()) {
             disconnectMic();
         } else {
             await connectMic();
         }
     }
 
-    static setMicButtonState(active: boolean) {
-        if (active) {
-            ChuckBar.micButton.innerHTML = MicButtonIcon.on;
-            ChuckBar.micButton.classList.add("ring-2", "ring-purple-500");
-            ChuckBar.micButton.title = "Disconnect Microphone";
-            ChuckBar.micButton.setAttribute(
-                "aria-label",
-                "Disconnect Microphone"
-            );
-            ChuckBar.micButton.setAttribute("aria-pressed", "true");
-        } else {
-            ChuckBar.micButton.innerHTML = MicButtonIcon.off;
-            ChuckBar.micButton.classList.remove("ring-2", "ring-purple-500");
-            ChuckBar.micButton.title = "Connect Microphone";
-            ChuckBar.micButton.setAttribute("aria-label", "Connect Microphone");
-            ChuckBar.micButton.setAttribute("aria-pressed", "false");
-        }
+    static setMicButtonState(state: InputState) {
+        const active = state !== "off";
+        const connecting = state === "connecting";
+        ChuckBar.micButton.innerHTML = active
+            ? MicButtonIcon.on
+            : MicButtonIcon.off;
+        ChuckBar.micButton.classList.toggle("ring-2", active);
+        // Lighter ring while connecting, solid ring once the mic is live
+        ChuckBar.micButton.classList.toggle("ring-purple-300", connecting);
+        ChuckBar.micButton.classList.toggle(
+            "ring-purple-500",
+            active && !connecting
+        );
+        ChuckBar.micButton.setAttribute("aria-pressed", String(active));
+        ChuckBar.micButton.setAttribute("aria-busy", String(connecting));
+        ChuckBar.micButton.title = connecting
+            ? "Microphone (connecting... click to cancel)"
+            : "Microphone";
     }
 
     static runEditorCode() {
