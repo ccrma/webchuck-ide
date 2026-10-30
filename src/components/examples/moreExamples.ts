@@ -13,8 +13,13 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Examples from "./examples";
 import DropdownElement from "../navbar/dropdownElement";
 import * as JsSearch from "js-search";
-import { isPlaintextFile } from "webchuck/dist/utils";
-import { File, fetchDataFile, fetchTextFile } from "@/utils/fileLoader";
+import {
+    File,
+    fetchDataFile,
+    fetchTextFile,
+    isPlaintextFile
+} from "@/utils/fileLoader";
+import { engineMode } from "@/host";
 
 // JSON Structure
 interface MoreExamplesJSON {
@@ -101,11 +106,15 @@ export default class MoreExamples {
      * @param moreExamplesDropdownItem button to activate
      */
     static initMoreExamples(moreExamplesDropdownItem: DropdownElement) {
-        // LOAD moreExamples.json FILE!!
+        // Load the appropriate examples JSON based on engine mode
         // and enable the more examples button
         // Render the examples in the examples folder
         // run asynchronously
-        fetch("examples/moreExamples.json")
+        const examplesJsonUrl =
+            engineMode === "webchugl"
+                ? "examples/moreChuglExamples.json"
+                : "examples/moreExamples.json";
+        fetch(examplesJsonUrl)
             .then((response) => response.json())
             .then((data) => {
                 MoreExamples.moreExamplesJSON = data;

@@ -5,7 +5,7 @@
   Special thanks to: Celeste Betancur, Mike Mulshine, Jack Atherton, Chris Chafe, and Ge Wang
 -->
 <!DOCTYPE html>
-<html lang="en" data-banner-version="1">
+<html lang="en" data-banner-version="">
 
   <head>
     <!-- Google tag (gtag.js) -->
@@ -44,8 +44,9 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
-      // Set notification banner
-      if (localStorage.getItem("hideNotificationBanner") === document.documentElement.getAttribute("data-banner-version")) {
+      // Set notification banner (empty data-banner-version disables it)
+      const bannerVersion = document.documentElement.getAttribute("data-banner-version");
+      if (!bannerVersion || localStorage.getItem("hideNotificationBanner") === bannerVersion) {
         document.documentElement.classList.add("hide-notification-banner");
       }
     </script>
@@ -94,23 +95,23 @@
                 </button>
                 <div id="fileDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="fileButton" role="menu">
-                    <li role="separator">
+                    <li role="none">
                       <button id="newFile" type="button" class="dropdownItem" role="menuitem">
                         New
                       </button>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <input id="fileUploader" type="file" multiple hidden aria-label="Upload files" />
                       <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" role="menuitem" disabled>
                         Upload Files
                       </button>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="newProject" type="button" class="dropdownItem" role="menuitem">
                         New Project
                       </button>
                     </li>
-                    <li id="exportToContainer" class="relative" role="separator">
+                    <li id="exportToContainer" class="relative" role="none">
                       <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton" role="menuitem">
                         Export to
                         <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -119,20 +120,25 @@
                       </button>
                       <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
                         <ul class="py-2 text-base text-gray-700 dark:text-gray-200" role="menu" aria-labelledby="exportToButton">
-                          <li role="separator">
+                          <li role="none">
                             <button id="exportChuck" type="button" class="dropdownItem" role="menuitem">
                               ChucK
                             </button>
                           </li>
-                          <li role="separator">
+                          <li role="none">
                             <button id="exportWebchuck" type="button" class="dropdownItem" role="menuitem">
                               WebChucK
+                            </button>
+                          </li>
+                          <li role="none">
+                            <button id="exportWebchugl" type="button" class="dropdownItem" role="menuitem">
+                              WebChuGL
                             </button>
                           </li>
                         </ul>
                       </div>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="openSettings" type="button" class="dropdownItem" role="menuitem">
                         Settings
                       </button>
@@ -150,8 +156,8 @@
                 </button>
                 <div id="editDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="editButton" role="menu">
-                    <li role="separator">
-                      <button id="vimToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="vimToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         Vim Mode: Off
                       </button>
                     </li>
@@ -168,19 +174,24 @@
                 </button>
                 <div id="viewDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="viewButton" role="menu">
-                    <li role="separator">
-                      <button id="chuckNowToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="chuckNowToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         ChucK Time: Off
                       </button>
                     </li>
+                    <li id="fpsToggleItem" class="hidden" role="none">
+                      <button id="fpsToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
+                        FPS: Off
+                      </button>
+                    </li>
                     <li class="divider dark:border-t-gray-400" data-content="THEME" role="separator"></li>
-                    <li role="separator">
-                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitem">
+                    <li role="none">
+                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitemcheckbox" aria-checked="false">
                         Mode: Light
                       </button>
                     </li>
-                    <li role="separator">
-                      <button id="colorPreferenceToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="colorPreferenceToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         System: On
                       </button>
                     </li>
@@ -210,29 +221,29 @@
                 </button>
                 <div id="helpDropdown" class="hidden dropdown w-52">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="helpButton" role="menu">
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://chuck.stanford.edu/doc/reference" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">ChucK API Reference</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://chuck.stanford.edu/webchuck/" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Learn WebChucK</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://discord.gg/ENr3nurrx8" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Discord Community</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="keyboard-shortcuts" type="button" class="dropdownItem" role="menuitem">Keyboard Shortcuts</button>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="GITHUB" role="separator"></li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://github.com/ccrma/webchuck-ide" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">GitHub Repo</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Report an Issue</a>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="ABOUT" role="separator"></li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="about-ide" type="button" class="dropdownItem" role="menuitem">About IDE...</button>
                     </li>
                   </ul>
@@ -250,12 +261,9 @@
       </header>
 
       <!-- CHUCK BAR -->
-      <nav id="chuckBar" class="flex items-center justify-start px-2 py-1 gap-2" aria-label="ChucK controls">
+      <nav id="chuckBar" class="flex items-center justify-start px-2 py-1 gap-2 overflow-x-auto" aria-label="ChucK controls">
           <div class="flex items-center gap-2 flex-shrink-0" role="toolbar" aria-label="ChucK controls">
             <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
-            <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" title="Enable Microphone" aria-label="Enable Microphone" disabled>
-              <svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/></svg>
-            </button>
             <button id="playButton" type="button" class="chuck-button bg-[#70E16E]" aria-label="Play" disabled>
               <svg viewBox="14 10 28 33" fill="none" class="w-5 h-5"><path d="M40.1084 25.7217L15.9126 39.6911L15.9126 11.7522L40.1084 25.7217Z" fill="white"/><rect x="30.5172" y="35.5744" width="10.4631" height="1.79367" fill="white"/><rect x="34.7024" y="41.8522" width="10.4631" height="1.79367" transform="rotate(-90 34.7024 41.8522)" fill="white"/></svg>
             </button>
@@ -267,6 +275,17 @@
             </button>
             <button id="recordButton" type="button" class="chuck-button bg-white" aria-label="Record" disabled>
               <svg viewBox="13 13 24 24" fill="none" class="w-5 h-5"><circle cx="25" cy="25" r="10" fill="#FF6868"/></svg>
+            </button>
+          </div>
+          <div id="connectButtons" class="flex items-center gap-2 flex-shrink-0 ml-6" role="toolbar" aria-label="Connect devices">
+            <button id="micButton" type="button" class="chuck-button bg-[#CF68FF] disabled:opacity-50" title="Connect Microphone" aria-label="Connect Microphone" disabled>
+              <svg viewBox="13 9 24 33" fill="none" class="w-5 h-5"><path d="M25 10.1667C22.3764 10.1667 20.25 12.2931 20.25 14.9167V24.4167C20.25 27.0402 22.3764 29.1667 25 29.1667C27.6236 29.1667 29.75 27.0402 29.75 24.4167V14.9167C29.75 12.2931 27.6236 10.1667 25 10.1667ZM15.6392 24.4167C14.6797 24.4167 13.9069 25.2681 14.062 26.2165C14.8377 30.966 18.6368 34.6909 23.4167 35.3763V38.6667C23.4167 39.5407 24.126 40.25 25 40.25C25.874 40.25 26.5834 39.5407 26.5834 38.6667V35.3763C31.3632 34.6909 35.1624 30.966 35.938 26.2165C36.0932 25.2681 35.3204 24.4167 34.3609 24.4167C33.5787 24.4167 32.9337 24.9923 32.8023 25.765C32.161 29.4937 28.9124 32.3333 25 32.3333C21.0876 32.3333 17.839 29.4937 17.1978 25.765C17.0664 24.9923 16.4229 24.4167 15.6392 24.4167Z" fill="white"/></svg>
+            </button>
+            <button id="webcamButton" type="button" class="chuck-button bg-[#68CFFF] disabled:opacity-50" title="Connect Webcam" aria-label="Connect Webcam" disabled>
+              <svg viewBox="0 0 24 24" class="w-5 h-5"><path fill="white" fill-rule="evenodd" clip-rule="evenodd" d="M12 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/><rect x="11" y="18" width="2" height="2.5" fill="white"/><rect x="7" y="20" width="10" height="1.75" rx="0.5" fill="white"/></svg>
+            </button>
+            <button id="midiButton" type="button" class="chuck-button bg-[#6AE1D7] disabled:opacity-50" title="Connect MIDI" aria-label="Connect MIDI" disabled>
+              <svg viewBox="0 0 24 24" class="w-5 h-5"><path fill="white" fill-rule="evenodd" clip-rule="evenodd" d="M3 5.5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-13Zm2.5.5v7h2v-7h-2Zm5.5 0v7h2v-7h-2Zm5.5 0v7h2v-7h-2ZM8.85 13.5v4.5h.6v-4.5h-.6Zm5.7 0v4.5h.6v-4.5h-.6Z"/></svg>
             </button>
           </div>
       </nav>
@@ -417,6 +436,16 @@
                 <button id="vmMonitorTab"  type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="vmMonitorContainer">VM MONITOR</button>
                 <button id="consoleTab"    type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="consoleContainer">CONSOLE</button>
                 <button id="visualizerTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="visualizerContainer">VISUALIZER</button>
+                <button id="canvasTab" type="button" class="header-item text-dark-5" role="tab" aria-selected="false" aria-controls="canvasContainer">CANVAS</button>
+              </div>
+              <div id="fullscreenBtnWrap" class="ml-auto flex items-center hidden" style="color: var(--ide-text-muted, #888)">
+                <button id="fullscreenBtn" type="button" class="px-1 text-xs cursor-pointer hover:text-dark dark:hover:text-light focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 rounded" title="Fullscreen" aria-label="Fullscreen">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                    <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2 2h6"></path>
+                  </svg>
+                </button>
               </div>
             </div>
             <div id="vmMonitorContainer" class="flex flex-col" role="tabpanel" aria-labelledby="vmMonitorTab">
@@ -447,6 +476,12 @@
                 <b>Start WebChucK for visualizer</b>
               </div>
               <canvas id="visualizer" class="absolute inset-0 w-full h-full" aria-label="Audio visualizer"></canvas>
+            </div>
+            <div id="canvasContainer" class="hidden flex flex-col" role="tabpanel" aria-labelledby="canvasTab">
+              <div class="flex-1 min-h-0 relative">
+                <canvas id="chuglCanvas" class="absolute inset-0 w-full h-full"></canvas>
+                <div id="fpsCounter" class="absolute top-2 right-2 text-xs font-mono text-white bg-black/50 px-1.5 py-0.5 rounded pointer-events-none" style="display: none;">0 FPS</div>
+              </div>
             </div>
           </div>
         </div>
@@ -508,12 +543,21 @@
         <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
         <form class="flex flex-col gap-2 py-2" method="dialog">
-          <label class="form-label" for="chuck-version-select">ChucK version</label>
-          <select id="chuck-version-select" class="form-select">
-            <option value="stable">Stable</option>
-            <option value="dev">Development</option>
+          <label class="form-label" for="engine-select">Engine</label>
+          <select id="engine-select" class="form-select">
+            <option value="webchuck">WebChucK (Audio only)</option>
+            <option value="webchugl">WebChuGL (Audio + Graphics)</option>
           </select>
-          <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+          <p id="engine-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+
+          <div id="chuck-version-group">
+            <label class="form-label" for="chuck-version-select">ChucK version</label>
+            <select id="chuck-version-select" class="form-select">
+              <option value="stable">Stable</option>
+              <option value="dev">Development</option>
+            </select>
+            <p id="chuck-version-desc" class="text-sm text-dark-8 dark:text-gray-400 mt-1"></p>
+          </div>
         </form>
         <!-- Close Settings -->
         <div class="flex gap-4 justify-end pt-4">
@@ -610,6 +654,29 @@
         </form>
       </dialog>
 
+      <!-- Export to WebChuGL Modal -->
+      <dialog class="modal" id="export-webchugl-modal" aria-labelledby="export-chugl-heading">
+        <form class="flex flex-col gap-2 py-2" method="dialog">
+          <h2 id="export-chugl-heading" class="text-xl font-semibold pb-2">Export to WebChuGL</h2>
+
+          <div>
+            <label class="form-label" for="export-chugl-title">Title</label>
+            <input id="export-chugl-title" class="form-input" type="text" placeholder="My ChuGL Project">
+          </div>
+
+          <div>
+            <label class="form-label pr-2" for="export-chugl-file-select">Main File</label>
+            <select id="export-chugl-file-select" class="form-select disabled:opacity-50">
+            </select>
+          </div>
+
+          <div class="flex gap-4 justify-end pt-4">
+            <button id="export-chugl-cancel-btn" type="button" class="button secondary">Cancel</button>
+            <button id="export-chugl-btn" type="submit" class="button primary">Export</button>
+          </div>
+        </form>
+      </dialog>
+
       <!-- Share Code Modal -->
       <dialog class="modal" id="share-code-modal" aria-labelledby="share-code-heading">
         <form class="flex flex-col gap-4 py-2" method="dialog">
@@ -688,6 +755,34 @@
           </div>
           <div id="bottomSheetFiles" class="overflow-hidden" style="height: 50vh;"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Overlay (outside #webchuck-ide grid to avoid layout interference) -->
+    <div id="fullscreenOverlay" class="fullscreen-overlay hidden">
+      <div id="fullscreenContent" class="fullscreen-content"></div>
+      <div id="fullscreenToolbar" class="fullscreen-toolbar toolbar-hidden">
+        <button id="fullscreenClose" type="button" class="fullscreen-btn" title="Exit fullscreen (Esc)" aria-label="Close fullscreen">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="fullscreen-divider"></div>
+        <button id="fullscreenToggleBtn" type="button" class="fullscreen-btn" title="Toggle fullscreen" aria-label="Toggle fullscreen">
+          <svg id="fullscreenExpandIcon" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <svg id="fullscreenShrinkIcon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 14 10 14 10 20"></polyline>
+            <polyline points="20 10 14 10 14 4"></polyline>
+            <line x1="14" y1="10" x2="21" y2="3"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+        </button>
       </div>
     </div>
 

@@ -3,6 +3,7 @@ import Editor from "../editor/monaco/editor";
 import ProjectFile from "../fileExplorer/projectFile";
 import { compressSharedFiles, SharedFile } from "@/services/sharedFile";
 import { generateURLFromParams, URLParams } from "@/services/urlParamParser";
+import { engineMode } from "@/host";
 
 export default class ShareModal {
     public static shareCodeButton: HTMLButtonElement;
@@ -183,7 +184,8 @@ export default class ShareModal {
             url: null,
             project: null,
             share: null,
-            code: null
+            code: null,
+            engine: engineMode
         };
         let shareFiles: SharedFile[] = [];
 

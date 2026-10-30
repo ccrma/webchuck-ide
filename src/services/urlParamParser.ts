@@ -6,6 +6,7 @@ export interface URLParams {
     project: string | null; // A pako compressed SharedFile[]
     share: string | null; // A pako compressed SharedFile[] (length 1)
     code: string | null; // Legacy: A ck file (string)
+    engine: string | null; // Engine override ("webchuck" | "webchugl")
 }
 
 /**
@@ -18,7 +19,8 @@ export function parseURLParams(): URLParams {
         url: urlParams.get("url"),
         project: urlParams.get("project"),
         share: urlParams.get("share"),
-        code: urlParams.get("code")
+        code: urlParams.get("code"),
+        engine: urlParams.get("engine")
     };
 }
 
@@ -41,6 +43,9 @@ export function generateURLFromParams(params: URLParams): string {
     }
     if (params.code) {
         url.searchParams.append("code", params.code);
+    }
+    if (params.engine) {
+        url.searchParams.append("engine", params.engine);
     }
     return url.toString();
 }

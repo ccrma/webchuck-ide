@@ -1,17 +1,42 @@
 //---------------------------------------------------
 // title: Settings
-// desc:  IDE settings modal for ChucK versions
+// desc:  IDE settings modal for ChucK version
+//        and engine mode (WebChucK vs WebChuGL)
 //
 // author: terry feng
 // date:   April 2024
 //---------------------------------------------------
 
 import { selectChuckSrc } from "@/host";
+import { parseURLParams } from "@/services/urlParamParser";
 
 const versionString = Object.freeze({
     stable: "stable",
     dev: "dev"
 });
+
+const engineString = Object.freeze({
+    webchuck: "webchuck",
+    webchugl: "webchugl"
+});
+
+export type EngineMode = "webchuck" | "webchugl";
+
+/**
+ * Read the current engine mode. An ?engine= URL param overrides
+ * localStorage for this page load only (it is not persisted).
+ * Defaults to WebChucK on first visit.
+ */
+export function getEngineMode(): EngineMode {
+    const param = parseURLParams().engine;
+    if (param === engineString.webchuck) return engineString.webchuck;
+    if (param === engineString.webchugl) return engineString.webchugl;
+
+    const stored = localStorage.getItem("engineMode");
+    if (stored === engineString.webchuck) return engineString.webchuck;
+    if (stored === engineString.webchugl) return engineString.webchugl;
+    return engineString.webchuck;
+}
 
 export default class Settings {
     public static openButton: HTMLButtonElement;
@@ -20,6 +45,9 @@ export default class Settings {
     public static applyButton: HTMLButtonElement;
     public static versionSelect: HTMLSelectElement;
     public static versionDescription: HTMLParagraphElement;
+    public static versionGroup: HTMLDivElement;
+    public static engineSelect: HTMLSelectElement;
+    public static engineDescription: HTMLParagraphElement;
 
     constructor() {
         Settings.openButton =
@@ -37,6 +65,12 @@ export default class Settings {
             document.querySelector<HTMLParagraphElement>(
                 "#chuck-version-desc"
             )!;
+        Settings.versionGroup =
+            document.querySelector<HTMLDivElement>("#chuck-version-group")!;
+        Settings.engineSelect =
+            document.querySelector<HTMLSelectElement>("#engine-select")!;
+        Settings.engineDescription =
+            document.querySelector<HTMLParagraphElement>("#engine-desc")!;
 
         // Open settings
         Settings.openButton.addEventListener("click", () => {
@@ -56,6 +90,12 @@ export default class Settings {
             this.applySettings();
         });
 
+        // Engine select — only updates preview; reload happens on Apply
+        Settings.engineSelect.addEventListener("change", () => {
+            this.selectEngine(Settings.engineSelect.value as EngineMode);
+        });
+        this.selectEngine(getEngineMode());
+
         // Chuck version select
         Settings.versionSelect.addEventListener("change", () => {
             this.selectChucKVersion(Settings.versionSelect.value);
@@ -63,6 +103,24 @@ export default class Settings {
         this.selectChucKVersion(
             localStorage.getItem("chuckVersion") || versionString.stable
         );
+    }
+
+    /**
+     * Select engine mode (WebChucK or WebChuGL).
+     * Hides the ChucK version group when WebChuGL is chosen, since WebChuGL
+     * ships with its own bundled ChucK version.
+     */
+    selectEngine(engine: EngineMode) {
+        Settings.engineSelect.value = engine;
+        if (engine === engineString.webchugl) {
+            Settings.engineDescription.textContent =
+                "ChucK with ChuGL graphics (WebGPU). Enables 3D rendering.";
+            Settings.versionGroup.classList.add("hidden");
+        } else {
+            Settings.engineDescription.textContent =
+                "Audio-only ChucK runtime. Lightweight and fast.";
+            Settings.versionGroup.classList.remove("hidden");
+        }
     }
 
     /**
@@ -90,12 +148,23 @@ export default class Settings {
      * Apply settings and refresh the page
      */
     applySettings() {
+        // Save engine mode
+        localStorage.setItem("engineMode", Settings.engineSelect.value);
+
+        // Save ChucK version (relevant for WebChucK mode)
         const version = Settings.versionSelect.value === versionString.stable;
         selectChuckSrc(version);
         localStorage.setItem(
             "chuckVersion",
             version ? versionString.stable : versionString.dev
         );
+
+        // Drop any ?engine= override so the saved engine takes effect
+        const url = new URL(location.href);
+        if (url.searchParams.has("engine")) {
+            url.searchParams.delete("engine");
+            history.replaceState(null, "", url.toString());
+        }
 
         // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
         location.reload();

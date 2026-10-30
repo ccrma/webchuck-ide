@@ -14,6 +14,8 @@ import EditorPanelHeader from "@/components/editor/editorPanelHeader";
 import InputPanelHeader from "@/components/inputPanel/inputPanelHeader";
 import OutputPanelHeader from "@/components/outputPanel/outputPanelHeader";
 import Console from "@/components/outputPanel/console";
+import FpsCounter from "@components/outputPanel/fpsCounter";
+import FullscreenOverlay from "@components/outputPanel/fullscreenOverlay";
 import VmMonitor from "@/components/vmMonitor";
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import FindInProject from "@/components/fileExplorer/findInProject";
@@ -28,6 +30,7 @@ import { initChuck } from "@/host";
 import { initAppSplitters } from "@utils/appLayout";
 import { initTheme } from "@utils/theme";
 import { initExportWebChuck } from "@/services/export/exportWebchuck";
+import { initExportWebChuGL } from "@/services/export/exportWebchugl";
 import { initExportChuck } from "@/services/export/exportChuck";
 import { initProjectStartup } from "@/services/startup";
 
@@ -65,6 +68,8 @@ class Main {
         Main.outputPanelHeader = new OutputPanelHeader();
         Main.editorPanelHeader = new EditorPanelHeader();
         Main.console = new Console();
+        new FpsCounter();
+        new FullscreenOverlay();
         Main.editor = new Editor(
             document.querySelector<HTMLDivElement>("#monacoEditor")!
         );
@@ -93,6 +98,7 @@ class Main {
         // SERVICES
         initExportChuck();
         initExportWebChuck();
+        initExportWebChuGL();
         initProjectStartup();
 
         // Init WebChucK
