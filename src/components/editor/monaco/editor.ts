@@ -311,6 +311,7 @@ export default class Editor {
         Editor.vimModule = initVimMode(Editor.editor, Editor.vimStatus);
         // editor block cursor
         Editor.vimToggle.innerText = "Vim Mode: On";
+        Editor.vimToggle.setAttribute("aria-checked", "true");
         Editor.vimStatus.setAttribute("style", "display: flex !important");
 
         localStorage.setItem("vimMode", "true");
@@ -323,12 +324,18 @@ export default class Editor {
         // Reset editor to stretch to bottom
         Editor.editorContainer.setAttribute("style", "bottom: 0");
         Editor.resizeEditor();
-        Editor.vimModule?.dispose();
+        // keep focus on dropdown
+        if (Editor.vimModule) {
+            const focused = document.activeElement as HTMLElement | null;
+            Editor.vimModule.dispose();
+            focused?.focus();
+        }
         Editor.editor.updateOptions({
             cursorStyle: "line",
             cursorBlinking: "smooth"
         });
         Editor.vimToggle.innerText = "Vim Mode: Off";
+        Editor.vimToggle.setAttribute("aria-checked", "false");
         Editor.vimStatus?.setAttribute("style", "display: none !important");
 
         localStorage.setItem("vimMode", "false");

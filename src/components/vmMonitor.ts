@@ -212,10 +212,12 @@ export class ChuckNow {
         if (isDisplay) {
             // On
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: On";
+            ChuckNow.chuckNowToggle.setAttribute("aria-checked", "true");
             ChuckNow.chuckNowStatus.style.display = "flex";
             ChuckNow.isDisplay = localStorage["chuckNow"] = true;
         } else {
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: Off";
+            ChuckNow.chuckNowToggle.setAttribute("aria-checked", "false");
             ChuckNow.chuckNowStatus.style.display = "none";
             ChuckNow.isDisplay = localStorage["chuckNow"] = false;
         }

@@ -29,6 +29,7 @@ export default class FpsCounter {
         const fpsToggle =
             document.querySelector<HTMLButtonElement>("#fpsToggle")!;
         fpsToggle.textContent = FpsCounter.isEnabled ? "FPS: On" : "FPS: Off";
+        fpsToggle.setAttribute("aria-checked", String(FpsCounter.isEnabled));
         FpsCounter.setDisplay(FpsCounter.isEnabled);
 
         fpsToggle.addEventListener("click", () => {
@@ -38,6 +39,10 @@ export default class FpsCounter {
                 : "FPS: Off";
             localStorage.setItem(
                 "fpsCounter",
+                String(FpsCounter.isEnabled)
+            );
+            fpsToggle.setAttribute(
+                "aria-checked",
                 String(FpsCounter.isEnabled)
             );
             FpsCounter.setDisplay(FpsCounter.isEnabled);

@@ -95,23 +95,23 @@
                 </button>
                 <div id="fileDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-light" aria-labelledby="fileButton" role="menu">
-                    <li role="separator">
+                    <li role="none">
                       <button id="newFile" type="button" class="dropdownItem" role="menuitem">
                         New
                       </button>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <input id="fileUploader" type="file" multiple hidden aria-label="Upload files" />
                       <button id="uploadFiles" type="button" class="dropdownItem disabled:opacity-50" role="menuitem" disabled>
                         Upload Files
                       </button>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="newProject" type="button" class="dropdownItem" role="menuitem">
                         New Project
                       </button>
                     </li>
-                    <li id="exportToContainer" class="relative" role="separator">
+                    <li id="exportToContainer" class="relative" role="none">
                       <button id="exportToButton" type="button" class="dropdownItem nestedDropdownButton" role="menuitem">
                         Export to
                         <svg class="w-2.5 h-2.5 ml-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -120,17 +120,17 @@
                       </button>
                       <div id="exportToDropdown" class="nestedDropdown w-36 hidden">
                         <ul class="py-2 text-base text-gray-700 dark:text-gray-200" role="menu" aria-labelledby="exportToButton">
-                          <li role="separator">
+                          <li role="none">
                             <button id="exportChuck" type="button" class="dropdownItem" role="menuitem">
                               ChucK
                             </button>
                           </li>
-                          <li role="separator">
+                          <li role="none">
                             <button id="exportWebchuck" type="button" class="dropdownItem" role="menuitem">
                               WebChucK
                             </button>
                           </li>
-                          <li role="separator">
+                          <li role="none">
                             <button id="exportWebchugl" type="button" class="dropdownItem" role="menuitem">
                               WebChuGL
                             </button>
@@ -138,7 +138,7 @@
                         </ul>
                       </div>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="openSettings" type="button" class="dropdownItem" role="menuitem">
                         Settings
                       </button>
@@ -156,8 +156,8 @@
                 </button>
                 <div id="editDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="editButton" role="menu">
-                    <li role="separator">
-                      <button id="vimToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="vimToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         Vim Mode: Off
                       </button>
                     </li>
@@ -174,24 +174,24 @@
                 </button>
                 <div id="viewDropdown" class="hidden dropdown w-40">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="viewButton" role="menu">
-                    <li role="separator">
-                      <button id="chuckNowToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="chuckNowToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         ChucK Time: Off
                       </button>
                     </li>
                     <li id="fpsToggleItem" class="hidden" role="none">
-                      <button id="fpsToggle" type="button" class="dropdownItem" role="menuitem">
+                      <button id="fpsToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         FPS: Off
                       </button>
                     </li>
                     <li class="divider dark:border-t-gray-400" data-content="THEME" role="separator"></li>
-                    <li role="separator">
-                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitem">
+                    <li role="none">
+                      <button id="darkModeToggle" type="button" class="dropdownItem disabled:opacity-50" role="menuitemcheckbox" aria-checked="false">
                         Mode: Light
                       </button>
                     </li>
-                    <li role="separator">
-                      <button id="colorPreferenceToggle" type="button" class="dropdownItem" role="menuitem">
+                    <li role="none">
+                      <button id="colorPreferenceToggle" type="button" class="dropdownItem" role="menuitemcheckbox" aria-checked="false">
                         System: On
                       </button>
                     </li>
@@ -221,29 +221,29 @@
                 </button>
                 <div id="helpDropdown" class="hidden dropdown w-52">
                   <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="helpButton" role="menu">
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://chuck.stanford.edu/doc/reference" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">ChucK API Reference</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://chuck.stanford.edu/webchuck/" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Learn WebChucK</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://discord.gg/ENr3nurrx8" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Discord Community</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="keyboard-shortcuts" type="button" class="dropdownItem" role="menuitem">Keyboard Shortcuts</button>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="GITHUB" role="separator"></li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://github.com/ccrma/webchuck-ide" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">GitHub Repo</a>
                     </li>
-                    <li role="separator">
+                    <li role="none">
                       <a href="https://github.com/ccrma/webchuck-ide/issues/new" target="_blank" rel="noopener noreferrer" class="dropdownItem" role="menuitem">Report an Issue</a>
                     </li>
 
                     <li class="divider dark:border-t-gray-400" data-content="ABOUT" role="separator"></li>
-                    <li role="separator">
+                    <li role="none">
                       <button id="about-ide" type="button" class="dropdownItem" role="menuitem">About IDE...</button>
                     </li>
                   </ul>
