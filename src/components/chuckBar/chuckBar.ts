@@ -27,6 +27,8 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import VmMonitor from "@/components/vmMonitor";
 import Recorder, { RecordState } from "./recorder";
 import Console from "@/components/outputPanel/console";
+import Dropdown from "@/components/navbar/dropdown";
+import { applyEngineMode, type EngineMode } from "@/components/settings";
 
 // detect operating system
 const isWindows = navigator.userAgent.includes("Windows");
@@ -65,6 +67,32 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#removeButton")!;
         ChuckBar.recordButton =
             document.querySelector<HTMLButtonElement>("#recordButton")!;
+
+        // Engine selector (split button next to Start)
+        const engineContainer =
+            document.querySelector<HTMLDivElement>("#engineSelectContainer")!;
+        // WebChuGL gets its own Start/caret button color (see index.css)
+        engineContainer.classList.toggle("chugl", engineMode === "webchugl");
+        const engineDropdown = document.querySelector<HTMLDivElement>(
+            "#engineSelectDropdown"
+        )!;
+        new Dropdown(
+            engineContainer,
+            document.querySelector<HTMLButtonElement>("#engineSelectButton")!,
+            engineDropdown
+        );
+        engineDropdown
+            .querySelectorAll<HTMLButtonElement>("[data-engine]")
+            .forEach((item) => {
+                const engine = item.dataset.engine as EngineMode;
+                if (engine === engineMode) {
+                    item.setAttribute("aria-current", "true");
+                    item.classList.add("font-bold");
+                }
+                item.addEventListener("click", () => {
+                    if (engine !== engineMode) applyEngineMode(engine);
+                });
+            });
 
         ChuckBar.micButton.disabled = true;
         ChuckBar.playButton.disabled = true;

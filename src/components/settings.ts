@@ -38,6 +38,22 @@ export function getEngineMode(): EngineMode {
     return engineString.webchuck;
 }
 
+/**
+ * Persist the engine mode and reload the page to apply it.
+ */
+export function applyEngineMode(engine: EngineMode) {
+    localStorage.setItem("engineMode", engine);
+
+    const url = new URL(location.href);
+    if (url.searchParams.has("engine")) {
+        url.searchParams.delete("engine");
+        history.replaceState(null, "", url.toString());
+    }
+
+    // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
+    location.reload();
+}
+
 export default class Settings {
     public static openButton: HTMLButtonElement;
     public static modal: HTMLDialogElement;
@@ -148,9 +164,6 @@ export default class Settings {
      * Apply settings and refresh the page
      */
     applySettings() {
-        // Save engine mode
-        localStorage.setItem("engineMode", Settings.engineSelect.value);
-
         // Save ChucK version (relevant for WebChucK mode)
         const version = Settings.versionSelect.value === versionString.stable;
         selectChuckSrc(version);
@@ -159,14 +172,6 @@ export default class Settings {
             version ? versionString.stable : versionString.dev
         );
 
-        // Drop any ?engine= override so the saved engine takes effect
-        const url = new URL(location.href);
-        if (url.searchParams.has("engine")) {
-            url.searchParams.delete("engine");
-            history.replaceState(null, "", url.toString());
-        }
-
-        // TODO: Reload the page for now, but should be able to just change the AudioWorkletNode/AudioContext
-        location.reload();
+        applyEngineMode(Settings.engineSelect.value as EngineMode);
     }
 }

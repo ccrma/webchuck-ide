@@ -263,7 +263,24 @@
       <!-- CHUCK BAR -->
       <nav id="chuckBar" class="flex items-center justify-start px-2 py-1 gap-2 overflow-x-auto" aria-label="ChucK controls">
           <div class="flex items-center gap-2 flex-shrink-0" role="toolbar" aria-label="ChucK controls">
-            <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50" disabled>Loading...</button>
+            <div id="engineSelectContainer" class="inline-flex items-center">
+              <button id="webchuckButton" type="button" class="chuck-button h-10 font-semibold bg-orange text-white text-base px-3 enabled:hover:bg-orange-400 transition-all overflow-hidden truncate disabled:opacity-50 !rounded-r-none" disabled>Loading...</button>
+              <button id="engineSelectButton" type="button" class="chuck-button h-10 bg-orange text-white !rounded-l-none !px-2 border-l border-white/30" title="Change engine" aria-label="Change engine">
+                <svg class="!w-3 !h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"/>
+                </svg>
+              </button>
+              <div id="engineSelectDropdown" class="hidden dropdown w-64">
+                <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="engineSelectButton" role="menu">
+                  <li role="none">
+                    <button type="button" data-engine="webchuck" class="dropdownItem" role="menuitem">WebChucK <span class="block text-sm opacity-70">Audio only</span></button>
+                  </li>
+                  <li role="none">
+                    <button type="button" data-engine="webchugl" class="dropdownItem" role="menuitem">WebChuGL <span class="block text-sm opacity-70">Audio + Graphics</span></button>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <button id="playButton" type="button" class="chuck-button bg-[#70E16E]" aria-label="Play" disabled>
               <svg viewBox="14 10 28 33" fill="none" class="w-5 h-5"><path d="M40.1084 25.7217L15.9126 39.6911L15.9126 11.7522L40.1084 25.7217Z" fill="white"/><rect x="30.5172" y="35.5744" width="10.4631" height="1.79367" fill="white"/><rect x="34.7024" y="41.8522" width="10.4631" height="1.79367" transform="rotate(-90 34.7024 41.8522)" fill="white"/></svg>
             </button>
