@@ -15,7 +15,9 @@ import json
 import re
 
 # TODO: Chuck repository examples path here
-CHUCK_EXAMPLES_PATH = "YOUR/PATH/HERE"
+CHUCK_EXAMPLES_PATH = "/YOUR/PATH/TO/chuck-repo/examples"
+
+# Output JSON file path
 OUTPUT_JSON_FILE = "../public/examples/moreExamples.json"
 
 # Chuck examples Web URL
