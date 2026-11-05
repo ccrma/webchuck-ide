@@ -91,8 +91,9 @@ export async function connectMic(): Promise<boolean> {
         setState("connecting");
     }
 
+    let stream: MediaStream | undefined;
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
+        stream = await navigator.mediaDevices.getUserMedia({
             video: false,
             audio: {
                 echoCancellation: false,
@@ -110,8 +111,11 @@ export async function connectMic(): Promise<boolean> {
             return false;
         }
 
-        // Replace previous mic stream only after new stream is ready
+        const adcNode = audioContext.createMediaStreamSource(stream);
         releaseStream();
+        adcNode.connect(theChuck);
+        currentStream = stream;
+        currentAdcNode = adcNode;
 
         // Listen for hardware disconnection or permission revocation
         stream.getAudioTracks()[0]?.addEventListener("ended", () => {
@@ -120,12 +124,12 @@ export async function connectMic(): Promise<boolean> {
             }
         });
 
-        currentStream = stream;
-        currentAdcNode = audioContext.createMediaStreamSource(stream);
-        currentAdcNode.connect(theChuck);
         setState("on");
         return true;
     } catch (err) {
+        if (stream !== currentStream) {
+            stream?.getTracks().forEach((track) => track.stop());
+        }
         // Superseded requests are handled by whoever superseded them
         if (id !== requestId) {
             return false;

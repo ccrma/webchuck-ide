@@ -83,6 +83,9 @@ export async function initChuck() {
                 ? new AudioContext({ sampleRate: requestedSampleRate })
                 : new AudioContext();
     } catch {
+        Console.print(
+            `sample rate ${requestedSampleRate} is not supported, using system default`
+        );
         audioContext = new AudioContext();
     }
     audioContext.suspend();
@@ -156,6 +159,7 @@ export async function initChuck() {
             );
         }
     }
+    audioContext.destination.channelCount = numOutChannels;
     theChuck.connect(audioContext.destination);
     Console.print("WebChucK is ready!");
 
@@ -339,12 +343,9 @@ export function getMaxOutputChannels(): number {
 }
 
 /**
- * Set and save the audio output device, applying it live
+ * Set and save the audio output device, applying it live.
  */
 export async function setAudioOutputDevice(deviceId: string): Promise<boolean> {
-    if (deviceId === selectedOutputDeviceId) {
-        return true;
-    }
     selectedOutputDeviceId = deviceId;
     localStorage.setItem(OUTPUT_STORAGE_KEY, deviceId);
     return applyOutputDevice();
@@ -354,13 +355,8 @@ export async function setAudioOutputDevice(deviceId: string): Promise<boolean> {
  * Route the AudioContext to the selected output device (if supported)
  */
 async function applyOutputDevice(): Promise<boolean> {
-    if (!audioContext) return false;
-    if (typeof audioContext.setSinkId !== "function") {
-        console.warn(
-            "AudioContext.setSinkId is not supported in this browser."
-        );
-        return false;
-    }
+    // Unsupported browsers: Safari/Firefox
+    if (!audioContext?.setSinkId) return false;
     try {
         await audioContext.setSinkId(
             selectedOutputDeviceId === "default" ? "" : selectedOutputDeviceId

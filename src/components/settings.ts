@@ -153,6 +153,7 @@ export default class Settings {
      * Open the settings modal
      */
     static async openModal() {
+        if (Settings.modal.open) return;
         Settings.resetState();
         await Settings.populateAudioDevices();
         // Silently probe if permission was already granted previously
@@ -435,7 +436,7 @@ export default class Settings {
         const needsReload = Settings.requiresReload();
 
         // Commit audio settings only if device labels were unlocked
-        // (setters save, apply live, and no-op when unchanged)
+        // (setters save and apply live)
         if (Settings.hasDeviceLabels) {
             setAudioInputDevice(Settings.pending.audioInput);
             setAudioOutputDevice(Settings.pending.audioOutput);
