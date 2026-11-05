@@ -504,83 +504,88 @@
       </dialog>
 
       <!-- Settings Modal -->
-      <dialog class="modal" id="settings-modal" aria-labelledby="settings-heading">
+      <dialog class="modal modal-md" id="settings-modal" aria-labelledby="settings-heading">
         <h2 id="settings-heading" class="text-xl font-semibold pb-2">Settings</h2>
         <!-- Setting Options-->
-        <form class="flex flex-col py-1" method="dialog">
+        <form class="flex flex-col" method="dialog">
           <!-- Audio Section -->
-          <section class="shortcuts-section">
+          <section class="shortcuts-section py-3.5">
             <h3 class="shortcuts-category">Audio</h3>
-            <div class="flex flex-col gap-3 pt-1">
+            <div class="flex flex-col gap-3.5 pt-1.5">
+              <!-- Audio Permission Banner -->
+              <div id="audio-permission-prompt" class="hidden p-2.5 rounded-md bg-orange/10 border border-orange/30 flex items-center justify-between gap-3 text-xs">
+                <span class="text-dark-6 dark:text-gray-300">Microphone permission is required to detect audio device names.</span>
+                <button id="audio-grant-permission" type="button" class="button secondary text-xs py-1 px-2.5 whitespace-nowrap">Grant Access</button>
+              </div>
+
               <!-- Audio Input Device -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
-                <label class="font-medium leading-5" for="audio-input-select">Input Device</label>
-                <select id="audio-input-select" class="form-select sm:col-span-2 min-w-0 truncate">
+              <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5 whitespace-nowrap" for="audio-input-select">Input Device</label>
+                <select id="audio-input-select" class="form-select min-w-0 truncate">
                   <option value="default" selected>System Default Input</option>
                 </select>
               </div>
 
               <!-- Audio Output Device -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
-                <label class="font-medium leading-5" for="audio-output-select">Output Device</label>
-                <select id="audio-output-select" class="form-select sm:col-span-2 min-w-0 truncate">
+              <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5 whitespace-nowrap" for="audio-output-select">Output Device</label>
+                <select id="audio-output-select" class="form-select min-w-0 truncate">
                   <option value="default" selected>System Default Output</option>
                 </select>
               </div>
 
-              <!-- Audio Permission Banner -->
-              <div id="audio-permission-prompt" class="hidden p-2.5 rounded bg-orange/10 border border-orange/30 flex items-center justify-between gap-3 text-xs">
-                <span class="text-dark-8 dark:text-gray-300">Microphone permission is required to detect audio device names.</span>
-                <button id="audio-grant-permission" type="button" class="button secondary text-xs py-1 px-2.5 whitespace-nowrap">Grant Access</button>
-              </div>
-
               <!-- Output Channels -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
-                <label class="font-medium leading-5" for="audio-channels-select">
-                  Output Channels <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span><span class="sr-only">(requires reload)</span>
+              <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5 whitespace-nowrap" for="audio-channels-select">
+                  Output Channels <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload" aria-hidden="true">↻</span><span class="sr-only">(requires reload)</span>
                 </label>
-                <select id="audio-channels-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                <select id="audio-channels-select" class="form-select min-w-0 truncate">
                   <option value="default" selected>System Default</option>
                 </select>
               </div>
 
               <!-- Sample Rate -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
-                <label class="font-medium leading-5" for="audio-srate-select">
-                  Sample Rate <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span><span class="sr-only">(requires reload)</span>
+              <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] sm:items-center gap-1 sm:gap-4">
+                <label class="font-medium leading-5 whitespace-nowrap" for="audio-srate-select">
+                  Sample Rate <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload" aria-hidden="true">↻</span><span class="sr-only">(requires reload)</span>
                 </label>
-                <select id="audio-srate-select" class="form-select sm:col-span-2 min-w-0 truncate">
+                <select id="audio-srate-select" class="form-select min-w-0 truncate">
                   <option value="default" selected>System Default</option>
-                  <option value="44100">44100</option>
-                  <option value="48000">48000</option>
-                  <option value="96000">96000</option>
-                  <option value="192000">192000</option>
+                  <option value="44100">44100 Hz</option>
+                  <option value="48000">48000 Hz</option>
+                  <option value="96000">96000 Hz</option>
+                  <option value="192000">192000 Hz</option>
                 </select>
               </div>
             </div>
           </section>
 
           <!-- ChucK Section -->
-          <section class="shortcuts-section">
+          <section class="shortcuts-section py-3.5">
             <h3 class="shortcuts-category">ChucK</h3>
-            <div class="pt-1">
-              <div class="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1 sm:gap-4">
-                <label class="font-medium leading-5" for="chuck-version-select">
-                  Version <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload">↻</span>
+            <div class="pt-1.5">
+              <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] sm:items-start gap-1 sm:gap-4">
+                <label class="font-medium leading-5 sm:pt-1.5 whitespace-nowrap" for="chuck-version-select">
+                  Version <span class="text-dark-8 dark:text-gray-400 font-normal" title="Requires reload" aria-hidden="true">↻</span><span class="sr-only">(requires reload)</span>
                 </label>
-                <select id="chuck-version-select" class="form-select sm:col-span-2 min-w-0 truncate" aria-describedby="chuck-version-desc">
-                  <option value="stable">Stable</option>
-                  <option value="dev">Development</option>
-                </select>
+                <div class="min-w-0">
+                  <select id="chuck-version-select" class="form-select min-w-0 truncate" aria-describedby="chuck-version-desc">
+                    <option value="stable">Stable</option>
+                    <option value="dev">Development</option>
+                  </select>
+                  <p id="chuck-version-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1.5 leading-relaxed"></p>
+                </div>
               </div>
-              <p id="chuck-version-desc" class="text-xs text-dark-8 dark:text-gray-400 mt-1.5"></p>
             </div>
           </section>
         </form>
         <!-- Close Settings -->
-        <div class="flex gap-4 justify-end pt-4">
-          <button id="settings-close" type="button" class="button secondary">Cancel</button>
-          <button id="settings-apply" type="button" class="button primary">Apply</button>
+        <div class="flex items-center justify-between gap-4 pt-4">
+          <span class="text-xs text-dark-8 dark:text-gray-400" aria-hidden="true">↻ Requires IDE reload</span>
+          <div class="flex gap-3">
+            <button id="settings-close" type="button" class="button secondary">Cancel</button>
+            <button id="settings-apply" type="button" class="button primary">Apply</button>
+          </div>
         </div>
       </dialog>
 

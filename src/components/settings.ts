@@ -100,8 +100,24 @@ export default class Settings {
         Settings.closeButton.addEventListener("click", () =>
             Settings.modal.close()
         );
-        Settings.modal.addEventListener("click", (e) => {
-            if (e.target === Settings.modal) Settings.modal.close();
+
+        let pressedOutside = false;
+        const isOutsideDialog = (e: MouseEvent) => {
+            const rect = Settings.modal.getBoundingClientRect();
+            return (
+                e.clientX < rect.left ||
+                e.clientX > rect.right ||
+                e.clientY < rect.top ||
+                e.clientY > rect.bottom
+            );
+        };
+        Settings.modal.addEventListener("pointerdown", (e) => {
+            pressedOutside = isOutsideDialog(e);
+        });
+        Settings.modal.addEventListener("pointerup", (e) => {
+            if (pressedOutside && isOutsideDialog(e)) {
+                Settings.modal.close();
+            }
         });
 
         // Apply changes
@@ -230,7 +246,7 @@ export default class Settings {
         const defaultOpt = Settings.sampleRateSelect.options[0];
         if (defaultOpt) {
             defaultOpt.text = sysRate
-                ? `System Default (${sysRate})`
+                ? `System Default (${sysRate} Hz)`
                 : "System Default";
         }
         Settings.sampleRateSelect.value = Settings.pending.sampleRate;

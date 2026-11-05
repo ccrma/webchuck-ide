@@ -642,7 +642,7 @@ dialog::backdrop {
 }
 
 .form-input {
-    @apply w-full px-2 py-1 rounded-md focus-visible:outline-none focus-visible:ring-1;
+    @apply w-full px-2.5 py-1.5 rounded-md focus-visible:outline-none focus-visible:ring-1;
     background-color: var(--ide-editor-bg, #fefeff);
     color: var(--ide-text, #555);
     border: 1px solid var(--ide-border, #ccc);
@@ -650,7 +650,7 @@ dialog::backdrop {
 }
 
 .form-select {
-    @apply w-full px-2 py-1 rounded-md focus-visible:outline-none focus-visible:ring-1;
+    @apply w-full px-2.5 py-1.5 rounded-md focus-visible:outline-none focus-visible:ring-1 disabled:opacity-50 disabled:cursor-not-allowed;
     background-color: var(--ide-editor-bg, #fefeff);
     color: var(--ide-text, #555);
     border: 1px solid var(--ide-border, #ccc);
@@ -659,6 +659,10 @@ dialog::backdrop {
 
 .modal.modal-sm {
     max-width: 320px;
+}
+
+.modal.modal-md {
+    max-width: 540px;
 }
 
 .modal.modal-lg {
