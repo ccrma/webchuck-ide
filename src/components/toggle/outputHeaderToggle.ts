@@ -23,14 +23,17 @@ export default class OutputHeaderToggle extends HeaderToggle {
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,
-        initialOpen: boolean = false
+        initialOpen: boolean = false,
+        hidden: boolean = false
     ) {
-        OutputHeaderToggle.numToggles++;
-        // If initialOpen, increment active
-        if (initialOpen) {
-            OutputHeaderToggle.numActive++;
+        if (!hidden) {
+            OutputHeaderToggle.numToggles++;
+            // If initialOpen, increment active
+            if (initialOpen) {
+                OutputHeaderToggle.numActive++;
+            }
         }
-        super(button, contentContainer, initialOpen);
+        super(button, contentContainer, initialOpen, hidden);
     }
 
     toggle() {

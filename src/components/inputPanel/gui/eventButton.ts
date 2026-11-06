@@ -6,8 +6,6 @@
 // date:   February 2024
 //------------------------------------------------------------
 
-/* eslint-disable indent */
-
 import { theChuck } from "@/host";
 
 const RATIO = window.devicePixelRatio || 1;

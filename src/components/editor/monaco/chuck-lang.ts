@@ -3,6 +3,7 @@
 import { monaco } from "./monacoLite";
 import { chuck_modules, chuck_libraries } from "./chuck-modules";
 import ckdocJSON from "./ckdoc.json";
+import chuglDocJSON from "./chugl-doc.json";
 
 // Documentation Type for ckdoc
 interface docType {
@@ -13,7 +14,7 @@ interface docType {
     examples: string[];
     link: string;
 }
-const ckdoc: { [key: string]: docType } = ckdocJSON;
+const ckdoc: { [key: string]: docType } = { ...ckdocJSON, ...chuglDocJSON };
 
 // Register a new language for Monaco
 monaco.languages.register({ id: "chuck" });

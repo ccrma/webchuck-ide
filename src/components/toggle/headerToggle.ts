@@ -4,20 +4,24 @@
 export default class HeaderToggle {
     public button: HTMLButtonElement;
     public contentContainer: HTMLDivElement;
+    public hidden: boolean;
     protected open: boolean = false;
 
     constructor(
         button: HTMLButtonElement,
         contentContainer: HTMLDivElement,
-        initialOpen: boolean = false
+        initialOpen: boolean = false,
+        hidden: boolean = false
     ) {
         this.button = button;
         this.contentContainer = contentContainer;
+        this.hidden = hidden;
+        this.button.classList.toggle("hidden", hidden);
 
         this.button.addEventListener("click", () => {
             this.toggle();
         });
-        this.setActive(initialOpen);
+        this.setActive(initialOpen && !hidden);
     }
 
     // Default implementation
