@@ -160,6 +160,9 @@ export class WebChuGLAdapter implements ChucKAdapter {
 
     async runCode(code: string): Promise<number> {
         const result = await this.ck.runCode(code);
+        if (!result.shredId || result.shredId <= 0) {
+            throw new Error((result as any).error || "Failed to compile code");
+        }
         return result.shredId;
     }
     replaceCode(code: string): Promise<{ oldShred: number; newShred: number }> {
@@ -212,6 +215,11 @@ export class WebChuGLAdapter implements ChucKAdapter {
     }
     async runFile(path: string): Promise<number> {
         const result = await this.ck.runFile(path);
+        if (!result.shredId || result.shredId <= 0) {
+            throw new Error(
+                (result as any).error || `Failed to run file: ${path}`
+            );
+        }
         return result.shredId;
     }
 

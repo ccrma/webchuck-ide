@@ -119,9 +119,9 @@ export default class ChuckBar {
         ChuckBar.webcamButton.addEventListener("click", () => requestWebcam());
         ChuckBar.midiButton.addEventListener("click", () => connectMidi());
         // Webcam and MIDI are WebChuGL-only.
-        if (engineMode !== "webchugl") {
-            ChuckBar.webcamButton.style.display = "none";
-            ChuckBar.midiButton.style.display = "none";
+        if (engineMode === "webchugl") {
+            ChuckBar.webcamButton.style.display = "";
+            ChuckBar.midiButton.style.display = "";
         }
         ChuckBar.playButton.addEventListener("click", async () => {
             ChuckBar.runEditorCode();
@@ -185,7 +185,11 @@ export default class ChuckBar {
         // Dropping the shred row resets the ChuGL VM, which is what stops the
         // scene's parent shred and everything it sporked
         if (engineMode === "webchugl") {
-            return VmMonitor.removeShredRow(VmMonitor.getLastShred());
+            return VmMonitor.clearAllShredRows().then(() => {
+                if (Recorder.state === RecordState.recording) {
+                    Recorder.stopRecording();
+                }
+            });
         }
 
         return theChuck?.removeLastCode().then(

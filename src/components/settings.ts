@@ -91,6 +91,10 @@ export default class Settings {
 
         // Open settings
         Settings.openButton.addEventListener("click", () => {
+            this.selectEngine(getEngineMode());
+            this.selectChucKVersion(
+                localStorage.getItem("chuckVersion") || versionString.stable
+            );
             Settings.modal.showModal();
         });
         // Close settings
@@ -131,11 +135,11 @@ export default class Settings {
         Settings.engineSelect.value = engine;
         if (engine === engineString.webchugl) {
             Settings.engineDescription.textContent =
-                "ChucK with ChuGL graphics (WebGPU). Enables 3D rendering.";
+                "ChucK with ChuGL graphics (WebGPU). Enables audiovisual programming.";
             Settings.versionGroup.classList.add("hidden");
         } else {
             Settings.engineDescription.textContent =
-                "Audio-only ChucK runtime. Lightweight and fast.";
+                "Audio-priority ChucK runtime (AudioWorklet). Lightweight and low latency.";
             Settings.versionGroup.classList.remove("hidden");
         }
     }

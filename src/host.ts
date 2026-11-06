@@ -344,6 +344,7 @@ export async function requestWebcam() {
     if (engineMode !== "webchugl") return;
     try {
         await theChuck.rawRuntime.requestWebcam();
+        ChuckBar.webcamButton.disabled = true;
         Console.print("Webcam connected");
     } catch (err) {
         Console.print(`\x1b[31mwebcam: ${(err as Error).message}\x1b[0m`);
@@ -360,6 +361,7 @@ export async function connectMidi() {
     if (engineMode !== "webchugl") return;
     try {
         await theChuck.rawRuntime.requestMidi();
+        ChuckBar.midiButton.disabled = true;
         Console.print("MIDI connected");
     } catch (err) {
         Console.print(`\x1b[31mMIDI: ${(err as Error).message}\x1b[0m`);
@@ -374,6 +376,7 @@ export async function connectMic() {
     if (engineMode === "webchugl") {
         try {
             await theChuck.rawRuntime.requestMicrophone();
+            ChuckBar.micButton.disabled = true;
             Console.print("Microphone connected");
         } catch (err) {
             Console.print(
@@ -395,7 +398,8 @@ export async function connectMic() {
         })
         .then((stream) => {
             const adc = audioContext.createMediaStreamSource(stream);
-            adc.connect(theChuck as any);
+            adc.connect(theChuck.rawRuntime);
+            ChuckBar.micButton.disabled = true;
             Console.print("Microphone connected");
         })
         .catch((err: Error) => {
@@ -447,7 +451,9 @@ export async function runJsCode(code: string, filename: string = "<js>") {
                     const result = await target.runCode(code);
                     const id: number =
                         typeof result === "object" ? result.shredId : result;
-                    VmMonitor.addShredRow(id);
+                    if (id > 0) {
+                        VmMonitor.addShredRow(id);
+                    }
                     return id;
                 };
             }
@@ -456,14 +462,33 @@ export async function runJsCode(code: string, filename: string = "<js>") {
                     const result = await target.runFile(path);
                     const id: number =
                         typeof result === "object" ? result.shredId : result;
-                    VmMonitor.addShredRow(id);
+                    if (id > 0) {
+                        VmMonitor.addShredRow(id);
+                    }
                     return id;
                 };
             }
             if (prop === "replaceCode") {
                 return async (code: string) => {
+                    if (engineMode === "webchugl") {
+                        const oldShred = VmMonitor.getLastShred();
+                        await VmMonitor.clearAllShredRows();
+                        const result = await target.runCode(code);
+                        const newShred: number =
+                            typeof result === "object"
+                                ? result.shredId
+                                : result;
+                        if (!newShred || newShred <= 0) {
+                            throw new Error(
+                                (result as any)?.error ||
+                                    "Failed to compile code"
+                            );
+                        }
+                        VmMonitor.addShredRow(newShred);
+                        return { oldShred, newShred };
+                    }
                     const result = await target.replaceCode(code);
-                    VmMonitor.removeShredRow(result.oldShred);
+                    await VmMonitor.removeShredRow(result.oldShred);
                     VmMonitor.addShredRow(result.newShred);
                     return result;
                 };
@@ -471,14 +496,14 @@ export async function runJsCode(code: string, filename: string = "<js>") {
             if (prop === "removeLastCode") {
                 return async () => {
                     const id: number = await target.removeLastCode();
-                    VmMonitor.removeShredRow(id);
+                    await VmMonitor.removeShredRow(id);
                     return id;
                 };
             }
             if (prop === "removeShred") {
                 return async (id: number) => {
                     const result: number = await target.removeShred(id);
-                    VmMonitor.removeShredRow(result);
+                    await VmMonitor.removeShredRow(result);
                     return result;
                 };
             }

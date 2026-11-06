@@ -82,13 +82,18 @@ export default class VmMonitor {
 
                 // Piggyback off time keeper to remove row
                 // if shred is removed
-                if (!(myShred in VmMonitor.shredsToRows)) {
+                if (VmMonitor.shredsToRows[myShred] !== newRow) {
                     removed = true;
+                    return;
                 }
 
                 // Check if shred active, if not, remove row
                 theChuck?.isShredActive(myShred).then((active: number) => {
-                    if (!active && !removed) {
+                    if (
+                        !active &&
+                        !removed &&
+                        VmMonitor.shredsToRows[myShred] === newRow
+                    ) {
                         removed = true;
                         VmMonitor.removeShredRow(myShred);
                         return;
@@ -150,6 +155,23 @@ export default class VmMonitor {
                 await resetChuGL();
             }
         }
+    }
+
+    /**
+     * Remove all tracked shred rows and reset ChuGL state
+     */
+    static async clearAllShredRows() {
+        // Always reset (even with no tracked rows) so untracked scenes stop too
+        const shredIds = Object.keys(VmMonitor.shredsToRows).map(Number);
+        for (const id of shredIds) {
+            VmMonitor.shredsToRows[id]?.parentNode?.removeChild(
+                VmMonitor.shredsToRows[id]
+            );
+            delete VmMonitor.shredsToRows[id];
+        }
+        this.numShreds = 0;
+        ChuckBar.playButton.disabled = !ChuckBar.running;
+        await resetChuGL();
     }
 
     static getNumShreds(): number {

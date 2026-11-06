@@ -7,10 +7,12 @@
 //-----------------------------------------------------------
 
 import { engineMode, theChuck } from "@/host";
+import ChuckBar from "@/components/chuckBar/chuckBar";
 
 export default class FpsCounter {
     private static display: HTMLDivElement;
     private static isEnabled: boolean = false;
+    private static intervalId: ReturnType<typeof setInterval> | null = null;
 
     constructor() {
         if (engineMode !== "webchugl") return;
@@ -43,16 +45,22 @@ export default class FpsCounter {
             );
             FpsCounter.setDisplay(FpsCounter.isEnabled);
         });
-
-        // ChuGL updates fps() once per second, so match that rate
-        setInterval(() => {
-            if (FpsCounter.isEnabled && theChuck) {
-                FpsCounter.display.textContent = `${Math.round(theChuck.rawRuntime.fps())} FPS`;
-            }
-        }, 1000);
     }
 
     private static setDisplay(visible: boolean): void {
         FpsCounter.display.style.display = visible ? "" : "none";
+        if (visible && !FpsCounter.intervalId) {
+            // ChuGL updates fps() once per second, so match that rate
+            FpsCounter.intervalId = setInterval(() => {
+                if (ChuckBar.running && theChuck) {
+                    FpsCounter.display.textContent = `${Math.round(theChuck.rawRuntime.fps())} FPS`;
+                }
+            }, 1000);
+        } else if (!visible && FpsCounter.intervalId) {
+            clearInterval(FpsCounter.intervalId);
+            FpsCounter.intervalId = null;
+            // Clear so a stale value isn't shown when re-enabled
+            FpsCounter.display.textContent = "";
+        }
     }
 }

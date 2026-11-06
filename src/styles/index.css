@@ -321,7 +321,42 @@ body {
 
 /* WebChuGL: Start + engine caret buttons */
 #chuckBar #engineSelectContainer.chugl .chuck-button {
-    background-color: #4f9019;
+    background-color: #5bd159;
+}
+
+#chuckBar
+    #engineSelectContainer:has(#webchuckButton:disabled)
+    #engineSelectButton {
+    opacity: 0.5;
+}
+
+#chuckBar
+    #engineSelectContainer:has(#webchuckButton:disabled)
+    #engineSelectButton:hover,
+#chuckBar
+    #engineSelectContainer:has(#webchuckButton:disabled)
+    #engineSelectButton[aria-expanded="true"] {
+    opacity: 1;
+}
+
+#engineSelectDropdown .dropdownItem[aria-current="true"] {
+    font-weight: 700;
+    color: var(--ide-accent, #ff8833);
+    background-color: color-mix(
+        in srgb,
+        var(--ide-accent, #ff8833) 12%,
+        transparent
+    );
+}
+
+#engineSelectDropdown
+    .dropdownItem[data-engine="webchugl"][aria-current="true"] {
+    color: #5bd159;
+    background-color: color-mix(in srgb, #5bd159 12%, transparent);
+}
+
+#engineSelectDropdown .dropdownItem[aria-current="true"] .engine-check {
+    display: block;
 }
 
 #chuckBar .chuck-button svg {

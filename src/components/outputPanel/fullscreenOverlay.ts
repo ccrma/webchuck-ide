@@ -22,6 +22,7 @@ export default class FullscreenOverlay {
     private static isOpen: boolean = false;
     private static activeSource: "visualizer" | "canvas" | null = null;
     private static originalParent: HTMLElement | null = null;
+    private static originalNextSibling: Node | null = null;
     private static reparentedElement: HTMLElement | null = null;
 
     // Toolbar hidden — hides toolbar entirely
@@ -98,6 +99,7 @@ export default class FullscreenOverlay {
 
         // Save original parent for restoration
         FullscreenOverlay.originalParent = element.parentElement;
+        FullscreenOverlay.originalNextSibling = element.nextSibling;
         FullscreenOverlay.reparentedElement = element;
 
         // Reparent into the overlay content area
@@ -107,8 +109,12 @@ export default class FullscreenOverlay {
         // Show the overlay
         FullscreenOverlay.overlay.classList.remove("hidden");
 
-        // Toolbar starts hidden
-        FullscreenOverlay.toolbar.classList.add("toolbar-hidden");
+        if (!FullscreenOverlay.toolbarHidden) {
+            FullscreenOverlay.toolbar.classList.remove("toolbar-hidden");
+            FullscreenOverlay.resetIdleTimer();
+        } else {
+            FullscreenOverlay.toolbar.classList.add("toolbar-hidden");
+        }
 
         // Add global event listeners
         document.addEventListener("keydown", FullscreenOverlay.boundOnKeyDown);
@@ -148,8 +154,9 @@ export default class FullscreenOverlay {
             FullscreenOverlay.originalParent &&
             FullscreenOverlay.reparentedElement
         ) {
-            FullscreenOverlay.originalParent.appendChild(
-                FullscreenOverlay.reparentedElement
+            FullscreenOverlay.originalParent.insertBefore(
+                FullscreenOverlay.reparentedElement,
+                FullscreenOverlay.originalNextSibling
             );
         }
 
@@ -188,6 +195,7 @@ export default class FullscreenOverlay {
         FullscreenOverlay.isOpen = false;
         FullscreenOverlay.activeSource = null;
         FullscreenOverlay.originalParent = null;
+        FullscreenOverlay.originalNextSibling = null;
         FullscreenOverlay.reparentedElement = null;
 
         // Trigger resize on the restored elements

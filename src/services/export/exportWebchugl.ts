@@ -1,4 +1,5 @@
 import ProjectSystem from "@/components/fileExplorer/projectSystem";
+import Editor from "@/components/editor/monaco/editor";
 
 const exportWebchuglButton =
     document.querySelector<HTMLButtonElement>("#exportWebchugl")!;
@@ -17,11 +18,30 @@ const exportChuglTitle = document.querySelector<HTMLInputElement>(
     "#export-chugl-title"
 )!;
 
+function escapeHtml(str: string): string {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+// Escapes for a single-quoted JS string literal; shell.html must keep
+// '{{{ MAIN_FILE }}}' wrapped in single quotes. Not safe for newlines or
+// "</script>" (fine for filenames).
+function escapeJsString(str: string): string {
+    return str.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+}
+
 /**
  * Export Project Files to a WebChuGL Web App
  */
 export function initExportWebChuGL() {
     exportWebchuglButton.addEventListener("click", () => {
+        exportChuglTitle.value =
+            sessionStorage.getItem("export-chugl-title") || "";
+
         // Populate main file select
         const allCkfiles = ProjectSystem.getProjectFiles().filter((file) =>
             file.isChuckFile()
@@ -33,9 +53,10 @@ export function initExportWebChuGL() {
             option.textContent = file.getFilename();
             exportChuglFileSelect.appendChild(option);
         });
-        exportChuglFileSelect.disabled = allCkfiles.length == 1;
+        exportChuglFileSelect.disabled = allCkfiles.length <= 1;
+        exportBtn.disabled = allCkfiles.length === 0;
         const activeFile = ProjectSystem.activeFile;
-        if (activeFile.isChuckFile()) {
+        if (activeFile?.isChuckFile()) {
             exportChuglFileSelect.value = activeFile.getFilename();
         }
 
@@ -55,9 +76,10 @@ export function initExportWebChuGL() {
         const title = exportChuglTitle.value;
         const mainFile = exportChuglFileSelect.value;
 
-        await exportWebchugl(title, mainFile);
-
         exportChuglTitle.value = "";
+        sessionStorage.removeItem("export-chugl-title");
+
+        await exportWebchugl(title, mainFile);
     });
 }
 
@@ -67,6 +89,8 @@ export function initExportWebChuGL() {
  * @param mainFile entry point .ck file
  */
 async function exportWebchugl(title: string, mainFile: string) {
+    ProjectSystem.activeFile?.setData(Editor.getEditorCode());
+
     // 1. Fetch the HTML template
     const templateText = await (
         await fetch("templates/webchugl/shell.html")
@@ -74,8 +98,8 @@ async function exportWebchugl(title: string, mainFile: string) {
 
     // 2. Apply template substitutions
     let html = templateText;
-    html = html.replace("{{{ TITLE }}}", title || "WebChuGL");
-    html = html.replace("{{{ MAIN_FILE }}}", mainFile);
+    html = html.replace("{{{ TITLE }}}", () => escapeHtml(title || "WebChuGL"));
+    html = html.replace("{{{ MAIN_FILE }}}", () => escapeJsString(mainFile));
 
     // 3. Create bundle.zip from all project files
     const { default: JSZip } = await import("jszip");
@@ -119,10 +143,7 @@ async function exportWebchugl(title: string, mainFile: string) {
     URL.revokeObjectURL(url);
 }
 
-// Save/restore title across dialog open/close
+// Save title across dialog close
 exportDialog.addEventListener("close", () => {
     sessionStorage.setItem("export-chugl-title", exportChuglTitle.value);
-});
-exportDialog.addEventListener("show", () => {
-    exportChuglTitle.value = sessionStorage.getItem("export-chugl-title") || "";
 });
