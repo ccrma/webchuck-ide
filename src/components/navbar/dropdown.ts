@@ -52,16 +52,25 @@ export default class Dropdown {
                 event.relatedTarget &&
                 !this.container.contains(event.relatedTarget as Node)
             ) {
-                this.close();
+                setTimeout(() => {
+                    if (!this.container.contains(document.activeElement)) {
+                        this.close();
+                    }
+                });
             }
         });
 
-        // Close dropdown when a menu item is clicked
+        // conditionally close dropdown when a menu item is clicked
         this.dropdown.addEventListener("click", (event: MouseEvent) => {
             const target = event.target as HTMLElement;
             const item = target.closest("button, a");
-            if (item && !item.classList.contains("nestedDropdownButton")) {
+            if (
+                item &&
+                !item.classList.contains("nestedDropdownButton") &&
+                item.getAttribute("role") !== "menuitemcheckbox"
+            ) {
                 this.close();
+                this.button.focus();
             }
         });
 
@@ -75,7 +84,7 @@ export default class Dropdown {
                 event.preventDefault();
                 const items = Array.from(
                     this.dropdown.querySelectorAll<HTMLElement>(
-                        "[role=\"menuitem\"]"
+                        "[role^=\"menuitem\"]"
                     )
                 );
                 if (items.length === 0) return;

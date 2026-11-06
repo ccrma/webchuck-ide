@@ -12,6 +12,7 @@
  *    localStorage.
  *
  * To update the announcement banner, increment `data-banner-version` in <html>
+ * To disable the announcement banner, set `data-banner-version=""`
  */
 
 import Console from "@/components/outputPanel/console";
@@ -21,6 +22,11 @@ export default class AnnouncementBanner {
     public static closeBtn: HTMLButtonElement | null;
 
     constructor() {
+        // Banner disabled: skip the console announcement as well
+        if (!document.documentElement.getAttribute("data-banner-version")) {
+            return;
+        }
+
         AnnouncementBanner.banner = document.getElementById(
             "notificationBanner"
         ) as HTMLDivElement | null;

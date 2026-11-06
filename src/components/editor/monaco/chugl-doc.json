@@ -1,0 +1,907 @@
+{
+    "GG": {
+        "title": "**GG (ChuGL Graphics Manager)**",
+        "description": "Static class providing core ChuGL graphics and audio-visual programming functionality. Use `GG.nextFrame() => now;` to advance to the next frame in a render loop.",
+        "constructors": [],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nNextFrameEvent nextFrame()\n```\nRegisters the calling shred to be notified on the next graphics frame. Use with `GG.nextFrame() => now;` in a render loop.",
+            "```chuck\nGScene scene()\n```\nGet the current default scene.",
+            "```chuck\nGScene scene(GScene scene)\n```\nSet the current scene.",
+            "```chuck\nGCamera camera()\n```\nGet the default camera.",
+            "```chuck\nfloat dt()\n```\nGet the delta time (frame time) in seconds for the graphics thread.",
+            "```chuck\nint fc()\n```\nGet the frame count since start.",
+            "```chuck\nfloat fps()\n```\nGet the current frames per second.",
+            "```chuck\nvoid fps(int fps)\n```\nSet the target frame rate limit.",
+            "```chuck\nfloat mouseX()\n```\nGet the current mouse X position.",
+            "```chuck\nfloat mouseY()\n```\nGet the current mouse Y position.",
+            "```chuck\nfloat frameWidth()\n```\nGet the framebuffer width in pixels.",
+            "```chuck\nfloat frameHeight()\n```\nGet the framebuffer height in pixels.",
+            "```chuck\nfloat windowWidth()\n```\nGet the window width in pixels.",
+            "```chuck\nfloat windowHeight()\n```\nGet the window height in pixels.",
+            "```chuck\nvoid windowTitle(string title)\n```\nSet the window title.",
+            "```chuck\nvoid fullscreen()\n```\nSet the window to fullscreen mode.",
+            "```chuck\nvoid windowed(int width, int height)\n```\nSet the window to windowed mode with given dimensions.",
+            "```chuck\nvoid windowed()\n```\nSet the window to windowed mode with previous size.",
+            "```chuck\nint autoUpdate()\n```\nGet whether GGen transforms are automatically updated each frame.",
+            "```chuck\nvoid autoUpdate(int autoUpdate)\n```\nSet whether GGen transforms are automatically updated.",
+            "```chuck\nvoid bloom(int connect)\n```\nConnect or disconnect the bloom post-processing effect.",
+            "```chuck\nBloomPass bloomPass()\n```\nGet the default bloom pass.",
+            "```chuck\nOutputPass outputPass()\n```\nGet the default output pass.",
+            "```chuck\nGPass rootPass()\n```\nGet the root pass of the render graph.",
+            "```chuck\nScenePass scenePass()\n```\nGet the default scene render pass.",
+            "```chuck\nvoid unregisterShred()\n```\nUnregister the calling shred from the graphics loop."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/)"
+    },
+    "GGen": {
+        "title": "**GGen (Graphics Generator)**",
+        "description": "Base class for all ChuGL graphics objects in the scene graph. Provides transform manipulation (position, rotation, scale), parent-child hierarchy, and per-frame update callbacks. Connect to a scene with `myGGen --> GG.scene();`",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGGen()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvec3 pos()\n```\nGet local position.",
+            "```chuck\nGGen pos(vec3 pos)\n```\nSet local position.",
+            "```chuck\nGGen pos(float x, float y, float z)\n```\nSet local position.",
+            "```chuck\nfloat posX()\n```\nGet local X position.",
+            "```chuck\nGGen posX(float pos)\n```\nSet local X position.",
+            "```chuck\nfloat posY()\n```\nGet local Y position.",
+            "```chuck\nGGen posY(float pos)\n```\nSet local Y position.",
+            "```chuck\nfloat posZ()\n```\nGet local Z position.",
+            "```chuck\nGGen posZ(float pos)\n```\nSet local Z position.",
+            "```chuck\nvec3 posWorld()\n```\nGet world position.",
+            "```chuck\nGGen posWorld(vec3 pos)\n```\nSet world position.",
+            "```chuck\nvec3 rot()\n```\nGet rotation as euler angles (radians).",
+            "```chuck\nvec3 rot(vec3 eulers)\n```\nSet rotation as euler angles.",
+            "```chuck\nGGen rotX(float radians)\n```\nSet X rotation.",
+            "```chuck\nGGen rotY(float radians)\n```\nSet Y rotation.",
+            "```chuck\nGGen rotZ(float radians)\n```\nSet Z rotation.",
+            "```chuck\nGGen rotateX(float radians)\n```\nRotate incrementally on X axis.",
+            "```chuck\nGGen rotateY(float radians)\n```\nRotate incrementally on Y axis.",
+            "```chuck\nGGen rotateZ(float radians)\n```\nRotate incrementally on Z axis.",
+            "```chuck\nGGen rotate(vec3 eulers)\n```\nRotate incrementally by euler angles.",
+            "```chuck\nGGen rotateOnLocalAxis(vec3 axis, float radians)\n```\nRotate on a local axis.",
+            "```chuck\nGGen rotateOnWorldAxis(vec3 axis, float radians)\n```\nRotate on a world axis.",
+            "```chuck\nGGen lookAt(vec3 pos)\n```\nRotate to look at a world position.",
+            "```chuck\nvec3 sca()\n```\nGet local scale.",
+            "```chuck\nGGen sca(vec3 scale)\n```\nSet local scale.",
+            "```chuck\nGGen sca(float scale)\n```\nSet uniform local scale.",
+            "```chuck\nfloat scaX()\n```\nGet local X scale.",
+            "```chuck\nfloat scaY()\n```\nGet local Y scale.",
+            "```chuck\nfloat scaZ()\n```\nGet local Z scale.",
+            "```chuck\nvec3 scaWorld()\n```\nGet world scale.",
+            "```chuck\nGGen translate(vec3 translation)\n```\nTranslate by a vector.",
+            "```chuck\nGGen translateX(float amt)\n```\nTranslate on X axis.",
+            "```chuck\nGGen translateY(float amt)\n```\nTranslate on Y axis.",
+            "```chuck\nGGen translateZ(float amt)\n```\nTranslate on Z axis.",
+            "```chuck\nvec3 forward()\n```\nGet the forward direction vector in world space.",
+            "```chuck\nvec3 right()\n```\nGet the right direction vector in world space.",
+            "```chuck\nvec3 up()\n```\nGet the up direction vector in world space.",
+            "```chuck\nGGen parent()\n```\nGet parent GGen.",
+            "```chuck\nGGen child(int n)\n```\nGet nth child.",
+            "```chuck\nint numChildren()\n```\nGet number of children.",
+            "```chuck\nvoid detach()\n```\nDetach from parent and children.",
+            "```chuck\nvoid detachParent()\n```\nDetach from parent.",
+            "```chuck\nvoid detachChildren()\n```\nDetach all children.",
+            "```chuck\nvoid update(float dt)\n```\nPer-frame update callback. Override for custom logic."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GScene": {
+        "title": "**GScene (Scene Graph)**",
+        "description": "Scene container managing the scene graph, lights, camera, ambient lighting, and background color. Extends GGen.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGScene()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid backgroundColor(vec3 color)\n```\nSet the background color.",
+            "```chuck\nvec3 backgroundColor()\n```\nGet the background color.",
+            "```chuck\nvoid ambient(vec3 color)\n```\nSet the ambient lighting color.",
+            "```chuck\nvec3 ambient()\n```\nGet the ambient lighting color.",
+            "```chuck\nGCamera camera(GCamera camera)\n```\nSet the main camera.",
+            "```chuck\nGCamera camera()\n```\nGet the main camera.",
+            "```chuck\nGLight light()\n```\nGet the first light in the scene.",
+            "```chuck\nGLight[] lights()\n```\nGet all lights in the scene.",
+            "```chuck\nvoid envMap(Texture envMap)\n```\nSet the environment map for skybox reflections.",
+            "```chuck\nvoid skybox(Material skybox)\n```\nSet the skybox material."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GCamera": {
+        "title": "**GCamera (Camera)**",
+        "description": "Camera class supporting perspective and orthographic projection modes with coordinate conversion utilities. Extends GGen.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGCamera()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid perspective()\n```\nSwitch to perspective projection.",
+            "```chuck\nvoid orthographic()\n```\nSwitch to orthographic projection.",
+            "```chuck\nint mode()\n```\nGet the camera mode (PERSPECTIVE or ORTHOGRAPHIC).",
+            "```chuck\nvoid fov(float fov_radians)\n```\nSet the field of view in radians.",
+            "```chuck\nfloat fov()\n```\nGet the field of view.",
+            "```chuck\nvoid clip(float near, float far)\n```\nSet the near and far clip planes.",
+            "```chuck\nfloat clipNear()\n```\nGet the near clip plane distance.",
+            "```chuck\nfloat clipFar()\n```\nGet the far clip plane distance.",
+            "```chuck\nvoid aspect(float aspect)\n```\nSet a fixed aspect ratio.",
+            "```chuck\nfloat aspect()\n```\nGet the aspect ratio.",
+            "```chuck\nvoid viewSize(float size)\n```\nSet orthographic view height.",
+            "```chuck\nfloat viewSize()\n```\nGet orthographic view height.",
+            "```chuck\nvec3 screenCoordToWorldPos(vec2 screen_pos, float distance)\n```\nConvert screen coordinates to world position.",
+            "```chuck\nvec2 worldPosToScreenCoord(vec3 world_pos)\n```\nConvert world position to screen coordinates.",
+            "```chuck\nvec3 NDCToWorldPos(vec3 clip_pos)\n```\nConvert normalized device coordinates to world position."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GMesh": {
+        "title": "**GMesh (Mesh)**",
+        "description": "Renderable mesh combining a Geometry and a Material. Extends GGen. Create with `GMesh mesh(myGeometry, myMaterial);` or set geometry/material after construction.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGMesh()\n```\nDefault constructor.",
+            "```chuck\nGMesh(Geometry geo, Material mat)\n```\nConstruct with a geometry and material."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nGeometry geo()\n```\nGet the geometry.",
+            "```chuck\nGMesh geo(Geometry geometry)\n```\nSet the geometry.",
+            "```chuck\nMaterial mat()\n```\nGet the material.",
+            "```chuck\nGMesh mat(Material material)\n```\nSet the material.",
+            "```chuck\nvoid mesh(Geometry geometry, Material material)\n```\nSet both geometry and material.",
+            "```chuck\nint shadowed()\n```\nGet shadow receiving flag.",
+            "```chuck\nvoid shadowed(int receives_shadow)\n```\nSet shadow receiving."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GCube": {
+        "title": "**GCube (Cube Mesh)**",
+        "description": "Convenience class for a cube mesh with PhongMaterial. Extends GMesh. Use `GCube cube --> GG.scene();` to add a cube to the scene.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGCube()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nfloat alpha()\n```\nGet the alpha channel.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the diffuse texture.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent.",
+            "```chuck\nvoid normalMap(Texture normalTexture)\n```\nSet the normal map.",
+            "```chuck\nvoid emission(vec3 emission)\n```\nSet the emission color.",
+            "```chuck\nvoid emissiveMap(Texture emissiveTexture)\n```\nSet the emissive texture."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GSphere": {
+        "title": "**GSphere (Sphere Mesh)**",
+        "description": "Convenience class for a sphere mesh with PhongMaterial. Extends GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGSphere()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the diffuse texture.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent.",
+            "```chuck\nvoid emission(vec3 emission)\n```\nSet the emission color."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GCircle": {
+        "title": "**GCircle (Circle Mesh)**",
+        "description": "Convenience class for a flat circle mesh with PhongMaterial. Extends GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGCircle()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the diffuse texture.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GPlane": {
+        "title": "**GPlane (Plane Mesh)**",
+        "description": "Convenience class for a rectangular plane mesh with PhongMaterial. Extends GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGPlane()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the diffuse texture.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GTorus": {
+        "title": "**GTorus (Torus Mesh)**",
+        "description": "Convenience class for a torus (donut) mesh with PhongMaterial. Extends GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGTorus()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GCylinder": {
+        "title": "**GCylinder (Cylinder Mesh)**",
+        "description": "Convenience class for a cylinder mesh with PhongMaterial. Extends GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGCylinder()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the shininess exponent."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GLines": {
+        "title": "**GLines (2D Lines)**",
+        "description": "Class for creating and rendering 2D lines. Extends GMesh. Set positions with an array of vec2 points.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGLines()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid positions(vec2[] points)\n```\nSet the line vertex positions (Z = 0).",
+            "```chuck\nvoid color(vec3 color)\n```\nSet the line color.",
+            "```chuck\nvec3 color()\n```\nGet the line color.",
+            "```chuck\nvoid colors(vec3[] colors)\n```\nSet per-line interpolated colors.",
+            "```chuck\nvoid width(float width)\n```\nSet the line thickness.",
+            "```chuck\nfloat width()\n```\nGet the line thickness."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GPoints": {
+        "title": "**GPoints (Instanced Points)**",
+        "description": "Class for creating instanced points in 3D space. Extends GMesh. Supports per-point colors, sizes, and billboard mode.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGPoints()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid positions(vec3[] positions)\n```\nSet point positions.",
+            "```chuck\nvoid color(vec3 color)\n```\nSet global point color.",
+            "```chuck\nvec3 color()\n```\nGet global point color.",
+            "```chuck\nvoid colors(vec3[] colors)\n```\nSet per-point colors.",
+            "```chuck\nvoid size(float size)\n```\nSet global point size.",
+            "```chuck\nfloat size()\n```\nGet global point size.",
+            "```chuck\nvoid sizes(float[] sizes)\n```\nSet per-point sizes.",
+            "```chuck\nvoid billboard(int billboard)\n```\nEnable/disable camera-facing mode.",
+            "```chuck\nvoid texture(Texture texture)\n```\nSet point texture."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GLight": {
+        "title": "**GLight (Light)**",
+        "description": "Base class for all light types in ChuGL (directional, point, spot). Extends GGen.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGLight()\n```\nDefault constructor.",
+            "```chuck\nGLight(int type)\n```\nConstruct with a light type (DIRECTIONAL, POINT, or SPOT)."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 color)\n```\nSet the light color.",
+            "```chuck\nvec3 color()\n```\nGet the light color.",
+            "```chuck\nvoid intensity(float intensity)\n```\nSet the light intensity.",
+            "```chuck\nfloat intensity()\n```\nGet the light intensity.",
+            "```chuck\nvoid shadow(int generate_shadows)\n```\nEnable or disable shadow generation.",
+            "```chuck\nint shadow()\n```\nGet shadow generation status.",
+            "```chuck\nvoid shadowAdd(GGen mesh, int add_children)\n```\nAdd a GGen as a shadow caster.",
+            "```chuck\nvoid shadowRemove(GGen mesh, int add_children)\n```\nRemove a shadow caster.",
+            "```chuck\nvoid shadowBias(float bias)\n```\nSet the shadow map bias.",
+            "```chuck\nvoid mode(int type)\n```\nSet the light type."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GPointLight": {
+        "title": "**GPointLight (Point Light)**",
+        "description": "Point light that emits in all directions from its position. Extends GLight.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGPointLight()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid radius(float radius)\n```\nSet the light radius.",
+            "```chuck\nfloat radius()\n```\nGet the light radius.",
+            "```chuck\nvoid falloff(float falloff_exponent)\n```\nSet the falloff exponent.",
+            "```chuck\nfloat falloff()\n```\nGet the falloff exponent."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GDirLight": {
+        "title": "**GDirLight (Directional Light)**",
+        "description": "Directional light. Rotate using GGen rotation methods to change the light direction. Extends GLight.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGDirLight()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid shadowBounds(float size, float depth)\n```\nSet the shadow map orthographic projection bounds.",
+            "```chuck\nvec3 shadowBounds()\n```\nGet the shadow projection dimensions."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GSpotLight": {
+        "title": "**GSpotLight (Spot Light)**",
+        "description": "Spotlight with cone angle and falloff control. Extends GLight.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGSpotLight()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid angleMax(float radians)\n```\nSet the maximum cone angle.",
+            "```chuck\nfloat angleMax()\n```\nGet the maximum cone angle.",
+            "```chuck\nvoid angleMin(float radians)\n```\nSet the angle where attenuation begins.",
+            "```chuck\nvoid range(float range)\n```\nSet the light range.",
+            "```chuck\nfloat range()\n```\nGet the light range.",
+            "```chuck\nvoid falloff(float falloff)\n```\nSet the distance falloff rate.",
+            "```chuck\nvoid angularFalloff(float exponent)\n```\nSet the angular falloff rate."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GText": {
+        "title": "**GText (Text Rendering)**",
+        "description": "Text rendering in 3D space with font support, wrapping, and alignment. Extends GGen. Builtin fonts: \"chugl:cousine-regular\", \"chugl:karla-regular\", \"chugl:proggy-tiny\", \"chugl:proggy-clean\".",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGText()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid text(string text)\n```\nSet the text string.",
+            "```chuck\nstring text()\n```\nGet the text string.",
+            "```chuck\nvoid font(string font)\n```\nSet the font file path or builtin font name.",
+            "```chuck\nvoid color(vec3 color)\n```\nSet the text color (RGB).",
+            "```chuck\nvoid color(vec4 color)\n```\nSet the text color (RGBA).",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nvoid size(float size)\n```\nSet the font size scale.",
+            "```chuck\nvoid align(int alignment_mode)\n```\nSet text alignment (0=left, 1=center, 2=right).",
+            "```chuck\nvoid maxWidth(float width)\n```\nSet the text wrap width.",
+            "```chuck\nvoid spacing(float spacing)\n```\nSet the line spacing.",
+            "```chuck\nvoid controlPoints(vec2 control_points)\n```\nSet the text origin within its bounds."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GModel": {
+        "title": "**GModel (3D Model Loader)**",
+        "description": "Loads 3D models from OBJ files. Contains meshes, geometries, and materials. Extends GGen.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGModel()\n```\nDefault constructor.",
+            "```chuck\nGModel(string filepath)\n```\nLoad a model from an OBJ file.",
+            "```chuck\nGModel(string filepath, ModelLoadDesc options)\n```\nLoad with options."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GOrbitCamera": {
+        "title": "**GOrbitCamera (Orbit Camera)**",
+        "description": "Camera that orbits around a target point. Provides drag-to-rotate and scroll-to-zoom interaction. Extends GCamera.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGOrbitCamera()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "GFlyCamera": {
+        "title": "**GFlyCamera (Fly Camera)**",
+        "description": "First-person fly camera with WASD movement and mouse look. Extends GCamera.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGFlyCamera()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-ggens.html)"
+    },
+    "Color": {
+        "title": "**Color (Color Utility)**",
+        "description": "Utility class for color operations and conversions. Provides named color constants and conversion between RGB, HSV, and hex formats.",
+        "constructors": [],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvec3 random()\n```\nGenerate a random RGB color.",
+            "```chuck\nvec3 hex(int hex)\n```\nConvert a hex color value to RGB (e.g., `Color.hex(0xff4500)`).",
+            "```chuck\nvec3 hsv2rgb(vec3 hsv)\n```\nConvert HSV to RGB.",
+            "```chuck\nvec3 rgb2hsv(vec3 rgb)\n```\nConvert RGB to HSV.",
+            "```chuck\nvec3 grayscale(vec3 rgb)\n```\nConvert RGB to grayscale using NTSC formula."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-basic.html)"
+    },
+    "GWindow": {
+        "title": "**GWindow (Window Management)**",
+        "description": "Static class for managing the ChuGL window properties and reading user input (keyboard, mouse, scroll, gamepad).",
+        "constructors": [],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid title(string title)\n```\nSet the window title.",
+            "```chuck\nvoid fullscreen()\n```\nSet fullscreen mode.",
+            "```chuck\nvoid windowed(int width, int height)\n```\nSet windowed mode with dimensions.",
+            "```chuck\nvec2 windowSize()\n```\nGet the window size.",
+            "```chuck\nvec2 framebufferSize()\n```\nGet the framebuffer size in pixels.",
+            "```chuck\nvec2 mousePos()\n```\nGet the mouse position.",
+            "```chuck\nvec2 mouseDeltaPos()\n```\nGet the mouse position change since last frame.",
+            "```chuck\nint mouseLeft()\n```\nGet left mouse button state.",
+            "```chuck\nint mouseLeftDown()\n```\nCheck if left button was pressed this frame.",
+            "```chuck\nint mouseRight()\n```\nGet right mouse button state.",
+            "```chuck\nint key(int key)\n```\nCheck if a key is currently held.",
+            "```chuck\nint keyDown(int key)\n```\nCheck if a key was pressed this frame.",
+            "```chuck\nint keyUp(int key)\n```\nCheck if a key was released this frame.",
+            "```chuck\nvec2 scroll()\n```\nGet 2D scroll delta.",
+            "```chuck\nvoid center()\n```\nCenter the window on the monitor.",
+            "```chuck\nvoid close()\n```\nClose the window.",
+            "```chuck\nvoid opacity(float opacity)\n```\nSet window opacity (0.0-1.0).",
+            "```chuck\nvoid position(int x, int y)\n```\nSet the window position.",
+            "```chuck\nvoid mouseMode(int mode)\n```\nSet mouse mode (MOUSE_NORMAL, MOUSE_HIDDEN, MOUSE_DISABLED).",
+            "```chuck\nWindowResizeEvent resizeEvent()\n```\nGet the window resize event.",
+            "```chuck\nWindowCloseEvent closeEvent()\n```\nGet the window close event."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-basic.html)"
+    },
+    "Geometry": {
+        "title": "**Geometry (Vertex Data)**",
+        "description": "Base class for vertex attribute data, indices, and vertex buffers. Used with GMesh to define renderable shapes.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nGeometry()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid positions(vec3[] positions)\n```\nSet position vertex data.",
+            "```chuck\nvec3[] positions()\n```\nGet position vertex data.",
+            "```chuck\nvoid normals(vec3[] normals)\n```\nSet normal vertex data.",
+            "```chuck\nvec3[] normals()\n```\nGet normal vertex data.",
+            "```chuck\nvoid uvs(vec2[] uvs)\n```\nSet UV coordinate data.",
+            "```chuck\nvec2[] uvs()\n```\nGet UV coordinate data.",
+            "```chuck\nvoid indices(int[] indices)\n```\nSet index data.",
+            "```chuck\nint[] indices()\n```\nGet index data.",
+            "```chuck\nvoid vertexCount(int count)\n```\nSet vertex draw count.",
+            "```chuck\nint vertexCount()\n```\nGet vertex draw count.",
+            "```chuck\nvoid vertexAttribute(int location, int numComponents, float[] data)\n```\nSet custom vertex attributes."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "CubeGeometry": {
+        "title": "**CubeGeometry (Box Geometry)**",
+        "description": "Box geometry with customizable width, height, depth, and subdivisions.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nCubeGeometry()\n```\nDefault constructor.",
+            "```chuck\nCubeGeometry(float width, float height, float depth, int widthSegments, int heightSegments, int depthSegments)\n```\nConstruct with dimensions and segments."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float width, float height, float depth, int widthSegments, int heightSegments, int depthSegments)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat width()\n```\nGet width.",
+            "```chuck\nfloat height()\n```\nGet height.",
+            "```chuck\nfloat depth()\n```\nGet depth."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "SphereGeometry": {
+        "title": "**SphereGeometry**",
+        "description": "Spherical geometry with configurable radius, segments, and angular range.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nSphereGeometry()\n```\nDefault constructor.",
+            "```chuck\nSphereGeometry(float radius, int widthSeg, int heightSeg, float phiStart, float phiLength, float thetaStart, float thetaLength)\n```\nConstruct with full parameters."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float radius, int widthSeg, int heightSeg, float phiStart, float phiLength, float thetaStart, float thetaLength)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat radius()\n```\nGet radius.",
+            "```chuck\nint widthSegments()\n```\nGet width segments.",
+            "```chuck\nint heightSegments()\n```\nGet height segments."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "CircleGeometry": {
+        "title": "**CircleGeometry**",
+        "description": "Flat circular geometry with configurable radius, segments, and arc range.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nCircleGeometry()\n```\nDefault constructor.",
+            "```chuck\nCircleGeometry(float radius, int segments, float thetaStart, float thetaLength)\n```\nConstruct with parameters."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float radius, int segments, float thetaStart, float thetaLength)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat radius()\n```\nGet radius.",
+            "```chuck\nint segments()\n```\nGet segment count."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "PlaneGeometry": {
+        "title": "**PlaneGeometry**",
+        "description": "Rectangular plane geometry with subdivision support.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPlaneGeometry()\n```\nDefault constructor.",
+            "```chuck\nPlaneGeometry(float width, float height, int widthSegments, int heightSegments)\n```\nConstruct with dimensions and segments."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float width, float height, int widthSegments, int heightSegments)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat width()\n```\nGet width.",
+            "```chuck\nfloat height()\n```\nGet height."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "TorusGeometry": {
+        "title": "**TorusGeometry**",
+        "description": "Donut-shaped torus geometry with configurable radius, tube radius, and arc length.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nTorusGeometry()\n```\nDefault constructor.",
+            "```chuck\nTorusGeometry(float radius, float tubeRadius, int radialSegments, int tubularSegments, float arcLength)\n```\nConstruct with full parameters."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float radius, float tubeRadius, int radialSegments, int tubularSegments, float arcLength)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat radius()\n```\nGet radius.",
+            "```chuck\nfloat tubeRadius()\n```\nGet tube radius."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "CylinderGeometry": {
+        "title": "**CylinderGeometry**",
+        "description": "Cylindrical geometry with adjustable top/bottom radii and open/closed ends.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nCylinderGeometry()\n```\nDefault constructor.",
+            "```chuck\nCylinderGeometry(float radiusTop, float radiusBottom, float height, int radialSegments, int heightSegments, int openEnded, float thetaStart, float thetaLength)\n```\nConstruct with full parameters."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float radiusTop, float radiusBottom, float height, int radialSegments, int heightSegments, int openEnded, float thetaStart, float thetaLength)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat radiusTop()\n```\nGet top radius.",
+            "```chuck\nfloat radiusBottom()\n```\nGet bottom radius.",
+            "```chuck\nfloat height()\n```\nGet height."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "Material": {
+        "title": "**Material (Base Material)**",
+        "description": "Base class for all ChuGL materials. Wraps shader uniforms, textures, and buffers. Use with GMesh.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nMaterial()\n```\nDefault constructor.",
+            "```chuck\nMaterial(Shader shader)\n```\nConstruct with a custom shader."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid wireframe(int wireframe)\n```\nEnable or disable wireframe rendering.",
+            "```chuck\nvoid transparent(int is_transparent)\n```\nMark material as transparent.",
+            "```chuck\nvoid cullMode(int cullMode)\n```\nSet face culling mode.",
+            "```chuck\nvoid blend(int blend_mode)\n```\nSet blending mode.",
+            "```chuck\nvoid texture(int location, Texture texture)\n```\nBind a texture at a location.",
+            "```chuck\nvoid sampler(int location, TextureSampler sampler)\n```\nBind a sampler at a location.",
+            "```chuck\nvoid uniformFloat(int location, float value)\n```\nSet a float uniform.",
+            "```chuck\nvoid uniformFloat2(int location, vec2 value)\n```\nSet a vec2 uniform.",
+            "```chuck\nvoid uniformFloat3(int location, vec3 value)\n```\nSet a vec3 uniform.",
+            "```chuck\nvoid uniformFloat4(int location, vec4 value)\n```\nSet a vec4 uniform.",
+            "```chuck\nvoid uniformInt(int location, int value)\n```\nSet an integer uniform.",
+            "```chuck\nvoid topology(int topology)\n```\nSet the primitive topology."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "PhongMaterial": {
+        "title": "**PhongMaterial (Phong Shading)**",
+        "description": "Phong specular shading material with diffuse, specular, emission, and normal mapping support.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPhongMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 diffuse)\n```\nSet the diffuse color.",
+            "```chuck\nvec3 color()\n```\nGet the diffuse color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet alpha channel.",
+            "```chuck\nfloat alpha()\n```\nGet alpha channel.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the diffuse texture.",
+            "```chuck\nvoid specular(vec3 specular)\n```\nSet the specular color.",
+            "```chuck\nvec3 specular()\n```\nGet the specular color.",
+            "```chuck\nvoid shine(float shine)\n```\nSet the log shininess exponent.",
+            "```chuck\nfloat shine()\n```\nGet the shininess.",
+            "```chuck\nvoid normalMap(Texture normalTexture)\n```\nSet the normal map texture.",
+            "```chuck\nvoid normalFactor(float normalFactor)\n```\nScale the normal map effect.",
+            "```chuck\nvoid emission(vec3 emission)\n```\nSet emission color.",
+            "```chuck\nvec3 emission()\n```\nGet emission color.",
+            "```chuck\nvoid emissiveMap(Texture emissiveTexture)\n```\nSet the emissive texture.",
+            "```chuck\nvoid aoMap(Texture aoTexture)\n```\nSet the ambient occlusion texture.",
+            "```chuck\nvoid aoFactor(float aoFactor)\n```\nSet the AO factor.",
+            "```chuck\nvoid envmapIntensity(float intensity)\n```\nSet the environment map intensity.",
+            "```chuck\nvoid sampler(TextureSampler sampler)\n```\nSet the texture sampler."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "FlatMaterial": {
+        "title": "**FlatMaterial (Flat Shading)**",
+        "description": "Simple flat-shaded material not affected by scene lighting.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nFlatMaterial()\n```\nDefault constructor.",
+            "```chuck\nFlatMaterial(vec3 color)\n```\nConstruct with a color."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 color)\n```\nSet the material color.",
+            "```chuck\nvec3 color()\n```\nGet the material color.",
+            "```chuck\nvoid alpha(float alpha)\n```\nSet the alpha channel.",
+            "```chuck\nfloat alpha()\n```\nGet the alpha channel.",
+            "```chuck\nvoid colorMap(Texture colorMap)\n```\nSet the color texture.",
+            "```chuck\nvoid emissive(vec4 color)\n```\nSet the emissive color.",
+            "```chuck\nvoid scale(vec2 scale)\n```\nSet the texture scale.",
+            "```chuck\nvoid offset(vec2 offset)\n```\nSet the texture offset."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "PBRMaterial": {
+        "title": "**PBRMaterial (Physically Based Rendering)**",
+        "description": "Physically based rendering material with metallic/roughness workflow.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPBRMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 albedo)\n```\nSet the albedo (base) color.",
+            "```chuck\nvec3 color()\n```\nGet the albedo color.",
+            "```chuck\nvoid colorMap(Texture albedoTexture)\n```\nSet the albedo texture.",
+            "```chuck\nvoid metallic(float metallic)\n```\nSet the metallic factor.",
+            "```chuck\nfloat metallic()\n```\nGet the metallic factor.",
+            "```chuck\nvoid roughness(float roughness)\n```\nSet the roughness factor.",
+            "```chuck\nfloat roughness()\n```\nGet the roughness factor.",
+            "```chuck\nvoid mrMap(Texture mrTexture)\n```\nSet the metallic-roughness texture.",
+            "```chuck\nvoid normalMap(Texture normalTexture)\n```\nSet the normal map.",
+            "```chuck\nvoid normalFactor(float normalFactor)\n```\nScale the normal map effect.",
+            "```chuck\nvoid emissive(vec3 emissive)\n```\nSet the emissive color.",
+            "```chuck\nvoid emissiveMap(Texture emissiveTexture)\n```\nSet the emissive texture.",
+            "```chuck\nvoid aoMap(Texture aoTexture)\n```\nSet the AO texture.",
+            "```chuck\nvoid aoFactor(float aoFactor)\n```\nSet the AO factor."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "NormalMaterial": {
+        "title": "**NormalMaterial (Normal Visualization)**",
+        "description": "Debug material that visualizes mesh normals as colors.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nNormalMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid worldspaceNormals(int use_worldspace_normals)\n```\nVisualize normals in world or local space.",
+            "```chuck\nint worldspaceNormals()\n```\nGet the normal space setting."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "LinesMaterial": {
+        "title": "**LinesMaterial (Line Material)**",
+        "description": "Material for 2D line rendering. Typically used internally by GLines.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nLinesMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid color(vec3 color)\n```\nSet the line color.",
+            "```chuck\nvec3 color()\n```\nGet the line color.",
+            "```chuck\nvoid width(float thickness)\n```\nSet the line thickness.",
+            "```chuck\nfloat width()\n```\nGet the line thickness."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "UVMaterial": {
+        "title": "**UVMaterial (UV Visualization)**",
+        "description": "Debug material that visualizes UV coordinates of a mesh as colors.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nUVMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    },
+    "NextFrameEvent": {
+        "title": "**NextFrameEvent**",
+        "description": "Event for frame synchronization in ChuGL render loops. Do not instantiate directly; use `GG.nextFrame() => now;` to wait for the next graphics frame.",
+        "constructors": [],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-basic.html)"
+    },
+    "Gamepad": {
+        "title": "**Gamepad (Controller Input)**",
+        "description": "Static class for reading gamepad/controller input. Supports up to 16 controllers with per-frame state updates.",
+        "constructors": [],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nint available(int gamepadId)\n```\nCheck if a gamepad is connected at the given ID.",
+            "```chuck\nint[] available()\n```\nGet an array of connected gamepad IDs.",
+            "```chuck\nfloat axis(int gamepadId, int axisId)\n```\nGet axis position in range [-1, 1].",
+            "```chuck\nint button(int gamepadId, int buttonId)\n```\nCheck if a button is currently held.",
+            "```chuck\nint buttonDown(int gamepadId, int buttonId)\n```\nCheck if a button was pressed this frame.",
+            "```chuck\nint buttonUp(int gamepadId, int buttonId)\n```\nCheck if a button was released this frame.",
+            "```chuck\nstring name(int gamepadId)\n```\nGet the gamepad name."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-basic.html)"
+    },
+    "LinesGeometry": {
+        "title": "**LinesGeometry**",
+        "description": "Geometry for line rendering with per-vertex color interpolation.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nLinesGeometry()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid linePositions(vec2[] points)\n```\nSet line vertex positions (Z fixed to 0.0).",
+            "```chuck\nvoid lineColors(vec3[] colors)\n```\nSet per-vertex interpolated line colors."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "PolygonGeometry": {
+        "title": "**PolygonGeometry**",
+        "description": "Earcut-based triangulation supporting arbitrary polygons with holes.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPolygonGeometry()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(vec2[] points)\n```\nBuild a simple polygon from points (auto-closed).",
+            "```chuck\nvoid build(vec2[] points, vec2[] holes, int[] hole_counts)\n```\nBuild a polygon with holes."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "PolyhedronGeometry": {
+        "title": "**PolyhedronGeometry (Platonic Solids)**",
+        "description": "Geometry for platonic solids: tetrahedron, cube, octahedron, dodecahedron, icosahedron.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nPolyhedronGeometry()\n```\nDefault constructor (tetrahedron).",
+            "```chuck\nPolyhedronGeometry(int type)\n```\nConstruct a specific polyhedron type."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(int type)\n```\nRebuild as a different polyhedron type."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "KnotGeometry": {
+        "title": "**KnotGeometry (Torus Knot)**",
+        "description": "Parametric torus knot surface geometry.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nKnotGeometry()\n```\nDefault constructor.",
+            "```chuck\nKnotGeometry(float radius, float tube, int tubularSegments, int radialSegments, int p, int q)\n```\nConstruct with full parameters."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**",
+            "```chuck\nvoid build(float radius, float tube, int tubularSegments, int radialSegments, int p, int q)\n```\nRebuild with new parameters.",
+            "```chuck\nfloat radius()\n```\nGet radius.",
+            "```chuck\nfloat tube()\n```\nGet tube radius."
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "SuzanneGeometry": {
+        "title": "**SuzanneGeometry (Monkey Head)**",
+        "description": "Blender's Suzanne monkey head geometry.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nSuzanneGeometry()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-geo.html)"
+    },
+    "SkyboxMaterial": {
+        "title": "**SkyboxMaterial**",
+        "description": "Material for rendering skybox backgrounds in a scene.",
+        "constructors": [
+            "**Constructors:**",
+            "```chuck\nSkyboxMaterial()\n```\nDefault constructor."
+        ],
+        "examples": [],
+        "functions": [
+            "**Methods:**"
+        ],
+        "link": "[More...](https://chuck.stanford.edu/chugl/api/chugl-mat.html)"
+    }
+}
