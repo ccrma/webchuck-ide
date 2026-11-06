@@ -7,7 +7,7 @@
 // date:   January 2024
 //--------------------------------------------------------------------
 
-import { theChuck } from "@/host";
+import { theChuck, engineMode } from "@/host";
 import {
     File as FileData,
     fetchDataFile,
@@ -585,7 +585,11 @@ export default class ProjectSystem {
      * Load default code into the editor
      */
     private static async loadDefaultProject() {
-        const code: FileData = await fetchTextFile("./examples/helloSine.ck");
+        const defaultUrl =
+            engineMode === "webchugl"
+                ? "./examples/chugl/basicShapes.ck"
+                : "./examples/helloSine.ck";
+        const code: FileData = await fetchTextFile(defaultUrl);
         ProjectSystem.addNewFile("untitled.ck", code.data as string);
     }
 

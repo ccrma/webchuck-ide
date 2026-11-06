@@ -90,9 +90,72 @@ const chuck_modules = [
     "Centroid",
     "Flux",
     "RMS",
-    "RollOff"
+    "RollOff",
+    // ChuGL Graphics Generators
+    "GGen",
+    "GScene",
+    "GMesh",
+    "GCube",
+    "GSphere",
+    "GCircle",
+    "GPlane",
+    "GTorus",
+    "GCylinder",
+    "GKnot",
+    "GSuzanne",
+    "GLines",
+    "GPoints",
+    "GCamera",
+    "GOrbitCamera",
+    "GFlyCamera",
+    "GLight",
+    "GPointLight",
+    "GDirLight",
+    "GSpotLight",
+    "GText",
+    "GModel",
+    "GPolyhedron",
+    // ChuGL Geometries
+    "Geometry",
+    "CubeGeometry",
+    "SphereGeometry",
+    "CircleGeometry",
+    "PlaneGeometry",
+    "TorusGeometry",
+    "CylinderGeometry",
+    "KnotGeometry",
+    "SuzanneGeometry",
+    "LinesGeometry",
+    "PolygonGeometry",
+    "PolyhedronGeometry",
+    // ChuGL Materials
+    "Material",
+    "PhongMaterial",
+    "FlatMaterial",
+    "NormalMaterial",
+    "PBRMaterial",
+    "LinesMaterial",
+    "UVMaterial",
+    "WireframeMaterial",
+    "SkyboxMaterial",
+    // ChuGL Utility
+    "NextFrameEvent",
+    "Texture",
+    "TextureSampler",
+    "Shader"
 ];
 
-const chuck_libraries = ["Object", "Event", "Shred", "Math", "Machine", "Std"];
+const chuck_libraries = [
+    "Object",
+    "Event",
+    "Shred",
+    "Math",
+    "Machine",
+    "Std",
+    "GG",
+    "GWindow",
+    "Color",
+    "Gamepad"
+];
 
 export { chuck_modules, chuck_libraries };

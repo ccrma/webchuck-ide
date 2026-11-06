@@ -7,9 +7,16 @@
 // date:   September 2023
 //---------------------------------------------------
 
-import { getChuckNow, sampleRate, theChuck } from "@/host";
+import {
+    getChuckNow,
+    sampleRate,
+    theChuck,
+    engineMode,
+    resetChuGL
+} from "@/host";
 import { displayFormatTime, samplesToTimeHMSS } from "@/utils/time";
 import Editor from "@/components/editor/monaco/editor";
+import ChuckBar from "@/components/chuckBar/chuckBar";
 
 /**
  * Vm Monitor Class for handling VM time and shred table
@@ -117,24 +124,45 @@ export default class VmMonitor {
         });
 
         this.numShreds++;
+
+        // WebChuGL renders a single scene, so only one shred at a time
+        if (engineMode === "webchugl") {
+            ChuckBar.playButton.disabled = true;
+        }
     }
 
     /**
      * Remove a single shred row from the shred table
      * @param theShred Shred ID
+     * @returns Promise that resolves once ChuGL's reset is done
      */
-    static removeShredRow(theShred: number) {
+    static async removeShredRow(theShred: number) {
         if (theShred in VmMonitor.shredsToRows) {
             VmMonitor.shredsToRows[theShred].parentNode?.removeChild(
                 VmMonitor.shredsToRows[theShred]
             );
             delete VmMonitor.shredsToRows[theShred];
             this.numShreds--;
+
+            // reset graphics state and update play button state
+            if (this.numShreds === 0) {
+                ChuckBar.playButton.disabled = !ChuckBar.running;
+                await resetChuGL();
+            }
         }
     }
 
     static getNumShreds(): number {
         return this.numShreds;
+    }
+
+    /**
+     * Most recently added tracked shred
+     * @returns shred ID, or 0 if no shreds are tracked
+     */
+    static getLastShred(): number {
+        const shreds = Object.keys(VmMonitor.shredsToRows);
+        return Number(shreds[shreds.length - 1] ?? 0);
     }
 }
 
@@ -184,10 +212,12 @@ export class ChuckNow {
         if (isDisplay) {
             // On
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: On";
+            ChuckNow.chuckNowToggle.setAttribute("aria-checked", "true");
             ChuckNow.chuckNowStatus.style.display = "flex";
             ChuckNow.isDisplay = localStorage["chuckNow"] = true;
         } else {
             ChuckNow.chuckNowToggle.innerText = "ChucK Time: Off";
+            ChuckNow.chuckNowToggle.setAttribute("aria-checked", "false");
             ChuckNow.chuckNowStatus.style.display = "none";
             ChuckNow.isDisplay = localStorage["chuckNow"] = false;
         }
