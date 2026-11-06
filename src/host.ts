@@ -24,11 +24,7 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 import Recorder from "@/components/chuckBar/recorder";
 import NavBar from "./components/navbar/navbar";
 import { getEngineMode, type EngineMode } from "@/components/settings";
-import {
-    type ChucKAdapter,
-    WebChucKAdapter,
-    WebChuGLAdapter
-} from "@/adapter";
+import { type ChucKAdapter, WebChucKAdapter, WebChuGLAdapter } from "@/adapter";
 
 // WebChucK source
 const DEV_CHUCK_SRC = "https://chuck.stanford.edu/webchuck/dev/"; // dev webchuck src
@@ -176,8 +172,7 @@ async function initWebChuGL() {
         throw error;
     }
 
-    const canvas =
-        document.querySelector<HTMLCanvasElement>("#chuglCanvas")!;
+    const canvas = document.querySelector<HTMLCanvasElement>("#chuglCanvas")!;
 
     // Collect chugin URLs for ChuGL config
     const chugins: string[] = loadWebChugins();
@@ -381,7 +376,9 @@ export async function connectMic() {
             await theChuck.rawRuntime.requestMicrophone();
             Console.print("Microphone connected");
         } catch (err) {
-            Console.print(`\x1b[31mmicrophone: ${(err as Error).message}\x1b[0m`);
+            Console.print(
+                `\x1b[31mmicrophone: ${(err as Error).message}\x1b[0m`
+            );
         }
         return;
     }
@@ -499,4 +496,3 @@ export async function runJsCode(code: string, filename: string = "<js>") {
         );
     }
 }
-

@@ -2,17 +2,20 @@ import ProjectSystem from "@/components/fileExplorer/projectSystem";
 
 const exportWebchuglButton =
     document.querySelector<HTMLButtonElement>("#exportWebchugl")!;
-const exportChuglCancel =
-    document.querySelector<HTMLButtonElement>("#export-chugl-cancel-btn")!;
-const exportDialog =
-    document.querySelector<HTMLDialogElement>("#export-webchugl-modal")!;
+const exportChuglCancel = document.querySelector<HTMLButtonElement>(
+    "#export-chugl-cancel-btn"
+)!;
+const exportDialog = document.querySelector<HTMLDialogElement>(
+    "#export-webchugl-modal"
+)!;
 const exportBtn =
     document.querySelector<HTMLButtonElement>("#export-chugl-btn")!;
 const exportChuglFileSelect = document.querySelector<HTMLSelectElement>(
     "#export-chugl-file-select"
 )!;
-const exportChuglTitle =
-    document.querySelector<HTMLInputElement>("#export-chugl-title")!;
+const exportChuglTitle = document.querySelector<HTMLInputElement>(
+    "#export-chugl-title"
+)!;
 
 /**
  * Export Project Files to a WebChuGL Web App
@@ -86,8 +89,12 @@ async function exportWebchugl(title: string, mainFile: string) {
     // 4. Fetch static assets
     const [swText, logoLight, logoDark] = await Promise.all([
         fetch("templates/webchugl/sw.js").then((r) => r.text()),
-        fetch("templates/webchugl/assets/chugl_logo_light.png").then((r) => r.blob()),
-        fetch("templates/webchugl/assets/chugl_logo_dark.png").then((r) => r.blob())
+        fetch("templates/webchugl/assets/chugl_logo_light.png").then((r) =>
+            r.blob()
+        ),
+        fetch("templates/webchugl/assets/chugl_logo_dark.png").then((r) =>
+            r.blob()
+        )
     ]);
 
     // 5. Package everything into the export zip
@@ -101,7 +108,9 @@ async function exportWebchugl(title: string, mainFile: string) {
     const exportBlob = await exportZip.generateAsync({ type: "blob" });
 
     // 6. Trigger download
-    const zipName = title ? `${title} Project.zip` : `${mainFile.split(".")[0]} Project.zip`;
+    const zipName = title
+        ? `${title} Project.zip`
+        : `${mainFile.split(".")[0]} Project.zip`;
     const url = URL.createObjectURL(exportBlob);
     const downloadLink = document.createElement("a");
     downloadLink.href = url;
@@ -115,6 +124,5 @@ exportDialog.addEventListener("close", () => {
     sessionStorage.setItem("export-chugl-title", exportChuglTitle.value);
 });
 exportDialog.addEventListener("show", () => {
-    exportChuglTitle.value =
-        sessionStorage.getItem("export-chugl-title") || "";
+    exportChuglTitle.value = sessionStorage.getItem("export-chugl-title") || "";
 });

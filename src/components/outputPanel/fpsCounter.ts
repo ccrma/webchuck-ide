@@ -24,8 +24,7 @@ export default class FpsCounter {
         toggleItem.classList.remove("hidden");
 
         // Load state from localStorage
-        FpsCounter.isEnabled =
-            localStorage.getItem("fpsCounter") === "true";
+        FpsCounter.isEnabled = localStorage.getItem("fpsCounter") === "true";
         const fpsToggle =
             document.querySelector<HTMLButtonElement>("#fpsToggle")!;
         fpsToggle.textContent = FpsCounter.isEnabled ? "FPS: On" : "FPS: Off";
@@ -37,10 +36,7 @@ export default class FpsCounter {
             fpsToggle.textContent = FpsCounter.isEnabled
                 ? "FPS: On"
                 : "FPS: Off";
-            localStorage.setItem(
-                "fpsCounter",
-                String(FpsCounter.isEnabled)
-            );
+            localStorage.setItem("fpsCounter", String(FpsCounter.isEnabled));
             fpsToggle.setAttribute(
                 "aria-checked",
                 String(FpsCounter.isEnabled)
@@ -51,8 +47,7 @@ export default class FpsCounter {
         // ChuGL updates fps() once per second, so match that rate
         setInterval(() => {
             if (FpsCounter.isEnabled && theChuck) {
-                FpsCounter.display.textContent =
-                    `${Math.round(theChuck.rawRuntime.fps())} FPS`;
+                FpsCounter.display.textContent = `${Math.round(theChuck.rawRuntime.fps())} FPS`;
             }
         }, 1000);
     }

@@ -69,8 +69,9 @@ export default class ChuckBar {
             document.querySelector<HTMLButtonElement>("#recordButton")!;
 
         // Engine selector (split button next to Start)
-        const engineContainer =
-            document.querySelector<HTMLDivElement>("#engineSelectContainer")!;
+        const engineContainer = document.querySelector<HTMLDivElement>(
+            "#engineSelectContainer"
+        )!;
         // WebChuGL gets its own Start/caret button color (see index.css)
         engineContainer.classList.toggle("chugl", engineMode === "webchugl");
         const engineDropdown = document.querySelector<HTMLDivElement>(

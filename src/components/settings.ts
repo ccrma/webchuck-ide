@@ -81,8 +81,9 @@ export default class Settings {
             document.querySelector<HTMLParagraphElement>(
                 "#chuck-version-desc"
             )!;
-        Settings.versionGroup =
-            document.querySelector<HTMLDivElement>("#chuck-version-group")!;
+        Settings.versionGroup = document.querySelector<HTMLDivElement>(
+            "#chuck-version-group"
+        )!;
         Settings.engineSelect =
             document.querySelector<HTMLSelectElement>("#engine-select")!;
         Settings.engineDescription =

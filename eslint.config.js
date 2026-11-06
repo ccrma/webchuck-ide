@@ -28,10 +28,18 @@ export default [
         },
         rules: {
             // --- Formatting (match .prettierrc.json) ---
-            "indent": ["error", 4, { "SwitchCase": 1 }],
+            // Indentation is left to Prettier: ESLint's `indent` rule
+            // disagrees with Prettier on multi-line ternaries.
+            indent: "off",
             "linebreak-style": ["error", "unix"],
-            "quotes": ["error", "double", { "allowTemplateLiterals": true }],
-            "semi": ["error", "always"],
+            // avoidEscape matches Prettier, which uses single quotes when a
+            // string contains double quotes (e.g. '[role="menuitem"]').
+            quotes: [
+                "error",
+                "double",
+                { allowTemplateLiterals: true, avoidEscape: true }
+            ],
+            semi: ["error", "always"],
             "comma-dangle": ["error", "never"],
 
             // --- TypeScript: disable base rules that TS handles better ---

@@ -17,9 +17,7 @@ import type { ChucK as ChuGLChucK } from "webchugl";
 export interface ChucKAdapter {
     // Code execution
     runCode(code: string): Promise<number>;
-    replaceCode(
-        code: string
-    ): Promise<{ oldShred: number; newShred: number }>;
+    replaceCode(code: string): Promise<{ oldShred: number; newShred: number }>;
     removeLastCode(): Promise<number>;
     removeShred(id: number): Promise<number>;
     isShredActive(id: number): Promise<number>;
@@ -76,9 +74,7 @@ export class WebChucKAdapter implements ChucKAdapter {
     runCode(code: string): Promise<number> {
         return this.chuck.runCode(code);
     }
-    replaceCode(
-        code: string
-    ): Promise<{ oldShred: number; newShred: number }> {
+    replaceCode(code: string): Promise<{ oldShred: number; newShred: number }> {
         return this.chuck.replaceCode(code);
     }
     removeLastCode(): Promise<number> {
@@ -166,9 +162,7 @@ export class WebChuGLAdapter implements ChucKAdapter {
         const result = await this.ck.runCode(code);
         return result.shredId;
     }
-    replaceCode(
-        code: string
-    ): Promise<{ oldShred: number; newShred: number }> {
+    replaceCode(code: string): Promise<{ oldShred: number; newShred: number }> {
         return this.ck.replaceCode(code);
     }
     removeLastCode(): Promise<number> {

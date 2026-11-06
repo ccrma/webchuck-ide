@@ -45,15 +45,18 @@ export default class FullscreenOverlay {
             document.querySelector<HTMLDivElement>("#fullscreenContent")!;
         FullscreenOverlay.toolbar =
             document.querySelector<HTMLDivElement>("#fullscreenToolbar")!;
-        FullscreenOverlay.expandIcon =
-            document.querySelector<SVGElement>("#fullscreenExpandIcon")!;
-        FullscreenOverlay.shrinkIcon =
-            document.querySelector<SVGElement>("#fullscreenShrinkIcon")!;
+        FullscreenOverlay.expandIcon = document.querySelector<SVGElement>(
+            "#fullscreenExpandIcon"
+        )!;
+        FullscreenOverlay.shrinkIcon = document.querySelector<SVGElement>(
+            "#fullscreenShrinkIcon"
+        )!;
 
         const closeButton =
             document.querySelector<HTMLButtonElement>("#fullscreenClose")!;
-        const fullscreenButton =
-            document.querySelector<HTMLButtonElement>("#fullscreenToggleBtn")!;
+        const fullscreenButton = document.querySelector<HTMLButtonElement>(
+            "#fullscreenToggleBtn"
+        )!;
 
         // Load toolbar toggle from localStorage
         FullscreenOverlay.toolbarHidden =
@@ -89,11 +92,9 @@ export default class FullscreenOverlay {
         const element =
             source === "visualizer"
                 ? document.querySelector<HTMLDivElement>(
-                    "#visualizerContainer"
-                )!
-                : document.querySelector<HTMLDivElement>(
-                    "#canvasContainer"
-                )!;
+                      "#visualizerContainer"
+                  )!
+                : document.querySelector<HTMLDivElement>("#canvasContainer")!;
 
         // Save original parent for restoration
         FullscreenOverlay.originalParent = element.parentElement;
@@ -225,7 +226,7 @@ export default class FullscreenOverlay {
         if (e.key === "Tab") {
             const focusable =
                 FullscreenOverlay.overlay.querySelectorAll<HTMLElement>(
-                    "button:not([disabled]), [tabindex]:not([tabindex=\"-1\"])"
+                    'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
                 );
             if (focusable.length === 0) return;
             const first = focusable[0];
